@@ -1,0 +1,96 @@
+.wrapper {
+  color: #5a4e44
+}
+
+.content {
+  width: 350px;
+  margin: 20px auto;
+  background: #fff;
+  box-shadow: #b1b1b1 0 0 16px 0px;
+  border-radius: 3px;
+}
+
+.images {
+  height: 350px;
+  width: 350px;
+  overflow: hidden;
+}
+
+.info {
+  font-size: 14px;
+
+  td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .person {
+    vertical-align: top;
+    padding-top: 10px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
+.name {
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0;
+  margin-bottom: 10px;
+  line-height: 22px;
+}
+
+.age {
+  font-size: 30px;
+  width: 100px;
+
+  div {
+    font-size: 15px;
+  }
+}
+
+.bio {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  margin: 0;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.seen {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.actions {
+  font-size: 34px;
+  text-align: center;
+
+  td {
+    padding: 7px;
+    background: #f6f1ed;
+    color: #b1a599;
+    cursor: pointer;
+    border-right: 1px solid #fff;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      color: #e2704e;
+
+      :global(.fa-heart) {
+        color: #55bc75
+      }
+
+      :global(.fa-star) {
+        color: #5f90b0
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import Slider from 'react-slick'
 import _ from 'lodash'
+import cx from 'classnames'
 import styles from './user-card.scss'
 
 @CSSModules(styles)
@@ -33,9 +34,12 @@ export default class HomeUserCard extends Component {
   }
 
   render() {
-    const { user } = this.props
+    const { user, extended } = this.props
+    const wrapperClassName = cx({
+      extended
+    })
     return (
-      <div styleName="wrapper">
+      <div styleName="wrapper" className={wrapperClassName}>
         <div styleName="content">
           <table>
             <colgroup>
@@ -54,6 +58,16 @@ export default class HomeUserCard extends Component {
                     </Slider>
                   </div>
                 </td>
+                {this.props.extended &&
+                <td rowSpan="4" styleName="all-photos">
+                  <div styleName="all-images">
+                    <Slider {...this.sliderSettings}>
+                      {_.map(user.photos, photo => (
+                        <div key={_.uniqueId()}><img src={photo.url} alt="img" style={{width: 570}} /></div>
+                      ))}
+                    </Slider>
+                  </div>
+                </td>}
               </tr>
               <tr styleName="info">
                 <td styleName="age">

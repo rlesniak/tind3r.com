@@ -27,3 +27,7 @@ export const core = () => {
 export const meta = () => {
   return devRuntime('/meta')
 }
+
+export const user = (id) => {
+  return devRuntime('/user')
+}

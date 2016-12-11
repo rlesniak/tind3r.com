@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import { user } from '../runtime'
 import User from '../models/User'
 import Loader from './Loader'
+import UserCard from './Home/UserCard'
 
 @observer
 export default class Home extends Component {
@@ -17,13 +18,7 @@ export default class Home extends Component {
 
   renderUser() {
     return (
-      <div key={this.user.id}>
-        {this.user.name}
-        {this.user.bio}
-        {_.map(this.user.photos, photo => (
-          <img key={_.uniqueId()} src={photo.url} alt="img" style={{width: 200}} />
-        ))}
-      </div>
+      <UserCard user={this.user} extended />
     )
   }
 

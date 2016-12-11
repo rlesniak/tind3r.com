@@ -1,7 +1,13 @@
 @import '../../styles/vars';
 
 .wrapper {
-  color: #5a4e44
+  color: #5a4e44;
+
+  &:global(.extended) {
+    .content {
+      width: 1000px;
+    }
+  }
 }
 
 .content {
@@ -106,7 +112,7 @@
   text-align: center;
 
   td {
-    padding: 5px;
+    padding: 8px;
     vertical-align: middle;
     background: $bg2;
     border-bottom: 1px solid #fff;
@@ -131,4 +137,13 @@
 
 .school {
   font-size: 10px;
+}
+
+.all-photos {
+  background: #fff;
+  width: 570px;
+}
+
+.all-images {
+  width: 570px;
 }

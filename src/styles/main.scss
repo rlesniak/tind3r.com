@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family==Lato:300,300i,400|Montserrat');
+@import 'vars';
 
 body {
-  background: #dfc2b4;
+  background: $bg;
+  color: $font-c;
   font-family: Montserrat, Tahoma, Arial;
 }
 
@@ -17,6 +19,16 @@ body {
 
     .slick-dots {
       bottom: 0;
+      background: #fff;
+
+      li button:before {
+        font-size: 9px;
+        opacity: 0.5;
+      }
+
+      li.slick-active button:before {
+        opacity: 1
+      }
     }
   }
 }

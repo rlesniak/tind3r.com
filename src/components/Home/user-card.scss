@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .wrapper {
   color: #5a4e44
 }
@@ -22,12 +24,11 @@
   td {
     vertical-align: middle;
     text-align: center;
-    padding: 10px;
+    padding: 15px 10px;
   }
 
   .person {
     vertical-align: top;
-    padding-top: 10px;
 
     a {
       color: inherit;
@@ -46,7 +47,6 @@
 
 .age {
   font-size: 30px;
-  width: 100px;
 
   div {
     font-size: 15px;
@@ -55,9 +55,7 @@
 
 .bio {
   font-family: 'Lato', sans-serif;
-  font-weight: 300;
   margin: 0;
-  font-style: italic;
   font-size: 12px;
 }
 
@@ -67,13 +65,13 @@
 }
 
 .actions {
-  font-size: 34px;
+  font-size: 46px;
   text-align: center;
 
   td {
-    padding: 7px;
-    background: #f6f1ed;
-    color: #b1a599;
+    padding: 14px 7px;
+    background: $bg2;
+    color: $icons-c;
     cursor: pointer;
     border-right: 1px solid #fff;
 
@@ -82,15 +80,55 @@
     }
 
     &:hover {
-      color: #e2704e;
+      color: $red;
 
       :global(.fa-heart) {
-        color: #55bc75
+        color: $green
       }
 
       :global(.fa-star) {
-        color: #5f90b0
+        color: $blue
       }
     }
   }
+}
+
+.insta {
+  padding: 10px 0;
+
+  i {
+    font-size: 28px;
+    color: gray;
+  }
+}
+
+.additional {
+  text-align: center;
+
+  td {
+    padding: 5px;
+    vertical-align: middle;
+    background: $bg2;
+    border-bottom: 1px solid #fff;
+  }
+
+  .with-insta {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    i {
+      margin-bottom: 4px;
+      color: $green;
+    }
+
+    .instaname {
+      font-size: 12px;
+    }
+  }
+}
+
+.school {
+  font-size: 10px;
 }

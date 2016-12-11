@@ -11,7 +11,6 @@ const chromeRuntime = (type, params = {}) => {
       } else {
         browserHistory.push('/fb-connect');
         reject('NEED_FB')
-        // getFacebookToken(resolve, reject)
       }
     })
   })
@@ -27,6 +26,10 @@ export const core = () => {
 
 export const user = (id) => {
   return chromeRuntime('FETCH_USER', { id })
+}
+
+export const meta = () => {
+  return chromeRuntime('FETCH_META')
 }
 
 export default chromeRuntime

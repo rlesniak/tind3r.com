@@ -3,7 +3,7 @@ import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import Slider from 'react-slick'
 import _ from 'lodash'
-import styles from './home-user-card.scss'
+import styles from './user-card.scss'
 
 @CSSModules(styles)
 export default class HomeUserCard extends Component {
@@ -18,12 +18,31 @@ export default class HomeUserCard extends Component {
       slidesToScroll: 1,
     }
   }
+
+  renderInstagramSection() {
+    const { user } = this.props
+    if (user.instaLink) {
+      return <div styleName="with-insta">
+        <a href={user.instaLink} target="_blank">
+          <i className="fa fa-instagram"></i>
+          <div styleName="instaname">{user.instaName}</div>
+        </a>
+      </div>
+    }
+    return <i className="fa fa-instagram"></i>
+  }
+
   render() {
     const { user } = this.props
     return (
       <div styleName="wrapper">
         <div styleName="content">
           <table>
+            <colgroup>
+              <col width="33%" />
+              <col width="33%" />
+              <col width="33%" />
+            </colgroup>
             <tbody>
               <tr>
                 <td colSpan="3">
@@ -38,8 +57,8 @@ export default class HomeUserCard extends Component {
               </tr>
               <tr styleName="info">
                 <td styleName="age">
-                  {user.km}
-                  <div>KM</div>
+                  {user.age}
+                  <div>YO</div>
                 </td>
                 <td styleName="person" colSpan="2">
                   <Link to={`/users/${user.id}`}>
@@ -50,6 +69,17 @@ export default class HomeUserCard extends Component {
                     {user.bio && <h2 styleName="bio">{user.bio}</h2>}
                     {!user.bio && <span>[NO BIO]</span>}
                   </Link>
+                </td>
+              </tr>
+              <tr styleName="additional">
+                <td>
+                  ~{user.km} KM
+                </td>
+                <td styleName="insta">
+                  {this.renderInstagramSection()}
+                </td>
+                <td styleName="school">
+                  {user.school}
                 </td>
               </tr>
               <tr styleName="actions">

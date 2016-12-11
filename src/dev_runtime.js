@@ -19,6 +19,11 @@ const devRuntime = (url) => {
     })
   })
 }
+
 export const core = () => {
   return devRuntime('/recs/core/')
+}
+
+export const meta = () => {
+  return devRuntime('/meta')
 }

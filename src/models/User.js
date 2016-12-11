@@ -1,6 +1,6 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
-import { user } from '../runtime'
+import { user, meta } from '../dev_runtime'
 
 class User {
   id = null
@@ -28,6 +28,14 @@ class User {
     })
   }
 
+  @action fetchMeta() {
+    this.isLoading = true
+    meta().then(action(resp => {
+      extendObservable(this, resp.user)
+      this.isLoading = false
+    }))
+  }
+
   @action setFromJson(json) {
     extendObservable(this, json)
   }
@@ -46,6 +54,26 @@ class User {
 
   @computed get km() {
     return (this.distance_mi * 1.6093).toFixed(0)
+  }
+
+  @computed get instaLink() {
+    if (this.instagram && this.instagram.username) {
+      return `https://www.instagram.com/${this.instagram.username}/`
+    }
+
+    return null
+  }
+
+  @computed get instaName() {
+    return this.instagram && this.instagram.username
+  }
+
+  @computed get school() {
+    if (this.schools && this.schools[0]) {
+      return this.schools[0].name
+    }
+
+    return 'Hidden'
   }
 }
 

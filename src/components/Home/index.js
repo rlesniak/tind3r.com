@@ -11,27 +11,26 @@ import styles from './styles.scss'
 @observer
 @CSSModules(styles)
 export default class Home extends Component {
-  constructor(props) {
-    super(props)
-
-    this.userStore = new UserStore()
-  }
-
   componentDidMount() {
     this.width = window.innerWidth
   }
 
   render() {
+    const { userStore } = this.props
     return (
       <div styleName="home">
-        {this.userStore.isConnecting && <h1>Need connect</h1>}
-        {this.userStore.message}
-        {this.userStore.isLoading && <Loader />}
+        {userStore.isConnecting && <h1>Need connect</h1>}
+        {userStore.message}
+        {userStore.isLoading && <Loader />}
         <div styleName="recommendation">
-          {!this.userStore.isLoading && <UserCard user={this.userStore.first} />}
+          {!userStore.isLoading && <UserCard user={userStore.first} />}
         </div>
-        <UserCardList users={this.userStore.tail} />
+        {!userStore.isLoading && <UserCardList userStore={userStore} />}
       </div>
     );
   }
+}
+
+Home.defaultProps = {
+  userStore: new UserStore(),
 }

@@ -6,7 +6,9 @@
   vertical-align: top;
 
   &:global(.simple) {
+    width: $small-card-w;
     margin: 0 5px 5px;
+
     .content {
       width: $small-card-w;
     }

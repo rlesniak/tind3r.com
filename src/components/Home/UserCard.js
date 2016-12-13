@@ -6,6 +6,7 @@ import _ from 'lodash'
 import cx from 'classnames'
 import styles from './user-card.scss'
 import ActionButtons from '../ActionButtons'
+import Loader from '../Loader'
 
 @CSSModules(styles)
 export default class UserCard extends Component {
@@ -83,11 +84,19 @@ export default class UserCard extends Component {
   }
 
   render() {
-    const { user, simple } = this.props
+    const { user, simple, asLoader } = this.props
 
     const className = cx({
       simple
     })
+
+    if (asLoader) {
+      return (
+        <div styleName="wrapper" className="simple">
+          <Loader />
+        </div>
+      )
+    }
 
     return (
       <div styleName="wrapper" className={className}>

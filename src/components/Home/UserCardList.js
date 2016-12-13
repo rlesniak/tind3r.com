@@ -4,7 +4,6 @@ import CSSModules from 'react-css-modules'
 import _ from 'lodash'
 import UserStore from '../../stores/UserStore'
 import UserCard from './UserCard'
-import Loader from '../Loader'
 import styles from './user-card-list.scss'
 
 @observer
@@ -26,9 +25,11 @@ export default class UserCardList extends Component {
   }
 
   render() {
+    const { userStore } = this.props
     return (
       <div styleName="list">
-        {this.props.users.map(u => this.renderUser(u))}
+        {userStore.tail.map(u => this.renderUser(u))}
+        {userStore.isCharging && <UserCard asLoader />}
       </div>
     );
   }

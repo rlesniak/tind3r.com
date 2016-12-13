@@ -7,6 +7,7 @@ class UserStore {
   @observable users = []
   @observable message = null
   @observable isLoading = true;
+  @observable isCharging = true;
   @observable needFb = false;
 
   constructor() {
@@ -16,14 +17,18 @@ class UserStore {
       () => this.all.length,
       (length) => {
         if (length <= 3) {
-          this.fetch()
+          this.fetch(true)
         }
       }
     )
   }
 
-  fetch() {
+  fetch(isCharging = false) {
     Data.fetch().then(resp => {
+      if (isCharging) {
+        this.isCharging = true
+      }
+
       console.log(resp);
       if (!resp.results.length) {
         this.message = resp.message
@@ -33,6 +38,7 @@ class UserStore {
       transaction(() => {
         _.each(resp.results, res => this.updateUser(res))
         this.isLoading = false
+        this.isCharging = false
       })
     }).catch(resp => {
       this.needFb = true

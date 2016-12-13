@@ -2,6 +2,8 @@
 
 .wrapper {
   color: #5a4e44;
+  display: inline-block;
+  vertical-align: top;
 
   &:global(.extended) {
     .content {
@@ -12,7 +14,6 @@
 
 .content {
   width: 350px;
-  margin: 20px auto;
   background: #fff;
   box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
   border-radius: 3px;

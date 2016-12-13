@@ -8,12 +8,12 @@
   &:global(.simple) {
     margin: 0 5px 5px;
     .content {
-      width: 200px;
+      width: $small-card-w;
     }
 
     .images {
-      width: 200px;
-      height: 200px;
+      width: $small-card-w;
+      height: $small-card-w;
     }
 
     .instaname {
@@ -24,7 +24,7 @@
       font-size: 13px;
 
       span {
-        width: 188px;
+        width: $small-card-w;
         display: block;
       }
     }
@@ -40,6 +40,33 @@
       height: 37px;
       text-overflow: ellipsis;
       display: -webkit-box;
+    }
+
+    .actions {
+      display: none;
+    }
+
+    &:hover {
+      .employ {
+        display: none;
+      }
+
+      .actions {
+        display: table-row;
+
+        td {
+          border-bottom: 1px solid #fff;
+        }
+
+        td > div {
+          font-size: 19px;
+
+          div {
+            padding-top: 6px;
+            padding-bottom: 5px;
+          }
+        }
+      }
     }
   }
 }
@@ -130,6 +157,7 @@
     a {
       color: inherit;
       text-decoration: none;
+      display: inline-block;
     }
 
     i {
@@ -154,16 +182,17 @@
 .employ {
   font-size: 16px;
   text-align: center;
-  padding: 5px;
   background: $bg2;
   border-bottom: 1px solid #fff;
 
   span {
+    padding: 8px 5px;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 15px;
+    height: 30px;
     white-space: nowrap;
     display: block;
+    width: 338px;
   }
 }
 

@@ -14,10 +14,8 @@ export default class UserCard extends Component {
 
     this.sliderSettings = {
       dots: true,
-      infinite: true,
+      infinite: false,
       speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
     }
   }
 
@@ -37,7 +35,7 @@ export default class UserCard extends Component {
               {simple ? `, ${user.age}` : ''}
               <div styleName="seen">{user.seenMin}</div>
             </h1>
-            <h2 styleName="bio">
+            <h2 styleName="bio" title={user.bio}>
               {user.bio ? user.bio : <span>[NO BIO]</span>}
             </h2>
           </Link>
@@ -61,7 +59,7 @@ export default class UserCard extends Component {
 
   renderSimpleSlider() {
     const { user, simple } = this.props
-    const width = simple === true ? 200 : 350
+    const width = simple === true ? 220 : 350
     return (
       <div styleName="images">
         <Slider {...this.sliderSettings}>
@@ -70,6 +68,17 @@ export default class UserCard extends Component {
           ))}
         </Slider>
       </div>
+    )
+  }
+
+  renderActionsRow() {
+    const { user } = this.props
+    return (
+      <tr styleName="actions">
+        <td colSpan="3">
+          <ActionButtons user={user} />
+        </td>
+      </tr>
     )
   }
 
@@ -96,25 +105,22 @@ export default class UserCard extends Component {
                 </td>
               </tr>
               {this.renderBasicInfo()}
+              {simple && this.renderActionsRow()}
               <tr>
                 <td colSpan="3" styleName="employ">
                   <span>{user.school}</span>
                 </td>
               </tr>
               <tr styleName="additional">
-                  <td>
-                    {user.km} KM
-                  </td>
-                  <td />
-                  <td styleName="insta">
-                    {this.renderInstagramSection()}
-                  </td>
-                </tr>
-              {!this.props.simple && <tr>
-                <td colSpan="3">
-                  <ActionButtons user={user} />
+                <td>
+                  {user.km} KM
                 </td>
-              </tr>}
+                <td />
+                <td styleName="insta">
+                  {this.renderInstagramSection()}
+                </td>
+              </tr>
+              {!simple && this.renderActionsRow()}
             </tbody>
           </table>
         </div>

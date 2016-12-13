@@ -11,10 +11,6 @@ import styles from './styles.scss'
 @observer
 @CSSModules(styles)
 export default class Home extends Component {
-  componentDidMount() {
-    this.width = window.innerWidth
-  }
-
   render() {
     const { userStore } = this.props
     return (

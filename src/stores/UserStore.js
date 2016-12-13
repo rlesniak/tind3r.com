@@ -11,24 +11,24 @@ class UserStore {
   @observable needFb = false;
 
   constructor() {
-    this.fetch()
+    this.core()
 
     reaction(
       () => this.all.length,
       (length) => {
         if (length <= 3) {
-          this.fetch(true)
+          this.core(true)
         }
       }
     )
   }
 
-  fetch(isCharging = false) {
-    Data.fetch().then(resp => {
-      if (isCharging) {
-        this.isCharging = true
-      }
+  core(isCharging = false) {
+    if (isCharging) {
+      this.isCharging = true
+    }
 
+    Data.core().then(resp => {
       console.log(resp);
       if (!resp.results.length) {
         this.message = resp.message
@@ -36,7 +36,7 @@ class UserStore {
       }
 
       transaction(() => {
-        _.each(resp.results, res => this.updateUser(res))
+        _.each(_.sortBy(resp.results, '_id'), res => this.updateUser(res))
         this.isLoading = false
         this.isCharging = false
       })

@@ -14,7 +14,7 @@ db.open().catch(function (e) {
 })
 
 const Data = {
-  fetch() {
+  core() {
     return new Promise((resolve, reject) => {
       db.users.where('done').equals(0).toArray().then(users => {
         if (users.length > 3) {

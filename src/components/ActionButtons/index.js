@@ -1,34 +1,42 @@
 import React, { Component } from 'react';
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
 import autobind from 'autobind-decorator'
 import CSSModules from 'react-css-modules'
 import _ from 'lodash'
 import styles from './styles.scss'
+import Data from '../../data'
 
+@observer
 @CSSModules(styles)
 export default class ActionButtons extends Component {
+  @observable isLiked = false
   constructor(props) {
     super(props)
 
-    this.state = {
-      liked: false,
-    }
+    this.checkLiked()
+  }
+
+  checkLiked() {
+    Data.getActions().where('_id').equals(this.props.user.id).first(r => {
+      this.isLiked = r && r.type == 'like'
+    })
   }
 
   @autobind
   handleLike() {
-    this.setState({
-      liked: true,
-    })
+    this.isLiked = true
+    this.props.user.like()
   }
 
   render() {
     return (
       <div styleName="buttons">
-        {!this.state.liked &&
+        {!this.isLiked &&
         <div>
           <i className="fa fa-thumbs-o-down" />
         </div>}
-        {!this.state.liked &&
+        {!this.isLiked &&
         <div>
           <i className="fa fa-star" />
         </div>}

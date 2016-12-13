@@ -112,12 +112,10 @@ export default class UserCard extends Component {
   }
 
   render() {
-    const { user, extended } = this.props
-    const wrapperClassName = cx({
-      extended
-    })
+    const { user } = this.props
+
     return (
-      <div styleName="wrapper" className={wrapperClassName}>
+      <div styleName="wrapper">
         <div styleName="content">
           <table>
             <colgroup>
@@ -128,22 +126,12 @@ export default class UserCard extends Component {
             <tbody>
               <tr>
                 <td colSpan="3">
-                  {extended ? this.renderDetailInfo() : this.renderSimpleSlider()}
+                  {this.renderSimpleSlider()}
                 </td>
-                {extended &&
-                  <td rowSpan="4" styleName="all-photos">
-                    <div styleName="all-images">
-                      <Slider {...this.sliderSettings}>
-                        {_.map(user.photosWithInsta, photo => (
-                          <div key={_.uniqueId()}><img src={photo} alt="img" style={{width: 585}} /></div>
-                        ))}
-                      </Slider>
-                    </div>
-                  </td>}
               </tr>
-              {!extended && this.renderBasicInfo()}
+              {this.renderBasicInfo()}
 
-              {!extended && <tr styleName="additional">
+              <tr styleName="additional">
                   <td>
                     ~{user.km} KM
                   </td>
@@ -153,7 +141,7 @@ export default class UserCard extends Component {
                   <td styleName="school">
                     {user.school}
                   </td>
-                </tr>}
+                </tr>
               <tr>
                 <td colSpan="3">
                   <ActionButtons user={user} />

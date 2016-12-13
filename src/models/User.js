@@ -1,11 +1,13 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
 import { user, meta } from '../dev_runtime'
+import Data from '../data'
 
 class User {
   id = null
   store = null
   @observable isLoading = false
+  @observable actionDone = null
 
   constructor(store, id) {
     this.store = store
@@ -25,6 +27,12 @@ class User {
     })).catch(resp => {
       this.needFb = true
       this.isLoading = false
+    })
+  }
+
+  @action like() {
+    Data.like(this.id).then(resp => {
+      console.log(resp);
     })
   }
 

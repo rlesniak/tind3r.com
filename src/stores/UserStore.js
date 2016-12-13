@@ -1,8 +1,7 @@
 import { observable, transaction, computed } from 'mobx'
-import Dexie from 'dexie'
 import _ from 'lodash'
-import { core } from '../dev_runtime'
 import User from '../models/User'
+import Data from '../data'
 
 class UserStore {
   @observable users = []
@@ -11,33 +10,18 @@ class UserStore {
   @observable needFb = false;
 
   constructor() {
-    this.db = new Dexie('tinder')
-
-    this.initLocalDB()
     this.fetch()
   }
 
-  initLocalDB() {
-    this.db.version(1).stores({
-      users: '_id,name',
-    })
-    this.db.open().catch(function (e) {
-      console.log('Open failed: ', e)
-    });
-  }
-
   fetch() {
-    core().then(resp => {
-      if (resp.message) {
+    Data.fetch().then(resp => {
+      if (!resp.results) {
         this.message = resp.message
         return
       }
 
       transaction(() => {
-        _.each(resp.results, res => {
-          this.db.users.put(res.user)
-          this.updateUser(res.user)
-        })
+        _.each(resp.results, res => this.updateUser(res))
         this.isLoading = false
       })
     }).catch(resp => {
@@ -53,7 +37,7 @@ class UserStore {
   }
 
   @computed get first() {
-    return this.users[0]
+    return _.head(this.users)
   }
 
   @computed get tail() {

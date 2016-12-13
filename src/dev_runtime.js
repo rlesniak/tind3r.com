@@ -31,3 +31,7 @@ export const meta = () => {
 export const user = (id) => {
   return devRuntime('/user')
 }
+
+export const like = (id) => {
+  return devRuntime('/like')
+}

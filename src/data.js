@@ -2,10 +2,13 @@ import Dexie from 'dexie'
 import { core, like } from './dev_runtime'
 
 const db = new Dexie('tinder')
+
 db.version(1).stores({
   users: '_id,name,done',
   actions: '_id,type,date',
+  matches: '_id,isSuperLike,isBoostMatch,date',
 })
+
 db.open().catch(function (e) {
   console.log('Open failed: ', e)
 })
@@ -31,7 +34,17 @@ const Data = {
   like(id) {
     return new Promise((resolve, reject) => {
       like(id).then(resp => {
+        db.users.update(id, { done: 1 })
         db.actions.put({ _id: id, type: 'like', date: new Date() })
+
+        if (resp.match) {
+          db.matches.put({
+            _id: id,
+            isBoostMatch: resp.match.is_boost_match ? 1 : 0,
+            isSuperLike: resp.match.is_super_like ? 1 : 0,
+            date: new Date()
+          })
+        }
         resolve(resp)
       })
     })

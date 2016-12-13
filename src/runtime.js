@@ -32,4 +32,8 @@ export const meta = () => {
   return chromeRuntime('FETCH_META')
 }
 
+export const like = (id) => {
+  return chromeRuntime('ACTION_LIKE', { id })
+}
+
 export default chromeRuntime

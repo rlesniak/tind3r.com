@@ -14,10 +14,6 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      exhausted: false,
-    }
-
     this.userStore = new UserStore()
   }
 
@@ -33,7 +29,7 @@ export default class Home extends Component {
         <div styleName="recommendation">
           {!this.userStore.isLoading && <UserCard user={this.userStore.first} />}
         </div>
-        <UserCardList users={this.userStore} />
+        <UserCardList users={this.userStore.tail} />
       </div>
     );
   }

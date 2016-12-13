@@ -37,11 +37,15 @@ class UserStore {
   }
 
   @computed get first() {
-    return _.head(this.users)
+    return _.head(this.all)
   }
 
   @computed get tail() {
-    return _.tail(this.users)
+    return _.tail(this.all)
+  }
+
+  @computed get all() {
+    return _.filter(this.users, { done: 0 })
   }
 }
 

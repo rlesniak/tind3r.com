@@ -11,14 +11,19 @@ import Data from '../../data'
 @CSSModules(styles)
 export default class ActionButtons extends Component {
   @observable isLiked = false
+
   constructor(props) {
     super(props)
 
-    this.checkLiked()
+    this.checkLiked(props.user.id)
   }
 
-  checkLiked() {
-    Data.getActions().where('_id').equals(this.props.user.id).first(r => {
+  componentWillReceiveProps(nextProps) {
+    this.checkLiked(nextProps.user.id)
+  }
+
+  checkLiked(id) {
+    Data.getActions().where('_id').equals(id).first(r => {
       this.isLiked = r && r.type == 'like'
     })
   }
@@ -26,7 +31,11 @@ export default class ActionButtons extends Component {
   @autobind
   handleLike() {
     this.isLiked = true
-    this.props.user.like()
+    this.props.user.like().then(resp => {
+      if (resp.match) {
+        alert('Its a match!')
+      }
+    })
   }
 
   render() {

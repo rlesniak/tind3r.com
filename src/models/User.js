@@ -7,7 +7,7 @@ class User {
   id = null
   store = null
   @observable isLoading = false
-  @observable actionDone = null
+  @observable done = 0
 
   constructor(store, id) {
     this.store = store
@@ -30,9 +30,12 @@ class User {
     })
   }
 
-  @action like() {
-    Data.like(this.id).then(resp => {
-      console.log(resp);
+  @action like() : Promise {
+    return new Promise((resolve, reject) => {
+      Data.like(this.id).then(resp => {
+        this.done = 1
+        resolve(resp)
+      })
     })
   }
 
@@ -77,7 +80,7 @@ class User {
   }
 
   @computed get school() {
-    if (this.schools && this.schools[0]) {
+    if (_.head(this.schools)) {
       return this.schools[0].name
     }
 

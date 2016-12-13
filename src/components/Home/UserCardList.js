@@ -28,7 +28,7 @@ export default class UserCardList extends Component {
   render() {
     return (
       <div styleName="list">
-        {this.props.users.tail.map(u => this.renderUser(u))}
+        {this.props.users.map(u => this.renderUser(u))}
       </div>
     );
   }

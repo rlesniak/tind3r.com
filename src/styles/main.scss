@@ -5,6 +5,10 @@ body {
   background: $bg;
   color: $font-c;
   font-family: Montserrat, Tahoma, Arial;
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 :global {
@@ -16,11 +20,11 @@ body {
 
     .slick-prev {
       left: 10px;
+      z-index: 1;
     }
 
     .slick-dots {
       bottom: 0;
-      background: #fff;
 
       li button:before {
         font-size: 9px;

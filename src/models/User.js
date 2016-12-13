@@ -75,6 +75,16 @@ class User {
 
     return 'Hidden'
   }
+
+  @computed get photosWithInsta() {
+    const insta = this.instagram && this.instagram.photos
+    const photos = []
+
+    _.each(this.photos, i => photos.push(i.url))
+    _.each(insta, i => photos.push(i.image))
+
+    return photos
+  }
 }
 
 export default User

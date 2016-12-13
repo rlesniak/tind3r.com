@@ -14,7 +14,7 @@
   width: 350px;
   margin: 20px auto;
   background: #fff;
-  box-shadow: #b1b1b1 0 0 16px 0px;
+  box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
   border-radius: 3px;
 }
 
@@ -22,6 +22,10 @@
   height: 350px;
   width: 350px;
   overflow: hidden;
+
+  :global(.slick-dots) {
+    background: #fff;
+  }
 }
 
 .info {
@@ -70,35 +74,6 @@
   font-weight: normal;
 }
 
-.actions {
-  font-size: 46px;
-  text-align: center;
-
-  td {
-    padding: 14px 7px;
-    background: $bg2;
-    color: $icons-c;
-    cursor: pointer;
-    border-right: 1px solid #fff;
-
-    &:last-child {
-      border: none;
-    }
-
-    &:hover {
-      color: $red;
-
-      :global(.fa-heart) {
-        color: $green
-      }
-
-      :global(.fa-star) {
-        color: $blue
-      }
-    }
-  }
-}
-
 .insta {
   padding: 10px 0;
 
@@ -131,6 +106,11 @@
 
     .instaname {
       font-size: 12px;
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 90px;
     }
   }
 }
@@ -141,9 +121,51 @@
 
 .all-photos {
   background: #fff;
-  width: 570px;
+  width: 585px;
+
+  :global(.slick-dots) {
+    background: transparent !important;
+  }
 }
 
 .all-images {
-  width: 570px;
+  width: 585px;
+}
+
+.school-job {
+  font-size: 16px;
+  margin-top: 7px;
+}
+
+.intro {
+  min-height: 466px;
+  width: 400px;
+  padding: 15px;
+
+  h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  p b {
+    display: block;
+  }
+
+  .last-seen {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+  }
+
+  .full-bio {
+    border-left: 4px solid #f6f1e4;
+    padding-left: 10px;
+    font-family: 'Lato', sans-serif;
+  }
+}
+
+.common {
+  margin-top: 40px;
+  h1 {
+    font-size: 17px;
+  }
 }

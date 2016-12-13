@@ -1,0 +1,61 @@
+.wrapper {
+  width: 1000px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
+}
+
+.intro-wrapper {
+  float: left;
+  height: 600px;
+  width: 400px;
+
+  h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  p b {
+    display: block;
+  }
+
+  .last-seen {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+  }
+
+  .full-bio {
+    border-left: 4px solid #f6f1e4;
+    padding-left: 10px;
+    font-family: 'Lato', sans-serif;
+  }
+}
+
+.intro {
+  padding: 15px;
+  height: 526px;
+}
+
+.actions {
+  padding: 0;
+}
+
+.common {
+  margin-top: 40px;
+  h1 {
+    font-size: 17px;
+  }
+}
+
+.school-job:not(:empty) {
+  font-size: 16px;
+  margin-top: 7px;
+}
+
+.photos {
+  width: 600px;
+  height: 600px;
+  margin-left: 400px;
+}

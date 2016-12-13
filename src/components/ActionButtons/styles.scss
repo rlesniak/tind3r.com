@@ -1,0 +1,32 @@
+@import '../../styles/vars';
+
+.buttons {
+  display: flex;
+  font-size: 46px;
+  text-align: center;
+
+  > div {
+    flex: 1;
+    padding: 14px 7px;
+    background: $bg2;
+    color: $icons-c;
+    cursor: pointer;
+    border-right: 1px solid #fff;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      color: $red;
+
+      :global(.fa-heart) {
+        color: $green
+      }
+
+      :global(.fa-star) {
+        color: $blue
+      }
+    }
+  }
+}

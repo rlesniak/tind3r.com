@@ -36,4 +36,8 @@ export const like = (id) => {
   return chromeRuntime('ACTION_LIKE', { id })
 }
 
+export const pass = (id) => {
+  return chromeRuntime('ACTION_PASS', { id })
+}
+
 export default chromeRuntime

@@ -1,6 +1,6 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
-import { user, meta } from '../dev_runtime'
+import { user, meta } from '../runtime'
 import Data from '../data'
 
 class User {
@@ -31,9 +31,18 @@ class User {
   }
 
   @action like() : Promise {
+    this.done = 1
     return new Promise((resolve, reject) => {
       Data.like(this.id).then(resp => {
-        this.done = 1
+        resolve(resp)
+      })
+    })
+  }
+
+  @action pass() : Promise {
+    this.done = 1
+    return new Promise((resolve, reject) => {
+      Data.pass(this.id).then(resp => {
         resolve(resp)
       })
     })
@@ -84,7 +93,7 @@ class User {
       return this.schools[0].name
     }
 
-    return 'Hidden'
+    return null
   }
 
   @computed get photosWithInsta() {

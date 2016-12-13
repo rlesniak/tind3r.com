@@ -25,6 +25,7 @@ export default class Home extends Component {
     return (
       <div styleName="home">
         {this.userStore.isConnecting && <h1>Need connect</h1>}
+        {this.userStore.message}
         {this.userStore.isLoading && <Loader />}
         <div styleName="recommendation">
           {!this.userStore.isLoading && <UserCard user={this.userStore.first} />}

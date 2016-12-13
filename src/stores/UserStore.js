@@ -1,4 +1,4 @@
-import { observable, transaction, computed } from 'mobx'
+import { observable, transaction, computed, reaction } from 'mobx'
 import _ from 'lodash'
 import User from '../models/User'
 import Data from '../data'
@@ -11,11 +11,21 @@ class UserStore {
 
   constructor() {
     this.fetch()
+
+    reaction(
+      () => this.all.length,
+      (length) => {
+        if (length <= 3) {
+          this.fetch()
+        }
+      }
+    )
   }
 
   fetch() {
     Data.fetch().then(resp => {
-      if (!resp.results) {
+      console.log(resp);
+      if (!resp.results.length) {
         this.message = resp.message
         return
       }
@@ -31,6 +41,10 @@ class UserStore {
   }
 
   updateUser(json) {
+    if (_.find(this.users, { id: json._id })) {
+      return
+    }
+
     const user = new User(this, json._id)
     user.setFromJson(json)
     this.users.push(user)

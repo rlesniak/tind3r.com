@@ -5,9 +5,41 @@
   display: inline-block;
   vertical-align: top;
 
-  &:global(.extended) {
+  &:global(.simple) {
+    margin: 0 5px 5px;
     .content {
-      width: 1000px;
+      width: 200px;
+    }
+
+    .images {
+      width: 200px;
+      height: 200px;
+    }
+
+    .instaname {
+      display: none !important;
+    }
+
+    .employ {
+      font-size: 13px;
+
+      span {
+        width: 188px;
+        display: block;
+      }
+    }
+
+    .additional {
+      font-size: 13px;
+    }
+
+    .bio {
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 37px;
+      text-overflow: ellipsis;
+      display: -webkit-box;
     }
   }
 }
@@ -101,7 +133,6 @@
     }
 
     i {
-      margin-bottom: 4px;
       color: $green;
     }
 
@@ -118,6 +149,22 @@
 
 .school {
   font-size: 10px;
+}
+
+.employ {
+  font-size: 16px;
+  text-align: center;
+  padding: 5px;
+  background: $bg2;
+  border-bottom: 1px solid #fff;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 15px;
+    white-space: nowrap;
+    display: block;
+  }
 }
 
 .all-photos {

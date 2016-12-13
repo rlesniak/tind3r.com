@@ -21,64 +21,25 @@ export default class UserCard extends Component {
     }
   }
 
-  renderDetailInfo() {
-    const { user } = this.props
-    return (
-      <div styleName="intro">
-        <h1>
-          {user.name}, {user.age}
-          <ul styleName="school-job">
-            {_.map(user.schools, s => (
-              <li key={s.id}>{s.name}</li>
-            ))}
-            {_.map(user.jobs, s => (
-              <li key={s.id}>{s.name}</li>
-            ))}
-          </ul>
-        </h1>
-        <h2 styleName="last-seen">Last seen: {user.seen}</h2>
-        <p styleName="full-bio">
-          {user.bio}
-        </p>
-        <div styleName="common">
-          <h1>Common instersts:</h1>
-          <ul>
-            {_.map(user.common_interests, i => (
-              <li key={i.id}>{i.name}</li>
-            ))}
-          </ul>
-
-          <h1>Common friends:</h1>
-          <ul>
-            {_.map(user.common_friends, i => (
-              <li key={i.id}>{i.name}</li>
-            ))}
-          </ul>
-        </div>
-        <a href={user.instaLink} target="_blank">
-          <i className="fa fa-instagram"></i>
-          <span>{user.instaName}</span>
-        </a>
-      </div>
-    )
-  }
-
   renderBasicInfo() {
-    const { user } = this.props
+    const { user, simple } = this.props
+
     return (
       <tr styleName="info">
-        <td styleName="age">
+        {!simple && <td styleName="age">
           {user.age}
           <div>YO</div>
-        </td>
-        <td styleName="person" colSpan="2">
+        </td>}
+        <td styleName="person" colSpan={simple ? 3 : 2}>
           <Link to={`/users/${user.id}`}>
             <h1 styleName="name">
               {user.name}
-              <div styleName="seen">{user.seen} | {user.seenMin}</div>
+              {simple ? `, ${user.age}` : ''}
+              <div styleName="seen">{user.seenMin}</div>
             </h1>
-            {user.bio && <h2 styleName="bio">{user.bio}</h2>}
-            {!user.bio && <span>[NO BIO]</span>}
+            <h2 styleName="bio">
+              {user.bio ? user.bio : <span>[NO BIO]</span>}
+            </h2>
           </Link>
         </td>
       </tr>
@@ -99,12 +60,13 @@ export default class UserCard extends Component {
   }
 
   renderSimpleSlider() {
-    const { user, extended } = this.props
+    const { user, simple } = this.props
+    const width = simple === true ? 200 : 350
     return (
       <div styleName="images">
         <Slider {...this.sliderSettings}>
           {_.map(user.photos, photo => (
-            <div key={_.uniqueId()}><img src={photo.url} alt="img" style={{width: 350}} /></div>
+            <div key={_.uniqueId()}><img src={photo.url} alt="img" style={{ width }} /></div>
           ))}
         </Slider>
       </div>
@@ -112,10 +74,14 @@ export default class UserCard extends Component {
   }
 
   render() {
-    const { user } = this.props
+    const { user, simple } = this.props
+
+    const className = cx({
+      simple
+    })
 
     return (
-      <div styleName="wrapper">
+      <div styleName="wrapper" className={className}>
         <div styleName="content">
           <table>
             <colgroup>
@@ -130,23 +96,25 @@ export default class UserCard extends Component {
                 </td>
               </tr>
               {this.renderBasicInfo()}
-
+              <tr>
+                <td colSpan="3" styleName="employ">
+                  <span>{user.school}</span>
+                </td>
+              </tr>
               <tr styleName="additional">
                   <td>
-                    ~{user.km} KM
+                    {user.km} KM
                   </td>
+                  <td />
                   <td styleName="insta">
                     {this.renderInstagramSection()}
                   </td>
-                  <td styleName="school">
-                    {user.school}
-                  </td>
                 </tr>
-              <tr>
+              {!this.props.simple && <tr>
                 <td colSpan="3">
                   <ActionButtons user={user} />
                 </td>
-              </tr>
+              </tr>}
             </tbody>
           </table>
         </div>

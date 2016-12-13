@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import { core, like } from './dev_runtime'
+import { core, like, pass } from './runtime'
 
 const db = new Dexie('tinder')
 
@@ -45,6 +45,17 @@ const Data = {
             date: new Date()
           })
         }
+        resolve(resp)
+      })
+    })
+  },
+
+  pass(id) {
+    return new Promise((resolve, reject) => {
+      pass(id).then(resp => {
+        db.users.update(id, { done: 1 })
+        db.actions.put({ _id: id, type: 'pass', date: new Date() })
+
         resolve(resp)
       })
     })

@@ -21,7 +21,7 @@ export default class UserCardList extends Component {
 
   renderUser(user) {
     return (
-      <UserCard key={user.id} user={user} />
+      <UserCard key={user.id} user={user} simple />
     )
   }
 

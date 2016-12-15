@@ -35,3 +35,11 @@ export const user = (id) => {
 export const like = (id) => {
   return devRuntime('/like')
 }
+
+export const pass = (id) => {
+  return devRuntime('/like')
+}
+
+export const superLike = (id) => {
+  return devRuntime('/super')
+}

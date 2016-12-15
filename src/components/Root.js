@@ -4,6 +4,7 @@ import App from './App'
 import Home from './Home'
 import User from './User'
 import FbConnect from './FbConnect'
+import Data from '../data'
 
 Router.prototype.componentWillReceiveProps = function(nextProps) {
   let components = [];
@@ -18,11 +19,15 @@ Router.prototype.componentWillReceiveProps = function(nextProps) {
   }
   grabComponents(nextProps.routes || nextProps.children);
   components.forEach(React.createElement); // force patching
-};
+}
+
+const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
+  Data.clearRecs().then(() => callback())
+}
 
 const Root = () => (
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onEnter={clearRecsOnPageEnterOrReload}>
       <IndexRoute component={Home} />
       <Route path="users/:userId" component={User} />
       <Route path="fb-connect" component={FbConnect} />

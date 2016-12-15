@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import { core, like, pass } from './runtime'
+import { core, like, pass, superLike } from './dev_runtime'
 
 const db = new Dexie('tinder')
 
@@ -14,20 +14,18 @@ db.open().catch(function (e) {
 })
 
 const Data = {
+  clearRecs() {
+    return db.users.where('done').equals(0).delete()
+  },
+
   core() {
     return new Promise((resolve, reject) => {
-      db.users.where('done').equals(0).toArray().then(users => {
-        if (users.length > 3) {
-          resolve({ results: users })
-        } else {
-          core().then(resp => {
-            const data = _.map(resp.results, r => r.user)
-            _.each(data, user => db.users.put({ ...user, done: 0 }))
+      core().then(resp => {
+        const data = _.map(resp.results, r => r.user)
+        _.each(data, user => db.users.add({ ...user, done: 0 }))
 
-            resolve({ results: data, message: resp.message })
-          }).catch(resp => reject(resp))
-        }
-      })
+        resolve({ results: data, message: resp.message })
+      }).catch(resp => reject(resp))
     })
   },
 
@@ -57,6 +55,22 @@ const Data = {
         db.actions.put({ _id: id, type: 'pass', date: new Date() })
 
         resolve(resp)
+      })
+    })
+  },
+
+  superLike(id) {
+    return new Promise((resolve, reject) => {
+      superLike(id).then(resp => {
+        if (!resp.limit_exceeded) {
+          db.users.update(id, { done: 1 })
+          db.actions.put({ _id: id, type: 'superlike', date: new Date() })
+
+          resolve(resp)
+        } else {
+          localStorage.setItem('superLikeTime', resp.super_likes.resets_at)
+          reject('limit_exceeded')
+        }
       })
     })
   },

@@ -29,7 +29,6 @@ class UserStore {
     }
 
     Data.core().then(resp => {
-      console.log(resp);
       if (!resp.results.length) {
         this.message = resp.message
         return

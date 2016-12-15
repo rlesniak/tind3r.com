@@ -16,10 +16,6 @@ export default class App extends Component {
     this.currentUser.fetchMeta()
   }
 
-  fetchMeta() {
-
-  }
-
   render() {
     return (
       <div styleName="page">

@@ -2,19 +2,26 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   entry: [
-    'react-hot-loader/patch',
-    'webpack-hot-middleware/client',
     './src/index'
   ],
   output: {
     path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
   ],
   resolve: {
     root: path.resolve('./src'),

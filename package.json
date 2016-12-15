@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
+    "heroku-postbuild": "webpack --config ./webpack.prod.config.js --progress --colors",
     "start": "node server.js",
     "lint": "eslint src",
     "server": "json-server db/index.js -p 3002 -r routes.json"
@@ -11,17 +12,6 @@
     "type": "git",
     "url": "https://github.com/gaearon/react-hot-boilerplate.git"
   },
-  "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
   "author": "Dan Abramov <dan.abramov@me.com> (http://github.com/gaearon)",
   "license": "MIT",
   "bugs": {

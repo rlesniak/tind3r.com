@@ -1,28 +1,34 @@
 var path = require('path');
-var webpack = require('webpack');
 var express = require('express');
-var devMiddleware = require('webpack-dev-middleware');
-var hotMiddleware = require('webpack-hot-middleware');
-var config = require('./webpack.config');
-
 var app = express();
-var compiler = webpack(config);
+var PORT = process.env.PORT || 3001
 
-app.use(devMiddleware(compiler, {
-  publicPath: config.output.publicPath,
-  historyApiFallback: true,
-}));
+// using webpack-dev-server and middleware in development environment
+if(process.env.NODE_ENV !== 'production') {
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var webpack = require('webpack');
+  var config = require('./webpack.config');
+  var compiler = webpack(config);
 
-app.use(hotMiddleware(compiler));
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    historyApiFallback: true,
+  }));
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  app.use(webpackHotMiddleware(compiler));
+}
+
+app.use(express.static(path.join(__dirname, 'static')));
+
+app.get('*', function(request, response) {
+  response.sendFile(__dirname + '/static/index.html')
 });
 
-app.listen(3001, function (err) {
-  if (err) {
-    return console.error(err);
+app.listen(PORT, function(error) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.info('==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.', PORT, PORT);
   }
-
-  console.log('Listening at http://localhost:3000/');
 });

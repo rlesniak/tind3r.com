@@ -9,15 +9,6 @@ import styles from './user-card-list.scss'
 @observer
 @CSSModules(styles)
 export default class UserCardList extends Component {
-  constructor(props) {
-    super(props)
-
-  }
-
-  componentDidMount() {
-    this.width = window.innerWidth
-  }
-
   renderUser(user) {
     return (
       <UserCard key={user.id} user={user} simple />

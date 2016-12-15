@@ -30,22 +30,30 @@ class User {
     })
   }
 
-  @action like() : Promise {
-    this.done = 1
+  @action asyncAction(method) {
+    this.isLoading = true
     return new Promise((resolve, reject) => {
-      Data.like(this.id).then(resp => {
+      method(this.id).then(action(resp => {
+        this.done = 1
+        this.isLoading = false
         resolve(resp)
-      })
+      })).catch(action(resp => {
+        reject(resp)
+        this.isLoading = false
+      }))
     })
   }
 
+  @action like() : Promise {
+    return this.asyncAction(Data.like)
+  }
+
   @action pass() : Promise {
-    this.done = 1
-    return new Promise((resolve, reject) => {
-      Data.pass(this.id).then(resp => {
-        resolve(resp)
-      })
-    })
+    return this.asyncAction(Data.pass)
+  }
+
+  @action superLike() : Promise {
+    return this.asyncAction(Data.superLike)
   }
 
   @action fetchMeta() {

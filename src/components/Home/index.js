@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react'
+import { observable } from 'mobx'
 import CSSModules from 'react-css-modules'
+import moment from 'moment'
 import _ from 'lodash'
 import UserStore from '../../stores/UserStore'
 import UserCard from './UserCard'
@@ -11,6 +13,7 @@ import styles from './styles.scss'
 @observer
 @CSSModules(styles)
 export default class Home extends Component {
+
   render() {
     const { userStore } = this.props
     return (
@@ -19,7 +22,7 @@ export default class Home extends Component {
         {userStore.message}
         {userStore.isLoading && <Loader />}
         <div styleName="recommendation">
-          {!userStore.isLoading && <UserCard user={userStore.first} />}
+          {!userStore.isLoading && <UserCard user={userStore.first} withSuperLikeCounter />}
         </div>
         {!userStore.isLoading && <UserCardList userStore={userStore} />}
       </div>

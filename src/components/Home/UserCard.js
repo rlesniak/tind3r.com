@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import Slider from 'react-slick'
@@ -77,7 +77,10 @@ export default class UserCard extends Component {
     return (
       <tr styleName="actions">
         <td colSpan="3">
-          <ActionButtons user={user} />
+          <ActionButtons
+            user={user}
+            withSuperLikeCounter={this.props.withSuperLikeCounter}
+          />
         </td>
       </tr>
     )
@@ -136,4 +139,8 @@ export default class UserCard extends Component {
       </div>
     );
   }
+}
+
+UserCard.propTypes = {
+  withSuperLikeCounter: PropTypes.bool,
 }

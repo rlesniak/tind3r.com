@@ -40,4 +40,8 @@ export const pass = (id) => {
   return chromeRuntime('ACTION_PASS', { id })
 }
 
+export const superLike = (id) => {
+  return chromeRuntime('ACTION_SUPERLIKE', { id })
+}
+
 export default chromeRuntime

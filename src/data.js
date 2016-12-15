@@ -68,7 +68,7 @@ const Data = {
 
           resolve(resp)
         } else {
-          localStorage.setItem('superLikeTime', resp.super_likes.resets_at)
+          localStorage.setItem('superLikeExpiration', resp.super_likes.resets_at)
           reject('limit_exceeded')
         }
       })

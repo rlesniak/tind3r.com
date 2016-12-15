@@ -30,3 +30,16 @@
     }
   }
 }
+
+.counter {
+  font-size: 12px;
+  display: block;
+  text-align: center;
+}
+
+.disabled {
+  cursor: default !important;
+  i {
+    color: #c7c7c7 !important;
+  }
+}

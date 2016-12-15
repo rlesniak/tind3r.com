@@ -17,16 +17,16 @@ export default class NavBar extends Component {
       <div styleName="nav-bar">
         <ul>
           <li>
-            <Link to="/" activeClassName="active">
+            <Link to="/home" activeClassName="active">
               <i className="fa fa-home"></i>
               Home
             </Link>
           </li>
           <li>
-            <a href>
+            <Link to="/matches" activeClassName="active">
               <i className="fa fa-heart"></i>
               Matches
-            </a>
+            </Link>
           </li>
           <li styleName="profile">
             <a href>

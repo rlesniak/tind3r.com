@@ -31,9 +31,6 @@ export default class Home extends Component {
 
   renderUser() {
     const { user } = this
-    if (user.isLoading) {
-      return null
-    }
 
     return (
       <div styleName="wrapper">
@@ -92,8 +89,8 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        {this.user.isLoading && <Loader />}
-        {this.renderUser()}
+        {this.user.isFetching && <Loader />}
+        {!this.user.isFetching && this.renderUser()}
       </div>
     );
   }

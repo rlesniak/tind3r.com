@@ -7,6 +7,7 @@ class User {
   id = null
   store = null
   @observable isLoading = false
+  @observable isFetching = true
   @observable done = 0
 
   constructor(store, id) {
@@ -15,18 +16,18 @@ class User {
   }
 
   @action fetch() {
-    this.isLoading = true
+    this.isFetching = true
     user(this.id).then(action(resp => {
       if (resp.message) {
         this.message = resp.message
         return
       }
 
-      this.isLoading = false
+      this.isFetching = false
       extendObservable(this, resp.results)
     })).catch(resp => {
       this.needFb = true
-      this.isLoading = false
+      this.isFetching = false
     })
   }
 

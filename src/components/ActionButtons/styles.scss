@@ -16,18 +16,23 @@
     &:last-child {
       border: none;
     }
+  }
 
-    &:hover {
-      color: $red;
+  > div:hover,
+  :global(.done) {
+    color: $red;
 
-      :global(.fa-heart) {
-        color: $green
-      }
-
-      :global(.fa-star) {
-        color: $blue
-      }
+    :global(.fa-heart) {
+      color: $green
     }
+
+    :global(.fa-star) {
+      color: $blue
+    }
+  }
+
+  :global(.done) {
+    cursor: default;
   }
 }
 

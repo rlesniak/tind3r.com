@@ -1,5 +1,5 @@
 import React from 'react'
-import { browserHistory, Router, Route, IndexRoute } from 'react-router'
+import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
 import App from './App'
 import Home from './Home'
 import User from './User'
@@ -29,6 +29,7 @@ const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
 const Root = () => (
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={clearRecsOnPageEnterOrReload}>
+      <IndexRedirect to="home" />
       <Route path="home" component={Home} />
       <Route path="users/:userId" component={User} />
       <Route path="matches" component={Matches} />

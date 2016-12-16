@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import { core, like, pass, superLike } from './runtime'
+import { core, like, pass, superLike } from './dev_runtime'
 
 const db = new Dexie('tinder')
 

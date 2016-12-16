@@ -27,8 +27,7 @@ export default class ActionButtons extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.user = nextProps.user
-    this.isPassed = false
-    this.isLiked = false
+    this.checkLiked(user.id)
     this.forceUpdate()
   }
 
@@ -54,7 +53,9 @@ export default class ActionButtons extends Component {
 
   checkLiked(id) {
     Data.getActions().where('_id').equals(id).first(r => {
-      this.isLiked = r && r.type == 'like'
+      this.isLiked = (r && r.type == 'like')
+      this.isPassed = (r && r.type == 'pass')
+      this.isSuper = (r && r.type == 'superlike')
     })
   }
 
@@ -85,6 +86,7 @@ export default class ActionButtons extends Component {
 
   @autobind
   handleSuperlike() {
+    this.isSuper = true
     this.props.user.superLike().catch(err => {
       console.log('catch', err);
     })
@@ -102,19 +104,22 @@ export default class ActionButtons extends Component {
     }
 
     const superClass = cx({ disabled: this.diffMin > 0 })
+    const passedClass = cx({ done: this.isPassed })
+    const superClassN = cx({ done: this.isSuper })
+    const likedClass = cx({ done: this.isLiked })
 
     return (
       <div styleName="buttons">
-        {user.done == 0 && !this.isPassed &&
-        <div onClick={this.handlePass}>
+        {(this.isPassed || (!this.isSuper && !this.isLiked)) &&
+        <div onClick={this.handlePass} className={passedClass}>
           <i className="fa fa-thumbs-o-down" />
         </div>}
-        <div onClick={this.handleSuperlike} styleName={superClass}>
+        {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} styleName={superClass} className={superClassN}>
           <i className="fa fa-star" />
           <span styleName="counter">{this.formatCounter()}</span>
-        </div>
-        {user.done == 0 && !this.isLiked &&
-        <div onClick={this.handleLike}>
+        </div>}
+        {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
+        <div onClick={this.handleLike} className={likedClass}>
           <i className="fa fa-heart" />
         </div>}
       </div>

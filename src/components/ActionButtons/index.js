@@ -67,6 +67,10 @@ export default class ActionButtons extends Component {
 
   @autobind
   handleLike() {
+    if (this.isLiked) {
+      return
+    }
+
     this.isLiked = true
     this.props.user.like().then(resp => {
       if (resp.match) {
@@ -77,12 +81,19 @@ export default class ActionButtons extends Component {
 
   @autobind
   handlePass() {
+    if (this.isPassed) {
+      return
+    }
+
     this.isPassed = true
     this.props.user.pass()
   }
 
   @autobind
   handleSuperlike() {
+    if (this.isSuper) {
+      return
+    }
     this.isSuper = true
     this.props.user.superLike().catch(err => {
       console.log('catch', err);

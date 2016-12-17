@@ -39,7 +39,7 @@ export default class Actions extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-wrapper">
         <ul>
           {this.actions}
         </ul>

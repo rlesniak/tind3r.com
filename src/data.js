@@ -1,6 +1,6 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
-import { core, like, pass, superLike } from './runtime'
+import { core, like, pass, superLike } from './dev_runtime'
 
 const db = new Dexie('tinder', { addons: [relationships] })
 

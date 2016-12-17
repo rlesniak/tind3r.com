@@ -13,7 +13,7 @@ export default class Matches extends Component {
 
   render() {
     return (
-      <div styleName="wrapper">
+      <div className="main-wrapper">
         <div styleName="coversations">aconv</div>
       </div>
     );

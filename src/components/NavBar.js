@@ -28,6 +28,12 @@ export default class NavBar extends Component {
               Matches
             </Link>
           </li>
+          <li>
+            <Link to="/actions" activeClassName="active">
+              <i className="fa fa-history"></i>
+              Actions
+            </Link>
+          </li>
           <li styleName="profile">
             <a href>
               <div styleName="avatar">

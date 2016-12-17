@@ -6,14 +6,13 @@ import _ from 'lodash'
 import { browserHistory } from 'react-router'
 import styles from './styles.scss'
 import { user } from '../../runtime'
-import User from '../../models/User'
 import Loader from '../Loader'
 import ActionButtons from '../ActionButtons'
 import UserCard from '../Home/UserCard'
 
 @observer
 @CSSModules(styles)
-export default class Home extends Component {
+export default class User extends Component {
   constructor(props) {
     super(props)
 
@@ -25,7 +24,7 @@ export default class Home extends Component {
       slidesToScroll: 1,
     }
 
-    this.user = new User(null, props.params.userId)
+    this.user = props.userStore.find(props.params.userId)
     this.user.fetch()
   }
 

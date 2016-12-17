@@ -11,8 +11,10 @@ class UserStore {
   @observable needFb = false;
 
   constructor() {
-    this.core()
+    this.core() // Load only if user refresh/first visit page
+  }
 
+  initChargeReaction() {
     reaction(
       () => this.all.length,
       (length) => {
@@ -39,6 +41,8 @@ class UserStore {
         this.isLoading = false
         this.isCharging = false
       })
+
+      this.initChargeReaction()
     }).catch(resp => {
       this.needFb = true
       this.isLoading = false
@@ -53,6 +57,10 @@ class UserStore {
     const user = new User(this, json._id)
     user.setFromJson(json)
     this.users.push(user)
+  }
+
+  find(id) {
+    return _.find(this.users, { id }) || new User(this, id)
   }
 
   @computed get first() {

@@ -4,6 +4,7 @@ import App from './App'
 import Home from './Home'
 import User from './User'
 import Matches from './Matches'
+import Actions from './Actions'
 import FbConnect from './FbConnect'
 import Data from '../data'
 
@@ -33,6 +34,7 @@ const Root = () => (
       <Route path="home" component={Home} />
       <Route path="users/:userId" component={User} />
       <Route path="matches" component={Matches} />
+      <Route path="actions" component={Actions} />
       <Route path="fb-connect" component={FbConnect} />
     </Route>
   </Router>

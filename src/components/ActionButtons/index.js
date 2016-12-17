@@ -14,41 +14,38 @@ import Data from '../../data'
 export default class ActionButtons extends Component {
   @observable isLiked = false
   @observable isPassed = false
-  @observable user = null
   @observable counter = 0
   diffMin = 0
 
   constructor(props) {
     super(props)
 
-    this.user = props.user
-    this.checkLiked(props.user.id)
+    this.checkLiked(props.user._id)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.user = nextProps.user
-    this.checkLiked(user.id)
+    this.checkLiked(nextProps.user._id)
     this.forceUpdate()
   }
 
   componentDidMount() {
-    if (this.props.withSuperLikeCounter) {
-      setInterval(() => this.superLikecount(), 1000)
-    }
+    // if (this.props.withSuperLikeCounter) {
+      // setInterval(() => this.superLikecount(), 1000)
+    // }
   }
 
   superLikecount() {
     const expiration = localStorage.getItem('superLikeExpiration')
-    //
-    // if (expiration) {
-    //   this.diffMin = moment(expiration).diff(moment(), 'minutes')
-    //   const diffTime = expiration - moment()
-    //   const interval = 1000
-    //
-    //   const dur = moment.duration(diffTime * 1000, 'milliseconds')
-    //   const duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
-    //   console.log(moment(duration).seconds())
-    // }
+
+    if (expiration) {
+      this.diffMin = moment(expiration).diff(moment(), 'minutes')
+      const diffTime = expiration - moment()
+      const interval = 1000
+
+      const dur = moment.duration(diffTime * 1000, 'milliseconds')
+      const duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
+      console.log(moment(duration).seconds())
+    }
   }
 
   checkLiked(id) {
@@ -73,7 +70,7 @@ export default class ActionButtons extends Component {
     this.isLiked = true
     this.props.user.like().then(resp => {
       if (resp.match) {
-        alert('Its a match!')
+        console.log('match');
       }
     })
   }

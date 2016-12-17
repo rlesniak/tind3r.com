@@ -1,12 +1,13 @@
 import Dexie from 'dexie'
-import { core, like, pass, superLike } from './dev_runtime'
+import relationships from 'dexie-relationships'
+import { core, like, pass, superLike } from './runtime'
 
-const db = new Dexie('tinder')
+const db = new Dexie('tinder', { addons: [relationships] })
 
 db.version(1).stores({
   users: '_id,name,done',
-  actions: '_id,type,date',
-  matches: '_id,isSuperLike,isBoostMatch,date',
+  actions: '++,type,date,_id -> users._id',
+  matches: '++,isSuperLike,isBoostMatch,date,_id -> users._id',
 })
 
 db.open().catch(function (e) {
@@ -16,6 +17,10 @@ db.open().catch(function (e) {
 const Data = {
   clearRecs() {
     return db.users.where('done').equals(0).delete()
+  },
+
+  actions() {
+    return db.actions.with({ user: '_id' })
   },
 
   core() {

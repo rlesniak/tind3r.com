@@ -13,9 +13,9 @@ import styles from './styles.scss'
 @observer
 @CSSModules(styles)
 export default class Home extends Component {
-
   render() {
     const { userStore } = this.props
+
     return (
       <div styleName="home">
         {userStore.isConnecting && <h1>Need connect</h1>}
@@ -28,8 +28,4 @@ export default class Home extends Component {
       </div>
     );
   }
-}
-
-Home.defaultProps = {
-  userStore: new UserStore(),
 }

@@ -18,7 +18,7 @@ class UserStore {
     reaction(
       () => this.all.length,
       (length) => {
-        if (length <= 3) {
+        if (length <= 3 && !this.isCharging && !this.isLoading) {
           this.core(true)
         }
       }

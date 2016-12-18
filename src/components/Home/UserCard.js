@@ -17,6 +17,14 @@ export default class UserCard extends Component {
       dots: true,
       infinite: false,
       speed: 500,
+      currentSlide: 0,
+    }
+  }
+
+  componentWillReceiveProps() {
+    if (!this.props.simple) {
+      this.sliderSettings.currentSlide = 0
+      this.forceUpdate()
     }
   }
 

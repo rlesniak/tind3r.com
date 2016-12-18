@@ -43,3 +43,7 @@ export const pass = (id) => {
 export const superLike = (id) => {
   return devRuntime('/super')
 }
+
+export const updates = () => {
+  return devRuntime('/updates')
+}

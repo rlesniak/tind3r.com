@@ -1,0 +1,39 @@
+@import '../../styles/vars';
+
+.coversation {
+  border-bottom: 1px solid #b1a599;
+  padding: 10px;
+  overflow: hidden;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  color: $font-c;
+}
+
+.name {
+  font-size: 17px;
+}
+
+.date {
+  font-size: 14px;
+}
+
+.message {
+  font-size: 12px;
+  margin-top: 5px;
+  font-family: 'Lato', Tahoma, serif;
+}
+
+.avatar {
+  float: left;
+  width: 60px;
+  margin-right: 11px;
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: 0;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

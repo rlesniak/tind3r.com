@@ -1,0 +1,16 @@
+.messages {
+  height: calc(100% - 32px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  height: 100%;
+}
+
+.new-message-input {
+  textarea {
+    width: 100%;
+    outline: none;
+  }
+}

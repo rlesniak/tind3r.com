@@ -1,11 +1,31 @@
 .wrapper {
-  margin: 20px;
-  background: #fff;
-  box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
-  border-radius: 3px;
-  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+  max-height: calc(100vh - 60px - 40px);
 }
 
-.coversations {
-  width: 300px;
+.coversations,
+.messages {
+  height: calc(100vh - 60px - 40px);
+  overflow-y: scroll;;
+}
+
+.coversations,
+.profile {
+  width: 25%;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+}
+
+.messages {
+  width: 50%;
+  order: 0;
+  flex: 1 1 auto;
+  align-self: auto;
+  overflow: hidden;
 }

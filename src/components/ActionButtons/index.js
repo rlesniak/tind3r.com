@@ -14,12 +14,14 @@ import Data from '../../data'
 export default class ActionButtons extends Component {
   @observable isLiked = false
   @observable isPassed = false
-  @observable counter = 0
-  diffMin = 0
+  @observable isSuper = false
+  @observable counter = ''
+  @observable diffMin = 0
 
   constructor(props) {
     super(props)
 
+    this.expiration = localStorage.getItem('superLikeExpiration')
     this.checkLiked(props.user._id)
   }
 
@@ -29,40 +31,29 @@ export default class ActionButtons extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.withSuperLikeCounter) {
-      // setInterval(() => this.superLikecount(), 1000)
-    // }
-  }
-
-  superLikecount() {
-    const expiration = localStorage.getItem('superLikeExpiration')
-
-    if (expiration) {
-      this.diffMin = moment(expiration).diff(moment(), 'minutes')
-      const diffTime = expiration - moment()
-      const interval = 1000
-
-      const dur = moment.duration(diffTime * 1000, 'milliseconds')
-      const duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
-      console.log(moment(duration).seconds())
+    if (this.props.withSuperLikeCounter) {
+      this.superLikecount()
+      setInterval(() => this.superLikecount(), 1000)
     }
   }
 
+  superLikecount() {
+    if (this.expiration) {
+      this.counter = moment.utc(moment(this.expiration).diff(moment())).format('HH:mm:ss')
+    }
+  }
+
+  getSuperLikeDiffInMin() {
+    this.diffMin = moment(this.expiration).diff(moment(), 'minutes')
+  }
+
   checkLiked(id) {
+    this.getSuperLikeDiffInMin()
     Data.getActions().where('_id').equals(id).first(r => {
       this.isLiked = (r && r.type == 'like')
       this.isPassed = (r && r.type == 'pass')
       this.isSuper = (r && r.type == 'superlike')
     })
-  }
-
-  formatCounter() {
-    if (!this.props.superLikeCounter) return
-
-    this.diffMin = this.props.superLikeCounter.diff(moment(), 'minutes')
-    const diff = this.props.superLikeCounter.diff(moment())
-
-    return moment(diff).format('hh:mm:ss')
   }
 
   @autobind
@@ -91,11 +82,12 @@ export default class ActionButtons extends Component {
 
   @autobind
   handleSuperlike() {
-    if (this.isSuper) {
+    if (this.isSuper || this.diffMin > 0) {
       return
     }
     this.isSuper = true
     this.props.user.superLike().catch(err => {
+      this.isSuper = false
       console.log('catch', err);
     })
   }
@@ -124,7 +116,7 @@ export default class ActionButtons extends Component {
         </div>}
         {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} styleName={superClass} className={superClassN}>
           <i className="fa fa-star" />
-          <span styleName="counter">{this.formatCounter()}</span>
+          <span styleName="counter">{this.counter}</span>
         </div>}
         {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
         <div onClick={this.handleLike} className={likedClass}>

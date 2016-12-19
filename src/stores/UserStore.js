@@ -32,7 +32,8 @@ class UserStore {
 
     Data.core().then(resp => {
       if (!resp.results.length) {
-        this.message = resp.message
+        // this.message = resp.message
+        this.message = 'There\'s no one new around you.'
         return
       }
 

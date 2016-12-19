@@ -14,17 +14,17 @@ import styles from './styles.scss'
 @CSSModules(styles)
 export default class Home extends Component {
   render() {
-    const { userStore } = this.props
+    const { userStore, currentUser } = this.props
 
     return (
       <div styleName="home">
         {userStore.isConnecting && <h1>Need connect</h1>}
-        {userStore.message}
-        {userStore.isLoading && <Loader />}
+        {userStore.isLoading && <Loader currentUser={currentUser} />}
         <div styleName="recommendation">
           {!userStore.isLoading && <UserCard user={userStore.first} withSuperLikeCounter />}
         </div>
         {!userStore.isLoading && <UserCardList userStore={userStore} />}
+        {userStore.message && <div styleName="message">{userStore.message}</div>}
       </div>
     );
   }

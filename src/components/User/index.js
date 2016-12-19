@@ -88,7 +88,7 @@ export default class User extends Component {
   render() {
     return (
       <div>
-        {this.user.isFetching && <Loader />}
+        {this.user.isFetching && <Loader isSimpleLoader />}
         {!this.user.isFetching && this.renderUser()}
       </div>
     );

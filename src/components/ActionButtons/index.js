@@ -86,7 +86,9 @@ export default class ActionButtons extends Component {
       return
     }
     this.isSuper = true
-    this.props.user.superLike().catch(err => {
+    this.props.user.superLike().then(r => {
+      this.getSuperLikeDiffInMin()
+    }).catch(err => {
       this.isSuper = false
       console.log('catch', err);
     })
@@ -116,7 +118,7 @@ export default class ActionButtons extends Component {
         </div>}
         {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} styleName={superClass} className={superClassN}>
           <i className="fa fa-star" />
-          <span styleName="counter">{this.counter}</span>
+          {this.diffMin > 0 && <span styleName="counter">{this.counter}</span>}
         </div>}
         {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
         <div onClick={this.handleLike} className={likedClass}>

@@ -104,7 +104,7 @@ export default class UserCard extends Component {
     if (asLoader) {
       return (
         <div styleName="wrapper" className="simple">
-          <Loader />
+          <Loader isSimpleLoader />
         </div>
       )
     }

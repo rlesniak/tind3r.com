@@ -1,4 +1,6 @@
 import React from 'react'
+import { Provider } from 'mobx-react'
+import UserModel from '../models/User'
 import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
 import App from './App'
 import Home from './Home'
@@ -28,16 +30,18 @@ const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
 }
 
 const Root = () => (
-  <Router history={browserHistory}>
-    <Route path="/" component={App} onEnter={clearRecsOnPageEnterOrReload}>
-      <IndexRedirect to="home" />
-      <Route path="home" component={Home} />
-      <Route path="users/:userId" component={User} />
-      <Route path="matches" component={Matches} />
-      <Route path="actions" component={Actions} />
-      <Route path="fb-connect" component={FbConnect} />
-    </Route>
-  </Router>
+  <Provider currentUser={new UserModel()}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App} onEnter={clearRecsOnPageEnterOrReload}>
+        <IndexRedirect to="home" />
+        <Route path="home" component={Home} />
+        <Route path="users/:userId" component={User} />
+        <Route path="matches" component={Matches} />
+        <Route path="actions" component={Actions} />
+        <Route path="fb-connect" component={FbConnect} />
+      </Route>
+    </Router>
+  </Provider>
 )
 
 export default Root

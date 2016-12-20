@@ -18,7 +18,7 @@ export default class Actions extends Component {
     const actions = []
 
     Data.actions().then(data => {
-      _.each(data, action => {
+      _.each(data.reverse(), action => {
         actions.push(this.renderAction(action))
       })
 
@@ -28,6 +28,10 @@ export default class Actions extends Component {
   }
 
   renderAction(data) {
+    if (!data.user) {
+      return null
+    }
+
     return (
       <li key={data.user._id}>
         <Link to={`/users/${data.user._id}`}>

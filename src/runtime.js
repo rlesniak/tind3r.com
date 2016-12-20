@@ -44,4 +44,9 @@ export const superLike = (id) => {
   return chromeRuntime('ACTION_SUPERLIKE', { id })
 }
 
+export const updates = () => {
+  return chromeRuntime('FETCH_MESSAGES')
+}
+
+
 export default chromeRuntime

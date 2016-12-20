@@ -15,12 +15,18 @@ class ConversationStore {
 
   fetch(isCharging = false) {
     Data.matches().then(data => {
-      _.each(_.sortBy(data, 'date'), r => {
+      _.each(data, r => {
         this.updateConversation(r)
       })
     }).catch(resp => {
       this.needFb = true
       this.isLoading = false
+    })
+  }
+
+  fetchFromRemote() {
+    Data.updates().then(data => {
+      this.fetch()
     })
   }
 

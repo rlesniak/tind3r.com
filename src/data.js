@@ -40,6 +40,8 @@ const Data = {
             isSuperLike: match.is_super_like ? 1 : 0,
           })
         })
+
+        resolve()
       })
     })
   },
@@ -59,7 +61,7 @@ const Data = {
     return new Promise((resolve, reject) => {
       like(id).then(resp => {
         db.users.update(id, { done: 1 })
-        db.actions.put({ _id: id, type: 'like', date: new Date() })
+        db.actions.add({ _id: id, type: 'like', date: new Date() })
 
         if (resp.match) {
           db.matches.put({
@@ -78,7 +80,7 @@ const Data = {
     return new Promise((resolve, reject) => {
       pass(id).then(resp => {
         db.users.update(id, { done: 1 })
-        db.actions.put({ _id: id, type: 'pass', date: new Date() })
+        db.actions.add({ _id: id, type: 'pass', date: new Date() })
 
         resolve(resp)
       }).catch(e => reject(e))
@@ -88,13 +90,14 @@ const Data = {
   superLike(id) {
     return new Promise((resolve, reject) => {
       superLike(id).then(resp => {
+        localStorage.setItem('superLikeExpiration', resp.super_likes.resets_at)
+
         if (!resp.limit_exceeded) {
           db.users.update(id, { done: 1 })
-          db.actions.put({ _id: id, type: 'superlike', date: new Date() })
+          db.actions.add({ _id: id, type: 'superlike', date: new Date() })
 
           resolve(resp)
         } else {
-          localStorage.setItem('superLikeExpiration', resp.super_likes.resets_at)
           reject('limit_exceeded')
         }
       })
@@ -103,6 +106,17 @@ const Data = {
 
   getActions() {
     return db.actions
+  }
+}
+
+document.addEventListener('contentScript', e => {
+  const data = e.detail
+  console.log('data', data)
+})
+
+global.Data = {
+  trigger(msg) {
+    alert(1)
   }
 }
 

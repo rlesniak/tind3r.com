@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
+import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
 import { Link } from 'react-router'
 import CSSModules from 'react-css-modules'
 import { observer } from 'mobx-react'
 import _ from 'lodash'
 import styles from './nav-bar.scss'
+import Data from '../data'
 
 @observer
 @CSSModules(styles)
 export default class NavBar extends Component {
+  @observable newItems = 0
+
+  constructor(props) {
+    super(props)
+
+    this.countUnread()
+    this.registerHook()
+  }
+
+  registerHook() {
+    Data.registerMatchesHook(() => {
+      this.newItems -= 1
+    }, 'updating')
+  }
+
+  countUnread() {
+    Data.matches().where('isNew').equals(1).count(c => {
+      this.newItems = c
+    })
+  }
 
   render() {
     const { user } = this.props
@@ -24,8 +46,11 @@ export default class NavBar extends Component {
           </li>
           <li>
             <Link to="/matches" activeClassName="active">
-              <i className="fa fa-heart"></i>
-              Matches
+              <div styleName="badge">
+                <i className="fa fa-heart"></i>
+                Matches
+                {this.newItems > 0 && <span>{this.newItems}</span>}
+              </div>
             </Link>
           </li>
           <li>

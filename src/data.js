@@ -22,9 +22,9 @@ const Data = {
     })
   },
 
-  registerMatchesHook(callback) {
-    db.matches.hook('creating', (mods, primKey, obj, trans) => {
-      callback(primKey)
+  registerMatchesHook(callback, type = 'creating') {
+    db.matches.hook(type, function(mods, primKey, obj, trans) {
+      this.onsuccess = callback(primKey)
     })
   },
 

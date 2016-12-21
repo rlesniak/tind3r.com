@@ -24,6 +24,7 @@
     border-right: 1px solid #f7f3f0;
     text-transform: uppercase;
     border-bottom: 3px solid transparent;
+    position: relative;
 
     &:hover {
       background-color: #f8f3f0;
@@ -35,6 +36,29 @@
       i {
         color: $green;
       }
+    }
+
+    &:after {
+      content: attr(data-badge);
+      position: absolute;
+    }
+  }
+
+  .badge {
+    position: relative;
+
+    span {
+      position: absolute;
+      top: -12px;
+      right: -10px;
+      font-size: 10px;
+      background: #e55c38;
+      padding: 3px 5px;
+      border-radius: 50%;
+      letter-spacing: 0;
+      color: #fff;
+      text-align: CENTER;
+      font-family: Lato, Tahoma, serif;
     }
   }
 

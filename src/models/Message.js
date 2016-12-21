@@ -6,8 +6,7 @@ import Data from '../data'
 class Message {
   id = null
   store = null
-  @observable isLoading = false
-  @observable isFetching = true
+  @observable isSending = false
   @observable done = 0
 
   constructor(store, id = 0, json = {}, authorId) {
@@ -15,22 +14,6 @@ class Message {
     this.id = id
     this.authorId = authorId
     this.setFromJson(json)
-  }
-
-  @action fetch() {
-    this.isFetching = true
-    user(this.id).then(action(resp => {
-      if (resp.message) {
-        this.message = resp.message
-        return
-      }
-
-      this.isFetching = false
-      extendObservable(this, resp.results)
-    })).catch(resp => {
-      this.needFb = true
-      this.isFetching = false
-    })
   }
 
   @action setFromJson(json) {

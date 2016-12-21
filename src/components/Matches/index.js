@@ -9,29 +9,33 @@ import styles from './styles.scss'
 import ConversationStore from '../../stores/ConversationStore'
 import Conversation from './Conversation'
 import Messages from './Messages'
+import Data from '../../data'
 
 @observer
 @CSSModules(styles)
 export default class Matches extends Component {
-  @observable activeConversationId
+  @observable activeConversation
 
   constructor(props) {
     super(props)
-    this.conversationsStore = new ConversationStore()
-    this.conversationsStore.fetch()
+    this.cs = new ConversationStore()
+
+    Data.updates().then(() => {
+      this.cs.fetch()
+    })
   }
 
   @autobind
   handleSelect(id) {
-    this.activeConversationId = id
+    this.activeConversation = this.cs.findConversation(id)
+    this.cs.setAsDone(this.activeConversation)
   }
 
   render() {
-    const activeConversation = this.conversationsStore.findConversation(this.activeConversationId)
     return (
       <div className="main-wrapper" styleName="wrapper">
         <div styleName="coversations">
-          {_.map(this.conversationsStore.conversations.reverse(), conv => (
+          {!this.cs.isLoading && _.map(this.cs.conversations.reverse(), conv => (
             <Conversation
               key={conv.id}
               conversation={conv}
@@ -41,13 +45,13 @@ export default class Matches extends Component {
         </div>
         <div styleName="messages">
           <Messages
-            conversation={activeConversation}
+            conversation={this.activeConversation}
           />
         </div>
         <div styleName="profile">
-          <Link to={`/users/${this.activeConversationId}`}>
+          {this.activeConversation && <Link to={`/users/${this.activeConversation.person._id}`}>
             Profile
-          </Link>
+          </Link>}
         </div>
       </div>
     );
@@ -55,5 +59,5 @@ export default class Matches extends Component {
 }
 
 Matches.defaultProps = {
-  conversationsStore: new ConversationStore(),
+  cs: new ConversationStore(),
 }

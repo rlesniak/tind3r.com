@@ -40,7 +40,7 @@ export default class Conversation extends Component {
         <div styleName="avatar">
           <img src={conversation.person.photos[0].url} />
         </div>
-        <div styleName="name">{conversation.person.name}</div>
+        <div styleName="name">{conversation.person.name} {conversation.isNew}</div>
         <div styleName="message">{this.renderIcon()} {conversation.messageStore.last.message}</div>
         <div styleName="date">{conversation.messageStore.last.date}</div>
       </div>

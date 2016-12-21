@@ -1,4 +1,4 @@
-import { observable, transaction, computed, reaction } from 'mobx'
+import { observable, transaction, computed, reaction, asFlat } from 'mobx'
 import _ from 'lodash'
 import Message from '../models/Message'
 import Data from '../data'
@@ -14,14 +14,23 @@ class ConversationStore {
   }
 
   fetch(isCharging = false) {
-    Data.matches().then(data => {
-      _.each(data, r => {
-        this.updateConversation(r)
+    Data.registerMatchesHook(this.newConversationHook.bind(this))
+
+    Data.matches().toArray().then(data => {
+      transaction(() => {
+        _.each(_.sortBy(data, 'lastActivityDate'), r => {
+          this.updateConversation(r)
+        })
+        this.isLoading = false
       })
     }).catch(resp => {
       this.needFb = true
       this.isLoading = false
     })
+  }
+
+  newConversationHook(msg) {
+    this.updateConversation(msg)
   }
 
   fetchFromRemote() {
@@ -38,9 +47,15 @@ class ConversationStore {
     this.conversations.push({
       id: resp._id,
       date: resp.date,
-      person: resp.person,
-      messageStore: new MessageStore(this, resp.messages, resp.person._id),
+      person: asFlat(resp.person),
+      isNew: resp.isNew,
+      messageStore: new MessageStore(this, resp.userId, resp._id),
     })
+  }
+
+  setAsDone(conversation) {
+    conversation.isNew = false
+    Data.matches().update(conversation.id, { isNew: 0 })
   }
 
   findConversation(id) {

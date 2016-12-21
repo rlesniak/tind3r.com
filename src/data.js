@@ -7,7 +7,8 @@ const db = new Dexie('tinder', { addons: [relationships] })
 db.version(1).stores({
   users: '_id,name,done',
   actions: '++,type,date,_id -> users._id',
-  matches: '++,isSuperLike,isBoostMatch,date,_id -> users._id',
+  matches: '_id,isSuperLike,isBoostMatch,date,lastActivityDate,isNew,userId -> users._id',
+  messages: '_id, match_id, isNew, from -> users._id, to -> users._id',
 })
 
 db.open().catch(function (e) {
@@ -15,6 +16,18 @@ db.open().catch(function (e) {
 })
 
 const Data = {
+  registerMessagesHook(callback) {
+    db.messages.hook('creating', (mods, primKey, obj, trans) => {
+      callback(primKey)
+    })
+  },
+
+  registerMatchesHook(callback) {
+    db.matches.hook('creating', (mods, primKey, obj, trans) => {
+      callback(primKey)
+    })
+  },
+
   clearRecs() {
     return db.users.where('done').equals(0).delete()
   },
@@ -24,24 +37,46 @@ const Data = {
   },
 
   matches() {
-    return db.matches.with({ user: '_id' })
+    return db.matches
+  },
+
+  messages(conversationId) {
+    return db.messages.where('match_id').equals(conversationId)
   },
 
   updates() {
     return new Promise((resolve, reject) => {
       updates().then(({ matches }) => {
-        _.each(matches, match => {
-          db.matches.put({
-            _id: match.person._id,
-            date: match.created_date,
-            messages: match.messages,
-            person: match.person,
-            isBoostMatch: match.is_boost_match ? 1 : 0,
-            isSuperLike: match.is_super_like ? 1 : 0,
-          })
-        })
+        db.transaction('rw', db.users, db.matches, db.messages, function() {
+          _.each(matches, match => {
+            if (!match.is_new_message) {
+              db.users.where('_id').equals(match.person._id).first(p => {
+                if (p) return
 
-        resolve()
+                db.users.add(match.person)
+              })
+
+              db.matches.where('_id').equals(match._id).first(m => {
+                if (m) return
+
+                db.matches.add({
+                  _id: match._id,
+                  userId: match.person._id,
+                  date: new Date(match.created_date),
+                  lastActivityDate: new Date(match.last_activity_date),
+                  person: match.person,
+                  isNew: 1,
+                  isBoostMatch: match.is_boost_match ? 1 : 0,
+                  isSuperLike: match.is_super_like ? 1 : 0,
+                })
+              })
+            }
+
+            const messages = _.map(match.messages, m => ({ ...m, isNew: 0 }))
+
+            db.messages.bulkPut(messages)
+          })
+        }).then(() => resolve())
       })
     })
   },
@@ -106,8 +141,13 @@ const Data = {
 
   getActions() {
     return db.actions
+  },
+
+  _devAddNew(data) {
+    db.matches.add(data)
   }
 }
+console.log(Data);
 
 document.addEventListener('contentScript', e => {
   const data = e.detail

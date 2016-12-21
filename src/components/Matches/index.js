@@ -19,10 +19,6 @@ export default class Matches extends Component {
   constructor(props) {
     super(props)
     this.cs = new ConversationStore()
-
-    Data.updates().then(() => {
-      this.cs.fetch()
-    })
   }
 
   @autobind

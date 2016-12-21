@@ -24,6 +24,10 @@ export default class NavBar extends Component {
     Data.registerMatchesHook(() => {
       this.newItems -= 1
     }, 'updating')
+
+    Data.registerMatchesHook(() => {
+      this.newItems += 1
+    })
   }
 
   countUnread() {

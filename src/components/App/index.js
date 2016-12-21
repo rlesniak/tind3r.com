@@ -6,6 +6,7 @@ import UserStore from '../../stores/UserStore'
 import styles from './app.scss'
 import NavBar from '../NavBar'
 import User from '../../models/User'
+import Data from '../../data'
 
 @inject('currentUser')
 @observer
@@ -16,6 +17,10 @@ export default class App extends Component {
 
     this.props.currentUser.fetchMeta()
     this.userStore = new UserStore()
+
+    // setInterval(() => {
+    //   Data.updates()
+    // }, 2000)
   }
 
   render() {

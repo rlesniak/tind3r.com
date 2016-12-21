@@ -11,6 +11,7 @@ class ConversationStore {
   @observable isCharging = true;
 
   constructor() {
+    this.fetchFromRemote()
   }
 
   fetch(isCharging = false) {
@@ -36,6 +37,7 @@ class ConversationStore {
   fetchFromRemote() {
     Data.updates().then(data => {
       this.fetch()
+      localStorage.setItem('firstFetch', true)
     })
   }
 

@@ -13,14 +13,19 @@ if(process.env.NODE_ENV !== 'production') {
 
   app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    historyApiFallback: true,
+    historyApiFallback: false,
+    stats: {
+      colors: true
+    },
   }));
 
   app.use(webpackHotMiddleware(compiler));
 }
 
+app.use(express.static('static'))
+
 app.get('*', function(request, response) {
-  response.sendFile(__dirname + '/index.html')
+  response.sendFile(__dirname + '/static/index.html')
 });
 
 app.listen(PORT, function(error) {

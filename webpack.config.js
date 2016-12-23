@@ -3,18 +3,24 @@ var webpack = require('webpack');
 
 module.exports = {
   devtool: 'eval-source-map',
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-hot-middleware/client',
-    './src/index'
-  ],
+  entry: {
+    bundle: [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      './src/index'
+    ]
+  },
   output: {
     path: path.join(__dirname, 'static'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    filename: '[name].js',
+    publicPath: '/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DllReferencePlugin({
+      context: path.join(__dirname, 'static'),
+      manifest: require('./vendor-manifest.json')
+    }),
   ],
   resolve: {
     root: path.resolve('./src'),

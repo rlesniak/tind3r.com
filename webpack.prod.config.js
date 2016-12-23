@@ -17,6 +17,10 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
+    new webpack.DllReferencePlugin({
+      context: path.join(__dirname, 'static'),
+      manifest: require('./vendor-manifest.json')
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

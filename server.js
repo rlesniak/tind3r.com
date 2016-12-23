@@ -22,10 +22,10 @@ if(process.env.NODE_ENV !== 'production') {
   app.use(webpackHotMiddleware(compiler));
 }
 
-app.use(express.static('static'))
+app.use(express.static('dist'))
 
 app.get('*', function(request, response) {
-  response.sendFile(__dirname + '/static/index.html')
+  response.sendFile(__dirname + '/index.html')
 });
 
 app.listen(PORT, function(error) {

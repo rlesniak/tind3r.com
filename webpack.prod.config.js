@@ -7,9 +7,9 @@ module.exports = {
     './src/index'
   ],
   output: {
-    path: path.join(__dirname, 'static'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/dist/'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -24,7 +24,10 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
-      }
+      },
+      comments: false,
+      mangle: true,
+      minimize: true
     })
   ],
   resolve: {
@@ -41,9 +44,9 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: [
-          'style?sourceMap',
+          'style',
           'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'sass?sourceMap'
+          'sass'
         ]
       }
     ]

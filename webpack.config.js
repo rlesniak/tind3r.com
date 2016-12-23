@@ -11,14 +11,14 @@ module.exports = {
     ]
   },
   output: {
-    path: path.join(__dirname, 'static'),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: '/dist/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DllReferencePlugin({
-      context: path.join(__dirname, 'static'),
+      context: path.join(__dirname, 'dist'),
       manifest: require('./vendor-manifest.json')
     }),
   ],

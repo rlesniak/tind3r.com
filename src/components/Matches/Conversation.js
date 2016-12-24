@@ -38,9 +38,9 @@ export default class Conversation extends Component {
     return (
       <div styleName="coversation" onClick={this.handleSelect}>
         <div styleName="avatar">
-          <img src={conversation.person.photos[0].url} />
+          <img src={conversation.user.photos[0].url} />
         </div>
-        <div styleName="name">{conversation.person.name} {conversation.isNew}</div>
+        <div styleName="name">{conversation.user.name} {conversation.isNew}</div>
         <div styleName="message">{this.renderIcon()} {conversation.messageStore.last.message}</div>
         <div styleName="date">{conversation.messageStore.last.date}</div>
       </div>

@@ -1,6 +1,7 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
 import { core, like, pass, superLike, updates } from './runtime'
+import matchObj from './objects/match'
 
 const db = new Dexie('tinder', { addons: [relationships] })
 
@@ -37,7 +38,7 @@ const Data = {
   },
 
   matches() {
-    return db.matches
+    return db.matches.with({ user: 'userId' })
   },
 
   messages(conversationId) {
@@ -59,16 +60,7 @@ const Data = {
               db.matches.where('_id').equals(match._id).first(m => {
                 if (m) return
 
-                db.matches.add({
-                  _id: match._id,
-                  userId: match.person._id,
-                  date: new Date(match.created_date),
-                  lastActivityDate: new Date(match.last_activity_date),
-                  person: match.person,
-                  isNew: 1,
-                  isBoostMatch: match.is_boost_match ? 1 : 0,
-                  isSuperLike: match.is_super_like ? 1 : 0,
-                })
+                db.matches.add(matchObj(match))
               })
             }
 
@@ -99,13 +91,12 @@ const Data = {
         db.actions.add({ _id: id, type: 'like', date: new Date() })
 
         if (resp.match) {
-          db.matches.put({
-            _id: id,
-            isBoostMatch: resp.match.is_boost_match ? 1 : 0,
-            isSuperLike: resp.match.is_super_like ? 1 : 0,
-            date: new Date()
-          })
+          db.matches.put(matchObj({
+            ...resp.match,
+            person: { _id: id },
+          }))
         }
+
         resolve(resp)
       }).catch(e => reject(e))
     })
@@ -131,6 +122,13 @@ const Data = {
           db.users.update(id, { done: 1 })
           db.actions.add({ _id: id, type: 'superlike', date: new Date() })
 
+          if (resp.match) {
+            db.matches.put(matchObj({
+              ...resp.match,
+              person: { _id: id },
+            }))
+          }
+
           resolve(resp)
         } else {
           reject('limit_exceeded')
@@ -143,10 +141,15 @@ const Data = {
     return db.actions
   },
 
+  db() {
+    return db
+  },
+
   _devAddNew(data) {
     db.matches.add(data)
   }
 }
+
 console.log(Data);
 
 document.addEventListener('contentScript', e => {

@@ -38,8 +38,8 @@ const Root = () => (
         <Route path="users/:userId" component={User} />
         <Route path="matches" component={Matches} />
         <Route path="actions" component={Actions} />
-        <Route path="fb-connect" component={FbConnect} />
       </Route>
+      <Route path="fb-connect" component={FbConnect} />
     </Router>
   </Provider>
 )

@@ -54,7 +54,7 @@ export default class ActionButtons extends Component {
       this.isPassed = (r && r.type == 'pass')
       this.isSuper = (r && r.type == 'superlike')
     })
-    Data.matches().where('userId').equals(id).first(r => {
+    Data.db().matches.where('userId').equals(id).first(r => {
       if (!r) return
 
       if (r.isSuperLike === 0) {

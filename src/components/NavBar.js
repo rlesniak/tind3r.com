@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
 import { Link } from 'react-router'
 import CSSModules from 'react-css-modules'
@@ -11,33 +10,8 @@ import Data from '../data'
 @observer
 @CSSModules(styles)
 export default class NavBar extends Component {
-  @observable newItems = 0
-
-  constructor(props) {
-    super(props)
-
-    this.countUnread()
-    this.registerHook()
-  }
-
-  registerHook() {
-    Data.registerMatchesHook(() => {
-      this.newItems -= 1
-    }, 'updating')
-
-    Data.registerMatchesHook(() => {
-      this.newItems += 1
-    })
-  }
-
-  countUnread() {
-    Data.matches().where('isNew').equals(1).count(c => {
-      this.newItems = c
-    })
-  }
-
   render() {
-    const { user } = this.props
+    const { user, newCount } = this.props
 
     return (
       <div styleName="nav-bar">
@@ -53,7 +27,7 @@ export default class NavBar extends Component {
               <div styleName="badge">
                 <i className="fa fa-heart"></i>
                 Matches
-                {this.newItems > 0 && <span>{this.newItems}</span>}
+                {newCount > 0 && <span>{newCount}</span>}
               </div>
             </Link>
           </li>

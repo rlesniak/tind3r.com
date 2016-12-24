@@ -17,7 +17,7 @@ class ConversationStore {
   fetch(isCharging = false) {
     Data.registerMatchesHook(this.newConversationHook.bind(this))
 
-    Data.matches().toArray().then(data => {
+    Data.matches().then(data => {
       transaction(() => {
         _.each(_.sortBy(data, 'lastActivityDate'), r => {
           this.updateConversation(r)
@@ -42,14 +42,14 @@ class ConversationStore {
   }
 
   updateConversation(resp) {
-    if (_.find(this.conversations, { id: resp._id })) {
+    if (_.find(this.conversations, { id: resp._id }) || !resp.userId) {
       return
     }
 
     this.conversations.push({
       id: resp._id,
       date: resp.date,
-      person: asFlat(resp.person),
+      user: resp.user,
       isNew: resp.isNew,
       messageStore: new MessageStore(this, resp.userId, resp._id),
     })
@@ -57,7 +57,7 @@ class ConversationStore {
 
   setAsDone(conversation) {
     conversation.isNew = false
-    Data.matches().update(conversation.id, { isNew: 0 })
+    Data.db().matches.update(conversation.id, { isNew: 0 })
   }
 
   findConversation(id) {

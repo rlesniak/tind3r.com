@@ -45,7 +45,7 @@ export default class Matches extends Component {
           />
         </div>
         <div styleName="profile">
-          {this.activeConversation && <Link to={`/users/${this.activeConversation.person._id}`}>
+          {this.activeConversation && <Link to={`/users/${this.activeConversation.user._id}`}>
             Profile
           </Link>}
         </div>

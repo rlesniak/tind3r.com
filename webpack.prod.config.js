@@ -21,6 +21,7 @@ module.exports = {
       context: path.join(__dirname, 'static'),
       manifest: require('./vendor-manifest.json')
     }),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

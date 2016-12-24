@@ -22,7 +22,7 @@ if(process.env.NODE_ENV !== 'production') {
   app.use(webpackHotMiddleware(compiler));
 }
 
-app.use(express.static('dist'))
+app.use('/dist', express.static('dist'))
 
 app.get('*', function(request, response) {
   response.sendFile(__dirname + '/index.html')

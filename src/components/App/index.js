@@ -31,11 +31,11 @@ export default class App extends Component {
 
   registerHook() {
     Data.registerMatchesHook(() => {
-      this.newCount -= 1
+      setTimeout(() => this.countUnread(), 0) // TODO: remove timeout
     }, 'updating')
 
     Data.registerMatchesHook(() => {
-      this.newCount += 1
+      this.countUnread()
     })
   }
 

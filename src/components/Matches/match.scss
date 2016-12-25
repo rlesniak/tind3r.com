@@ -15,19 +15,28 @@
   }
 }
 
-
 .name {
   font-size: 17px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .date {
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .message {
   font-size: 12px;
-  margin-top: 5px;
   font-family: 'Lato', Tahoma, serif;
+  display: flex;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    margin-right: 10px;
+  }
 }
 
 .avatar {

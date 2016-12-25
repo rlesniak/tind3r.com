@@ -46,7 +46,7 @@ class MatchStore {
       return
     }
 
-    const user = Data.db().users.where('_id').equals(resp.userId).first(action(user => {
+    Data.db().users.where('_id').equals(resp.userId).first(action(user => {
       this.matches.push(new Match(this, resp))
     }))
   }

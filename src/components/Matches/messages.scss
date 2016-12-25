@@ -1,5 +1,7 @@
+$padding: 0;
+
 .messages {
-  height: calc(100% - 32px);
+  height: calc(100% - #{60px - $padding});
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -9,8 +11,17 @@
 }
 
 .new-message-input {
+  font-size: 0;
+  padding: $padding;
+
   textarea {
+    font-size: 14px;
+    resize: none;
+    padding: 4px;
+    height: 60px;
     width: 100%;
     outline: none;
+    border: 1px solid #ebddcf;
+    color: #7f7f7d;
   }
 }

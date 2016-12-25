@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
+import { Link } from 'react-router'
 import _ from 'lodash'
-import { observer } from 'mobx-react'
+import moment from 'moment'
+import cx from 'classnames'
+import { observer, inject } from 'mobx-react'
 import styles from './message.scss'
 
+@inject('currentUser')
 @observer
 @CSSModules(styles)
 export default class Message extends Component {
@@ -13,11 +17,26 @@ export default class Message extends Component {
   }
 
   render() {
-    const { message } = this.props
+    const { message, currentUser } = this.props
+
+    const className = cx({
+      'align-left': message.isAuthor,
+    })
 
     return (
-      <div styleName="wrapper" ref={ref => this.wrapper = ref}>
-        {message.message}
+      <div
+        styleName="wrapper"
+        className={className}
+        ref={ref => this.wrapper = ref}
+        title={message.date}
+      >
+        <div styleName="avatar">
+          <Link to={`users/${message.from}`} styleName="circle"><img src={message.isAuthor ? message.participant.photos[0].url : currentUser.photos[0].url} /></Link>
+          <span styleName="date">{moment(message.created_date).format('HH:mm')}</span>
+        </div>
+        <div styleName="message">
+          {message.message}
+        </div>
       </div>
     );
   }

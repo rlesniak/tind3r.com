@@ -27,8 +27,8 @@ class Match {
     this.messageStore = new MessageStore(this, json)
   }
 
-  @computed get date() {
-    return moment(this.lastActivityDate).format('DD/MM HH:mm')
+  @computed get ago() {
+    return moment(this.lastActivityDate).fromNow()
   }
 }
 

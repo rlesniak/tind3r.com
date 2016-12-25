@@ -9,11 +9,12 @@ class Message {
   @observable isSending = false
   @observable done = 0
 
-  constructor(store, json = {}, authorId) {
+  constructor(store, json = {}, authorId, participant) {
     this.store = store
     this.id = json._id
     this.authorId = authorId
     this.setFromJson(json)
+    this.participant = participant
   }
 
   @action setFromJson(json) {

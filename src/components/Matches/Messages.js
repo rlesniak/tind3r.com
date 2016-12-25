@@ -34,7 +34,7 @@ export default class Messages extends Component {
 
     const lastId = match.messageStore.messages.length - 1
     if(this[`msg${lastId}`]) {
-      this[`msg${lastId}`].scrollIntoView()
+      this[`msg${lastId}`].wrappedInstance.scrollIntoView()
     }
   }
 
@@ -81,6 +81,7 @@ export default class Messages extends Component {
         </div>
         <div styleName="new-message-input">
           <textarea
+            autoFocus
             type="text"
             onChange={this.handleMessageChange}
             onKeyPress={this.handleSubmit}

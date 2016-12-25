@@ -41,8 +41,8 @@ const Data = {
     return db.matches.with({ user: 'userId' })
   },
 
-  messages(conversationId) {
-    return db.messages.where('match_id').equals(conversationId)
+  messages(matchId) {
+    return db.messages.where('match_id').equals(matchId).with({ user: 'from' })
   },
 
   updates() {

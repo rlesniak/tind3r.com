@@ -1,3 +1,57 @@
 .wrapper {
   padding: 10px;
+  overflow: hidden;
+  width: 100%;
+
+  &:global(.align-left) {
+    text-align: right;
+
+    .avatar {
+      float: right;
+    }
+
+    .message {
+      margin-left: 0;
+      margin-right: 10px;
+      text-align: left;
+      background: #f8f3f0;
+      color: inherit;
+    }
+  }
+}
+
+.avatar {
+  float: left;
+
+  .circle {
+    display: block;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.message {
+  margin-left: 10px;
+  background: #5f90b0;
+  color: #fff;
+  padding: 17px 14px;
+  display: inline-block;
+  border-radius: 10px;
+  max-width: calc(100% - 70px);
+  font-family: "Lato", Tahoma, serif;
+  font-size: 14px;
+}
+
+.date {
+  font-size: 10px;
+  text-align: center;
+  display: block;
+  margin-top: 2px;
+  font-family: "Lato", Tahoma, serif;
 }

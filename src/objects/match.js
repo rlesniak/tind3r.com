@@ -7,5 +7,6 @@ export default (obj) => {
     isNew: 1,
     isBoostMatch: obj.is_boost_match ? 1 : 0,
     isSuperLike: obj.is_super_like ? 1 : 0,
+    participants: obj.participants,
   }
 }

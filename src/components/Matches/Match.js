@@ -52,8 +52,10 @@ export default class Match extends Component {
           <img src={match.user.photos[0].url} />
         </div>
         <div styleName="name">{match.user.name}</div>
-        <div styleName="message">{this.renderIcon()} {match.messageStore.last.message}</div>
-        <div styleName="date">{match.date}</div>
+        <div styleName="message">
+          <span>{this.renderIcon()} {match.messageStore.last.message}</span>
+          <div styleName="date">{match.ago}</div>
+        </div>
       </div>
     );
   }

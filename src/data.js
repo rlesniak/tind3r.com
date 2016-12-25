@@ -54,7 +54,10 @@ const Data = {
               db.users.where('_id').equals(match.person._id).first(p => {
                 if (p) return
 
-                db.users.add(match.person)
+                db.users.add({
+                  ...match.person,
+                  done: 1,
+                })
               })
 
               db.matches.where('_id').equals(match._id).first(m => {

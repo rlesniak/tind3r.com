@@ -5,8 +5,7 @@ import Data from '../data'
 
 class MessageStore {
   @observable messages = []
-  @observable isLoading = true;
-  @observable isCharging = true;
+  @observable isLoading = true
 
   constructor(store, authorId, convId) {
     this.store = store
@@ -16,11 +15,13 @@ class MessageStore {
     this.fetch()
   }
 
-  fetch() {
+  @action fetch() {
     Data.registerMessagesHook(this.newMessageHook.bind(this))
-    Data.messages(this.convId).each(msg => {
-      this.updateMessage(msg)
-    })
+
+    Data.messages(this.convId).toArray().then(action(allMsgs => {
+      _.each(allMsgs, msg => this.updateMessage(msg))
+      this.isLoading = false
+    }))
   }
 
   newMessageHook(msg) {

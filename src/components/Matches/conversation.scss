@@ -8,7 +8,13 @@
   display: block;
   text-decoration: none;
   color: $font-c;
+  border-left: 3px solid transparent;
+
+  &:global(.unread) {
+    border-left-color: $blue;
+  }
 }
+
 
 .name {
   font-size: 17px;

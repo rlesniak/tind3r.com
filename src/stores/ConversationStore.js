@@ -46,12 +46,14 @@ class ConversationStore {
       return
     }
 
-    this.conversations.push({
-      id: resp._id,
-      date: resp.date,
-      user: resp.user,
-      isNew: resp.isNew,
-      messageStore: new MessageStore(this, resp.userId, resp._id),
+    const user = Data.db().users.where('_id').equals(resp.userId).first(user => {
+      this.conversations.push({
+        id: resp._id,
+        date: resp.date,
+        user: user,
+        isNew: resp.isNew,
+        messageStore: new MessageStore(this, resp.userId, resp._id),
+      })
     })
   }
 

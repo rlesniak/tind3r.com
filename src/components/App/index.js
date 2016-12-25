@@ -23,7 +23,7 @@ export default class App extends Component {
 
     // setInterval(() => {
     //   Data.updates()
-    // }, 2000)
+    // }, 3000)
 
     this.countUnread()
     this.registerHook()

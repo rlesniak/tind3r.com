@@ -6,54 +6,50 @@ import { Link } from 'react-router'
 import _ from 'lodash'
 import { observer } from 'mobx-react'
 import styles from './styles.scss'
-import ConversationStore from '../../stores/ConversationStore'
-import Conversation from './Conversation'
+import MatchStore from '../../stores/MatchStore'
+import Match from './Match'
 import Messages from './Messages'
 import Data from '../../data'
 
 @observer
 @CSSModules(styles)
 export default class Matches extends Component {
-  @observable activeConversation
+  @observable seletedMatch
 
   constructor(props) {
     super(props)
-    this.cs = new ConversationStore()
+    this.matchStore = new MatchStore()
   }
 
   @autobind
   handleSelect(id) {
-    this.activeConversation = this.cs.findConversation(id)
-    this.cs.setAsDone(this.activeConversation)
+    this.seletedMatch = this.matchStore.findMatch(id)
+    this.matchStore.setAsDone(this.seletedMatch)
   }
 
   render() {
     return (
       <div className="main-wrapper" styleName="wrapper">
-        <div styleName="coversations">
-          {!this.cs.isLoading && _.map(this.cs.conversations.reverse(), conv => (
-            <Conversation
-              key={conv.id}
-              conversation={conv}
+        <div styleName="matches">
+          {!this.matchStore.isLoading && _.map(this.matchStore.matches.reverse(), match => (
+            <Match
+              key={match.id}
+              match={match}
               handleSelect={this.handleSelect}
             />
           ))}
         </div>
         <div styleName="messages">
           <Messages
-            conversation={this.activeConversation}
+            match={this.seletedMatch}
           />
         </div>
         <div styleName="profile">
-          {this.activeConversation && <Link to={`/users/${this.activeConversation.user._id}`}>
+          {this.seletedMatch && <Link to={`/users/${this.seletedMatch.user._id}`}>
             Profile
           </Link>}
         </div>
       </div>
     );
   }
-}
-
-Matches.defaultProps = {
-  cs: new ConversationStore(),
 }

@@ -26,13 +26,13 @@ export default class Messages extends Component {
   }
 
   scrollIntoView() {
-    const { conversation } = this.props
+    const { match } = this.props
 
-    if (!conversation) {
+    if (!match) {
       return
     }
 
-    const lastId = conversation.messageStore.messages.length - 1
+    const lastId = match.messageStore.messages.length - 1
     if(this[`msg${lastId}`]) {
       this[`msg${lastId}`].scrollIntoView()
     }
@@ -47,11 +47,11 @@ export default class Messages extends Component {
 
   @autobind
   handleSubmit(e) {
-    const { conversation } = this.props
+    const { match } = this.props
     if (e.charCode === 13) {
       e.preventDefault()
 
-      conversation.messageStore.updateMessage({
+      match.messageStore.updateMessage({
         id: _.uniqueId(),
         message: this.state.messageTxt,
       })
@@ -63,15 +63,15 @@ export default class Messages extends Component {
   }
 
   render() {
-    const { conversation } = this.props
-    if (!conversation) {
+    const { match } = this.props
+    if (!match) {
       return null
     }
 
     return (
       <div styleName="wrapper">
         <div styleName="messages" ref={ref => this.messagesRef = ref}>
-          {_.map(conversation.messageStore.messages, (msg, i) => (
+          {_.map(match.messageStore.messages, (msg, i) => (
             <Message
               key={msg.id}
               ref={ref => this[`msg${i}`] = ref}

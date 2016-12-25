@@ -8,13 +8,13 @@
   max-height: calc(100vh - 60px - 40px);
 }
 
-.coversations,
+.matches,
 .messages {
   height: calc(100vh - 60px - 40px);
   overflow-y: scroll;;
 }
 
-.coversations,
+.matches,
 .profile {
   width: 25%;
   order: 0;

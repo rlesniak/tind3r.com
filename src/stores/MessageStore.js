@@ -7,10 +7,10 @@ class MessageStore {
   @observable messages = []
   @observable isLoading = true
 
-  constructor(store, authorId, convId) {
+  constructor(store, json) {
     this.store = store
-    this.authorId = authorId
-    this.convId = convId
+    this.authorId = json.userId
+    this.convId = json._id
 
     this.fetch()
   }
@@ -32,7 +32,7 @@ class MessageStore {
   }
 
   @action updateMessage(json) {
-    const message = new Message(this, json._id, json, this.authorId)
+    const message = new Message(this, json, this.authorId)
     this.messages.push(message)
   }
 

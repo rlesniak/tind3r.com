@@ -18,12 +18,12 @@ class Message {
     this.participant = participant
   }
 
-  @action create(body) {
+  @action create(matchId, body) {
     this.isSending = true
 
-    setTimeout(() => {
+    Data.sendMessage(matchId, body).then(resp => {
       this.isSending = false
-    }, 2000)
+    })
 
     this.setFromJson({
       message: body,

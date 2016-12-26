@@ -1,6 +1,6 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
-import { core, like, pass, superLike, updates } from './runtime'
+import { core, like, pass, superLike, updates, sendMessage } from './runtime'
 import matchObj from './objects/match'
 
 const db = new Dexie('tinder', { addons: [relationships] })
@@ -83,6 +83,19 @@ const Data = {
         _.each(data, user => db.users.add({ ...user, done: 0 }))
 
         resolve({ results: data, message: resp.message })
+      }).catch(resp => reject(resp))
+    })
+  },
+
+  sendMessage(userId, message) {
+    return new Promise((resolve, reject) => {
+      sendMessage(userId, message).then(resp => {
+        db.messages.put({
+          ...resp,
+          isNew: 0
+        })
+
+        resolve(resp)
       }).catch(resp => reject(resp))
     })
   },

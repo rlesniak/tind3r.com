@@ -19,6 +19,10 @@ export default class FbConnect extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.onfocus = n => n
+  }
+
   render() {
     return (
       <div styleName="wrapper">

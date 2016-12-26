@@ -10,7 +10,7 @@ class MessageStore {
   constructor(store, json) {
     this.store = store
     this.authorId = json.userId
-    this.convId = json._id
+    this.matchId = json._id
     this.participant = json.participants[0]
 
     this.fetch()
@@ -20,7 +20,7 @@ class MessageStore {
     Data.registerMessagesHook(this.newMessageHook.bind(this))
 
     Data.db().users.where('_id').equals(this.participant).first(user => {
-      Data.messages(this.convId).then(action(allMsgs => {
+      Data.messages(this.matchId).then(action(allMsgs => {
         _.each(allMsgs, msg => this.updateMessages(msg, user))
         this.isLoading = false
       }))
@@ -29,13 +29,12 @@ class MessageStore {
 
   @action create(body) {
     const message = new Message(this, {}, this.authorId)
-    message.create(body)
+    message.create(this.matchId, body)
     this.messages.push(message)
   }
 
   newMessageHook(msg) {
-    console.log('MSG HOOK');
-    if (msg.match_id === this.convId) {
+    if (msg.match_id === this.matchId && msg.from === this.authorId) {
       this.updateMessages(msg)
     }
   }

@@ -32,6 +32,10 @@ export const meta = () => {
   return chromeRuntime('FETCH_META')
 }
 
+export const sendMessage = (userId, message) => {
+  return chromeRuntime('SEND_MESSAGE', { userId, message })
+}
+
 export const like = (id) => {
   return chromeRuntime('ACTION_LIKE', { id })
 }

@@ -20,6 +20,10 @@ const devRuntime = (url) => {
   })
 }
 
+export const constCheckIfInstalled = (callback) => {
+  callback(true)
+}
+
 export const core = () => {
   return devRuntime('/recs/core/')
 }

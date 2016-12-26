@@ -8,6 +8,7 @@ import styles from './app.scss'
 import NavBar from '../NavBar'
 import User from '../../models/User'
 import Data from '../../data'
+import { checkIfInstalled } from '../../runtime'
 
 @inject('currentUser')
 @observer
@@ -17,6 +18,8 @@ export default class App extends Component {
 
   constructor(props) {
     super(props)
+
+    this.checkIfHasExtension()
 
     this.props.currentUser.fetchMeta()
     this.userStore = new UserStore()
@@ -29,6 +32,14 @@ export default class App extends Component {
 
     this.countUnread()
     this.registerHook()
+  }
+
+  checkIfHasExtension() {
+    checkIfInstalled(status => {
+      if (!status) {
+        window.location = '/welcome'
+      }
+    })
   }
 
   registerHook() {

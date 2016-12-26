@@ -9,6 +9,7 @@ import User from './User'
 import Matches from './Matches'
 import Actions from './Actions'
 import FbConnect from './FbConnect'
+import Welcome from './Welcome'
 import Data from '../data'
 
 Router.prototype.componentWillReceiveProps = function(nextProps) {
@@ -30,8 +31,11 @@ const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
   Data.clearRecs().then(() => callback())
 }
 
-ReactGA.initialize('UA-60241080-4', {
-  debug: true
+const isProduction = process.env.NODE_ENV == 'production'
+const gaCode = isProduction == 'production' ? 'UA-60241080-4' : ''
+
+ReactGA.initialize(gaCode, {
+  debug: !isProduction
 });
 
 const logPageView = () => {
@@ -50,6 +54,7 @@ const Root = () => (
         <Route path="actions" component={Actions} />
       </Route>
       <Route path="fb-connect" component={FbConnect} />
+      <Route path="welcome" component={Welcome} />
     </Router>
   </Provider>
 )

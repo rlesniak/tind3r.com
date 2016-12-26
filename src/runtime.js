@@ -1,9 +1,9 @@
 import { browserHistory } from 'react-router'
-const editorExtensionId = 'hclhcjagjmknmkjmcnlhddhjojnghjmc'
+import { EXT_ID } from './const/index'
 
 const chromeRuntime = (type, params = {}) => {
   return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(editorExtensionId, { type, params }, response => {
+    chrome.runtime.sendMessage(EXT_ID, { type, params }, response => {
       if (response.data) {
         resolve(response.data)
       } else if(response.message) {
@@ -19,7 +19,13 @@ const chromeRuntime = (type, params = {}) => {
 }
 
 export const getFacebookToken = (resolve, reject) => {
-  chrome.runtime.sendMessage(editorExtensionId, { type: 'FACEBOOK_TOKEN' })
+  chrome.runtime.sendMessage(EXT_ID, { type: 'FACEBOOK_TOKEN' })
+}
+
+export const checkIfInstalled = (callback) => {
+  chrome.runtime.sendMessage(EXT_ID, { type: 'CHECK_INSTALLED' }, response => {
+    callback(response)
+  })
 }
 
 export const core = () => {

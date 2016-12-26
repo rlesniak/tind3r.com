@@ -1,0 +1,112 @@
+@import '../../styles/vars';
+$padding: 20px;
+
+.new-message-input {
+  font-size: 0;
+  padding: $padding;
+  border-top: 1px solid $bg;
+  position: relative;
+
+  textarea {
+    font-size: 14px;
+    resize: none;
+    padding: 4px;
+    height: 60px;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: #7f7f7d;
+    background: transparent;
+  }
+
+  &:global(.trying) {
+    opacity: .7;
+    background: #ececec;
+  }
+}
+
+.actions {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  text-align: right;
+
+  .delay {
+    margin-bottom: 6px;
+
+    :global(.fa) {
+      position: absolute;
+      left: 8px;
+      top: 2px;
+      color: #fff;
+      pointer-events: none;
+    }
+
+    :global {
+      .container {
+        width: 60px;
+        text-align: center;
+
+        .display {
+          padding: 3px 12px;
+          background: $blue;
+          color: #fff;
+          cursor: pointer;
+          border-radius: 10px;
+          padding-left: 25px;
+        }
+
+        .list {
+          display: none;
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 24px;
+        }
+
+        .option {
+          line-height: 18px;
+          font-size: 14px;
+          background: #fff;
+          text-align: center;
+          cursor: pointer;
+
+          &:last-child {
+            border-radius: 0 0 10px 10px;
+          }
+        }
+
+        &.show .list {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.send {
+  border-radius: 50%;
+  display: inline-block;
+  border: none;
+  background: $green;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 2px;
+  cursor: pointer;
+
+  &:global(.disabled) {
+    background: gray;
+    cursor: default;
+  }
+}
+
+.tryingLoader {
+  width: 10px;
+  height: 10px;
+  background: red;
+}

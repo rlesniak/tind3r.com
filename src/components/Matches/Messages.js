@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { observer } from 'mobx-react'
 import styles from './messages.scss'
 import Message from './Message'
-import sentences from '../const/sentence'
+import sentences from '../../const/sentence'
 import NewMessageInput from '././NewMessageInput'
 
 @observer

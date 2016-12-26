@@ -10,9 +10,13 @@ class User {
   @observable isFetching = true
   @observable done = 0
 
-  constructor(store, id) {
+  constructor(store, id, json) {
     this.store = store
     this.id = id
+
+    if (json) {
+      extendObservable(this, json)
+    }
   }
 
   @action fetch() {

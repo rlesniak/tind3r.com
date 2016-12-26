@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import { observable } from 'mobx'
-import { Link } from 'react-router'
 import _ from 'lodash'
 import { observer } from 'mobx-react'
 import styles from './styles.scss'
 import MatchStore from '../../stores/MatchStore'
 import Match from './Match'
 import Messages from './Messages'
+import Profile from './Profile'
 import Data from '../../data'
 
 @observer
@@ -45,9 +45,7 @@ export default class Matches extends Component {
           />
         </div>
         <div styleName="profile">
-          {this.seletedMatch && <Link to={`/users/${this.seletedMatch.user._id}`}>
-            Profile
-          </Link>}
+          {this.seletedMatch && <Profile user={this.seletedMatch.user} />}
         </div>
       </div>
     );

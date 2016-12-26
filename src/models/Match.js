@@ -3,6 +3,7 @@ import moment from 'moment'
 import { user, meta } from '../runtime'
 import Data from '../data'
 import MessageStore from '../stores/MessageStore'
+import User from './User'
 
 class Match {
   id = null
@@ -22,8 +23,8 @@ class Match {
 
   @action setFromJson(json) {
     this.lastActivityDate = json.lastActivityDate
-    this.user = json.user
     this.isNew = json.isNew
+    this.user = new User(this, json.user._id, json.user)
     this.messageStore = new MessageStore(this, json)
   }
 

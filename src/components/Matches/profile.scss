@@ -1,0 +1,26 @@
+@import '../../styles/vars';
+
+.wrapper {
+  padding: 10px;
+}
+
+.images {
+  width: 80%;
+  margin: 10px auto;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.bio {
+  margin-top: 10px;
+  font-size: 13px;
+  font-family: $lato;
+  line-height: 16px;
+}
+
+.name {
+  text-decoration: none;
+  color: inherit;
+}

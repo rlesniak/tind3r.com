@@ -40,7 +40,7 @@ export default class NavBar extends Component {
           <li styleName="profile">
             <a href>
               <div styleName="avatar">
-                {!user.isLoading && <img src={user.photos[0].url} alt="avatar" />}
+                {!user.isLoading && user.photos && <img src={user.photos[0].url} alt="avatar" />}
               </div>
               <div styleName="name">
                 {this.props.user.full_name}

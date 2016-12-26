@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
@@ -29,6 +30,11 @@ module.exports = {
       comments: false,
       mangle: true,
       minimize: true
+    }),
+    new RollbarSourceMapPlugin({
+      accessToken: '569f2db30e904dc19367cdeeffd07e1f',
+      version: '0.0.1',
+      publicPath: 'http://tnder.herokuapp.com/'
     })
   ],
   resolve: {

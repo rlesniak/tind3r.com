@@ -32,7 +32,7 @@ const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
 }
 
 const isProduction = process.env.NODE_ENV == 'production'
-const gaCode = isProduction == 'production' ? 'UA-60241080-4' : ''
+const gaCode = isProduction ? 'UA-60241080-4' : 'UA-000000-1'
 
 ReactGA.initialize(gaCode, {
   debug: !isProduction

@@ -51,6 +51,7 @@
     "react-router": "^3.0.0",
     "react-slick": "0.14.5",
     "resolve-url": "^0.2.1",
+    "rollbar-sourcemap-webpack-plugin": "^1.5.0",
     "sass-loader": "^4.1.1",
     "slick-carousel": "^1.6.0",
     "style-loader": "^0.13.1",

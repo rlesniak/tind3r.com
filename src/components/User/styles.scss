@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .wrapper {
   width: 1000px;
   margin: 20px auto;
@@ -29,7 +31,7 @@
   .full-bio {
     border-left: 4px solid #f6f1e4;
     padding-left: 10px;
-    font-family: 'Lato', sans-serif;
+    font-family: $lato;
   }
 }
 

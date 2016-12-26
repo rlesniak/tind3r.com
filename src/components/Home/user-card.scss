@@ -126,7 +126,7 @@
 }
 
 .bio {
-  font-family: 'Lato', sans-serif;
+  font-family: $lato;
   margin: 0;
   font-size: 12px;
 }
@@ -238,7 +238,7 @@
   .full-bio {
     border-left: 4px solid #f6f1e4;
     padding-left: 10px;
-    font-family: 'Lato', sans-serif;
+    font-family: $lato;
   }
 }
 

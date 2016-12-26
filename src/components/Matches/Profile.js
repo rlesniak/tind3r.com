@@ -20,10 +20,15 @@ export default class Profile extends Component {
   render() {
     const { user } = this.props
 
+    const sliderSettings = {
+      infinite: false,
+      dots: true,
+    }
+
     return (
       <div styleName="wrapper">
         <div styleName="images">
-          <Slider>
+          <Slider {...sliderSettings}>
             {_.map(user.photos, photo => (
               <div key={_.uniqueId()}><img src={photo.url} alt="img" /></div>
             ))}

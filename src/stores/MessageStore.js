@@ -21,26 +21,32 @@ class MessageStore {
 
     Data.db().users.where('_id').equals(this.participant).first(user => {
       Data.messages(this.convId).then(action(allMsgs => {
-        _.each(allMsgs, msg => this.updateMessage(msg, user))
+        _.each(allMsgs, msg => this.updateMessages(msg, user))
         this.isLoading = false
       }))
     })
   }
 
+  @action create(body) {
+    const message = new Message(this, {}, this.authorId)
+    message.create(body)
+    this.messages.push(message)
+  }
+
   newMessageHook(msg) {
     console.log('MSG HOOK');
     if (msg.match_id === this.convId) {
-      this.updateMessage(msg)
+      this.updateMessages(msg)
     }
   }
 
-  @action updateMessage(json, participant) {
+  @action updateMessages(json, participant) {
     const message = new Message(this, json, this.authorId, participant)
     this.messages.push(message)
   }
 
   @computed get last() {
-    return _.last(this.messages) || {}
+    return _.last(_.filter(this.messages, { isSending: false })) || {}
   }
 }
 

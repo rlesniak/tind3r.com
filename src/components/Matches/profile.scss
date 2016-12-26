@@ -6,7 +6,7 @@
 
 .images {
   width: 80%;
-  margin: 10px auto;
+  margin: 10px auto 30px;
   img {
     width: 100%;
     height: auto;
@@ -23,4 +23,29 @@
 .name {
   text-decoration: none;
   color: inherit;
+}
+
+.images {
+  :global {
+    .slick-slider {
+      .slick-prev,
+      .slick-next {
+        &:before {
+          color: #000;
+        }
+      }
+
+      .slick-prev {
+        left: -30px;
+      }
+
+      .slick-next {
+        right: -30px;
+      }
+
+      .slick-dots {
+        bottom: -25px;
+      }
+    }
+  }
 }

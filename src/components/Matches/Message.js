@@ -20,7 +20,8 @@ export default class Message extends Component {
     const { message, currentUser } = this.props
 
     const className = cx({
-      'align-left': message.isAuthor,
+      'align-right': message.isAuthor,
+      sending: message.isSending,
     })
 
     return (
@@ -36,6 +37,7 @@ export default class Message extends Component {
         </div>
         <div styleName="message">
           {message.message}
+          {message.isSending && <i className="fa fa-envelope-open-o" />}
         </div>
       </div>
     );

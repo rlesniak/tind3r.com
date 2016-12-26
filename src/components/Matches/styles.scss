@@ -9,8 +9,9 @@
 }
 
 .matches,
-.messages {
-  height: calc(100vh - 60px - 40px);
+.messages,
+.profile {
+  height: 100%;
   overflow-y: scroll;;
 }
 
@@ -27,5 +28,5 @@
   order: 0;
   flex: 1 1 auto;
   align-self: auto;
-  overflow: hidden;
+  overflow: visible;
 }

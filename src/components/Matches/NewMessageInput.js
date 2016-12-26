@@ -9,6 +9,7 @@ import cx from 'classnames'
 import { observer } from 'mobx-react'
 import Spinner from '../Spinner'
 import styles from './new-message-input.scss'
+import Data from '../../data'
 
 @observer
 @CSSModules(styles)
@@ -30,11 +31,11 @@ export default class NewMessageInput extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.stopSending)
+    document.addEventListener('keydown', this.onKeydown)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.stopSending)
+    document.removeEventListener('keydown', this.onKeydown)
   }
 
   processSubmit(msg) {
@@ -44,7 +45,7 @@ export default class NewMessageInput extends Component {
   }
 
   @autobind
-  stopSending(e) {
+  onKeydown(e) {
     if (e.keyCode === 27) {
       clearTimeout(this.sendTimeoutFn)
       this.isTryingToSend = false
@@ -78,6 +79,13 @@ export default class NewMessageInput extends Component {
 
       this.submit()
     }
+  }
+
+  @autobind
+  setAsRead() {
+    const { messageStore } = this.props
+
+    Data.db().matches.update(messageStore.matchId, { isNew: 0 })
   }
 
   @autobind
@@ -115,6 +123,8 @@ export default class NewMessageInput extends Component {
           value={this.messageTxt}
           placeholder="Type your message..."
           disabled={this.isTryingToSend}
+          onFocus={this.setAsRead}
+          onBlur={this.setAsRead}
         />
         <div styleName="actions">
           <div styleName="delay">

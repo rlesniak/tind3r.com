@@ -39,6 +39,10 @@ class Match {
 
     return new Date(this.lastActivityDate)
   }
+
+  @computed get areUnread() {
+    return this.isNew
+  }
 }
 
 export default Match

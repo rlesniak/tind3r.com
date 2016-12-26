@@ -37,7 +37,6 @@ class MatchStore {
   fetchFromRemote() {
     Data.updates().then(data => {
       this.fetch()
-      localStorage.setItem('firstFetch', true)
     })
   }
 

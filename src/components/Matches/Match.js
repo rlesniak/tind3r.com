@@ -44,7 +44,7 @@ export default class Match extends Component {
   render() {
     const { match } = this.props
     const className = cx({
-      unread: match.isNew,
+      unread: match.areUnread,
     })
     return (
       <div styleName="match" className={className} onClick={this.handleSelect}>

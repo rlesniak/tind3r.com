@@ -29,7 +29,15 @@ class Match {
   }
 
   @computed get ago() {
-    return moment(this.lastActivityDate).fromNow()
+    return moment(this.lastActvityTime).fromNow()
+  }
+
+  @computed get lastActvityTime() {
+    if (this.messageStore.last.created_date) {
+      return new Date(this.messageStore.last.created_date)
+    }
+
+    return new Date(this.lastActivityDate)
   }
 }
 

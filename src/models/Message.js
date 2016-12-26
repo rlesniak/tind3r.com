@@ -22,7 +22,7 @@ class Message {
   @action create(matchId, body) {
     this.isSending = true
 
-    Data.sendMessage(1, body).then(resp => {
+    Data.sendMessage(matchId, body).then(resp => {
       this.isSending = false
       this.isError = false
 
@@ -33,6 +33,7 @@ class Message {
 
     this.setFromJson({
       message: body,
+      created_date: new Date(),
       id: _.uniqueId(),
     })
   }

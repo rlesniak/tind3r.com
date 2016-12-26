@@ -59,6 +59,10 @@ class MatchStore {
   findMatch(id) {
     return _.find(this.matches, { id })
   }
+
+  @computed get byDate() {
+    return _.orderBy(this.matches, 'lastActvityTime').reverse()
+  }
 }
 
 export default MatchStore

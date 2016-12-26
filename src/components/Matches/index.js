@@ -31,7 +31,7 @@ export default class Matches extends Component {
     return (
       <div className="main-wrapper" styleName="wrapper">
         <div styleName="matches">
-          {!this.matchStore.isLoading && _.map(this.matchStore.matches.reverse(), match => (
+          {!this.matchStore.isLoading && _.map(this.matchStore.byDate, match => (
             <Match
               key={match.id}
               match={match}

@@ -8,4 +8,12 @@
 
 .message {
   text-align: center;
+
+  button {
+    border: none;
+    background: transparent;
+    margin-left: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
 }

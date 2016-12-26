@@ -1,4 +1,4 @@
-import { observable, transaction, computed, reaction } from 'mobx'
+import { observable, transaction, computed, reaction, action } from 'mobx'
 import _ from 'lodash'
 import User from '../models/User'
 import Data from '../data'
@@ -26,14 +26,17 @@ class UserStore {
   }
 
   core(isCharging = false) {
+    this.isLoading = true
+
     if (isCharging) {
       this.isCharging = true
     }
 
-    Data.core().then(resp => {
+    Data.core().then(action(resp => {
       if (!resp.results.length) {
         // this.message = resp.message
         this.message = 'There\'s no one new around you.'
+        this.isLoading = false
         return
       }
 
@@ -44,7 +47,7 @@ class UserStore {
       })
 
       this.initChargeReaction()
-    }).catch(resp => {
+    })).catch(resp => {
       this.needFb = true
       this.isLoading = false
     })

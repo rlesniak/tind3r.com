@@ -4,9 +4,12 @@ import CSSModules from 'react-css-modules';
 import _ from 'lodash'
 import styles from '../styles/loader.scss'
 
-export default inject('currentUser')(observer(CSSModules(({ currentUser, isSimpleLoader }) => (
+export default inject('currentUser')(observer(CSSModules(({ currentUser, isSimpleLoader, noAnimation }) => (
   <div>
-    {!isSimpleLoader && <div styleName="containter">
+    {!isSimpleLoader && <div
+      styleName="containter"
+      className={noAnimation && 'no-animation'}
+    >
       <div styleName="dot"></div>
       <div styleName="pulse">
         {!currentUser.isLoading && <img src={currentUser.photos[0].url} alt="avatar" />}

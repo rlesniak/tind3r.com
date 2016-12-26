@@ -71,7 +71,7 @@ export default class User extends Component {
             </a>
           </div>
           <div styleName="actions">
-            <ActionButtons user={user} withSuperLikeCounter />
+            <ActionButtons user={user} withSuperLikeCounter withKeyActions />
           </div>
         </div>
         <div styleName="photos">

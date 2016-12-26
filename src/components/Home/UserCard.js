@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import Slider from 'react-slick'
+import autobind from 'autobind-decorator'
 import _ from 'lodash'
 import cx from 'classnames'
 import styles from './user-card.scss'
@@ -21,11 +22,48 @@ export default class UserCard extends Component {
     }
   }
 
+  componentDidMount() {
+    if (!this.props.simple) {
+      document.addEventListener('keydown', this.onKeydown)
+    }
+  }
+
   componentWillReceiveProps() {
     if (!this.props.simple) {
       this.sliderSettings.currentSlide = 0
       this.forceUpdate()
     }
+  }
+
+  componentWillUnmount() {
+    if (!this.props.simple) {
+      document.removeEventListener('keydown', this.onKeydown)
+    }
+  }
+
+  @autobind
+  onKeydown(e) {
+    if (e.keyCode === 39 || e.keyCode === 37) {
+      e.preventDefault()
+    }
+
+    switch (e.keyCode) {
+      case 39:
+        this.nextSlide()
+        break;
+      case 37:
+        this.prevSlide()
+        break;
+      default:
+    }
+  }
+
+  nextSlide() {
+    this.sliderRef.slickNext()
+  }
+
+  prevSlide() {
+    this.sliderRef.slickPrev()
   }
 
   renderBasicInfo() {
@@ -71,7 +109,7 @@ export default class UserCard extends Component {
     const width = simple === true ? 220 : 350
     return (
       <div styleName="images">
-        <Slider {...this.sliderSettings}>
+        <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
           {_.map(user.photos, photo => (
             <div key={_.uniqueId()}><img src={photo.url} alt="img" style={{ width }} /></div>
           ))}
@@ -81,12 +119,13 @@ export default class UserCard extends Component {
   }
 
   renderActionsRow() {
-    const { user } = this.props
+    const { user, simple } = this.props
     return (
       <tr styleName="actions">
         <td colSpan="3">
           <ActionButtons
             user={user}
+            withKeyActions={!simple}
             withSuperLikeCounter={this.props.withSuperLikeCounter}
           />
         </td>

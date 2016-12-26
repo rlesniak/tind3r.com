@@ -35,6 +35,16 @@ export default class ActionButtons extends Component {
       this.superLikecount()
       setInterval(() => this.superLikecount(), 1000)
     }
+
+    if (this.props.withKeyActions) {
+      document.addEventListener('keydown', this.onKeydown)
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.withKeyActions) {
+      document.removeEventListener('keydown', this.onKeydown)
+    }
   }
 
   superLikecount() {
@@ -63,6 +73,31 @@ export default class ActionButtons extends Component {
         this.isSuper = true
       }
     })
+  }
+
+  /**
+   * 65 - a
+   * 83 - s
+   * 68 - d
+   */
+  @autobind
+  onKeydown(e) {
+    if (e.keyCode === 65 || e.keyCode === 83 || e.keyCode === 68) {
+      e.preventDefault()
+    }
+
+    switch (e.keyCode) {
+      case 65:
+        this.handlePass()
+        break;
+      case 68:
+        this.handleLike()
+        break;
+      case 83:
+        this.handleSuperlike()
+        break;
+      default:
+    }
   }
 
   @autobind

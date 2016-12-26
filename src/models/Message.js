@@ -8,6 +8,7 @@ class Message {
   id = null
   store = null
   @observable isSending = false
+  @observable isError = false
   @observable done = 0
 
   constructor(store, json = {}, authorId, participant) {
@@ -21,8 +22,13 @@ class Message {
   @action create(matchId, body) {
     this.isSending = true
 
-    Data.sendMessage(matchId, body).then(resp => {
+    Data.sendMessage(1, body).then(resp => {
       this.isSending = false
+      this.isError = false
+
+      this.setFromJson(resp)
+    }).catch(resp => {
+      this.isError = true
     })
 
     this.setFromJson({

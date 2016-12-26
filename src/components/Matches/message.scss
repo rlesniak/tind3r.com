@@ -31,6 +31,18 @@
   &:global(.sending) {
     opacity: .5;
   }
+
+  &:global(.error) {
+    opacity: .5;
+
+    .message {
+      background: red;
+
+      &:before {
+        border-right-color: red;
+      }
+    }
+  }
 }
 
 .avatar {

@@ -22,6 +22,7 @@ export default class Message extends Component {
     const className = cx({
       'align-right': message.isAuthor,
       sending: message.isSending,
+      error: message.isError,
     })
 
     return (
@@ -38,6 +39,7 @@ export default class Message extends Component {
         <div styleName="message">
           {message.message}
           {message.isSending && <i className="fa fa-envelope-open-o" />}
+          {message.isError && <i className="fa fa-exclamation-triangle" />}
         </div>
       </div>
     );

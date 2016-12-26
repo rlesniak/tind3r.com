@@ -8,7 +8,9 @@ const chromeRuntime = (type, params = {}) => {
         resolve(response.data)
       } else if(response.message) {
         resolve(response)
-      } else {
+      } else if(response.error !== 401) {
+        reject(response.error)
+      } else if(response.error === 401) {
         browserHistory.push('/fb-connect');
         reject('NEED_FB')
       }

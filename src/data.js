@@ -87,9 +87,9 @@ const Data = {
     })
   },
 
-  sendMessage(userId, message) {
+  sendMessage(matchId, message) {
     return new Promise((resolve, reject) => {
-      sendMessage(userId, message).then(resp => {
+      sendMessage(matchId, message).then(resp => {
         db.messages.put({
           ...resp,
           isNew: 0

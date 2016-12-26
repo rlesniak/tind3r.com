@@ -21,9 +21,11 @@ export default class App extends Component {
     this.props.currentUser.fetchMeta()
     this.userStore = new UserStore()
 
-    // setInterval(() => {
-    //   Data.updates()
-    // }, 3000)
+    if (process.env.NODE_ENV === 'production') {
+      setInterval(() => {
+        Data.updates()
+      }, 3000)
+    }
 
     this.countUnread()
     this.registerHook()

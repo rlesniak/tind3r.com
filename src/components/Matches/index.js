@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import { observable } from 'mobx'
 import _ from 'lodash'
+import ReactGA from 'react-ga'
 import { observer } from 'mobx-react'
 import styles from './styles.scss'
 import MatchStore from '../../stores/MatchStore'
@@ -25,6 +26,11 @@ export default class Matches extends Component {
   handleSelect(id) {
     this.seletedMatch = this.matchStore.findMatch(id)
     this.matchStore.setAsDone(this.seletedMatch)
+
+    ReactGA.event({
+      category: 'Match',
+      action: 'Select'
+    })
   }
 
   render() {

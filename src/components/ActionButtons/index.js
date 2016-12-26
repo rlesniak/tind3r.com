@@ -5,6 +5,7 @@ import moment from 'moment'
 import autobind from 'autobind-decorator'
 import CSSModules from 'react-css-modules'
 import _ from 'lodash'
+import ReactGA from 'react-ga'
 import cx from 'classnames'
 import styles from './styles.scss'
 import Data from '../../data'
@@ -106,6 +107,12 @@ export default class ActionButtons extends Component {
       return
     }
 
+    ReactGA.event({
+      category: 'User',
+      action: 'Like',
+      value: this.props.user._id
+    })
+
     this.isLiked = true
     this.props.user.like().then(resp => {
       if (resp.match) {
@@ -120,6 +127,12 @@ export default class ActionButtons extends Component {
       return
     }
 
+    ReactGA.event({
+      category: 'User',
+      action: 'Pass',
+      value: this.props.user._id
+    })
+
     this.isPassed = true
     this.props.user.pass()
   }
@@ -129,6 +142,13 @@ export default class ActionButtons extends Component {
     if (this.isSuper || this.diffMin > 0) {
       return
     }
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Superlike',
+      value: this.props.user._id
+    })
+
     this.isSuper = true
     this.props.user.superLike().then(r => {
       this.getSuperLikeDiffInMin()

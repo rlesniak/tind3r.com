@@ -1,5 +1,6 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
+import ReactGA from 'react-ga'
 import { user, meta } from '../runtime'
 import Data from '../data'
 
@@ -66,6 +67,7 @@ class User {
     meta().then(action(resp => {
       extendObservable(this, resp.user)
       this.isLoading = false
+      ReactGA.set({ userId: resp.user._id });
     }))
   }
 

@@ -4,6 +4,7 @@ import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
 import CSSModules from 'react-css-modules'
 import moment from 'moment'
+import ReactGA from 'react-ga'
 import _ from 'lodash'
 import UserStore from '../../stores/UserStore'
 import UserCard from './UserCard'
@@ -19,6 +20,11 @@ export default class Home extends Component {
   refresh() {
     const { userStore } = this.props
     userStore.core()
+
+    ReactGA.event({
+      category: 'Manual refresh',
+      action: 'Refresh',
+    })
   }
 
   renderLoader() {

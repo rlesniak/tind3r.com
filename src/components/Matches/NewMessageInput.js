@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
+import ReactGA from 'react-ga'
 import _ from 'lodash'
 import { Link } from 'react-router'
 import Select from 'react-basic-dropdown'
@@ -50,6 +51,11 @@ export default class NewMessageInput extends Component {
       clearTimeout(this.sendTimeoutFn)
       this.isTryingToSend = false
       this.inputRef.focus()
+
+      ReactGA.event({
+        category: 'Message',
+        action: 'Cancel',
+      })
     }
   }
 
@@ -77,6 +83,12 @@ export default class NewMessageInput extends Component {
     if (e.charCode === 13) {
       e.preventDefault()
 
+      ReactGA.event({
+        category: 'Message',
+        action: 'Submit',
+        label: 'Enter',
+      })
+
       this.submit()
     }
   }
@@ -92,6 +104,12 @@ export default class NewMessageInput extends Component {
   handleDelayChange(option) {
     this.sendDelaySec = option.value
     localStorage.setItem('sendDelay', option.value)
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Delay',
+      value: Number(option.value),
+    })
   }
 
   render() {

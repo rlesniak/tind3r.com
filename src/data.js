@@ -1,5 +1,6 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
+import ReactGA from 'react-ga'
 import { core, like, pass, superLike, updates, sendMessage } from './runtime'
 import matchObj from './objects/match'
 
@@ -77,10 +78,22 @@ const Data = {
             const messages = _.map(match.messages, m => ({ ...m, isNew: 0 }))
 
             db.messages.bulkPut(messages)
-
-            isFirstFetch ? localStorage.setItem('firstFetchDone', true) : null
           })
-        }).then(() => resolve())
+        }).then(() => {
+          if (isFirstFetch) {
+            db.matches.count(c => {
+              ReactGA.event({
+                category: 'Initial',
+                action: 'Matches loaded',
+                value: c,
+                nonInteraction: true
+              })
+            })
+          }
+
+          isFirstFetch ? localStorage.setItem('firstFetchDone', true) : null
+          resolve()
+        })
       })
     })
   },

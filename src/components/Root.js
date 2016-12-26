@@ -1,6 +1,7 @@
 import React from 'react'
 import { Provider } from 'mobx-react'
 import UserModel from '../models/User'
+import ReactGA from 'react-ga'
 import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
 import App from './App'
 import Home from './Home'
@@ -29,9 +30,18 @@ const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
   Data.clearRecs().then(() => callback())
 }
 
+ReactGA.initialize('UA-60241080-4', {
+  debug: true
+});
+
+const logPageView = () => {
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
+}
+
 const Root = () => (
   <Provider currentUser={new UserModel()}>
-    <Router history={browserHistory}>
+    <Router history={browserHistory} onUpdate={logPageView}>
       <Route path="/" component={App} onEnter={clearRecsOnPageEnterOrReload}>
         <IndexRedirect to="home" />
         <Route path="home" component={Home} />

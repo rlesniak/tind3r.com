@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
-    "heroku-postbuild": "npm run dll && npm rebuild node-sass && webpack -p --config ./webpack.prod.config.js --colors",
-    "dll": "webpack --config=webpack.dll.config.js --colors",
+    "heroku-postbuild": "npm run dll && webpack -p --config ./webpack.prod.config.js --colors",
+    "dll": "webpack -p --config=webpack.dll.config.js --colors",
     "start": "node server.js",
     "lint": "eslint src",
     "server": "json-server db/index.js -p 3002 -r routes.json"

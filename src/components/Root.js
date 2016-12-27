@@ -9,6 +9,7 @@ import User from './User'
 import Matches from './Matches'
 import Actions from './Actions'
 import FbConnect from './FbConnect'
+import Debug from './Debug'
 import Welcome from './Welcome'
 import Data from '../data'
 
@@ -55,6 +56,7 @@ const Root = () => (
       </Route>
       <Route path="fb-connect" component={FbConnect} />
       <Route path="welcome" component={Welcome} />
+      <Route path="debug" component={Debug} />
     </Router>
   </Provider>
 )

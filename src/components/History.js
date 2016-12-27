@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
 import { Link } from 'react-router'
+import CSSModules from 'react-css-modules'
 import _ from 'lodash'
 import Data from '../data'
+import styles from './history.scss'
 
-export default class Actions extends Component {
+@CSSModules(styles)
+export default class History extends Component {
   @observable actions = []
 
   constructor(props) {
@@ -43,7 +46,7 @@ export default class Actions extends Component {
 
   render() {
     return (
-      <div className="main-wrapper">
+      <div styleName="wrapper" className="main-wrapper">
         <ul>
           {this.actions}
         </ul>

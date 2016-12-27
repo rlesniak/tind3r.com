@@ -32,9 +32,9 @@ export default class NavBar extends Component {
             </Link>
           </li>
           <li>
-            <Link to="/actions" activeClassName="active">
+            <Link to="/history" activeClassName="active">
               <i className="fa fa-history"></i>
-              Actions
+              History
             </Link>
           </li>
           <li styleName="profile">

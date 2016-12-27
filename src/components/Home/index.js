@@ -6,6 +6,7 @@ import CSSModules from 'react-css-modules'
 import moment from 'moment'
 import ReactGA from 'react-ga'
 import _ from 'lodash'
+import { ModalContainer, ModalDialog } from 'react-modal-dialog'
 import UserStore from '../../stores/UserStore'
 import UserCard from './UserCard'
 import UserCardList from './UserCardList'
@@ -15,6 +16,13 @@ import styles from './styles.scss'
 @observer
 @CSSModules(styles)
 export default class Home extends Component {
+  @observable isShowingModal = false
+
+  componentDidMount() {
+    const shouldShow = !localStorage.getItem('homepage-tour')
+
+    this.isShowingModal = shouldShow;
+  }
 
   @autobind
   refresh() {
@@ -25,6 +33,37 @@ export default class Home extends Component {
       category: 'Manual refresh',
       action: 'Refresh',
     })
+  }
+
+  @autobind
+  handleClose() {
+    this.isShowingModal = false
+    localStorage.setItem('homepage-tour', true)
+  }
+
+  renderModal() {
+    if (!this.isShowingModal) {
+      return null
+    }
+
+    return (
+      <ModalContainer onClose={this.handleClose}>
+        <ModalDialog onClose={this.handleClose}>
+          <h1>Protips:</h1>
+          <ul>
+            <li>Use your arrows to sliding photos</li>
+            <li>Use your keys to:
+              <ul>
+                <li>a - pass</li>
+                <li>s - super like</li>
+                <li>d - like</li>
+              </ul>
+            </li>
+          </ul>
+          <h1>(layout will be improved)</h1>
+        </ModalDialog>
+      </ModalContainer>
+    )
   }
 
   renderLoader() {
@@ -55,6 +94,7 @@ export default class Home extends Component {
       </div>
     )
   }
+
   renderRecs() {
     const { userStore } = this.props
 
@@ -68,6 +108,7 @@ export default class Home extends Component {
 
     return (
       <div styleName="home">
+        {this.renderModal()}
         <div styleName="recommendation">
           <UserCard user={userStore.first} withSuperLikeCounter />
         </div>

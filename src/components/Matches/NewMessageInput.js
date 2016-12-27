@@ -145,7 +145,7 @@ export default class NewMessageInput extends Component {
           onBlur={this.setAsRead}
         />
         <div styleName="actions">
-          <div styleName="delay">
+          <div styleName="delay" title="Sending delay in sec">
             <i className="fa fa-clock-o" />
             <Select
               value={this.sendDelaySec}
@@ -155,7 +155,7 @@ export default class NewMessageInput extends Component {
             />
           </div>
           <div>
-            {this.isTryingToSend && <Spinner align="right" />}
+            {this.isTryingToSend && <Spinner align="right"><span styleName="esc">ESC</span></Spinner>}
           </div>
           {!this.isTryingToSend && <button styleName="send" className={sendStyle} onClick={this.submit}>
             <i className="fa fa-paper-plane" />

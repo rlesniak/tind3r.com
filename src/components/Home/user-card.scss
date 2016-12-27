@@ -60,6 +60,13 @@
           border-bottom: 1px solid #fff;
         }
 
+        td > div > :global(.sending) {
+          height: 30px;
+          line-height: 30px;
+          font-size: 12px;
+          color: inherit;
+        }
+
         td > div {
           font-size: 19px;
 

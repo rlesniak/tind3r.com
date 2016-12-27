@@ -30,7 +30,7 @@ export default class UserCard extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.props.simple) {
+    if (!this.props.simple && this.sliderRef) {
       setTimeout(() => this.sliderRef.slickGoTo(0), 0)
     }
   }

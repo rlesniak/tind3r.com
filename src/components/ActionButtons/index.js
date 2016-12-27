@@ -163,7 +163,7 @@ export default class ActionButtons extends Component {
     if (user.isLoading) {
       return (
         <div styleName="buttons">
-          <div styleName="sending">
+          <div styleName="sending" className="sending">
             Sending
             {this.isLiked && <span styleName="l"> like</span>}
             {this.isSuper && <span styleName="sl"> super like</span>}

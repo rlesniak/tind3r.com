@@ -63,7 +63,7 @@ export default class User extends Component {
           <div styleName="intro">
             <h1>
               {user.name}, {user.age}
-              <div styleName="km">{user.km} km, {user.seenMin}</div>
+              <div styleName="km">{user.km} km, <span>{user.seenMin}</span></div>
               <ul styleName="school-job">
                 {_.map(_.filter(user.schools, s => s.id), s => (
                   <li key={s.id}>{s.name}</li>

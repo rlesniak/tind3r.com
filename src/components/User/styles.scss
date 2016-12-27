@@ -75,6 +75,7 @@
     border-radius: 10px;
     font-size: 11px;
     margin-right: 3px;
+    margin-bottom: 3px;
   }
 }
 
@@ -113,4 +114,8 @@
 .km {
   font-size: 18px;
   margin: 10px 0 20px;
+
+  span {
+    color: $blue;
+  }
 }

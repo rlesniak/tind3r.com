@@ -38,14 +38,14 @@ export default class NavBar extends Component {
             </Link>
           </li>
           <li styleName="profile">
-            <a href>
+            <Link to={`/users/${this.props.user._id}`} activeClassName="active">
               <div styleName="avatar">
                 {!user.isLoading && user.photos && <img src={user.photos[0].url} alt="avatar" />}
               </div>
               <div styleName="name">
                 {this.props.user.full_name}
               </div>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

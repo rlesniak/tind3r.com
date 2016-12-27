@@ -188,17 +188,4 @@ const Data = {
   }
 }
 
-console.log(Data);
-
-document.addEventListener('contentScript', e => {
-  const data = e.detail
-  console.log('data', data)
-})
-
-global.Data = {
-  trigger(msg) {
-    alert(1)
-  }
-}
-
 export default Data

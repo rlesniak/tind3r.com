@@ -154,7 +154,6 @@ export default class ActionButtons extends Component {
       this.getSuperLikeDiffInMin()
     }).catch(err => {
       this.isSuper = false
-      console.log('catch', err);
     })
   }
 
@@ -164,7 +163,12 @@ export default class ActionButtons extends Component {
     if (user.isLoading) {
       return (
         <div styleName="buttons">
-          <div>Submitting...</div>
+          <div styleName="sending">
+            Sending
+            {this.isLiked && <span styleName="l"> like</span>}
+            {this.isSuper && <span styleName="sl"> super like</span>}
+            {this.isPassed && <span styleName="p"> pass</span>}
+          </div>
         </div>
       )
     }

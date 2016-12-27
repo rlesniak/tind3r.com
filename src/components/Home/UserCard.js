@@ -19,6 +19,7 @@ export default class UserCard extends Component {
       infinite: false,
       speed: 500,
       currentSlide: 0,
+      slide: 0,
     }
   }
 
@@ -28,10 +29,9 @@ export default class UserCard extends Component {
     }
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate(prevProps, prevState) {
     if (!this.props.simple) {
-      this.sliderSettings.currentSlide = 0
-      this.forceUpdate()
+      setTimeout(() => this.sliderRef.slickGoTo(0), 0)
     }
   }
 
@@ -46,6 +46,8 @@ export default class UserCard extends Component {
     if (e.keyCode === 39 || e.keyCode === 37) {
       e.preventDefault()
     }
+
+    if (!this.sliderRef) return
 
     switch (e.keyCode) {
       case 39:

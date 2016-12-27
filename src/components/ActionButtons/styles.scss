@@ -48,3 +48,22 @@
     color: #c7c7c7 !important;
   }
 }
+
+.sending {
+  font-size: 22px;
+  height: 74px;
+  padding: 0 !important;
+  line-height: 74px;
+
+  .l {
+    color: $green;
+  }
+
+  .sl {
+    color: $blue;
+  }
+
+  .p {
+    color: $red;
+  }
+}

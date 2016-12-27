@@ -38,6 +38,7 @@
     "eslint": "^3.12.2",
     "eslint-plugin-react": "^6.8.0",
     "express": "^4.13.4",
+    "lodash": "^4.17.3",
     "mobx": "^2.7.0",
     "mobx-react": "^4.0.4",
     "moment": "^2.17.1",

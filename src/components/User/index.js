@@ -63,6 +63,7 @@ export default class User extends Component {
           <div styleName="intro">
             <h1>
               {user.name}, {user.age}
+              <div styleName="km">{user.km} km, {user.seenMin}</div>
               <ul styleName="school-job">
                 {_.map(_.filter(user.schools, s => s.id), s => (
                   <li key={s.id}>{s.name}</li>
@@ -73,7 +74,7 @@ export default class User extends Component {
               </ul>
             </h1>
             <h2 styleName="last-seen">
-              Last seen: {user.seen}, {user.seenMin}
+              Last seen: {user.seen}
             </h2>
             <p styleName="full-bio">
               {user.bio || '[NO BIO]'}

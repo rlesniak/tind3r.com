@@ -26,10 +26,11 @@ class UserStore {
   }
 
   core(isCharging = false) {
-    this.isLoading = true
-
+    this.message = null
     if (isCharging) {
       this.isCharging = true
+    } else {
+      this.isLoading = true
     }
 
     Data.core().then(action(resp => {

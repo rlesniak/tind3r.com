@@ -16,6 +16,16 @@ export default class Message extends Component {
     this.wrapper.scrollIntoView()
   }
 
+  renderMessageContent() {
+    const { message } = this.props
+
+    if (message.type === 'gif') {
+      return <div styleName="gif"><img src={message.fixed_height} alt="gif" /></div>
+    }
+
+    return message.message
+  }
+
   render() {
     const { message, currentUser } = this.props
 
@@ -23,6 +33,7 @@ export default class Message extends Component {
       'align-right': message.isAuthor,
       sending: message.isSending,
       error: message.isError,
+      'with-gif': message.type === 'gif',
     })
 
     return (
@@ -37,7 +48,7 @@ export default class Message extends Component {
           <span styleName="date">{moment(message.created_date).format('HH:mm')}</span>
         </div>
         <div styleName="message">
-          {message.message}
+          {this.renderMessageContent()}
           {message.isSending && <i className="fa fa-envelope-open-o" />}
           {message.isError && <i className="fa fa-exclamation-triangle" />}
         </div>

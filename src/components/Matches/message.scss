@@ -43,6 +43,15 @@
       }
     }
   }
+
+  &:global(.with-gif) .message {
+    background: transparent;
+    padding-top: 0;
+
+    &:before {
+      border: none;
+    }
+  }
 }
 
 .avatar {
@@ -97,4 +106,12 @@
   display: block;
   margin-top: 2px;
   font-family: $lato;
+}
+
+.gif {
+  width: 100px;
+
+  img {
+    width: 100%;
+  }
 }

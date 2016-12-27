@@ -27,6 +27,13 @@ export default class Match extends Component {
     Data.db().matches.where('_id').equals(match.id).delete()
   }
 
+  renderLastMessageContent() {
+    const { match } = this.props
+    const { last } = match.messageStore
+
+    return last.type === 'gif' ? '[ GIF ]' : last.message
+  }
+
   renderIcon() {
     const { match } = this.props
 
@@ -53,7 +60,7 @@ export default class Match extends Component {
         </div>
         <div styleName="name">{match.user.name}</div>
         <div styleName="message">
-          <span>{this.renderIcon()} {match.messageStore.last.message}</span>
+          <span>{this.renderIcon()} {this.renderLastMessageContent()}</span>
           <div styleName="date">{match.ago}</div>
         </div>
       </div>

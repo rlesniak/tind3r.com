@@ -1,4 +1,3 @@
-import { browserHistory } from 'react-router'
 import { EXT_ID } from './const/index'
 
 const chromeRuntime = (type, params = {}) => {
@@ -11,8 +10,7 @@ const chromeRuntime = (type, params = {}) => {
       } else if(response.error !== 401) {
         reject(response.error)
       } else if(response.error === 401) {
-        browserHistory.push('/fb-connect');
-        reject('NEED_FB')
+        reject(response.error)
       }
     })
   })
@@ -20,6 +18,12 @@ const chromeRuntime = (type, params = {}) => {
 
 export const getFacebookToken = (resolve, reject) => {
   chrome.runtime.sendMessage(EXT_ID, { type: 'FACEBOOK_TOKEN' })
+}
+
+export const getTokenDate = (callback) => {
+  chrome.runtime.sendMessage(EXT_ID, { type: 'TOKEN_DATE' }, date => {
+    callback(date)
+  })
 }
 
 export const checkIfInstalled = (callback) => {

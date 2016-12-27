@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
+import { browserHistory } from 'react-router'
 import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
 import UserStore from '../../stores/UserStore'
@@ -21,9 +22,15 @@ export default class App extends Component {
 
     this.checkIfHasExtension()
 
-    this.props.currentUser.fetchMeta()
     this.userStore = new UserStore()
+    this.props.currentUser.fetchMeta().then(() => {
+      this.afterSucessLogin()
+    }).catch(status => {
+      browserHistory.push('/fb-connect')
+    })
+  }
 
+  afterSucessLogin() {
     if (process.env.NODE_ENV === 'production') {
       setInterval(() => {
         Data.updates()

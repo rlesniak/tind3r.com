@@ -64,11 +64,19 @@ class User {
 
   @action fetchMeta() {
     this.isLoading = true
-    meta().then(action(resp => {
-      extendObservable(this, resp.user)
-      this.isLoading = false
-      ReactGA.set({ userId: resp.user._id });
-    }))
+    return new Promise((resolve, reject) => {
+      meta().then(action(resp => {
+        extendObservable(this, resp.user)
+        this.isLoading = false
+
+        ReactGA.set({ userId: resp.user._id })
+
+        resolve()
+      })).catch(status => {
+        Rollbar.error('Facebook token expired')
+        reject(status)
+      })
+    })
   }
 
   @action setFromJson(json) {

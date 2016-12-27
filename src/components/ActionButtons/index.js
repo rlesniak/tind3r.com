@@ -87,6 +87,12 @@ export default class ActionButtons extends Component {
       e.preventDefault()
     }
 
+    ReactGA.event({
+      category: 'User',
+      action: 'Keydown',
+      value: e.keyCode,
+    })
+
     switch (e.keyCode) {
       case 65:
         this.handlePass()
@@ -116,8 +122,17 @@ export default class ActionButtons extends Component {
     this.isLiked = true
     this.props.user.like().then(resp => {
       if (resp.match) {
-        console.log('match');
+        alert('Its a match!')
+
+        ReactGA.event({
+          category: 'User',
+          action: 'Like',
+          label: 'Match',
+          nonInteraction: true
+        })
       }
+    }).catch(r => {
+      this.isLiked = false
     })
   }
 
@@ -150,8 +165,19 @@ export default class ActionButtons extends Component {
     })
 
     this.isSuper = true
-    this.props.user.superLike().then(r => {
+    this.props.user.superLike().then(resp => {
       this.getSuperLikeDiffInMin()
+
+      if (resp.match) {
+        alert('Its a match!')
+
+        ReactGA.event({
+          category: 'User',
+          action: 'Superlike',
+          label: 'Match',
+          nonInteraction: true
+        })
+      }
     }).catch(err => {
       this.isSuper = false
     })

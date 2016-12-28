@@ -116,6 +116,7 @@
   color: $font-c;
   cursor: pointer;
   border-radius: 0 0 0 3px;
+  z-index: 1;
 
   &:hover {
     background: #f8f3f0;

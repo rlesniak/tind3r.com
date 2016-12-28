@@ -1,7 +1,7 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
 import ReactGA from 'react-ga'
-import { core, like, pass, superLike, updates, sendMessage } from './runtime'
+import { core, like, pass, superLike, updates, sendMessage, purge } from './runtime'
 import matchObj from './objects/match'
 
 const db = new Dexie('tinder', { addons: [relationships] })
@@ -181,6 +181,11 @@ const Data = {
 
   db() {
     return db
+  },
+
+  purge() {
+    db.delete()
+    purge()
   },
 
   _devAddNew(data) {

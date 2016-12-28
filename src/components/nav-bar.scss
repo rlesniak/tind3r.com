@@ -12,7 +12,14 @@
 
   li {
     display: inline-block;
+    position: relative;
     vertical-align: top;
+
+    &:hover {
+      .submenu {
+        display: block;
+      }
+    }
   }
 
   a {
@@ -93,5 +100,24 @@
       padding-top: 10px;
       padding-bottom: 7px;
     }
+  }
+}
+
+.submenu {
+  display: none;
+  padding: 12px 18px;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid $font-c;
+  border-top: 0;
+  border-right: 0;
+  color: $font-c;
+  cursor: pointer;
+  border-radius: 0 0 0 3px;
+
+  &:hover {
+    background: #f8f3f0;
   }
 }

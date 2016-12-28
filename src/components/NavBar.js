@@ -10,6 +10,18 @@ import Data from '../data'
 @observer
 @CSSModules(styles)
 export default class NavBar extends Component {
+
+  @autobind
+  logout() {
+    const conf = confirm('Are you sure? You will lose all your history.')
+
+    if (conf) {
+      Data.purge()
+      localStorage.clear()
+      window.location.href = '/welcome'
+    }
+  }
+
   render() {
     const { user, newCount } = this.props
 
@@ -50,6 +62,9 @@ export default class NavBar extends Component {
                 {this.props.user.full_name}
               </div>
             </Link>
+            <div styleName="submenu" onClick={this.logout}>
+              <span>Logout</span>
+            </div>
           </li>
         </ul>
       </div>

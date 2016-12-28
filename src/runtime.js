@@ -64,5 +64,9 @@ export const updates = () => {
   return chromeRuntime('FETCH_MESSAGES')
 }
 
+export const purge = () => {
+  return chromeRuntime('PURGE')
+}
+
 
 export default chromeRuntime

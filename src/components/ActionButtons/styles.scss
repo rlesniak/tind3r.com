@@ -18,7 +18,7 @@
     }
   }
 
-  span {
+  .match-text:not(:empty) {
     display: inline-block;
     margin-left: 15px;
   }
@@ -47,19 +47,27 @@
   :global(.done) {
     cursor: default;
   }
+
+  :global(.disabled) {
+    cursor: default !important;
+    position: relative;
+
+    i {
+      color: #c7c7c7 !important;
+      opacity: .6;
+    }
+  }
 }
 
 .counter {
-  font-size: 12px;
+  font-size: 21px;
   display: block;
   text-align: center;
-}
-
-.disabled {
-  cursor: default !important;
-  i {
-    color: #c7c7c7 !important;
-  }
+  transform: translateY(-33px);
+  position: absolute;
+  color: $red;
+  left: 0;
+  width: 100%;
 }
 
 .sending {

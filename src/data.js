@@ -125,14 +125,20 @@ const Data = {
   like(id) {
     return new Promise((resolve, reject) => {
       like(id).then(resp => {
-        db.users.update(id, { done: 1 })
-        db.actions.add({ _id: id, type: 'like', date: new Date() })
+        if(resp.likes_remaining === 0) {
+          if (resp.rate_limited_until) {
+            localStorage.setItem('likeExpiration', resp.rate_limited_until)
+          }
+        } else {
+          db.users.update(id, { done: 1 })
+          db.actions.add({ _id: id, type: 'like', date: new Date() })
 
-        if (resp.match) {
-          db.matches.put(matchObj({
-            ...resp.match,
-            person: { _id: id },
-          }))
+          if (resp.match) {
+            db.matches.put(matchObj({
+              ...resp.match,
+              person: { _id: id },
+            }))
+          }
         }
 
         resolve(resp)

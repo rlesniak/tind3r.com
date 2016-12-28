@@ -40,9 +40,14 @@ class User {
     this.isLoading = true
     return new Promise((resolve, reject) => {
       method(this.id).then(action(resp => {
-        this.done = 1
+        if (resp.likes_remaining === 0) {
+          reject(resp)
+        } else {
+          this.done = 1
+          resolve(resp)
+        }
+
         this.isLoading = false
-        resolve(resp)
       })).catch(action(resp => {
         reject(resp)
         this.isLoading = false

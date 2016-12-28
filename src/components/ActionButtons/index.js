@@ -10,6 +10,8 @@ import cx from 'classnames'
 import styles from './styles.scss'
 import Data from '../../data'
 
+// TODO: Optimize this class!!!
+
 @observer
 @CSSModules(styles)
 export default class ActionButtons extends Component {
@@ -17,13 +19,14 @@ export default class ActionButtons extends Component {
   @observable isPassed = false
   @observable isSuper = false
   @observable isMatch = false
-  @observable counter = ''
-  @observable diffMin = 0
+  @observable counterSuperLike = ''
+  @observable counterLike = ''
+  @observable superlikeDiffMin = 0
+  @observable likeDiffMin = 0
 
   constructor(props) {
     super(props)
 
-    this.expiration = localStorage.getItem('superLikeExpiration')
     this.checkLiked(props.user._id)
   }
 
@@ -35,7 +38,7 @@ export default class ActionButtons extends Component {
   componentDidMount() {
     if (this.props.withSuperLikeCounter) {
       this.superLikecount()
-      setInterval(() => this.superLikecount(), 1000)
+      setInterval(() => this.superLikecount(), 500)
     }
 
     if (this.props.withKeyActions) {
@@ -50,17 +53,34 @@ export default class ActionButtons extends Component {
   }
 
   superLikecount() {
-    if (this.expiration) {
-      this.counter = moment.utc(moment(this.expiration).diff(moment())).format('HH:mm:ss')
+    if (this.superLikeExpiration) {
+      this.counterSuperLike = moment.utc(moment(this.superLikeExpiration).diff(moment())).format('HH:mm:ss')
+    }
+
+    if (this.likeExpiration) {
+      this.counterLike = moment.utc(moment(Number(this.likeExpiration)/1000).diff(moment())).format('HH:mm:ss')
     }
   }
 
   getSuperLikeDiffInMin() {
-    this.diffMin = moment(this.expiration).diff(moment(), 'minutes')
+    this.superlikeDiffMin = moment(this.superLikeExpiration).diff(moment(), 'minutes')
+  }
+
+  getLikeDiffInMin() {
+    this.likeDiffMin = moment.unix(Number(this.likeExpiration)/1000).diff(moment(), 'minutes')
+  }
+
+  initExpirationTimes() {
+    this.superLikeExpiration = localStorage.getItem('superLikeExpiration')
+    this.likeExpiration = localStorage.getItem('likeExpiration')
+
+    this.getSuperLikeDiffInMin()
+    this.getLikeDiffInMin()
   }
 
   checkLiked(id) {
-    this.getSuperLikeDiffInMin()
+    this.initExpirationTimes()
+
     Data.getActions().where('_id').equals(id).first(r => {
       if (r) {
         this.props.user.done = true
@@ -116,7 +136,7 @@ export default class ActionButtons extends Component {
 
   @autobind
   handleLike() {
-    if (this.isLiked) {
+    if (this.isLiked || this.likeDiffMin > 0) {
       return
     }
 
@@ -139,6 +159,8 @@ export default class ActionButtons extends Component {
         })
       }
     }).catch(r => {
+      this.initExpirationTimes()
+
       this.isLiked = false
     })
   }
@@ -161,7 +183,7 @@ export default class ActionButtons extends Component {
 
   @autobind
   handleSuperlike() {
-    if (this.isSuper || this.diffMin > 0) {
+    if (this.isSuper || this.superlikeDiffMin > 0) {
       return
     }
 
@@ -186,6 +208,8 @@ export default class ActionButtons extends Component {
         })
       }
     }).catch(err => {
+      this.initExpirationTimes()
+
       this.isSuper = false
     })
   }
@@ -208,10 +232,9 @@ export default class ActionButtons extends Component {
 
     const matchText = this.isMatch ? 'Match!' : null
 
-    const superClass = cx({ disabled: this.diffMin > 0 })
     const passedClass = cx({ done: this.isPassed })
-    const superClassN = cx({ done: this.isSuper })
-    const likedClass = cx({ done: this.isLiked })
+    const superClassN = cx({ done: this.isSuper, disabled: this.superlikeDiffMin > 0 })
+    const likedClass = cx({ done: this.isLiked, disabled: this.likeDiffMin > 0 })
 
     return (
       <div styleName="buttons">
@@ -219,15 +242,16 @@ export default class ActionButtons extends Component {
         <div onClick={this.handlePass} className={passedClass}>
           <i className="fa fa-thumbs-o-down" />
         </div>}
-        {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} styleName={superClass} className={superClassN}>
+        {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} className={superClassN}>
           <i className="fa fa-star" />
-          <span>{matchText}</span>
-          {this.diffMin > 0 && <span styleName="counter">{this.counter}</span>}
+          <span styleName="match-text">{matchText}</span>
+          {this.superlikeDiffMin > 0 && <span styleName="counter">{this.counterSuperLike}</span>}
         </div>}
         {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
         <div onClick={this.handleLike} className={likedClass}>
           <i className="fa fa-heart" />
-          <span>{matchText}</span>
+          <span styleName="match-text">{matchText}</span>
+          {this.likeDiffMin > 0 && <span styleName="counter">{this.counterLike}</span>}
         </div>}
       </div>
     );

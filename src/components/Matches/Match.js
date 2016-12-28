@@ -48,13 +48,29 @@ export default class Match extends Component {
     return <i className="fa fa-arrow-up" aria-hidden="true"></i>
   }
 
+  renderTypeIcon() {
+    const { match } = this.props
+
+    if (match.isSuperLike) {
+      return <i className="fa fa-star" />
+    }
+
+    if (match.isBoostMatch) {
+      return <i className="fa fa-bolt" />
+    }
+
+    return null
+  }
+
   render() {
     const { match } = this.props
     const className = cx({
       unread: match.areUnread,
+      'super': match.isSuperLike,
     })
     return (
       <div styleName="match" className={className} onClick={this.handleSelect}>
+        <div styleName="type-icon">{this.renderTypeIcon()}</div>
         <div styleName="avatar">
           <img src={match.user.photos[0].url} />
         </div>

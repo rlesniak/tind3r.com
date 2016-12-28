@@ -9,6 +9,7 @@
   text-decoration: none;
   color: $font-c;
   border-left: 3px solid transparent;
+  position: relative;
 
   &:global(.unread) {
     border-left-color: $blue;
@@ -50,5 +51,22 @@
   img {
     width: 100%;
     height: auto;
+  }
+}
+
+.type-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 15px;
+
+  :global {
+    .fa-star {
+      color: $blue;
+    }
+
+    .fa-bolt {
+      color: $violet;
+    }
   }
 }

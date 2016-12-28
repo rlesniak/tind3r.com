@@ -16,6 +16,7 @@ export default class ActionButtons extends Component {
   @observable isLiked = false
   @observable isPassed = false
   @observable isSuper = false
+  @observable isMatch = false
   @observable counter = ''
   @observable diffMin = 0
 
@@ -61,6 +62,10 @@ export default class ActionButtons extends Component {
   checkLiked(id) {
     this.getSuperLikeDiffInMin()
     Data.getActions().where('_id').equals(id).first(r => {
+      if (r) {
+        this.props.user.done = true
+      }
+
       this.isLiked = (r && r.type == 'like')
       this.isPassed = (r && r.type == 'pass')
       this.isSuper = (r && r.type == 'superlike')
@@ -73,6 +78,8 @@ export default class ActionButtons extends Component {
       } else {
         this.isSuper = true
       }
+
+      this.isMatch = true
     })
   }
 
@@ -199,6 +206,8 @@ export default class ActionButtons extends Component {
       )
     }
 
+    const matchText = this.isMatch ? 'Match!' : null
+
     const superClass = cx({ disabled: this.diffMin > 0 })
     const passedClass = cx({ done: this.isPassed })
     const superClassN = cx({ done: this.isSuper })
@@ -212,11 +221,13 @@ export default class ActionButtons extends Component {
         </div>}
         {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} styleName={superClass} className={superClassN}>
           <i className="fa fa-star" />
+          <span>{matchText}</span>
           {this.diffMin > 0 && <span styleName="counter">{this.counter}</span>}
         </div>}
         {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
         <div onClick={this.handleLike} className={likedClass}>
           <i className="fa fa-heart" />
+          <span>{matchText}</span>
         </div>}
       </div>
     );

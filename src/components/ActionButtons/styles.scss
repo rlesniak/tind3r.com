@@ -18,16 +18,29 @@
     }
   }
 
+  span {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
   > div:hover,
   :global(.done) {
     color: $red;
 
     :global(.fa-heart) {
-      color: $green
+      color: $green;
+
+      & + span {
+        color: $green;
+      }
     }
 
     :global(.fa-star) {
-      color: $blue
+      color: $blue;
+
+      & + span {
+        color: $blue;
+      }
     }
   }
 

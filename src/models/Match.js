@@ -12,6 +12,8 @@ class Match {
   @observable lastActivityDate
   @observable user
   @observable isNew
+  @observable isSuperLike
+  @observable isBoostMatch
   @observable messageStore
 
   constructor(store, json = {}) {
@@ -24,6 +26,8 @@ class Match {
   @action setFromJson(json) {
     this.lastActivityDate = json.lastActivityDate
     this.isNew = json.isNew
+    this.isSuperLike = json.isSuperLike
+    this.isBoostMatch = json.isBoostMatch
     this.user = new User(this, json.user._id, json.user)
     this.messageStore = new MessageStore(this, json)
   }

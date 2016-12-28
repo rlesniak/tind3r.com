@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family==Lato:300,300i,400|Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&subset=latin-ext');
 @import 'vars';
 
 body {
   background: $bg;
   color: $font-c;
-  font-family: Montserrat, Tahoma, Arial;
+  font-family: Poppins, Tahoma, Arial;
 
   * {
     box-sizing: border-box;

@@ -13,6 +13,10 @@ export default class NavBar extends Component {
   render() {
     const { user, newCount } = this.props
 
+    if (!user) {
+      return null
+    }
+
     return (
       <div styleName="nav-bar">
         <ul>

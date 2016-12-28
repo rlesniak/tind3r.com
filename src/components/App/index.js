@@ -20,13 +20,15 @@ export default class App extends Component {
   constructor(props) {
     super(props)
 
-    this.checkIfHasExtension()
-
     this.userStore = new UserStore()
-    this.props.currentUser.fetchMeta().then(() => {
-      this.afterSucessLogin()
-    }).catch(status => {
-      browserHistory.push('/fb-connect')
+
+    this.checkIfHasExtension(() => {
+      this.props.currentUser.fetchMeta().then(() => {
+        this.userStore.core()
+        this.afterSucessLogin()
+      }).catch(status => {
+        browserHistory.push('/fb-connect')
+      })
     })
   }
 
@@ -41,10 +43,12 @@ export default class App extends Component {
     this.registerHook()
   }
 
-  checkIfHasExtension() {
+  checkIfHasExtension(successCallback) {
     checkIfInstalled(status => {
       if (!status) {
         window.location = '/welcome'
+      } else {
+        successCallback()
       }
     })
   }

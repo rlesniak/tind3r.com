@@ -19,9 +19,9 @@ class MatchStore {
 
     Data.matches().then(data => {
       transaction(() => {
-        _.each(_.sortBy(data, 'lastActivityDate'), r => {
+        _.each(_.sortBy(data, 'lastActivityDate'), action(r => {
           this.updateMatches(r)
-        })
+        }))
         this.isLoading = false
       })
     }).catch(resp => {

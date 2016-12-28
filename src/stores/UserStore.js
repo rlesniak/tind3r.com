@@ -10,10 +10,6 @@ class UserStore {
   @observable isCharging = true;
   @observable needFb = false;
 
-  constructor() {
-    this.core() // Load only if user refresh/first visit page
-  }
-
   initChargeReaction() {
     reaction(
       () => this.all.length,

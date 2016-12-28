@@ -5,13 +5,18 @@ import Data from '../data'
 
 class UserStore {
   @observable users = []
-  @observable message = null
+  @observable noRecs = false
   @observable isLoading = true;
   @observable isCharging = true;
-  @observable needFb = false;
+
+  constructor() {
+    this.chargeReaction = null
+  }
 
   initChargeReaction() {
-    reaction(
+    if (this.chargeReaction) return
+
+    this.chargeReaction = reaction(
       () => this.all.length,
       (length) => {
         if (length <= 3 && !this.isCharging && !this.isLoading) {
@@ -22,7 +27,6 @@ class UserStore {
   }
 
   core(isCharging = false) {
-    this.message = null
     if (isCharging) {
       this.isCharging = true
     } else {
@@ -31,22 +35,23 @@ class UserStore {
 
     Data.core().then(action(resp => {
       if (!resp.results.length) {
-        // this.message = resp.message
-        this.message = 'There\'s no one new around you.'
+        this.noRecs = true
+        this.isCharging = false
         this.isLoading = false
         return
       }
 
       transaction(() => {
         _.each(_.sortBy(resp.results, '_id'), res => this.updateUser(res))
+        this.noRecs = false
         this.isLoading = false
         this.isCharging = false
       })
 
       this.initChargeReaction()
     })).catch(resp => {
-      this.needFb = true
       this.isLoading = false
+      this.isCharging = false
     })
   }
 
@@ -65,11 +70,11 @@ class UserStore {
   }
 
   @computed get first() {
-    return _.head(this.all)
+    return this.all.length ? _.head(this.all) : []
   }
 
   @computed get tail() {
-    return _.tail(this.all)
+    return this.all.length ? _.tail(this.all) : []
   }
 
   @computed get all() {

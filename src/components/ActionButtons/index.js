@@ -27,8 +27,8 @@ export default class ActionButtons extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!nextProps.user._id) return
     this.checkLiked(nextProps.user._id)
-    this.forceUpdate()
   }
 
   componentDidMount() {
@@ -116,7 +116,7 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Like',
-      value: this.props.user._id
+      label: this.props.user._id
     })
 
     this.isLiked = true
@@ -145,7 +145,7 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Pass',
-      value: this.props.user._id
+      label: this.props.user._id
     })
 
     this.isPassed = true
@@ -161,7 +161,7 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Superlike',
-      value: this.props.user._id
+      label: this.props.user._id
     })
 
     this.isSuper = true

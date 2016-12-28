@@ -10,6 +10,7 @@ import { user } from '../../runtime'
 import Loader from '../Loader'
 import ActionButtons from '../ActionButtons'
 import UserCard from '../Home/UserCard'
+import Img from '../Shared/Img'
 
 @observer
 @CSSModules(styles)
@@ -111,7 +112,7 @@ export default class User extends Component {
         <div styleName="photos">
           <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
             {_.map(user.photos, photo => (
-              <div key={_.uniqueId()}><img src={photo.url} alt="img" style={{width: 600}} /></div>
+              <div key={_.uniqueId()}><Img src={photo.url} style={{width: 600}} /></div>
             ))}
           </Slider>
         </div>

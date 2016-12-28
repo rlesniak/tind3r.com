@@ -112,7 +112,7 @@ class User {
   }
 
   @computed get school() {
-    if (_.head(this.schools)) {
+    if (this.schools.length && _.head(this.schools)) {
       return this.schools[0].name
     }
 

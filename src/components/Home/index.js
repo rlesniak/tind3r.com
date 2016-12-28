@@ -88,7 +88,7 @@ export default class Home extends Component {
       <div>
         <Loader currentUser={currentUser} noAnimation />
         <div styleName="message">
-          {userStore.message}
+          There's no one new around you.
           <button onClick={this.refresh}><i className="fa fa-refresh" /></button>
         </div>
       </div>
@@ -102,7 +102,7 @@ export default class Home extends Component {
       return this.renderLoader()
     }
 
-    if (userStore.message) {
+    if (userStore.noRecs && userStore.all.length === 0) {
       return this.renderMsg()
     }
 

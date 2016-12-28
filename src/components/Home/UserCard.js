@@ -8,6 +8,7 @@ import cx from 'classnames'
 import styles from './user-card.scss'
 import ActionButtons from '../ActionButtons'
 import Loader from '../Loader'
+import Img from '../Shared/Img'
 
 @CSSModules(styles)
 export default class UserCard extends Component {
@@ -113,7 +114,7 @@ export default class UserCard extends Component {
       <div styleName="images">
         <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
           {_.map(user.photos, photo => (
-            <div key={_.uniqueId()}><img src={photo.url} alt="img" style={{ width }} /></div>
+            <div key={_.uniqueId()}><Img src={photo.url} style={{ width }} /></div>
           ))}
         </Slider>
       </div>

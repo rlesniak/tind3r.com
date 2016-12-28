@@ -9,6 +9,7 @@ import { observer } from 'mobx-react'
 import styles from './profile.scss'
 import MatchStore from '../../stores/MatchStore'
 import Data from '../../data'
+import Img from '../Shared/Img'
 
 @observer
 @CSSModules(styles)

@@ -50,7 +50,7 @@ const Data = {
     const isFirstFetch = !localStorage.getItem('firstFetchDone')
 
     return new Promise((resolve, reject) => {
-      updates().then(({ matches }) => {
+      updates().then(({ blocks, matches }) => {
         db.transaction('rw', db.users, db.matches, db.messages, function() {
           _.each(matches, match => {
             if (!match.is_new_message) {
@@ -67,9 +67,11 @@ const Data = {
                 if (!m) {
                   db.matches.add({
                     ...matchObj(match),
+                    isBlocked: 0,
                     isNew: isFirstFetch ? 0 : 1,
                   })
                 } else {
+                  // eg. new message
                   db.matches.update(match._id, { isNew: 1 })
                 }
               })
@@ -78,6 +80,10 @@ const Data = {
             const messages = _.map(match.messages, m => ({ ...m, isNew: 0 }))
 
             db.messages.bulkPut(messages)
+          })
+
+          _.each(blocks, matchId => {
+            db.matches.update(matchId, { isBlocked: 1 })
           })
         }).then(() => {
           if (isFirstFetch) {

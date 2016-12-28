@@ -59,6 +59,10 @@ export default class Match extends Component {
       return <i className="fa fa-bolt" />
     }
 
+    if (match.isBlocked) {
+      return <i className="fa fa-ban" />
+    }
+
     return null
   }
 
@@ -67,7 +71,9 @@ export default class Match extends Component {
     const className = cx({
       unread: match.areUnread,
       'super': match.isSuperLike,
+      blocked: match.isBlocked,
     })
+
     return (
       <div styleName="match" className={className} onClick={this.handleSelect}>
         <div styleName="type-icon">{this.renderTypeIcon()}</div>

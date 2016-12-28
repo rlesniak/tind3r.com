@@ -28,7 +28,9 @@ export default class NewMessageInput extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.inputRef.focus()
+    if (this.inputRef) {
+      this.inputRef.focus()
+    }
   }
 
   componentDidMount() {
@@ -50,7 +52,10 @@ export default class NewMessageInput extends Component {
     if (e.keyCode === 27) {
       clearTimeout(this.sendTimeoutFn)
       this.isTryingToSend = false
-      this.inputRef.focus()
+
+      if (this.inputRef) {
+        this.inputRef.focus()
+      }
 
       ReactGA.event({
         category: 'Message',
@@ -113,7 +118,7 @@ export default class NewMessageInput extends Component {
   }
 
   render() {
-    const { user } = this.props
+    const { user, match } = this.props
 
     const sendStyle = cx({
       disabled: _.trim(this.messageTxt).length === 0
@@ -122,6 +127,14 @@ export default class NewMessageInput extends Component {
     const inputWrapperStyle = cx({
       trying: this.isTryingToSend && this.sendDelaySec > 0,
     })
+
+    if (match.isBlocked) {
+      return (
+        <div styleName="new-message-input">
+          <h1>You have been blocked.<br/>What went wrong?</h1>
+        </div>
+      )
+    }
 
     const options = [
       { label: '0s', value: '0', },

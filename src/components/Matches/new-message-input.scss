@@ -7,6 +7,11 @@ $padding: 20px;
   border-top: 1px solid $bg;
   position: relative;
 
+  h1 {
+    font-size: 25px;
+    text-align: center;
+  }
+
   textarea {
     font-size: 14px;
     resize: none;

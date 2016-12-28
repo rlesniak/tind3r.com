@@ -58,7 +58,7 @@ export default class Messages extends Component {
           ))}
           {this.renderSentence()}
         </div>
-        <NewMessageInput messageStore={match.messageStore} />
+        <NewMessageInput match={match} messageStore={match.messageStore} />
       </div>
     )
   }

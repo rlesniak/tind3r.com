@@ -58,7 +58,7 @@ export default class ActionButtons extends Component {
     }
 
     if (this.likeExpiration) {
-      this.counterLike = moment.utc(moment(Number(this.likeExpiration)/1000).diff(moment())).format('HH:mm:ss')
+      this.counterLike = moment.utc(moment(Number(this.likeExpiration)).diff(moment())).format('HH:mm:ss')
     }
   }
 
@@ -67,7 +67,7 @@ export default class ActionButtons extends Component {
   }
 
   getLikeDiffInMin() {
-    this.likeDiffMin = moment.unix(Number(this.likeExpiration)/1000).diff(moment(), 'minutes')
+    this.likeDiffMin = moment.utc(Number(this.likeExpiration)).diff(moment(), 'minutes')
   }
 
   initExpirationTimes() {

@@ -33,7 +33,7 @@ module.exports = {
     }),
     new RollbarSourceMapPlugin({
       accessToken: '569f2db30e904dc19367cdeeffd07e1f',
-      version: '0.0.6',
+      version: '0.0.7',
       publicPath: 'http://tnder.herokuapp.com/'
     })
   ],

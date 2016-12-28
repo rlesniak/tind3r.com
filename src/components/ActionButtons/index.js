@@ -233,8 +233,8 @@ export default class ActionButtons extends Component {
     const matchText = this.isMatch ? 'Match!' : null
 
     const passedClass = cx({ done: this.isPassed })
-    const superClassN = cx({ done: this.isSuper, disabled: this.superlikeDiffMin > 0 })
-    const likedClass = cx({ done: this.isLiked, disabled: this.likeDiffMin > 0 })
+    const superClassN = cx({ done: this.isSuper, disabled: this.superlikeDiffMin > 0 && !this.isSuper })
+    const likedClass = cx({ done: this.isLiked, disabled: this.likeDiffMin > 0 && !this.isLiked })
 
     return (
       <div styleName="buttons">
@@ -245,13 +245,13 @@ export default class ActionButtons extends Component {
         {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} className={superClassN}>
           <i className="fa fa-star" />
           <span styleName="match-text">{matchText}</span>
-          {this.superlikeDiffMin > 0 && <span styleName="counter">{this.counterSuperLike}</span>}
+          {this.superlikeDiffMin > 0 && !this.isSuper && <span styleName="counter">{this.counterSuperLike}</span>}
         </div>}
         {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
         <div onClick={this.handleLike} className={likedClass}>
           <i className="fa fa-heart" />
           <span styleName="match-text">{matchText}</span>
-          {this.likeDiffMin > 0 && <span styleName="counter">{this.counterLike}</span>}
+          {this.likeDiffMin > 0 && !this.isLiked && <span styleName="counter">{this.counterLike}</span>}
         </div>}
       </div>
     );

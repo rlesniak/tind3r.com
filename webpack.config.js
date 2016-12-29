@@ -1,12 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var env = process.env.NODE_ENV || 'development'
+
 module.exports = {
-  devtool: 'source-map',
   entry: {
     bundle: [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client',
       'babel-polyfill',
       './src/index'
     ]
@@ -19,10 +18,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify(env)
       }
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DllReferencePlugin({
       context: path.join(__dirname, 'dist'),
       manifest: require('./vendor-manifest.json')

@@ -1,10 +1,37 @@
 var path = require('path');
 var express = require('express');
+var fs = require('fs');
 var app = express();
+var layouts = require('express-ejs-layouts');
 var PORT = process.env.PORT || 3001
 
-// using webpack-dev-server and middleware in development environment
-if(process.env.NODE_ENV !== 'production') {
+var commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString().trim();
+
+var env = {
+  production: process.env.NODE_ENV === 'production'
+}
+
+app.set('layout');
+app.set('view engine', 'ejs');
+app.set('view options', { layout: 'layout' });
+app.set('views', path.join(process.cwd(), '/server/views'));
+
+app.use(layouts);
+
+Object.assign(env, {
+  env: process.env.NODE_ENV,
+  version: commitHash,
+})
+
+if (env.production) {
+  Object.assign(env, {
+    assets: JSON.parse(fs.readFileSync(path.join(process.cwd(), 'assets.json'))),
+  })
+}
+
+if(env.production === false) {
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
   var webpack = require('webpack');
@@ -24,8 +51,10 @@ if(process.env.NODE_ENV !== 'production') {
 
 app.use('/dist', express.static('dist'))
 
-app.get('*', function(request, response) {
-  response.sendFile(__dirname + '/index.html')
+app.get('*', function(req, res) {
+  res.render('index', {
+    env: env
+  });
 });
 
 app.listen(PORT, function(error) {

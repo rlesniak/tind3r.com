@@ -7,10 +7,10 @@ const chromeRuntime = (type, params = {}) => {
         resolve(response.data)
       } else if(response.message) {
         resolve(response)
-      } else if(response.error !== 401) {
-        reject(response.error)
-      } else if(response.error === 401) {
-        reject(response.error)
+      } else if(response.error.status !== 401) {
+        reject(response.error.status)
+      } else if(response.error.status === 401) {
+        reject(response.error.status)
       }
     })
   })

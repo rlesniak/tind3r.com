@@ -5,9 +5,6 @@ var RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin')
 var SaveAssetsJson = require('assets-webpack-plugin');
 var config = require('./webpack.config')
 var packageJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')))
-var commitHash = require('child_process')
-  .execSync('git rev-parse --short HEAD')
-  .toString().trim();
 
 config.devtool = 'source-map'
 
@@ -30,7 +27,7 @@ var plugins = [
   }),
   new RollbarSourceMapPlugin({
     accessToken: '569f2db30e904dc19367cdeeffd07e1f',
-    version: commitHash,
+    version: packageJson.version,
     publicPath: 'http://tnder.herokuapp.com/'
   }),
   new SaveAssetsJson({

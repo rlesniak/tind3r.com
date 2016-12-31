@@ -103,6 +103,7 @@ export default class NewMessageInput extends Component {
     const { messageStore } = this.props
 
     Data.db().matches.update(messageStore.matchId, { isNew: 0 })
+    messageStore.match.isNew = false
   }
 
   @autobind

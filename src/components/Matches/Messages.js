@@ -54,6 +54,7 @@ export default class Messages extends Component {
               key={msg.id}
               ref={ref => this[`msg${i}`] = ref}
               message={msg}
+              recipient={match.user}
             />
           ))}
           {this.renderSentence()}

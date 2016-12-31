@@ -33,7 +33,8 @@ export default class App extends Component {
   }
 
   afterSucessLogin() {
-    if (process.env.NODE_ENV === 'production') {
+    // if (process.env.NODE_ENV === 'production') {
+    if (1) {
       setInterval(() => {
         Data.updates()
       }, 3000)
@@ -57,15 +58,14 @@ export default class App extends Component {
     Data.registerMatchesHook(() => {
       setTimeout(() => this.countUnread(), 0) // TODO: remove timeout
     }, 'updating')
-
-    Data.registerMatchesHook(() => {
-      this.countUnread()
-    })
   }
 
   countUnread() {
-    Data.db().matches.where('isNew').equals(1).count(c => {
-      this.newCount = c
+    const currentUserId = this.props.currentUser._id
+    Data.countUnread(currentUserId, count => {
+      if (this.newCount !== count) {
+        this.newCount = count
+      }
     })
   }
 

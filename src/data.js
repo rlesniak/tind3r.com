@@ -19,8 +19,8 @@ db.open().catch(function (e) {
 
 const Data = {
   registerMessagesHook(callback) {
-    db.messages.hook('creating', (mods, primKey, obj, trans) => {
-      callback(primKey)
+    db.messages.hook('creating', function(mods, primKey, obj, trans) {
+      this.onsuccess = callback(primKey)
     })
   },
 
@@ -75,6 +75,8 @@ const Data = {
                   db.matches.update(match._id, { isNew: 1 })
                 }
               })
+            } else {
+              db.matches.update(match._id, { isNew: 1 })
             }
 
             const messages = _.map(match.messages, m => ({ ...m, isNew: 0 }))
@@ -94,10 +96,9 @@ const Data = {
                 value: c,
                 nonInteraction: true
               })
+              isFirstFetch && c > 0 ? localStorage.setItem('firstFetchDone', true) : null
             })
           }
-
-          isFirstFetch ? localStorage.setItem('firstFetchDone', true) : null
           resolve()
         })
       })
@@ -187,6 +188,23 @@ const Data = {
     })
   },
 
+  countUnread(currentUserId, callback) {
+    let count = 0
+    db.transaction('rw', db.matches, db.messages, function() {
+      db.matches.where('isNew').equals(1).toArray().then(matches => {
+        _.each(matches, m => {
+          db.messages.where('match_id').equals(m._id).toArray().then(messages => {
+            if (messages.length && _.last(messages).from !== currentUserId) {
+              count += 1
+            }
+          })
+        })
+      })
+    }).then(() => {
+      callback(count)
+    })
+  },
+
   getActions() {
     return db.actions
   },
@@ -200,9 +218,28 @@ const Data = {
     purge()
   },
 
+  removeMessage(id) {
+    db.messages.where('_id').equals(id).delete()
+  },
+
+  addMessage(matchId, data) {
+    db.matches.update(matchId, { isNew: 1 })
+    db.messages.add({
+      _id: data.id,
+      isNew: 0,
+      sent_date: "2016-12-31T15:11:00.756Z",
+      created_date: "2016-12-31T15:11:00.756Z",
+      to: "580cf937f63079810a7537f5",
+      match_id: matchId,
+      ...data
+    })
+  },
+
   _devAddNew(data) {
     db.matches.add(data)
   }
 }
+
+global.Data = Data
 
 export default Data

@@ -27,7 +27,7 @@ export default class Message extends Component {
   }
 
   render() {
-    const { message, currentUser } = this.props
+    const { message, currentUser, recipient } = this.props
 
     const className = cx({
       'align-right': message.isAuthor,
@@ -44,7 +44,7 @@ export default class Message extends Component {
         title={message.date}
       >
         <div styleName="avatar">
-          <Link to={`users/${message.from}`} styleName="circle"><img src={message.isAuthor ? message.participant.photos[0].url : currentUser.photos[0].url} /></Link>
+          <Link to={`users/${message.from}`} styleName="circle"><img src={message.isAuthor ? recipient.photos[0].url : currentUser.photos[0].url} /></Link>
           <span styleName="date">{moment(message.created_date).format('HH:mm')}</span>
         </div>
         <div styleName="message">

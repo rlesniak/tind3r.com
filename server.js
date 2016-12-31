@@ -4,10 +4,8 @@ var fs = require('fs');
 var app = express();
 var layouts = require('express-ejs-layouts');
 var PORT = process.env.PORT || 3001
+var packageJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')))
 
-var commitHash = require('child_process')
-  .execSync('git rev-parse --short HEAD')
-  .toString().trim();
 
 var env = {
   production: process.env.NODE_ENV === 'production'
@@ -22,7 +20,7 @@ app.use(layouts);
 
 Object.assign(env, {
   env: process.env.NODE_ENV,
-  version: commitHash,
+  version: packageJson.version,
 })
 
 if (env.production) {

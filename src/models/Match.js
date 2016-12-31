@@ -17,10 +17,11 @@ class Match {
   @observable isBlocked
   @observable messageStore
 
-  constructor(store, json = {}) {
+  constructor(store, json = {}, user = {}) {
     this.store = store
     this.id = json._id
     this.authorId = json.userId
+    this.user = new User(this, user._id, user)
     this.setFromJson(json)
   }
 
@@ -30,7 +31,6 @@ class Match {
     this.isSuperLike = json.isSuperLike
     this.isBoostMatch = json.isBoostMatch
     this.isBlocked = json.isBlocked
-    this.user = new User(this, json.user._id, json.user)
     this.messageStore = new MessageStore(this, json)
   }
 

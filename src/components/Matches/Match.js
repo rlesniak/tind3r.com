@@ -69,7 +69,7 @@ export default class Match extends Component {
   render() {
     const { match } = this.props
     const className = cx({
-      unread: match.areUnread,
+      unread: match.areUnread && match.messageStore.last.isAuthor,
       'super': match.isSuperLike,
       blocked: match.isBlocked,
     })

@@ -7,8 +7,8 @@ class MessageStore {
   @observable messages = []
   @observable isLoading = true
 
-  constructor(store, json) {
-    this.store = store
+  constructor(match, json) {
+    this.match = match
     this.authorId = json.userId
     this.matchId = json._id
     this.participant = json.participants[0]
@@ -35,6 +35,7 @@ class MessageStore {
 
   newMessageHook(msg) {
     if (msg.match_id === this.matchId && msg.from === this.authorId) {
+      this.match.isNew = true
       this.updateMessages(msg)
     }
   }

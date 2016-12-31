@@ -1,7 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 
-module.exports = {
+var env = process.env.NODE_ENV || 'development'
+
+var config = {
   devtool: 'source-map',
   entry: {
     vendor: [path.join(__dirname, 'src', 'vendors.js')]
@@ -14,7 +16,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify(env)
       }
     }),
     new webpack.DllPlugin({
@@ -22,15 +24,20 @@ module.exports = {
       name: '[name]_lib',
       context: path.resolve(__dirname, 'dist')
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      mangle: true,
-      minimize: true
-    })
+    new webpack.optimize.OccurenceOrderPlugin()
   ],
   resolve: {
     root: path.resolve('./src'),
     modulesDirectories: ['node_modules']
   }
-};
+}
+
+if (env === 'production') {
+  config.plugins.concat([new webpack.optimize.UglifyJsPlugin({
+    comments: false,
+    mangle: true,
+    minimize: true
+  })])
+}
+
+module.exports = config

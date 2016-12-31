@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var config = require('./webpack.config')
 
-config.devtool = '#cheap-module-eval-source-map';
+config.devtool = 'source-map';
 config.plugins = config.plugins.concat([
   new webpack.HotModuleReplacementPlugin()
 ]);

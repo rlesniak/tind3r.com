@@ -139,14 +139,14 @@ class User {
     return _.map(this.photos, photo => this.getPhotoUrl(photo))
   }
 
-  getPhotoUrl(photo) {
+  getPhotoUrl(photo, size = 640) {
     const baseUrl = 'http://images.gotinder.com'
 
     if (photo.id === 'unknown') {
       return 'http://images.gotinder.com/0001unknown/640x640_pct_0_0_100_100_unknown.jpg'
     }
 
-    return `${baseUrl}/${this.id}/640x640_${photo.fileName}`
+    return `${baseUrl}/${this.id}/${size}x${size}_${photo.fileName || (photo.id + '.jpg')}`
   }
 }
 

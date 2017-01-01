@@ -30,8 +30,8 @@ export default class Profile extends Component {
       <div styleName="wrapper">
         <div styleName="images">
           <Slider {...sliderSettings}>
-            {_.map(user.photos, photo => (
-              <div key={_.uniqueId()}><img src={photo.url} alt="img" /></div>
+            {_.map(user.photosUrls, url => (
+              <div key={_.uniqueId()}><img src={url} alt="img" /></div>
             ))}
           </Slider>
         </div>

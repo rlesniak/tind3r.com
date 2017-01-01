@@ -92,7 +92,7 @@ export default class Match extends Component {
       <div styleName="match" className={className} onClick={this.handleSelect}>
         <div styleName="type-icon">{this.renderTypeIcon()}</div>
         <div styleName="avatar">
-          <img src={match.user.photos[0].url} />
+          <img src={match.user.mainPhoto} />
         </div>
         <div styleName="name">{match.user.name}</div>
         <div styleName="message">

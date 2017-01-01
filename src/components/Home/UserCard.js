@@ -113,8 +113,8 @@ export default class UserCard extends Component {
     return (
       <div styleName="images">
         <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
-          {_.map(user.photos, photo => (
-            <div key={_.uniqueId()}><Img src={photo.url} style={{ width }} /></div>
+          {_.map(user.photosUrls, url => (
+            <div key={_.uniqueId()}><Img src={url} style={{ width }} /></div>
           ))}
         </Slider>
       </div>

@@ -35,7 +35,7 @@ export default class Messages extends Component {
     const { match } = this.props
     const id = _.random(sentences.length - 1)
 
-    if (match.messageStore.messages.length) return
+    if (match.messageStore.messages.length || match.isBlocked) return
 
     return <h1>{sentences[id]}</h1>
   }

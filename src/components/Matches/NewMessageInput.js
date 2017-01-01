@@ -132,7 +132,7 @@ export default class NewMessageInput extends Component {
     if (match.isBlocked) {
       return (
         <div styleName="new-message-input">
-          <h1>You have been blocked.<br/>What went wrong?</h1>
+          <h1>Blocked.</h1>
         </div>
       )
     }

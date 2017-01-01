@@ -122,6 +122,32 @@ class User {
 
     return null
   }
+
+  @computed get mainPhoto() {
+    const photo = _.find(this.photos, photo => {
+      return photo.main
+    })
+
+    if (!photo) {
+      return this.getPhotoUrl(this.photos[0])
+    }
+
+    return this.getPhotoUrl(photo)
+  }
+
+  @computed get photosUrls() {
+    return _.map(this.photos, photo => this.getPhotoUrl(photo))
+  }
+
+  getPhotoUrl(photo) {
+    const baseUrl = 'http://images.gotinder.com'
+
+    if (photo.id === 'unknown') {
+      return 'http://images.gotinder.com/0001unknown/640x640_pct_0_0_100_100_unknown.jpg'
+    }
+
+    return `${baseUrl}/${this.id}/640x640_${photo.fileName}`
+  }
 }
 
 export default User

@@ -46,6 +46,10 @@ class Match {
     return new Date(this.lastActivityDate)
   }
 
+  @computed get isNewMatch() {
+    return this.isNew && !this.messageStore.hasMessages
+  }
+
   @computed get areUnread() {
     return this.isNew
   }

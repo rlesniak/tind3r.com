@@ -78,7 +78,6 @@ class User {
 
         resolve()
       })).catch(status => {
-        Rollbar.info('Facebook token expired')
         reject(status)
       })
     })

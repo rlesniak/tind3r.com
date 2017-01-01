@@ -58,6 +58,10 @@ export default class App extends Component {
     Data.registerMatchesHook(() => {
       setTimeout(() => this.countUnread(), 0) // TODO: remove timeout
     }, 'updating')
+
+    Data.registerMatchesHook(() => {
+      setTimeout(() => this.countUnread(), 0) // TODO: remove timeout
+    })
   }
 
   countUnread() {
@@ -65,6 +69,12 @@ export default class App extends Component {
     Data.countUnread(currentUserId, count => {
       if (this.newCount !== count) {
         this.newCount = count
+
+        if (count > 0) {
+          document.title = `(${count}) - Tind3r`
+        } else {
+          document.title = 'Tind3r'
+        }
       }
     })
   }

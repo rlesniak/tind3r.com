@@ -34,6 +34,20 @@ export default class Match extends Component {
     return last.type === 'gif' ? '[ GIF ]' : last.message
   }
 
+  hasUnread() {
+    const { match } = this.props
+
+    if (match.isNewMatch) {
+      return true
+    }
+
+    if (match.areUnread && match.messageStore.last.isAuthor) {
+      return true
+    }
+
+    return false
+  }
+
   renderIcon() {
     const { match } = this.props
 
@@ -69,7 +83,7 @@ export default class Match extends Component {
   render() {
     const { match } = this.props
     const className = cx({
-      unread: match.areUnread && match.messageStore.last.isAuthor,
+      unread: this.hasUnread(),
       'super': match.isSuperLike,
       blocked: match.isBlocked,
     })

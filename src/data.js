@@ -64,6 +64,11 @@ const Data = {
               })
 
               db.matches.where('_id').equals(match._id).first(m => {
+                console.log({
+                  ...matchObj(match),
+                  isBlocked: 0,
+                  isNew: isFirstFetch ? 0 : 1,
+                });
                 if (!m) {
                   db.matches.add({
                     ...matchObj(match),
@@ -194,7 +199,7 @@ const Data = {
       db.matches.where('isNew').equals(1).toArray().then(matches => {
         _.each(matches, m => {
           db.messages.where('match_id').equals(m._id).toArray().then(messages => {
-            if (messages.length && _.last(messages).from !== currentUserId) {
+            if ((messages.length && _.last(messages).from !== currentUserId) || messages.length === 0) {
               count += 1
             }
           })

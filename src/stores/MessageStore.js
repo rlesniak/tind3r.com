@@ -45,6 +45,10 @@ class MessageStore {
     this.messages.push(message)
   }
 
+  @computed get hasMessages() {
+    return !!this.messages.length
+  }
+
   @computed get last() {
     return _.last(_.filter(this.messages, { isSending: false })) || {}
   }

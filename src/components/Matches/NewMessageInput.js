@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
@@ -8,6 +9,8 @@ import { Link } from 'react-router'
 import Select from 'react-basic-dropdown'
 import cx from 'classnames'
 import { observer } from 'mobx-react'
+import { Picker } from 'emoji-mart'
+import 'emoji-mart/css/emoji-mart.css'
 import Spinner from '../Spinner'
 import styles from './new-message-input.scss'
 import Data from '../../data'
@@ -17,6 +20,7 @@ import Data from '../../data'
 export default class NewMessageInput extends Component {
   @observable isTryingToSend = false
   @observable messageTxt = ''
+  @observable isEmojiOpen = false
 
   constructor(props) {
     super(props)
@@ -45,6 +49,14 @@ export default class NewMessageInput extends Component {
     const { messageStore } = this.props
     messageStore.create(msg)
     this.messageTxt = ''
+  }
+
+  @autobind
+  onMouseDown(e) {
+    const picker = ReactDOM.findDOMNode(this.pickerRef)
+    if (!picker.contains(e.target)) {
+      this.closeEmoji()
+    }
   }
 
   @autobind
@@ -118,6 +130,28 @@ export default class NewMessageInput extends Component {
     })
   }
 
+  @autobind
+  openEmoji() {
+    document.addEventListener('mousedown', this.onMouseDown)
+    this.isEmojiOpen = true
+  }
+
+  @autobind
+  closeEmoji() {
+    document.removeEventListener('mousedown', this.onMouseDown)
+    this.isEmojiOpen = false
+  }
+
+  @autobind
+  toggleEmoji() {
+    this.isEmojiOpen ? this.closeEmoji() : this.openEmoji()
+  }
+
+  @autobind
+  emojiSelected(emoji) {
+    this.messageTxt += emoji.native
+  }
+
   render() {
     const { user, match } = this.props
 
@@ -158,7 +192,21 @@ export default class NewMessageInput extends Component {
           onFocus={this.setAsRead}
           onBlur={this.setAsRead}
         />
+        <div styleName="emotions">
+          {this.isEmojiOpen && <Picker
+            emojiSize={24}
+            perLine={9}
+            skin={1}
+            set='google'
+            title="Pick your Emoji!"
+            style={{ position: 'absolute', bottom: '75px', right: '137px' }}
+            onClick={this.emojiSelected}
+            ref={ref => { this.pickerRef = ref }}
+          />}
+        </div>
         <div styleName="actions">
+          <button styleName="trigger" className="gif">[ GIF ]</button>
+          <button styleName="trigger" onClick={this.toggleEmoji}>Emoji</button>
           <div styleName="delay" title="Sending delay in sec">
             <i className="fa fa-clock-o" />
             <Select

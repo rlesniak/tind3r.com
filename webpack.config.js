@@ -44,7 +44,8 @@ module.exports = {
           'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
           'sass?sourceMap'
         ]
-      }
+      },
+      { test: /\.css$/, loader: 'style-loader!css-loader' }
     ]
   }
 };

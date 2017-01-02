@@ -1,5 +1,5 @@
 @import '../../styles/vars';
-$padding: 20px;
+$padding: 24px 20px 12px;
 
 .new-message-input {
   font-size: 0;
@@ -124,4 +124,25 @@ $padding: 20px;
   left: 10px;
   color: #fff;
   font-size: 10px;
+}
+
+.emotions {
+  position: relative;
+}
+
+.trigger {
+  padding: 2px 10px;
+  background: #ffffff;
+  border: 1px solid $blue;
+  color: $blue;
+  border-radius: 12px;
+  position: absolute;
+  right: 70px;
+  font-family: $lato;
+  cursor: pointer;
+
+  &:global(.gif) {
+    right: 135px;
+    width: 62px;
+  }
 }

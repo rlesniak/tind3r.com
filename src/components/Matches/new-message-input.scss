@@ -1,5 +1,5 @@
 @import '../../styles/vars';
-$padding: 24px 20px 12px;
+$padding: 28px 20px 12px;
 
 .new-message-input {
   font-size: 0;
@@ -35,7 +35,7 @@ $padding: 24px 20px 12px;
 .actions {
   position: absolute;
   right: 20px;
-  top: 50%;
+  top: 43%;
   transform: translateY(-50%);
   font-size: 16px;
   text-align: right;

@@ -27,9 +27,9 @@ class MessageStore {
     })
   }
 
-  @action create(body) {
+  @action create(body, payload) {
     const message = new Message(this, {}, this.authorId)
-    message.create(this.matchId, body)
+    message.create(this.matchId, body, payload)
     this.messages.push(message)
   }
 

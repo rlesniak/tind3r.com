@@ -14,6 +14,7 @@ import 'emoji-mart/css/emoji-mart.css'
 import Spinner from '../Spinner'
 import styles from './new-message-input.scss'
 import Data from '../../data'
+import GifInput from './GifInput'
 
 @observer
 @CSSModules(styles)
@@ -21,6 +22,7 @@ export default class NewMessageInput extends Component {
   @observable isTryingToSend = false
   @observable messageTxt = ''
   @observable isEmojiOpen = false
+  @observable isGifInputOpen = false
 
   constructor(props) {
     super(props)
@@ -100,6 +102,8 @@ export default class NewMessageInput extends Component {
     if (e.charCode === 13) {
       e.preventDefault()
 
+      this.closeEmoji()
+
       ReactGA.event({
         category: 'Message',
         action: 'Submit',
@@ -134,6 +138,12 @@ export default class NewMessageInput extends Component {
   openEmoji() {
     document.addEventListener('mousedown', this.onMouseDown)
     this.isEmojiOpen = true
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Emoji',
+      label: 'Open',
+    })
   }
 
   @autobind
@@ -150,6 +160,42 @@ export default class NewMessageInput extends Component {
   @autobind
   emojiSelected(emoji) {
     this.messageTxt += emoji.native
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Emoji',
+      label: 'Select',
+    })
+  }
+
+  @autobind
+  showGifInput() {
+    this.closeEmoji()
+
+    this.isGifInputOpen = true
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Gif',
+      label: 'Open',
+    })
+  }
+
+  @autobind
+  handleGifClose() {
+    this.isGifInputOpen = false
+  }
+
+  @autobind
+  handleGifSubmit(body, payload) {
+    const { messageStore } = this.props
+    messageStore.create(body, payload)
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Gif',
+      label: 'Submit',
+    })
   }
 
   render() {
@@ -168,6 +214,12 @@ export default class NewMessageInput extends Component {
         <div styleName="new-message-input">
           <h1>Blocked.</h1>
         </div>
+      )
+    }
+
+    if (this.isGifInputOpen) {
+      return (
+        <GifInput onClose={this.handleGifClose} onSubmit={this.handleGifSubmit} />
       )
     }
 
@@ -199,13 +251,13 @@ export default class NewMessageInput extends Component {
             skin={1}
             set='google'
             title="Pick your Emoji!"
-            style={{ position: 'absolute', bottom: '75px', right: '137px' }}
+            style={{ position: 'absolute', bottom: '81px', right: '137px' }}
             onClick={this.emojiSelected}
             ref={ref => { this.pickerRef = ref }}
           />}
         </div>
         <div styleName="actions">
-          <button styleName="trigger" className="gif">[ GIF ]</button>
+          <button styleName="trigger" className="gif" onClick={this.showGifInput}>[ GIF ]</button>
           <button styleName="trigger" onClick={this.toggleEmoji}>Emoji</button>
           <div styleName="delay" title="Sending delay in sec">
             <i className="fa fa-clock-o" />

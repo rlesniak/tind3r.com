@@ -19,10 +19,10 @@ class Message {
     this.participant = participant
   }
 
-  @action create(matchId, body) {
+  @action create(matchId, body, payload = {}) {
     this.isSending = true
 
-    Data.sendMessage(matchId, body).then(resp => {
+    Data.sendMessage(matchId, body, payload).then(resp => {
       this.isSending = false
       this.isError = false
 

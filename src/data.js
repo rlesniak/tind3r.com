@@ -121,9 +121,9 @@ const Data = {
     })
   },
 
-  sendMessage(matchId, message) {
+  sendMessage(matchId, message, payload = {}) {
     return new Promise((resolve, reject) => {
-      sendMessage(matchId, message).then(resp => {
+      sendMessage(matchId, { message, ...payload }).then(resp => {
         db.messages.put({
           ...resp,
           isNew: 0

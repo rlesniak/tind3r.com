@@ -57,7 +57,7 @@ export default class User extends Component {
 
   renderUser() {
     const { user } = this
-    const insta = user.instagram && user.instagram.photos
+    const insta = (user.instagram && user.instagram.photos) || []
 
     return (
       <div styleName="wrapper">

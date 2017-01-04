@@ -72,11 +72,11 @@ class User {
     return new Promise((resolve, reject) => {
       meta().then(action(resp => {
         extendObservable(this, resp.user)
-        this.isLoading = false
 
         ReactGA.set({ userId: resp.user._id })
 
-        resolve()
+        resolve(resp)
+        this.isLoading = false
       })).catch(status => {
         reject(status)
       })

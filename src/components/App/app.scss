@@ -9,16 +9,17 @@
 .footer {
   text-align: center;
   font-size: 14px;
+  padding-top: 10px;
 }
 
 .footer,
 .page :after {
-  height: 24px;
+  height: 30px;
 }
 
 .page  {
   min-height: 100%;
-  margin-bottom: -24px;
+  margin-bottom: -30px;
 
   &:after {
     content: "";

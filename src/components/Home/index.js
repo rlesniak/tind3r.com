@@ -16,12 +16,10 @@ import styles from './styles.scss'
 @observer
 @CSSModules(styles)
 export default class Home extends Component {
-  @observable isShowingModal = false
+  @observable isShowingModal = null
 
-  componentDidMount() {
-    const shouldShow = !localStorage.getItem('homepage-tour')
-
-    this.isShowingModal = shouldShow;
+  componentWillReceiveProps(nextProps) {
+    console.log('props');
   }
 
   @autobind
@@ -42,7 +40,7 @@ export default class Home extends Component {
   }
 
   renderModal() {
-    if (!this.isShowingModal) {
+    if (this.isShowingModal === false) {
       return null
     }
 
@@ -74,7 +72,7 @@ export default class Home extends Component {
     }
 
     return (
-      <div>
+      <div styleName="home">
         <Loader currentUser={currentUser} />
         <div styleName="message">Finding people near you...</div>
       </div>
@@ -95,8 +93,8 @@ export default class Home extends Component {
     )
   }
 
-  renderRecs() {
-    const { userStore } = this.props
+  render() {
+    const { userStore, currentUser } = this.props
 
     if (userStore.isLoading) {
       return this.renderLoader()
@@ -106,20 +104,16 @@ export default class Home extends Component {
       return this.renderMsg()
     }
 
+    const shouldShowTour = !localStorage.getItem('homepage-tour')
+
     return (
       <div styleName="home">
-        {this.renderModal()}
+        {shouldShowTour && this.renderModal()}
         <div styleName="recommendation">
           <UserCard user={userStore.first} withSuperLikeCounter />
         </div>
         <UserCardList userStore={userStore} />
       </div>
     )
-  }
-
-  render() {
-    const { userStore, currentUser } = this.props
-
-    return this.renderRecs()
   }
 }

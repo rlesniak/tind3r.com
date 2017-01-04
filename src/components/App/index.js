@@ -23,7 +23,11 @@ export default class App extends Component {
     this.userStore = new UserStore()
 
     this.checkIfHasExtension(() => {
-      this.props.currentUser.fetchMeta().then(() => {
+      this.props.currentUser.fetchMeta().then(resp => {
+        if (resp.rating.super_likes.resets_at) {
+          localStorage.setItem('superLikeExpiration', resp.rating.super_likes.resets_at)
+        }
+
         this.userStore.core()
         this.afterSucessLogin()
       }).catch(status => {
@@ -80,6 +84,10 @@ export default class App extends Component {
   }
 
   render() {
+    if (this.props.currentUser.isLoading) {
+      return null
+    }
+
     return (
       <div styleName="app-wrapper">
         <div styleName="page">

@@ -17,7 +17,7 @@ export default class FbConnect extends Component {
 
   checkTokenDate() {
     getTokenDate(date => {
-      const tokenDate = moment(date)
+      const tokenDate = moment(new Date(date))
       const nowDate = moment()
 
       if (nowDate.diff(tokenDate, 'seconds') >= 0) {

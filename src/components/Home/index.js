@@ -85,7 +85,7 @@ export default class Home extends Component {
     const { userStore, currentUser } = this.props
 
     return (
-      <div>
+      <div styleName="home">
         <Loader currentUser={currentUser} noAnimation />
         <div styleName="message">
           There's no one new around you.

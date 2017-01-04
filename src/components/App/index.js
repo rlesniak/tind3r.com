@@ -33,8 +33,8 @@ export default class App extends Component {
   }
 
   afterSucessLogin() {
-    // if (process.env.NODE_ENV === 'production') {
-    if (1) {
+    if (process.env.NODE_ENV === 'production') {
+    // if (1) {
       setInterval(() => {
         Data.updates()
       }, 3000)
@@ -81,12 +81,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div styleName="page">
-        <NavBar user={this.props.currentUser} newCount={this.newCount} />
-        {this.props.children && React.cloneElement(this.props.children, {
-          userStore: this.userStore,
-          currentUser: this.props.currentUser,
-        })}
+      <div styleName="app-wrapper">
+        <div styleName="page">
+          <NavBar user={this.props.currentUser} newCount={this.newCount} />
+          {this.props.children && React.cloneElement(this.props.children, {
+            userStore: this.userStore,
+            currentUser: this.props.currentUser,
+          })}
+        </div>
+        <div styleName="footer">
+          Copyright &copy; Rafal Lesniak | Privacy Policy
+        </div>
       </div>
     );
   }

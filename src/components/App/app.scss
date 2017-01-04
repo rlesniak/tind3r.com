@@ -1,3 +1,27 @@
 .page {
   margin: 0;
 }
+
+.app-wrapper {
+  height: 100%;
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer,
+.page :after {
+  height: 24px;
+}
+
+.page  {
+  min-height: 100%;
+  margin-bottom: -24px;
+
+  &:after {
+    content: "";
+    display: block;
+  }
+}

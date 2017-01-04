@@ -6,6 +6,7 @@ import CSSModules from 'react-css-modules'
 import _ from 'lodash'
 import Data from '../data'
 import styles from './history.scss'
+import moment from 'moment'
 
 @CSSModules(styles)
 export default class History extends Component {
@@ -36,9 +37,23 @@ export default class History extends Component {
     }
 
     return (
-      <li key={data.user._id}>
+      <li key={data.user._id} className={data.type}>
         <Link to={`/users/${data.user._id}`}>
-          {data.user.name}: {data.type}
+          <table>
+            <tbody>
+              <tr>
+                <td rowSpan="2">
+                  <div styleName="avatar">
+                    <img src={data.user.photos[0].url} />
+                  </div>
+                </td>
+                <td><span styleName="name">{data.user.name}</span></td>
+              </tr>
+              <tr>
+                <td>{moment(new Date(data.date)).fromNow()}</td>
+              </tr>
+            </tbody>
+          </table>
         </Link>
       </li>
     )

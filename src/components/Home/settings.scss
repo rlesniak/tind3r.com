@@ -1,0 +1,52 @@
+@import '../../styles/vars';
+
+.wrapper {
+  width: 300px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  &:global(.open) {
+    .main {
+      display: block;
+    }
+  }
+}
+
+.main {
+  background: #fff;
+  display: none;
+  border-radius: 0 0 $border-radius $border-radius;
+}
+
+.trigger {
+  position: absolute;
+  bottom: -28px;
+  background: #fff;
+  padding: 5px 10px;
+  border: 1px solid $bg2;
+  border-top: 0;
+  border-radius: 0 0 $border-radius $border-radius;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.option {
+  display: block;
+  padding: 10px 12px;
+  font-size: 13px;
+
+  span {
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}
+
+.label {
+  cursor: default;
+  font-weight: bold;
+}

@@ -11,6 +11,7 @@ import UserStore from '../../stores/UserStore'
 import UserCard from './UserCard'
 import UserCardList from './UserCardList'
 import Loader from '../Loader'
+import Settings from './Settings'
 import styles from './styles.scss'
 
 @observer
@@ -39,6 +40,13 @@ export default class Home extends Component {
   handleClose() {
     this.isShowingModal = false
     localStorage.setItem('homepage-tour', true)
+  }
+
+  @autobind
+  setLayout(type) {
+    this.layout = type
+    this.forceUpdate()
+    localStorage.setItem('layout', type)
   }
 
   renderModal() {
@@ -130,6 +138,7 @@ export default class Home extends Component {
 
     return (
       <div styleName="home">
+        <Settings handleSetLayout={this.setLayout} />
         {shouldShowTour && this.renderModal()}
         {this.layout === 'horizontal' ? this.renderHorizontalLayout() : this.renderVerticalLayout()}
 

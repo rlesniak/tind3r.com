@@ -1,9 +1,22 @@
 .home {
   padding: 20px 20px 30px;
 }
+
 .recommendation {
   padding: 0;
   float: left;
+}
+
+.horizontal {
+  $photo-w: 250px;
+
+  padding: 0;
+  width: 3 * $photo-w;
+  margin: 20px auto 40px;
+}
+
+.recs {
+  margin-left: 0;
 }
 
 .message {

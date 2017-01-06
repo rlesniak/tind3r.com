@@ -136,24 +136,19 @@ export default class UserCard extends Component {
     )
   }
 
-  render() {
-    const { user, simple, asLoader } = this.props
-
-    const className = cx({
-      simple
-    })
-
-    if (asLoader) {
-      return (
-        <div styleName="wrapper" className="simple">
-          <Loader isSimpleLoader />
-        </div>
-      )
-    }
+  renderHorizontalLayout() {
+    const { user, simple } = this.props
 
     return (
-      <div styleName="wrapper" className={className}>
-        <div styleName="content">
+      <div styleName="horizontal">
+        <div styleName="photos">
+          <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings} slidesToShow="3" infinite>
+            {_.map(user.photosUrls, url => (
+              <div key={_.uniqueId()}><Img src={url} style={{ width: 250 }} /></div>
+            ))}
+          </Slider>
+        </div>
+        <div styleName="details">
           <table>
             <colgroup>
               <col width="33%" />
@@ -161,11 +156,6 @@ export default class UserCard extends Component {
               <col width="33%" />
             </colgroup>
             <tbody>
-              <tr>
-                <td colSpan="3">
-                  {this.renderSimpleSlider()}
-                </td>
-              </tr>
               {this.renderBasicInfo()}
               {simple && this.renderActionsRow()}
               <tr>
@@ -182,10 +172,72 @@ export default class UserCard extends Component {
                   {this.renderInstagramSection()}
                 </td>
               </tr>
-              {!simple && this.renderActionsRow()}
+              {this.renderActionsRow()}
             </tbody>
           </table>
         </div>
+      </div>
+    )
+  }
+
+  renderVerticalLayout() {
+    const { user, simple } = this.props
+
+    return (
+      <div styleName="content">
+        <table>
+          <colgroup>
+            <col width="33%" />
+            <col width="33%" />
+            <col width="33%" />
+          </colgroup>
+          <tbody>
+            <tr>
+              <td colSpan="3">
+                {this.renderSimpleSlider()}
+              </td>
+            </tr>
+            {this.renderBasicInfo()}
+            {simple && this.renderActionsRow()}
+            <tr>
+              <td colSpan="3" styleName="employ">
+                <span>{user.school}</span>
+              </td>
+            </tr>
+            <tr styleName="additional">
+              <td>
+                {user.km} KM
+              </td>
+              <td />
+              <td styleName="insta">
+                {this.renderInstagramSection()}
+              </td>
+            </tr>
+            {!simple && this.renderActionsRow()}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  render() {
+    const { user, simple, asLoader, horizontal } = this.props
+
+    const className = cx({
+      simple
+    })
+
+    if (asLoader) {
+      return (
+        <div styleName="wrapper" className="simple">
+          <Loader isSimpleLoader />
+        </div>
+      )
+    }
+
+    return (
+      <div styleName="wrapper" className={className}>
+        {horizontal ? this.renderHorizontalLayout() : this.renderVerticalLayout()}
       </div>
     );
   }
@@ -193,4 +245,5 @@ export default class UserCard extends Component {
 
 UserCard.propTypes = {
   withSuperLikeCounter: PropTypes.bool,
+  horizontal: PropTypes.bool,
 }

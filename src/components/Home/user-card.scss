@@ -255,3 +255,43 @@
     font-size: 17px;
   }
 }
+
+.horizontal {
+  $photo-w: 250px;
+
+  .details {
+    background: #fff;
+
+    table {
+      width: 100%;
+    }
+  }
+
+  .employ {
+    span {
+      width: 100%;
+    }
+  }
+
+  .photos {
+    width: 3 * $photo-w;
+  }
+
+  :global {
+    .slick-slider {
+      margin-bottom: -7px;
+    }
+    .slick-slider .slick-dots {
+      bottom: 7px;
+      background: #fff;
+    }
+
+    .slick-slider .slick-next {
+      right: -25px;
+    }
+
+    .slick-slider .slick-prev {
+      left: -25px;
+    }
+  }
+}

@@ -18,8 +18,10 @@ import styles from './styles.scss'
 export default class Home extends Component {
   @observable isShowingModal = null
 
-  componentWillReceiveProps(nextProps) {
-    console.log('props');
+  constructor(props) {
+    super(props)
+
+    this.layout = localStorage.getItem('layout') || 'horizontal'
   }
 
   @autobind
@@ -93,6 +95,26 @@ export default class Home extends Component {
     )
   }
 
+  renderVerticalLayout() {
+    const { userStore } = this.props
+
+    return (
+      <div styleName="recommendation">
+        <UserCard user={userStore.first} withSuperLikeCounter />
+      </div>
+    )
+  }
+
+  renderHorizontalLayout() {
+    const { userStore } = this.props
+
+    return (
+      <div styleName="horizontal">
+        <UserCard user={userStore.first} withSuperLikeCounter horizontal />
+      </div>
+    )
+  }
+
   render() {
     const { userStore, currentUser } = this.props
 
@@ -109,10 +131,11 @@ export default class Home extends Component {
     return (
       <div styleName="home">
         {shouldShowTour && this.renderModal()}
-        <div styleName="recommendation">
-          <UserCard user={userStore.first} withSuperLikeCounter />
-        </div>
-        <UserCardList userStore={userStore} />
+        {this.layout === 'horizontal' ? this.renderHorizontalLayout() : this.renderVerticalLayout()}
+
+        <dit styleName="recs">
+          <UserCardList userStore={userStore} />
+        </dit>
       </div>
     )
   }

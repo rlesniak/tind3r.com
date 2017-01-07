@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { reaction } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
@@ -29,6 +30,10 @@ export default class User extends Component {
 
     this.user = props.userStore.find(props.params.userId)
     this.user.fetch()
+
+    this.documentTitleDispose = reaction(() => this.user.isFetching, () => {
+      document.title = `${this.user.name}, ${this.user.age} - Tind3r`
+    })
   }
 
   componentDidMount() {
@@ -37,6 +42,8 @@ export default class User extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeydown)
+    this.documentTitleDispose()
+    document.title = 'Tind3r'
   }
 
   @autobind

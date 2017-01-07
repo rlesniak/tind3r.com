@@ -4,6 +4,10 @@ import { observable } from 'mobx'
 import { browserHistory } from 'react-router'
 import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
+import Alert from 'react-s-alert'
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/flip.css'
+import MatchAlert from '../MatchAlert'
 import UserStore from '../../stores/UserStore'
 import styles from './app.scss'
 import NavBar from '../NavBar'
@@ -100,6 +104,7 @@ export default class App extends Component {
         <div styleName="footer">
           Copyright &copy; Rafal Lesniak | Privacy Policy
         </div>
+        <Alert contentTemplate={MatchAlert} effect="flip" stack />
       </div>
     );
   }

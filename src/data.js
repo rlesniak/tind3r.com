@@ -64,11 +64,6 @@ const Data = {
               })
 
               db.matches.where('_id').equals(match._id).first(m => {
-                console.log({
-                  ...matchObj(match),
-                  isBlocked: 0,
-                  isNew: isFirstFetch ? 0 : 1,
-                });
                 if (!m) {
                   db.matches.add({
                     ...matchObj(match),

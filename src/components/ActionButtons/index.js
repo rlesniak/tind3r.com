@@ -7,6 +7,7 @@ import CSSModules from 'react-css-modules'
 import _ from 'lodash'
 import ReactGA from 'react-ga'
 import cx from 'classnames'
+import Alert from 'react-s-alert'
 import styles from './styles.scss'
 import Data from '../../data'
 
@@ -103,6 +104,17 @@ export default class ActionButtons extends Component {
     })
   }
 
+  showAlert() {
+    Alert.success('Match', {
+      position: 'top',
+      timeout: 2000,
+      customFields: {
+        userName: this.props.user.name,
+        avatar: this.props.user.mainPhoto,
+      }
+    })
+  }
+
   /**
    * 65 - a
    * 83 - s
@@ -140,7 +152,7 @@ export default class ActionButtons extends Component {
       return
     }
 
-    ReactGA.event({
+    ReactGA.event('<h1>Test message 1</h1>', {
       category: 'User',
       action: 'Like',
       label: this.props.user._id
@@ -149,7 +161,7 @@ export default class ActionButtons extends Component {
     this.isLiked = true
     this.props.user.like().then(resp => {
       if (resp.match) {
-        alert('Its a match!')
+        this.showAlert()
 
         ReactGA.event({
           category: 'User',
@@ -198,7 +210,7 @@ export default class ActionButtons extends Component {
       this.getSuperLikeDiffInMin()
 
       if (resp.match) {
-        alert('Its a match!')
+        this.showAlert()
 
         ReactGA.event({
           category: 'User',

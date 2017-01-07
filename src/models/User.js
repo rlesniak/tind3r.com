@@ -43,13 +43,12 @@ class User {
   }
 
   @action asyncAction(method) {
-    this.isLoading = true
+    this.done = 1
     return new Promise((resolve, reject) => {
       method(this.id).then(action(resp => {
         if (resp.likes_remaining === 0) {
           reject(resp)
         } else {
-          this.done = 1
           resolve(resp)
         }
 

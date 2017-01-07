@@ -3972,6 +3972,12 @@ react-router@^3.0.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
+react-s-alert@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-s-alert/-/react-s-alert-1.2.2.tgz#3a2e8521fdff68622c397a42c49e1885e71b346e"
+  dependencies:
+    babel-runtime "^6.18.0"
+
 react-slick@0.14.5:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.14.5.tgz#29e2e2d73653a786ac38de379c6e6f27ffa0b029"

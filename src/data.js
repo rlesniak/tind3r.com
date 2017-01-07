@@ -46,6 +46,10 @@ const Data = {
     return db.messages.where('match_id').equals(matchId).with({ user: 'from' })
   },
 
+  removePerson(id) {
+    db.users.where('_id').equals(id).delete()
+  },
+
   updates() {
     const isFirstFetch = !localStorage.getItem('firstFetchDone')
 

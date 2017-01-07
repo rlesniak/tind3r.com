@@ -77,10 +77,6 @@ export default class Home extends Component {
   renderLoader() {
     const { userStore, currentUser } = this.props
 
-    if (!userStore.isLoading) {
-      return null
-    }
-
     return (
       <div styleName="home">
         <Loader currentUser={currentUser} />
@@ -92,12 +88,13 @@ export default class Home extends Component {
   renderMsg() {
     const { userStore, currentUser } = this.props
 
+    const filterMsg = userStore.activeFilter ? '(with custom filter)' : ''
     return (
       <div styleName="home">
         <Loader currentUser={currentUser} noAnimation />
-        <Settings handleSetLayout={this.setLayout} />
+        <Settings handleSetLayout={this.setLayout} userStore={userStore} />
         <div styleName="message">
-          There's no one new around you. <br/>
+          There's no one new around you. {filterMsg}<br/>
           (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br/>
           <button onClick={this.refresh}><i className="fa fa-refresh" /></button>
         </div>
@@ -128,7 +125,7 @@ export default class Home extends Component {
   render() {
     const { userStore, currentUser } = this.props
 
-    if (userStore.isLoading) {
+    if (userStore.isLoading || userStore.isCharging && userStore.all.length == 0) {
       return this.renderLoader()
     }
 
@@ -136,11 +133,15 @@ export default class Home extends Component {
       return this.renderMsg()
     }
 
+    if (!userStore.isCharging && !userStore.isLoading && userStore.all.length === 0) {
+      return this.renderMsg()
+    }
+
     const shouldShowTour = !localStorage.getItem('homepage-tour')
 
     return (
       <div styleName="home">
-        <Settings handleSetLayout={this.setLayout} />
+        <Settings handleSetLayout={this.setLayout} userStore={userStore} />
         {shouldShowTour && this.renderModal()}
         {this.layout === 'horizontal' ? this.renderHorizontalLayout() : this.renderVerticalLayout()}
 

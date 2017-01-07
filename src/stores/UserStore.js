@@ -8,6 +8,7 @@ class UserStore {
   @observable noRecs = false
   @observable isLoading = true;
   @observable isCharging = true;
+  @observable activeFilter = null;
 
   constructor() {
     this.chargeReaction = null
@@ -69,6 +70,21 @@ class UserStore {
     return _.find(this.users, { id }) || new User(this, id)
   }
 
+  @action setFilter(option) {
+    this.activeFilter = option
+
+    if (this.activeFilter === 'insta') {
+      _.remove(this.users, user => {
+        if (!user.hasInsta) {
+          Data.removePerson(user._id)
+          return true
+        }
+
+        return false
+      })
+    }
+  }
+
   @computed get first() {
     return this.all.length ? _.head(this.all) : []
   }
@@ -78,7 +94,14 @@ class UserStore {
   }
 
   @computed get all() {
-    return _.filter(this.users, { done: 0 })
+    return _.filter(this.users, user => {
+      let filterValue = true
+      if (this.activeFilter === 'insta') {
+        filterValue = user.hasInsta
+      }
+
+      return filterValue && user.done === 0
+    })
   }
 }
 

@@ -6,16 +6,19 @@ import { observer, inject } from 'mobx-react'
 import RCSlider from 'rc-slider'
 import _ from 'lodash'
 import cx from 'classnames'
+import Select from 'react-basic-dropdown'
 import ReactGA from 'react-ga'
 import styles from './settings.scss'
 import { miToKm, kmToMi } from '../../utils'
 import 'rc-slider/assets/index.css'
+import '../../select.scss'
 
 @inject('currentUser')
 @observer
 @CSSModules(styles)
 export default class Settings extends Component {
-  @observable isOpen = false
+  @observable isOpenSettings = false
+  @observable isOpenFilter = false
 
   constructor(props) {
     super(props)
@@ -23,7 +26,14 @@ export default class Settings extends Component {
 
   @autobind
   showSettings() {
-    this.isOpen = !this.isOpen
+    this.isOpenFilter = false
+    this.isOpenSettings = !this.isOpenSettings
+  }
+
+  @autobind
+  showFilter() {
+    this.isOpenSettings = false
+    this.isOpenFilter = !this.isOpenFilter
   }
 
   @autobind
@@ -50,7 +60,8 @@ export default class Settings extends Component {
 
   @autobind
   handleBlur() {
-    this.isOpen = false
+    this.isOpenSettings = false
+    this.isOpenFilter = false
   }
 
   @autobind
@@ -64,16 +75,38 @@ export default class Settings extends Component {
     })
   }
 
+  @autobind
+  handleFilterChange({ value }) {
+    this.props.userStore.setFilter(value)
+  }
+
   render() {
-    const className = cx({ open: this.isOpen })
+    const classNameSettings = cx({ open: this.isOpenSettings })
+    const classNameFilter = cx({ open: this.isOpenFilter })
     const distance = this.props.currentUser.profileSettings.distance_filter
 
+    const filterOptions = [
+      { value: '', label: 'None' },
+      { value: 'insta', label: 'Instagram' },
+    ]
+
     return (
-      <div styleName="wrapper" className={className} tabIndex="0" onBlur={this.handleBlur}>
-        <div styleName="trigger" onClick={this.showSettings}>
-          <i className="fa fa-cog" />
+      <div styleName="wrapper" tabIndex="0" onBlur={this.handleBlur}>
+        <div styleName="trigger">
+          <i className="fa fa-cog" onClick={this.showSettings} />
+          <i className="fa fa-filter" onClick={this.showFilter} />
         </div>
-        <div styleName="main">
+        <div styleName="main" className={classNameFilter}>
+          <div styleName="option">
+            <div styleName="label">Filter by: </div>
+            <Select
+              value=""
+              options={filterOptions}
+              onChange={this.handleFilterChange}
+            />
+          </div>
+        </div>
+        <div styleName="main" className={classNameSettings}>
           <div styleName="option">
             <div styleName="label">Layout: </div>
             <span onClick={this.setVertical}>Vertical</span>

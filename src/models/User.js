@@ -131,6 +131,10 @@ class User {
     return this.instagram && this.instagram.username
   }
 
+  @computed get hasInsta() {
+    return this.instagram && this.instagram !== null
+  }
+
   @computed get school() {
     if (this.schools.length && _.head(this.schools)) {
       return this.schools[0].name

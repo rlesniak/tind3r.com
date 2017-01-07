@@ -8,18 +8,20 @@
   transform: translateX(-50%);
   z-index: 1;
   outline: none;
-
-  &:global(.open) {
-    .main {
-      display: block;
-    }
-  }
 }
 
 .main {
   background: #fff;
   display: none;
   border-radius: 0 0 $border-radius $border-radius;
+
+  &:global(.open) {
+    display: block;
+  }
+
+  &:global(.container) {
+    padding: 0;
+  }
 }
 
 .trigger {
@@ -32,7 +34,16 @@
   border-radius: 0 0 $border-radius $border-radius;
   left: 50%;
   transform: translateX(-50%);
-  cursor: pointer;
+
+  :global {
+    .fa {
+      cursor: pointer;
+    }
+
+    .fa-filter {
+      margin-left: 15px;
+    }
+  }
 }
 
 .option {

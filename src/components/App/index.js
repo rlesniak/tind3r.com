@@ -32,6 +32,10 @@ export default class App extends Component {
           localStorage.setItem('superLikeExpiration', resp.rating.super_likes.resets_at)
         }
 
+        if (resp.rating.likes_remaining === 0) {
+          localStorage.setItem('likeExpiration', resp.rating.rate_limited_until)
+        }
+
         this.userStore.core()
         this.afterSucessLogin()
       }).catch(status => {

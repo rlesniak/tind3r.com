@@ -19,8 +19,8 @@
     display: block;
   }
 
-  &:global(.container) {
-    padding: 0;
+  :global(.container) {
+    width: 100px;
   }
 }
 

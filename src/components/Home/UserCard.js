@@ -140,7 +140,7 @@ export default class UserCard extends Component {
     const { user, simple } = this.props
 
     return (
-      <div styleName="horizontal">
+      <div styleName="horizontal" className="body">
         <div styleName="photos">
           <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings} slidesToShow="3" infinite>
             {_.map(user.photosUrls, url => (
@@ -184,7 +184,7 @@ export default class UserCard extends Component {
     const { user, simple } = this.props
 
     return (
-      <div styleName="content">
+      <div styleName="content" className="body">
         <table>
           <colgroup>
             <col width="33%" />

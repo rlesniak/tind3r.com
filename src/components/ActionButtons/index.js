@@ -152,7 +152,7 @@ export default class ActionButtons extends Component {
       return
     }
 
-    ReactGA.event('<h1>Test message 1</h1>', {
+    ReactGA.event({
       category: 'User',
       action: 'Like',
       label: this.props.user._id

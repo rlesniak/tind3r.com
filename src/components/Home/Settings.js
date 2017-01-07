@@ -29,11 +29,23 @@ export default class Settings extends Component {
   @autobind
   setVertical() {
     this.props.handleSetLayout('vertical')
+
+    ReactGA.event({
+      category: 'Settings',
+      action: 'Layout change',
+      label: 'To vertical'
+    })
   }
 
   @autobind
   setHorizontal() {
     this.props.handleSetLayout('horizontal')
+
+    ReactGA.event({
+      category: 'Settings',
+      action: 'Layout change',
+      label: 'To horizontal'
+    })
   }
 
   @autobind
@@ -44,6 +56,12 @@ export default class Settings extends Component {
   @autobind
   handleDistanceChange(value) {
     this.props.currentUser.updateProfile(kmToMi(value))
+
+    ReactGA.event({
+      category: 'Settings',
+      action: 'Distance change',
+      label: `To ${value}`,
+    })
   }
 
   render() {

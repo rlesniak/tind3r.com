@@ -1,8 +1,8 @@
 import { EXT_ID } from './const/index'
 
-const chromeRuntime = (type, params = {}) => {
+const chromeRuntime = (type, params = {}, url = null) => {
   return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(EXT_ID, { type, params }, response => {
+    chrome.runtime.sendMessage(EXT_ID, { type, url, params }, response => {
       if (response.data) {
         resolve(response.data)
       } else if(response.message) {
@@ -62,6 +62,10 @@ export const superLike = (id) => {
 
 export const updates = () => {
   return chromeRuntime('FETCH_MESSAGES')
+}
+
+export const post = (props, url) => {
+  return chromeRuntime('POST', props, url)
 }
 
 export const purge = () => {

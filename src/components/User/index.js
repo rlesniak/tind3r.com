@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import Slider from 'react-slick'
@@ -12,6 +12,7 @@ import ActionButtons from '../ActionButtons'
 import UserCard from '../Home/UserCard'
 import Img from '../Shared/Img'
 
+@inject('currentUser')
 @observer
 @CSSModules(styles)
 export default class User extends Component {
@@ -56,7 +57,7 @@ export default class User extends Component {
   }
 
   renderUser() {
-    const { user } = this
+    const { user, props: { currentUser } } = this
     const insta = (user.instagram && user.instagram.photos) || []
 
     return (
@@ -79,7 +80,13 @@ export default class User extends Component {
               Last seen: {user.seen}
             </h2>
             <p styleName="full-bio">
-              {user.bio || '[NO BIO]'}
+              {user.bio.split('\n').map(item => (
+                <span key={_.uniqueId()}>
+                  {item}
+                  <br/>
+                </span>
+              ))}
+              {!user.bio && '[NO BIO]'}
             </p>
             <div styleName="common">
               {!!user.common_interests.length && <h1>Common interests:</h1>}
@@ -106,9 +113,9 @@ export default class User extends Component {
               </a>
             </div>}
           </div>
-          <div styleName="actions">
+          {user.id !== currentUser._id && <div styleName="actions">
             <ActionButtons user={user} withSuperLikeCounter withKeyActions />
-          </div>
+          </div>}
         </div>
         <div styleName="photos">
           <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>

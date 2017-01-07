@@ -59,7 +59,7 @@ export default class Match extends Component {
       return <i className="fa fa-arrow-down" aria-hidden="true" />
     }
 
-    return <i className="fa fa-arrow-up" aria-hidden="true"></i>
+    return <i className="fa fa-arrow-up" aria-hidden="true" />
   }
 
   renderTypeIcon() {

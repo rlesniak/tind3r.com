@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import { observable } from 'mobx'
+import { observer, inject } from 'mobx-react'
+import RCSlider from 'rc-slider'
 import _ from 'lodash'
 import cx from 'classnames'
 import ReactGA from 'react-ga'
-import { observer } from 'mobx-react'
 import styles from './settings.scss'
+import { miToKm, kmToMi } from '../../utils'
+import 'rc-slider/assets/index.css'
 
+@inject('currentUser')
 @observer
 @CSSModules(styles)
 export default class Settings extends Component {
@@ -32,18 +36,43 @@ export default class Settings extends Component {
     this.props.handleSetLayout('horizontal')
   }
 
+  @autobind
+  handleBlur() {
+    this.isOpen = false
+  }
+
+  @autobind
+  handleDistanceChange(value) {
+    this.props.currentUser.updateProfile(kmToMi(value))
+  }
+
   render() {
     const className = cx({ open: this.isOpen })
+    const distance = this.props.currentUser.profileSettings.distance_filter
+
     return (
-      <div styleName="wrapper" className={className}>
+      <div styleName="wrapper" className={className} tabIndex="0" onBlur={this.handleBlur}>
         <div styleName="trigger" onClick={this.showSettings}>
           <i className="fa fa-cog" />
         </div>
         <div styleName="main">
           <div styleName="option">
-            <span styleName="label">Layout: </span>
+            <div styleName="label">Layout: </div>
             <span onClick={this.setVertical}>Vertical</span>
             <span onClick={this.setHorizontal}>Horizontal</span>
+          </div>
+
+          <div styleName="option">
+            <div styleName="label">Search distance: {miToKm(distance)}KM</div>
+            <span>
+              <RCSlider
+                min={2}
+                max={160}
+                defaultValue={miToKm(distance) || 0}
+                onAfterChange={this.handleDistanceChange}
+                tipFormatter={v => `${v} KM`}
+              />
+            </span>
           </div>
         </div>
       </div>

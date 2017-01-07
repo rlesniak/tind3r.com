@@ -1,7 +1,7 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
 import ReactGA from 'react-ga'
-import { core, like, pass, superLike, updates, sendMessage, purge } from './runtime'
+import { core, like, pass, superLike, updates, sendMessage, purge, post } from './runtime'
 import matchObj from './objects/match'
 
 const db = new Dexie('tinder', { addons: [relationships] })
@@ -191,6 +191,17 @@ const Data = {
         }
       })
     })
+  },
+
+  updateProfile(distanceMi, payload) {
+    return post({
+      discoverable: payload.discoverable,
+      gender_filter: payload.gender_filter,
+      age_filter_min: payload.age_filter_min,
+      age_filter_max: payload.age_filter_max,
+      distance_filter: distanceMi, // in MI
+      squads_discoverable: payload.squads_discoverable,
+    }, 'profile')
   },
 
   countUnread(currentUserId, callback) {

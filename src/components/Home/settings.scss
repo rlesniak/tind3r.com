@@ -7,6 +7,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+  outline: none;
 
   &:global(.open) {
     .main {
@@ -40,13 +41,12 @@
   font-size: 13px;
 
   span {
-    display: inline-block;
     margin-right: 5px;
     cursor: pointer;
   }
 }
 
 .label {
-  cursor: default;
+  line-height: 25px;
   font-weight: bold;
 }

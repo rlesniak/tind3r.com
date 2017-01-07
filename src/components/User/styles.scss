@@ -17,6 +17,8 @@
   float: left;
   height: 600px;
   width: 400px;
+  display: flex;
+  flex-direction: column;
 
   h1 {
     font-size: 30px;
@@ -43,11 +45,13 @@
 
 .intro {
   padding: 15px;
-  height: 526px;
+  overflow-y: auto;
+  flex: 1 1 auto;
 }
 
 .actions {
   padding: 0;
+  flex: 0 1 auto;
 }
 
 .common {

@@ -36,7 +36,7 @@ const isProduction = process.env.NODE_ENV == 'production'
 const gaCode = isProduction ? 'UA-60241080-4' : 'UA-000000-1'
 
 ReactGA.initialize(gaCode, {
-  debug: !isProduction
+  debug: false
 });
 
 const logPageView = () => {

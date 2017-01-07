@@ -26,11 +26,6 @@ export default class Matches extends Component {
   handleSelect(id) {
     this.seletedMatch = this.matchStore.findMatch(id)
     this.matchStore.setAsDone(this.seletedMatch)
-
-    ReactGA.event({
-      category: 'Match',
-      action: 'Select'
-    })
   }
 
   render() {

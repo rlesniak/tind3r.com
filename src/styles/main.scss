@@ -50,4 +50,12 @@ body {
       }
     }
   }
+
+  .rc-slider-tooltip {
+    z-index: 2;
+    box-shadow: none;
+    font-family: $lato;
+    padding: 6px 2px 6px;
+    font-weight: 400;
+  }
 }

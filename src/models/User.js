@@ -3,6 +3,12 @@ import moment from 'moment'
 import ReactGA from 'react-ga'
 import { user, meta } from '../runtime'
 import Data from '../data'
+import { miToKm } from '../utils'
+
+const PROFILE_FIELDS = [
+  'discoverable', 'gender_filter', 'age_filter_min', 'age_filter_max',
+  'distance_filter', 'squads_discoverable'
+]
 
 class User {
   id = null
@@ -83,6 +89,17 @@ class User {
     })
   }
 
+  @action updateProfile(distanceMi) {
+    return new Promise((resolve, reject) => {
+      Data.updateProfile(distanceMi, this.profileSettings).then(action(resp => {
+        this.distance_filter = resp.distance_filter
+        resolve(resp)
+      })).catch(status => {
+        reject(status)
+      })
+    })
+  }
+
   @action setFromJson(json) {
     extendObservable(this, json)
   }
@@ -100,7 +117,7 @@ class User {
   }
 
   @computed get km() {
-    return (this.distance_mi * 1.6093).toFixed(0)
+    return miToKm(this.distance_mi)
   }
 
   @computed get instaLink() {
@@ -137,6 +154,10 @@ class User {
 
   @computed get photosUrls() {
     return _.map(this.photos, photo => this.getPhotoUrl(photo))
+  }
+
+  @computed get profileSettings() {
+    return _.pick(this, PROFILE_FIELDS)
   }
 
   getPhotoUrl(photo, size = 640) {

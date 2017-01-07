@@ -95,8 +95,10 @@ export default class Home extends Component {
     return (
       <div styleName="home">
         <Loader currentUser={currentUser} noAnimation />
+        <Settings handleSetLayout={this.setLayout} />
         <div styleName="message">
-          There's no one new around you.
+          There's no one new around you. <br/>
+          (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br/>
           <button onClick={this.refresh}><i className="fa fa-refresh" /></button>
         </div>
       </div>
@@ -117,7 +119,7 @@ export default class Home extends Component {
     const { userStore } = this.props
 
     return (
-      <div styleName="horizontal">
+      <div styleName="horizontal" className="horizontal">
         <UserCard user={userStore.first} withSuperLikeCounter horizontal />
       </div>
     )
@@ -142,9 +144,7 @@ export default class Home extends Component {
         {shouldShowTour && this.renderModal()}
         {this.layout === 'horizontal' ? this.renderHorizontalLayout() : this.renderVerticalLayout()}
 
-        <dit styleName="recs">
-          <UserCardList userStore={userStore} />
-        </dit>
+        <UserCardList userStore={userStore} />
       </div>
     )
   }

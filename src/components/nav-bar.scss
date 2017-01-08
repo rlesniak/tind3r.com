@@ -5,6 +5,11 @@
   width: 100%;
   box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
 
+  .logo {
+    padding: 9px;
+    border-right: 1px solid #f7f3f0;
+  }
+
   ul, li {
     padding: 0;
     margin: 0;

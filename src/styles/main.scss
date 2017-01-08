@@ -18,6 +18,18 @@ body {
     height: 100%;
   }
 
+  .logo-m-white {
+    background: url('../images/logo-m-white.png');
+    width: 120px;
+    height: 38px;
+    background-size: cover;
+  }
+
+  .static-wrapper {
+    font-family: $lato;
+    padding: 20px;
+  }
+
   .main-wrapper {
     margin: 20px 20px 0;
     background: #fff;
@@ -61,5 +73,16 @@ body {
 
   .s-alert-box {
     padding: 13px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 14px;
+    padding-top: 10px;
+
+    a {
+      text-decoration: none;
+      color: $red;
+    }
   }
 }

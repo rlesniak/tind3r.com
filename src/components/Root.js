@@ -8,9 +8,10 @@ import Home from './Home'
 import User from './User'
 import Matches from './Matches'
 import History from './History'
-import FbConnect from './FbConnect'
-import Debug from './Debug'
-import Welcome from './Welcome'
+import FbConnect from './Static/FbConnect'
+import Debug from './Static/Debug'
+import Welcome from './Static/Welcome'
+import PrivacyPolicy from './Static/PrivacyPolicy'
 import Data from '../data'
 
 Router.prototype.componentWillReceiveProps = function(nextProps) {
@@ -56,6 +57,7 @@ const Root = () => (
       </Route>
       <Route path="fb-connect" component={FbConnect} />
       <Route path="welcome" component={Welcome} />
+      <Route path="privacy-policy" component={PrivacyPolicy} />
       <Route path="debug" component={Debug} />
     </Router>
   </Provider>

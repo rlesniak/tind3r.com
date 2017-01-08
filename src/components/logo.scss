@@ -1,0 +1,52 @@
+@import '../styles/vars';
+
+.logo-wrapper {
+  text-align: center;
+}
+
+.logo {
+  display: inline-block;
+
+  .sub {
+    font-size: 17px;
+    text-align: right;
+    margin-top: 9px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.logo h1 {
+  font-family: Comfortaa;
+  font-size: 100px;
+
+  span {
+    transform: rotate(90deg);
+    position: relative;
+    width: 103px;
+    height: 74px;
+    display: inline-block;
+    margin-left: 6px;
+    margin-right: 8px;
+    text-align: left;
+
+    .atop {
+      z-index: 1;
+      color: $red;
+    }
+
+    .border {
+      right: -2px;
+      top: -13px;
+      font-size: 111px;
+      color: #ffffff;
+    }
+
+    i {
+      position: absolute;;
+    }
+  }
+}

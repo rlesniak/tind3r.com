@@ -33,6 +33,11 @@ export default class NavBar extends Component {
       <div styleName="nav-bar">
         <ul>
           <li>
+            <div styleName="logo">
+              <div className="logo-m-white" />
+            </div>
+          </li>
+          <li>
             <Link to="/home" activeClassName="active">
               <i className="fa fa-home"></i>
               Home

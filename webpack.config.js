@@ -45,7 +45,14 @@ module.exports = {
           'sass?sourceMap'
         ]
       },
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'url-loader',
+        options: {
+          name: '[path][name].[hash].[ext]'
+        }
+      }
     ]
   }
 };

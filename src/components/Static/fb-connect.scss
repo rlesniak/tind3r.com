@@ -1,0 +1,23 @@
+@import '../../styles/vars';
+
+.content {
+  margin-top: 50px;
+  text-align: center;
+  font-family: Lato;
+
+  h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  button {
+    border: none;
+    background: $blue;
+    font-size: 23px;
+    padding: 5px 25px;
+    cursor: pointer;
+    color: #fff;
+    border-radius: $border-radius;
+    font-family: $lato;
+  }
+}

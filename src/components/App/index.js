@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
 import { browserHistory } from 'react-router'
+import { Link } from 'react-router'
 import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
 import Alert from 'react-s-alert'
@@ -105,8 +106,8 @@ export default class App extends Component {
             currentUser: this.props.currentUser,
           })}
         </div>
-        <div styleName="footer">
-          Copyright &copy; Rafal Lesniak | Privacy Policy
+        <div className="footer">
+          Copyright &copy; <a href="https://goo.gl/6i11L7" target="_blank">Rafal Lesniak</a> | <Link to="/privacy-policy">Privacy Policy</Link>
         </div>
         <Alert contentTemplate={MatchAlert} effect="flip" stack />
       </div>

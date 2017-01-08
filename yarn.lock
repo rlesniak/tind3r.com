@@ -2940,11 +2940,7 @@ lodash@^3.9.3:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.2.0, lodash@^4.6.1:
-  version "4.17.3"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.3.tgz#557ed7d2a9438cac5fd5a43043ca60cb455e01f7"
-
-lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3885,9 +3881,9 @@ rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react-basic-dropdown@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/react-basic-dropdown/-/react-basic-dropdown-0.1.1.tgz#e291b7809fc93785d00349bd0689879ce5306a64"
+react-basic-dropdown@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-basic-dropdown/-/react-basic-dropdown-0.1.2.tgz#5086c0897226ea3265db823b0d44b2e7fc8b6cd7"
   dependencies:
     chai "^3.5.0"
     classnames "^2.2.5"

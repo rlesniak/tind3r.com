@@ -60,6 +60,19 @@ export default class History extends Component {
   }
 
   render() {
+    const actions = this.actions
+
+    if (actions.length === 0) {
+      return (
+        <div styleName="wrapper" className="main-wrapper table">
+          <h1>
+            <i className="fa fa-frown-o" />
+            <span>You have no actions saved in this browser.</span>
+          </h1>
+        </div>
+      )
+    }
+
     return (
       <div styleName="wrapper" className="main-wrapper">
         <ul>

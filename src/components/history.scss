@@ -40,6 +40,23 @@
       color: $red;
     }
   }
+
+  &:global(.table) {
+    display: table;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+
+    h1 {
+      display: table-cell;
+      vertical-align: middle;
+
+      span {
+        display: block;
+        margin-top: 10px;
+      }
+    }
+  }
 }
 
 .avatar {

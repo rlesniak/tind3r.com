@@ -57,18 +57,17 @@ export default class Home extends Component {
     return (
       <ModalContainer onClose={this.handleClose}>
         <ModalDialog onClose={this.handleClose}>
-          <h1>Protips:</h1>
-          <ul>
-            <li>Use your arrows to sliding photos</li>
-            <li>Use your keys to:
-              <ul>
-                <li>a - pass</li>
-                <li>s - super like</li>
-                <li>d - like</li>
-              </ul>
-            </li>
-          </ul>
-          <h1>(layout will be improved)</h1>
+          <div styleName="popup">
+            <h1>
+              <i className="fa fa-keyboard-o" />Keyboard protips:
+            </h1>
+            <ul>
+              <li>Use your arrows (left, right) to sliding photos.</li>
+              <li>a - pass</li>
+              <li>s - super like</li>
+              <li>d - like</li>
+            </ul>
+          </div>
         </ModalDialog>
       </ModalContainer>
     )

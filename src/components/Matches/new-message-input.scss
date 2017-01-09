@@ -45,6 +45,7 @@ $padding: 28px 20px 12px;
 
     :global(.fa) {
       position: absolute;
+      z-index: 1;
       left: 8px;
       top: 2px;
       color: #fff;

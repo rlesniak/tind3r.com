@@ -27,14 +27,13 @@ export const getTokenDate = (callback) => {
 }
 
 export const checkIfInstalled = (callback) => {
-  if (!chrome) {
+  try {
+    chrome.runtime.sendMessage(EXT_ID, { type: 'CHECK_INSTALLED' }, response => {
+      callback(response)
+    })
+  } catch(err) {
     callback(false)
-    return
   }
-
-  chrome.runtime.sendMessage(EXT_ID, { type: 'CHECK_INSTALLED' }, response => {
-    callback(response)
-  })
 }
 
 export const core = () => {

@@ -104,6 +104,13 @@ const Data = {
             })
           }
           resolve()
+        }).catch(error => {
+          ReactGA.event({
+            category: 'Initial',
+            action: 'Error',
+            label: error
+          })
+          console.log(error)
         })
       })
     })

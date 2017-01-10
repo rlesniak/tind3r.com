@@ -100,6 +100,11 @@ const Data = {
                 value: c,
                 nonInteraction: true
               })
+              ReactGA.event({
+                category: 'Initial',
+                action: 'Matches loaded',
+                label: _.toString(c),
+              })
               isFirstFetch && c > 0 ? localStorage.setItem('firstFetchDone', true) : null
             })
           }

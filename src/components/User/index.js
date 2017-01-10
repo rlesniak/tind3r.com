@@ -32,7 +32,7 @@ export default class User extends Component {
     this.user.fetch()
 
     this.documentTitleDispose = reaction(() => this.user.isFetching, () => {
-      document.title = `${this.user.name}, ${this.user.age} - Tind3r`
+      document.title = `${this.user.name}, ${this.user.age} - Tind3r - Unofficial Tinder client`
     })
   }
 
@@ -43,7 +43,7 @@ export default class User extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeydown)
     this.documentTitleDispose()
-    document.title = 'Tind3r'
+    document.title = 'Tind3r - Unofficial Tinder client'
   }
 
   @autobind

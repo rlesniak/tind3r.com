@@ -84,9 +84,9 @@ export default class App extends Component {
         this.newCount = count
 
         if (count > 0) {
-          document.title = `(${count}) - Tind3r`
+          document.title = `(${count}) - Tind3r - Unofficial Tinder client`
         } else {
-          document.title = 'Tind3r'
+          document.title = 'Tind3r - Unofficial Tinder client'
         }
       }
     })

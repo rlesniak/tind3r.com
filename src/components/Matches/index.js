@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
-import { observable } from 'mobx'
+import { observable, computed } from 'mobx'
 import _ from 'lodash'
 import ReactGA from 'react-ga'
 import { observer } from 'mobx-react'
@@ -16,10 +16,21 @@ import Data from '../../data'
 @CSSModules(styles)
 export default class Matches extends Component {
   @observable seletedMatch
+  @observable searchValue = ''
 
   constructor(props) {
     super(props)
     this.matchStore = new MatchStore()
+  }
+
+  @computed get list() {
+    if (this.searchValue.length) {
+      return this.matchStore.byDate.filter(match => (
+        _.includes(match.user.name.toLowerCase(), this.searchValue.toLowerCase())
+      ))
+    } else {
+      return this.matchStore.byDate
+    }
   }
 
   @autobind
@@ -39,8 +50,8 @@ export default class Matches extends Component {
   }
 
   @autobind
-  search() {
-
+  handleSearch(e) {
+    this.searchValue = e.target.value
   }
 
   render() {
@@ -48,15 +59,20 @@ export default class Matches extends Component {
       <div className="main-wrapper" styleName="wrapper">
         <div styleName="matches">
           {!this.matchStore.isLoading && <div styleName="actions">
-            {/* <div styleName="action" onClick={this.search}>
-              <input type="text" placeholder="Search by name" />
-            </div> */}
+            <div styleName="action" onClick={this.search}>
+              <input
+                type="text"
+                placeholder="Search by name"
+                value={this.searchValue}
+                onChange={this.handleSearch}
+              />
+            </div>
             <div styleName="action" onClick={this.markAsRead}>
               <i className="fa fa-check-square-o" /> Mark all as seen
             </div>
           </div>}
           {this.matchStore.isLoading && <h1>Loading...</h1>}
-          {!this.matchStore.isLoading && _.map(this.matchStore.byDate, match => (
+          {!this.matchStore.isLoading && _.map(this.list, match => (
             <Match
               key={match.id}
               match={match}

@@ -100,18 +100,8 @@ export default class Settings extends Component {
       <div styleName="wrapper" tabIndex="0" onBlur={this.handleBlur}>
         <div styleName="trigger">
           <i className="fa fa-cog" onClick={this.showSettings} />
-          <i className="fa fa-filter" onClick={this.showFilter} />
         </div>
-        <div styleName="main" className={classNameFilter}>
-          <div styleName="option">
-            <div styleName="label">Filter by: </div>
-            <Select
-              value=""
-              options={filterOptions}
-              onChange={this.handleFilterChange}
-            />
-          </div>
-        </div>
+
         <div styleName="main" className={classNameSettings}>
           <div styleName="option">
             <div styleName="label">Layout: </div>
@@ -130,6 +120,15 @@ export default class Settings extends Component {
                 tipFormatter={v => `${v} KM`}
               />
             </span>
+          </div>
+
+          <div styleName="option">
+            <div styleName="label">Filter by: </div>
+            <Select
+              value=""
+              options={filterOptions}
+              onChange={this.handleFilterChange}
+            />
           </div>
         </div>
       </div>

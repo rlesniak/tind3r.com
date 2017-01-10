@@ -7,6 +7,7 @@ import moment from 'moment'
 import cx from 'classnames'
 import { observer, inject } from 'mobx-react'
 import styles from './message.scss'
+import Img from '../Shared/Img'
 
 @inject('currentUser')
 @observer
@@ -36,6 +37,21 @@ export default class Message extends Component {
       'with-gif': message.type === 'gif',
     })
 
+    if (!recipient.photos) {
+      Raven.captureMessage('recipient error', {
+        level: 'error',
+        extra: recipient,
+      })
+    }
+
+    let avatar
+
+    if (message.isAuthor) {
+      avatar = recipient.photos ? recipient.photos[0].url : ''
+    } else {
+      avatar = currentUser.photos[0].url
+    }
+
     return (
       <div
         styleName="wrapper"
@@ -44,7 +60,7 @@ export default class Message extends Component {
         title={message.date}
       >
         <div styleName="avatar">
-          <Link to={`users/${message.from}`} styleName="circle"><img src={message.isAuthor ? recipient.photos[0].url : currentUser.photos[0].url} /></Link>
+          <Link to={`users/${message.from}`} styleName="circle"><Img src={avatar} width={40} /></Link>
           <span styleName="date">{moment(message.created_date).format('HH:mm')}</span>
         </div>
         <div styleName="message">

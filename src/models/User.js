@@ -166,6 +166,10 @@ class User {
   getPhotoUrl(photo, size = 640) {
     const baseUrl = 'http://images.gotinder.com'
 
+    if (!photo) {
+      return null
+    }
+
     if (photo.id === 'unknown') {
       return 'http://images.gotinder.com/0001unknown/640x640_pct_0_0_100_100_unknown.jpg'
     }

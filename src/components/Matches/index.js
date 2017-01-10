@@ -25,9 +25,10 @@ export default class Matches extends Component {
 
   @computed get list() {
     if (this.searchValue.length) {
-      return this.matchStore.byDate.filter(match => (
-        _.includes(match.user.name.toLowerCase(), this.searchValue.toLowerCase())
-      ))
+      return this.matchStore.byDate.filter(match => {
+        const name = match.user.name || ''
+        return _.includes(name.toLowerCase(), this.searchValue.toLowerCase())
+      })
     } else {
       return this.matchStore.byDate
     }

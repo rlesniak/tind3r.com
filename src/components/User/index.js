@@ -96,14 +96,14 @@ export default class User extends Component {
               {!user.bio && '[NO BIO]'}
             </p>
             <div styleName="common">
-              {!!user.common_interests.length && <h1>Common interests:</h1>}
+              {user.common_interests && !!user.common_interests.length && <h1>Common interests:</h1>}
               <ul styleName="commons">
                 {_.map(user.common_interests, i => (
                   <li key={i.id}>{i.name}</li>
                 ))}
               </ul>
 
-              {!!user.common_connections.length && <h1>Common connections:</h1>}
+              {user.common_connections && !!user.common_connections.length && <h1>Common connections:</h1>}
               <ul styleName="commons">
                 {_.map(user.common_connections, i => (
                   <li styleName="connection" key={i.id}>

@@ -51,9 +51,7 @@ const Data = {
     db.users.where('_id').equals(id).delete()
   },
 
-  updates() {
-    const isFirstFetch = !localStorage.getItem('firstFetchDone')
-
+  updates(firstFetch = false) {
     return new Promise((resolve, reject) => {
       updates().then(({ blocks, matches }) => {
         db.transaction('rw', db.users, db.matches, db.messages, function() {
@@ -73,7 +71,7 @@ const Data = {
                   db.matches.add({
                     ...matchObj(match),
                     isBlocked: 0,
-                    isNew: isFirstFetch ? 0 : 1,
+                    isNew: firstFetch ? 0 : 1,
                   })
                 } else {
                   // eg. new message
@@ -93,20 +91,13 @@ const Data = {
             db.matches.update(matchId, { isBlocked: 1 })
           })
         }).then(() => {
-          if (isFirstFetch) {
+          if (firstFetch) {
             db.matches.count(c => {
-              ReactGA.event({
-                category: 'Initial',
-                action: 'Matches loaded',
-                value: c,
-                nonInteraction: true
-              })
               ReactGA.event({
                 category: 'Initial',
                 action: 'Matches loaded',
                 label: _.toString(c),
               })
-              isFirstFetch && c > 0 ? localStorage.setItem('firstFetchDone', true) : null
             })
           }
           resolve()

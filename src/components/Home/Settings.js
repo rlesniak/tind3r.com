@@ -78,6 +78,12 @@ export default class Settings extends Component {
   @autobind
   handleFilterChange({ value }) {
     this.props.userStore.setFilter(value)
+
+    ReactGA.event({
+      category: 'Settings',
+      action: 'Filter change',
+      label: value,
+    })
   }
 
   render() {

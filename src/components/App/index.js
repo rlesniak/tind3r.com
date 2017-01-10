@@ -46,15 +46,26 @@ export default class App extends Component {
   }
 
   afterSucessLogin() {
-    if (process.env.NODE_ENV === 'production') {
-    // if (1) {
-      setInterval(() => {
-        Data.updates()
-      }, 3000)
+    const isFirstFetch = !localStorage.getItem('firstFetchDone')
+
+    if (isFirstFetch) {
+      Data.updates(true).then(() => this.runInterval())
+      localStorage.setItem('firstFetchDone', true)
+    } else {
+      this.runInterval()
     }
 
     this.countUnread()
     this.registerHook()
+  }
+
+  runInterval() {
+    if (process.env.NODE_ENV === 'production') {
+    // if (1) {
+      setInterval(() => {
+        Data.updates()
+      }, 1500)
+    }
   }
 
   checkIfHasExtension(successCallback) {

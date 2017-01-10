@@ -11,6 +11,7 @@
 
 .container {
   height: 100%;
+  position: relative;
 }
 
 .intro-wrapper {
@@ -19,10 +20,15 @@
   width: 400px;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   h1 {
     font-size: 30px;
     margin-bottom: 0;
+
+    > span {
+      padding-left: 50px;
+    }
   }
 
   p b {
@@ -124,6 +130,19 @@
   margin: 10px 0 20px;
 
   span {
+    color: $blue;
+  }
+}
+
+.back {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  background: $hover-c;
+  padding: 0 11px;
+  cursor: pointer;
+
+  &:hover {
     color: $blue;
   }
 }

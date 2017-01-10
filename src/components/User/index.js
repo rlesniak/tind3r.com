@@ -59,6 +59,9 @@ export default class User extends Component {
       case 37:
         this.sliderRef.slickPrev()
         break;
+      case 8:
+        browserHistory.goBack()
+        break;
       default:
     }
   }
@@ -72,7 +75,8 @@ export default class User extends Component {
         <div styleName="intro-wrapper">
           <div styleName="intro">
             <h1>
-              {user.name}, {user.age}
+              <div styleName="back" onClick={browserHistory.goBack}><i className="fa fa-long-arrow-left" /></div>
+              <span>{user.name}, {user.age}</span>
               <div styleName="km">{user.km} km, <span>{user.seenMin}</span></div>
               <ul styleName="school-job">
                 {_.map(_.filter(user.schools, s => s.id), s => (

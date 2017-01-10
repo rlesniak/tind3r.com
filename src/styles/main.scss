@@ -40,6 +40,13 @@ body {
 
   .slick-slider {
     margin-bottom: 0;
+
+    .slick-next,
+    .slick-prev {
+      height: 100%;
+      top: 0;
+    }
+
     .slick-next {
       right: 10px;
     }

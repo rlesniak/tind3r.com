@@ -60,7 +60,7 @@ export default class Message extends Component {
         title={message.date}
       >
         <div styleName="avatar">
-          <Link to={`users/${message.from}`} styleName="circle"><Img src={avatar} width={40} /></Link>
+          <Link to={`users/${message.from}`} styleName="circle"><Img src={avatar} style={{ width: 40 }} /></Link>
           <span styleName="date">{moment(message.created_date).format('HH:mm')}</span>
         </div>
         <div styleName="message">

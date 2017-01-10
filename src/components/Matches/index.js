@@ -28,10 +28,33 @@ export default class Matches extends Component {
     this.matchStore.setAsDone(this.seletedMatch)
   }
 
+  @autobind
+  markAsRead() {
+    this.matchStore.markAsRead()
+
+    ReactGA.event({
+      category: 'Match',
+      action: 'Mark as seen',
+    })
+  }
+
+  @autobind
+  search() {
+
+  }
+
   render() {
     return (
       <div className="main-wrapper" styleName="wrapper">
         <div styleName="matches">
+          {!this.matchStore.isLoading && <div styleName="actions">
+            {/* <div styleName="action" onClick={this.search}>
+              <input type="text" placeholder="Search by name" />
+            </div> */}
+            <div styleName="action" onClick={this.markAsRead}>
+              <i className="fa fa-check-square-o" /> Mark all as seen
+            </div>
+          </div>}
           {this.matchStore.isLoading && <h1>Loading...</h1>}
           {!this.matchStore.isLoading && _.map(this.matchStore.byDate, match => (
             <Match

@@ -40,6 +40,14 @@ class MatchStore {
     })
   }
 
+  @action markAsRead() {
+    _.each(this.matches, match => {
+      match.isNew = false
+    })
+
+    Data.db().matches.where('isNew').equals(1).modify({ isNew: 0 })
+  }
+
   @action updateMatches(resp) {
     if (_.find(this.matches, { id: resp._id }) || !resp.userId) {
       return

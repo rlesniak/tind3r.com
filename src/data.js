@@ -1,6 +1,7 @@
 import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
 import ReactGA from 'react-ga'
+import _ from 'lodash'
 import { core, like, pass, superLike, updates, sendMessage, purge, post } from './runtime'
 import matchObj from './objects/match'
 

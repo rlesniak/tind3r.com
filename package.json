@@ -54,6 +54,7 @@
     "react-dom": "^15.4.2",
     "react-ga": "^2.1.2",
     "react-hot-loader": "3.0.0-beta.6",
+    "react-intercom": "^1.0.11",
     "react-modal-dialog": "^4.0.4",
     "react-router": "^3.0.0",
     "react-s-alert": "^1.2.2",

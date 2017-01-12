@@ -28,6 +28,7 @@ export default class Settings extends Component {
   showSettings() {
     this.isOpenFilter = false
     this.isOpenSettings = !this.isOpenSettings
+    IntercomAPI('trackEvent', 'open-settings');
   }
 
   @autobind
@@ -84,6 +85,8 @@ export default class Settings extends Component {
       action: 'Filter change',
       label: value,
     })
+
+    IntercomAPI('trackEvent', 'filter-change');
   }
 
   render() {

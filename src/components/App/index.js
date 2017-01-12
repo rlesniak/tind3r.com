@@ -4,6 +4,7 @@ import { observable } from 'mobx'
 import { browserHistory } from 'react-router'
 import { Link } from 'react-router'
 import _ from 'lodash'
+import Intercom from 'react-intercom'
 import { observer, inject } from 'mobx-react'
 import Alert from 'react-s-alert'
 import 'react-s-alert/dist/s-alert-default.css'
@@ -104,14 +105,20 @@ export default class App extends Component {
   }
 
   render() {
-    if (this.props.currentUser.isLoading) {
+    const { currentUser } = this.props
+    if (currentUser.isLoading) {
       return null
+    }
+
+    const user = {
+      user_id: currentUser._id,
+      name: currentUser.name,
     }
 
     return (
       <div styleName="app-wrapper">
         <div styleName="page">
-          <NavBar user={this.props.currentUser} newCount={this.newCount} />
+          <NavBar user={currentUser} newCount={this.newCount} />
           {this.props.children && React.cloneElement(this.props.children, {
             userStore: this.userStore,
             currentUser: this.props.currentUser,
@@ -121,6 +128,7 @@ export default class App extends Component {
           Copyright &copy; <a href="https://goo.gl/6i11L7" target="_blank">Rafal Lesniak</a> | <Link to="/privacy-policy">Privacy Policy</Link>
         </div>
         <Alert contentTemplate={MatchAlert} effect="flip" stack />
+        <Intercom appID="budgcl9v" {...user} />
       </div>
     );
   }

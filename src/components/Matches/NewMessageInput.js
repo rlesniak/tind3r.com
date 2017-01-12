@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
 import ReactGA from 'react-ga'
+import { IntercomAPI } from 'react-intercom'
 import _ from 'lodash'
 import { Link } from 'react-router'
 import Select from 'react-basic-dropdown'
@@ -109,6 +110,8 @@ export default class NewMessageInput extends Component {
         action: 'Submit',
         label: 'Enter',
       })
+
+      IntercomAPI('trackEvent', 'submit-message');
 
       this.submit()
     }

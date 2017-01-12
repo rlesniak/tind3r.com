@@ -6,6 +6,7 @@ import autobind from 'autobind-decorator'
 import CSSModules from 'react-css-modules'
 import _ from 'lodash'
 import ReactGA from 'react-ga'
+import { IntercomAPI } from 'react-intercom'
 import cx from 'classnames'
 import Alert from 'react-s-alert'
 import styles from './styles.scss'
@@ -169,6 +170,8 @@ export default class ActionButtons extends Component {
           label: 'Match',
           nonInteraction: true
         })
+
+        IntercomAPI('trackEvent', 'match');
       }
     }).catch(r => {
       this.initExpirationTimes()
@@ -218,6 +221,8 @@ export default class ActionButtons extends Component {
           label: 'Match',
           nonInteraction: true
         })
+
+        IntercomAPI('trackEvent', 'superlike-match');
       }
     }).catch(err => {
       this.initExpirationTimes()

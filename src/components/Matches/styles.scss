@@ -39,12 +39,15 @@
   border-bottom: 1px solid #b1a599;
 }
 
-.action {
+.action-wrapper {
   font-size: 14px;
-  cursor: pointer;
-  margin: 15px 0;
+  margin: 10px 0;
 
-  &:hover {
+  .action {
+    cursor: pointer;
+  }
+
+  &:hover .action {
     color: $blue;
   }
 
@@ -62,5 +65,34 @@
     border: 1px solid $bg;
     outline: none;
     width: 100%;
+  }
+}
+
+.quick {
+  display: flex;
+
+  button {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    margin-right: 5px;
+    padding-right: 5px;
+    border-right: 1px solid $bg;
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    i {
+      margin-right: 5px;
+      display: inline-block;
+      width: 10px;
+    }
+
+    span {
+      color: $blue;
+    }
   }
 }

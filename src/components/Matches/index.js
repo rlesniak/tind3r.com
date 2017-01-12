@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
-import { observable, computed } from 'mobx'
+import { observable, computed, extendObservable } from 'mobx'
 import _ from 'lodash'
 import ReactGA from 'react-ga'
+import Select from 'react-basic-dropdown'
 import { observer } from 'mobx-react'
 import styles from './styles.scss'
 import MatchStore from '../../stores/MatchStore'
@@ -12,11 +13,27 @@ import Messages from './Messages'
 import Profile from './Profile'
 import Data from '../../data'
 
+const sortOptions = [
+  { label: 'Most recent', value: 1 },
+  { label: 'Age', value: 2 },
+  { label: 'Distance', value: 3 },
+]
+
+const ORDER_DIR_MAP = {
+  'true': 'desc',
+  'false': 'asc',
+}
+
 @observer
 @CSSModules(styles)
 export default class Matches extends Component {
   @observable seletedMatch
   @observable searchValue = ''
+  @observable orderBy = ''
+  @observable orderDirection = {
+    age: null,
+    date: null,
+  }
 
   constructor(props) {
     super(props)
@@ -24,14 +41,26 @@ export default class Matches extends Component {
   }
 
   @computed get list() {
+    let values = this.matchStore.byDate
     if (this.searchValue.length) {
-      return this.matchStore.byDate.filter(match => {
+      values = values.filter(match => {
         const name = match.user.name || ''
         return _.includes(name.toLowerCase(), this.searchValue.toLowerCase())
       })
-    } else {
-      return this.matchStore.byDate
     }
+    if (this.orderBy !== null) {
+      switch(this.orderBy) {
+        case 'age':
+          values = _.orderBy(values, m => m.user.age, ORDER_DIR_MAP[this.orderDirection.age])
+        break;
+        case 'date':
+          values = _.orderBy(values, m => m.lastActvityTime, ORDER_DIR_MAP[this.orderDirection.date])
+        break;
+        default:
+      }
+    }
+
+    return values
   }
 
   @autobind
@@ -55,12 +84,41 @@ export default class Matches extends Component {
     this.searchValue = e.target.value
   }
 
+  resetOrderDirectionWithout(ommited) {
+    const updated = _.omit({
+      age: null,
+      date: null,
+    }, ommited)
+
+    extendObservable(this.orderDirection, updated)
+  }
+
+  handleOrder(by) {
+    this.resetOrderDirectionWithout(by)
+    this.orderBy = by
+    this.orderDirection[by] = !this.orderDirection[by]
+  }
+
+  renderOrderIcon(target) {
+    if (this.orderDirection[target] === null) {
+      return <i className="fa fa-sort" />
+    }
+
+    return (
+      <span>
+        {this.orderDirection[target] ?
+          <i className="fa fa-sort-numeric-desc" /> : <i className="fa fa-sort-numeric-asc" />
+        }
+      </span>
+    )
+  }
+
   render() {
     return (
       <div className="main-wrapper" styleName="wrapper">
         <div styleName="matches">
           {!this.matchStore.isLoading && <div styleName="actions">
-            <div styleName="action" onClick={this.search}>
+            <div styleName="action-wrapper" onClick={this.search}>
               <input
                 type="text"
                 placeholder="Search by name"
@@ -68,8 +126,20 @@ export default class Matches extends Component {
                 onChange={this.handleSearch}
               />
             </div>
-            <div styleName="action" onClick={this.markAsRead}>
-              <i className="fa fa-check-square-o" /> Mark all as seen
+            {this.matchStore.unreadCount > 0 && <div styleName="action-wrapper" onClick={this.markAsRead}>
+              <span styleName="action">
+                <i className="fa fa-check-square-o" /> Mark all as seen
+              </span>
+            </div>}
+            <div styleName="quick">
+              <button onClick={this.handleOrder.bind(this, 'age')}>
+                {this.renderOrderIcon('age')}
+                by age
+              </button>
+              <button onClick={this.handleOrder.bind(this, 'date')}>
+                {this.renderOrderIcon('date')}
+                by recent
+              </button>
             </div>
           </div>}
           {this.matchStore.isLoading && <h1>Loading...</h1>}

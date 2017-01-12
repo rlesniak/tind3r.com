@@ -94,7 +94,7 @@ export default class Match extends Component {
         <div styleName="avatar">
           <img src={match.user.mainPhoto} />
         </div>
-        <div styleName="name">{match.user.name}</div>
+        <div styleName="name">{match.user.name}, {match.user.age}</div>
         <div styleName="message">
           <span>{this.renderIcon()} {this.renderLastMessageContent()}</span>
           <div styleName="date">{match.ago}</div>

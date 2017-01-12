@@ -67,6 +67,10 @@ class MatchStore {
     return _.find(this.matches, { id })
   }
 
+  @computed get unreadCount() {
+    return _.filter(this.matches, match => match.isNew).length
+  }
+
   @computed get byDate() {
     return _.orderBy(this.matches, 'lastActvityTime').reverse()
   }

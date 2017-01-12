@@ -130,7 +130,6 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Keydown',
-      label: e.keyCode,
     })
 
     switch (e.keyCode) {

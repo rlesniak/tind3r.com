@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { observable } from 'mobx'
+import { observable, transaction } from 'mobx'
+import { observer } from 'mobx-react'
 import autobind from 'autobind-decorator'
 import { Link } from 'react-router'
 import CSSModules from 'react-css-modules'
@@ -8,26 +9,22 @@ import Data from '../data'
 import styles from './history.scss'
 import moment from 'moment'
 
+@observer
 @CSSModules(styles)
 export default class History extends Component {
   @observable actions = []
 
-  constructor(props) {
-    super(props)
-
+  componentDidMount() {
     this.getActions()
   }
 
   getActions() {
-    const actions = []
-
     Data.actions().then(data => {
-      _.each(data.reverse(), action => {
-        actions.push(this.renderAction(action))
+      transaction(() => {
+        _.each(_.orderBy(data, 'date', 'desc'), action => {
+          this.actions.push(this.renderAction(action))
+        })
       })
-
-      this.actions = actions
-      this.forceUpdate()
     })
   }
 
@@ -78,7 +75,7 @@ export default class History extends Component {
     return (
       <div styleName="wrapper" className="main-wrapper">
         <ul>
-          {this.actions}
+          {actions}
         </ul>
       </div>
     )

@@ -52,6 +52,11 @@ module.exports = {
         options: {
           name: '[path][name].[hash].[ext]'
         }
+      },
+      {
+        test: /\.(ogg|mp3)$/,
+        include: path.join(__dirname, 'src', 'static'),
+        loader: 'file-loader'
       }
     ]
   }

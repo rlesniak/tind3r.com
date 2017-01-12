@@ -130,7 +130,7 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Keydown',
-      value: e.keyCode,
+      label: e.keyCode,
     })
 
     switch (e.keyCode) {
@@ -161,6 +161,10 @@ export default class ActionButtons extends Component {
 
     this.isLiked = true
     this.props.user.like().then(resp => {
+      IntercomAPI('trackEvent', 'like', {
+        user_id: this.props.user._id,
+      });
+
       if (resp.match) {
         this.showAlert()
 
@@ -191,6 +195,7 @@ export default class ActionButtons extends Component {
       action: 'Pass',
       label: this.props.user._id
     })
+    IntercomAPI('trackEvent', 'pass');
 
     this.isPassed = true
     this.props.user.pass()
@@ -210,6 +215,10 @@ export default class ActionButtons extends Component {
 
     this.isSuper = true
     this.props.user.superLike().then(resp => {
+      IntercomAPI('trackEvent', 'superlike', {
+        user_id: this.props.user._id,
+      })
+
       this.getSuperLikeDiffInMin()
 
       if (resp.match) {

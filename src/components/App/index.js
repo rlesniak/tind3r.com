@@ -16,6 +16,7 @@ import NavBar from '../NavBar'
 import User from '../../models/User'
 import Data from '../../data'
 import { checkIfInstalled } from '../../runtime'
+import notificationFile from '../../static/notif.mp3'
 
 @inject('currentUser')
 @observer
@@ -44,6 +45,8 @@ export default class App extends Component {
         browserHistory.push('/fb-connect')
       })
     })
+
+    this.audio = new Audio(notificationFile)
   }
 
   afterSucessLogin() {
@@ -85,7 +88,11 @@ export default class App extends Component {
     }, 'updating')
 
     Data.registerMatchesHook(() => {
-      setTimeout(() => this.countUnread(), 0) // TODO: remove timeout
+      setTimeout(() => {
+        this.audio.play()
+
+        this.countUnread()
+      }, 0) // TODO: remove timeout
     })
   }
 

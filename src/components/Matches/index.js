@@ -97,6 +97,11 @@ export default class Matches extends Component {
     this.resetOrderDirectionWithout(by)
     this.orderBy = by
     this.orderDirection[by] = !this.orderDirection[by]
+
+    ReactGA.event({
+      category: 'Match',
+      action: 'Change order',
+    })
   }
 
   renderOrderIcon(target) {

@@ -1,5 +1,5 @@
 @import '../../styles/vars';
-$padding: 28px 20px 12px;
+$padding: 22px 20px 12px;
 
 .new-message-input {
   font-size: 0;
@@ -30,7 +30,16 @@ $padding: 28px 20px 12px;
     opacity: .7;
     background: #ececec;
   }
+
+  &:global(.block) {
+    text-align: center;
+
+    button {
+      margin-top: 7px;
+    }
+  }
 }
+
 
 .actions {
   position: absolute;

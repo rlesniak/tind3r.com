@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
-import { observable, computed, extendObservable } from 'mobx'
+import { observable, computed, extendObservable, action } from 'mobx'
 import _ from 'lodash'
 import ReactGA from 'react-ga'
 import Select from 'react-basic-dropdown'
@@ -118,6 +118,12 @@ export default class Matches extends Component {
     )
   }
 
+  @autobind
+  handleRemoveMatch(id) {
+    this.seletedMatch.remove()
+    this.seletedMatch = null
+  }
+
   render() {
     return (
       <div className="main-wrapper" styleName="wrapper">
@@ -159,6 +165,7 @@ export default class Matches extends Component {
         <div styleName="messages">
           <Messages
             match={this.seletedMatch}
+            removeMatch={this.handleRemoveMatch}
           />
         </div>
         <div styleName="profile">

@@ -41,7 +41,7 @@ export default class Messages extends Component {
   }
 
   render() {
-    const { match } = this.props
+    const { match, removeMatch } = this.props
     if (!match) {
       return null
     }
@@ -59,7 +59,11 @@ export default class Messages extends Component {
           ))}
           {this.renderSentence()}
         </div>
-        <NewMessageInput match={match} messageStore={match.messageStore} />
+        <NewMessageInput
+          match={match}
+          messageStore={match.messageStore}
+          removeMatch={removeMatch}
+        />
       </div>
     )
   }

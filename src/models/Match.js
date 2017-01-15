@@ -34,6 +34,10 @@ class Match {
     this.messageStore = new MessageStore(this, json)
   }
 
+  @action remove() {
+    this.store.remove(this.id)
+  }
+
   @computed get ago() {
     return moment(this.lastActvityTime).fromNow()
   }

@@ -1,0 +1,21 @@
+@import 'vars';
+
+:global {
+  .button {
+    border: none;
+    padding: 6px 6px;
+    border-radius: 6px;
+    font-family: $poppins;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+
+    &.blue {
+      background: $blue;
+    }
+
+    &.red {
+      background: $red;
+    }
+  }
+}

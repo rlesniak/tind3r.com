@@ -202,7 +202,7 @@ export default class NewMessageInput extends Component {
   }
 
   render() {
-    const { user, match } = this.props
+    const { user, match, removeMatch } = this.props
 
     const sendStyle = cx({
       disabled: _.trim(this.messageTxt).length === 0
@@ -214,8 +214,9 @@ export default class NewMessageInput extends Component {
 
     if (match.isBlocked) {
       return (
-        <div styleName="new-message-input">
+        <div styleName="new-message-input" className="block">
           <h1>Blocked.</h1>
+          <button className="button red" onClick={removeMatch}>Remove match</button>
         </div>
       )
     }

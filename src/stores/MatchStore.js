@@ -40,6 +40,13 @@ class MatchStore {
     })
   }
 
+  @action remove(id) {
+    _.remove(this.matches, { id })
+
+    Data.db().matches.where('_id').equals(id).delete()
+    Data.db().messages.where('match_id').equals(id).delete()
+  }
+
   @action markAsRead() {
     _.each(this.matches, match => {
       match.isNew = false

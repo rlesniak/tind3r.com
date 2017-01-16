@@ -1,0 +1,7 @@
+.list {
+  margin-left: 356px;
+}
+
+:global(.horizontal) + .list {
+  margin-left: 0;
+}

@@ -1,0 +1,90 @@
+@import 'vars';
+
+.buttons {
+  display: flex;
+  font-size: 46px;
+  text-align: center;
+
+  > div {
+    flex: 1;
+    padding: 14px 7px;
+    background: $bg2;
+    color: $icons-c;
+    cursor: pointer;
+    border-right: 1px solid #fff;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  .match-text:not(:empty) {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
+  > div:hover,
+  :global(.done) {
+    color: $red;
+
+    :global(.fa-heart) {
+      color: $green;
+
+      & + span {
+        color: $green;
+      }
+    }
+
+    :global(.fa-star) {
+      color: $blue;
+
+      & + span {
+        color: $blue;
+      }
+    }
+  }
+
+  :global(.done) {
+    cursor: default;
+  }
+
+  :global(.disabled) {
+    cursor: default !important;
+    position: relative;
+
+    i {
+      color: #c7c7c7 !important;
+      opacity: .6;
+    }
+  }
+}
+
+.counter {
+  font-size: 21px;
+  display: block;
+  text-align: center;
+  transform: translateY(-33px);
+  position: absolute;
+  color: $red;
+  left: 0;
+  width: 100%;
+}
+
+.sending {
+  font-size: 22px;
+  height: 74px;
+  padding: 0 !important;
+  line-height: 74px;
+
+  .l {
+    color: $green;
+  }
+
+  .sl {
+    color: $blue;
+  }
+
+  .p {
+    color: $red;
+  }
+}

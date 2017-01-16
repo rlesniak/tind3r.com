@@ -1,7 +1,7 @@
 import { AppContainer } from 'react-hot-loader'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Root from './components/Root'
+import Root from './config/Routes'
 import './styles/main.scss'
 
 ReactDOM.render(<AppContainer><Root /></AppContainer>, document.getElementById('root'));

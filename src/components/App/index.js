@@ -79,7 +79,7 @@ export default class App extends Component {
         window.location = '/welcome'
       } else {
         checkVersion(version => {
-          if (cmp(version, '0.2.0') === -1) {
+          if (!version || cmp(version, '0.2.0') === -1) {
             browserHistory.push('/update')
           } else {
             successCallback()

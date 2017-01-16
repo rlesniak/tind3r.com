@@ -15,7 +15,7 @@ export default class FbConnect extends Component {
 
   checkVersion() {
     checkVersion(version => {
-      if (cmp(version, '0.2.0') !== -1) {
+      if (version && cmp(version, '0.2.0') !== -1) {
         browserHistory.push('/home')
       }
     })

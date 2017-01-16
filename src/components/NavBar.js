@@ -6,6 +6,7 @@ import { observer } from 'mobx-react'
 import _ from 'lodash'
 import styles from './nav-bar.scss'
 import Data from '../data'
+import ls from '../local-storage'
 
 @observer
 @CSSModules(styles)
@@ -17,7 +18,7 @@ export default class NavBar extends Component {
 
     if (conf) {
       Data.purge()
-      localStorage.clear()
+      ls.clear()
       window.location.href = '/welcome'
     }
   }

@@ -2,8 +2,10 @@ import Dexie from 'dexie'
 import relationships from 'dexie-relationships'
 import ReactGA from 'react-ga'
 import _ from 'lodash'
-import { core, like, pass, superLike, updates, sendMessage, purge, post } from './runtime'
+import { purge } from './runtime'
 import matchObj from './objects/match'
+import API from './api'
+import ls from './local-storage'
 
 const db = new Dexie('tinder', { addons: [relationships] })
 
@@ -53,7 +55,13 @@ const Data = {
 
   updates(firstFetch = false) {
     return new Promise((resolve, reject) => {
-      updates().then(({ blocks, matches }) => {
+      const lastActivityDate = ls.data.lastActivity
+
+      API.post('/updates', { last_activity_date: lastActivityDate }).then(({
+        data: { blocks, matches, last_activity_date }
+      }) => {
+        ls.set({ lastActivity: last_activity_date })
+
         db.transaction('rw', db.users, db.matches, db.messages, function() {
           _.each(matches, match => {
             if (!match.is_new_message) {
@@ -107,7 +115,6 @@ const Data = {
             action: 'Error',
             label: error
           })
-          console.log(error)
         })
       })
     })
@@ -115,80 +122,80 @@ const Data = {
 
   core() {
     return new Promise((resolve, reject) => {
-      core().then(resp => {
-        const data = _.map(resp.results, r => r.user)
-        _.each(data, user => db.users.add({ ...user, done: 0 }))
+      API.get('/recs/core').then(({ data }) => {
+        const results = _.map(data.results, r => r.user)
+        _.each(results, user => db.users.add({ ...user, done: 0 }))
 
-        resolve({ results: data, message: resp.message })
+        resolve({ results: results, message: data.message })
       }).catch(resp => reject(resp))
     })
   },
 
   sendMessage(matchId, message, payload = {}) {
     return new Promise((resolve, reject) => {
-      sendMessage(matchId, { message, ...payload }).then(resp => {
+      API.post(`/user/matches/${matchId}`, { message, ...payload }).then(({ data }) => {
         db.messages.put({
-          ...resp,
+          ...data,
           isNew: 0
         })
 
-        resolve(resp)
+        resolve(data)
       }).catch(resp => reject(resp))
     })
   },
 
   like(id) {
     return new Promise((resolve, reject) => {
-      like(id).then(resp => {
-        if(resp.likes_remaining === 0) {
-          if (resp.rate_limited_until) {
-            localStorage.setItem('likeExpiration', resp.rate_limited_until)
+      API.get(`/like/${id}`).then(({ data }) => {
+        if(data.likes_remaining === 0) {
+          if (data.rate_limited_until) {
+            ls.set({ likeExpiration: data.rate_limited_until })
           }
         } else {
           db.users.update(id, { done: 1 })
           db.actions.add({ _id: id, type: 'like', date: new Date() })
 
-          if (resp.match) {
+          if (data.match) {
             db.matches.put(matchObj({
-              ...resp.match,
+              ...data.match,
               person: { _id: id },
             }))
           }
         }
 
-        resolve(resp)
+        resolve(data)
       }).catch(e => reject(e))
     })
   },
 
   pass(id) {
     return new Promise((resolve, reject) => {
-      pass(id).then(resp => {
+      API.get(`/pass/${id}`).then(({ data }) => {
         db.users.update(id, { done: 1 })
         db.actions.add({ _id: id, type: 'pass', date: new Date() })
 
-        resolve(resp)
+        resolve(data)
       }).catch(e => reject(e))
     })
   },
 
   superLike(id) {
     return new Promise((resolve, reject) => {
-      superLike(id).then(resp => {
-        localStorage.setItem('superLikeExpiration', resp.super_likes.resets_at)
+      API.post(`/like/${id}/super`).then(({ data }) => {
+        ls.set({ superlikeExpiration: data.super_likes.resets_at })
 
-        if (!resp.limit_exceeded) {
+        if (!data.limit_exceeded) {
           db.users.update(id, { done: 1 })
           db.actions.add({ _id: id, type: 'superlike', date: new Date() })
 
-          if (resp.match) {
+          if (data.match) {
             db.matches.put(matchObj({
-              ...resp.match,
+              ...data.match,
               person: { _id: id },
             }))
           }
 
-          resolve(resp)
+          resolve(data)
         } else {
           reject('limit_exceeded')
         }
@@ -197,14 +204,14 @@ const Data = {
   },
 
   updateProfile(distanceMi, payload) {
-    return post({
+    return API.post('profile', {
       discoverable: payload.discoverable,
       gender_filter: payload.gender_filter,
       age_filter_min: payload.age_filter_min,
       age_filter_max: payload.age_filter_max,
       distance_filter: distanceMi, // in MI
       squads_discoverable: payload.squads_discoverable,
-    }, 'profile')
+    })
   },
 
   countUnread(currentUserId, callback) {

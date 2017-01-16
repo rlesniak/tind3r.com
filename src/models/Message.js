@@ -1,7 +1,6 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
 import _ from 'lodash'
-import { user, meta } from '../runtime'
 import Data from '../data'
 
 class Message {

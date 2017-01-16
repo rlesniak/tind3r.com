@@ -18,7 +18,7 @@ export default class Welcome extends Component {
           <Logo />
 
           <div styleName="content">
-            <h3>To be able to use tind3r.com you must download extension:</h3>
+            <h3>To be able to use tind3r.com you must download Chrome Extension:</h3>
             <a
               target="_blank"
               href="https://chrome.google.com/webstore/detail/tnder-tind3r-tinder-web-c/iopleohdgiomebidpblllpaigodfhoia">
@@ -30,7 +30,7 @@ export default class Welcome extends Component {
             </p>
 
             <h4>
-              When installation is complete you are free to use web client! <a href="/">GO GO GO!</a>
+              When installation is complete you are free to use web client! <a href="/">Click here!</a>
             </h4>
           </div>
 

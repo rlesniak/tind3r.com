@@ -12,6 +12,7 @@ import FbConnect from './Static/FbConnect'
 import Debug from './Static/Debug'
 import Welcome from './Static/Welcome'
 import PrivacyPolicy from './Static/PrivacyPolicy'
+import Outdated from './Static/Outdated'
 import Data from '../data'
 
 Router.prototype.componentWillReceiveProps = function(nextProps) {
@@ -59,6 +60,7 @@ const Root = () => (
       <Route path="welcome" component={Welcome} />
       <Route path="privacy-policy" component={PrivacyPolicy} />
       <Route path="debug" component={Debug} />
+      <Route path="update" component={Outdated} />
     </Router>
   </Provider>
 )

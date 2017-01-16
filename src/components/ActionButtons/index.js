@@ -11,6 +11,7 @@ import cx from 'classnames'
 import Alert from 'react-s-alert'
 import styles from './styles.scss'
 import Data from '../../data'
+import ls from '../../local-storage'
 
 // TODO: Optimize this class!!!
 
@@ -73,8 +74,8 @@ export default class ActionButtons extends Component {
   }
 
   initExpirationTimes() {
-    this.superLikeExpiration = localStorage.getItem('superLikeExpiration')
-    this.likeExpiration = localStorage.getItem('likeExpiration')
+    this.superLikeExpiration = ls.data.superLikeExpiration
+    this.likeExpiration = ls.data.likeExpiration
 
     this.getSuperLikeDiffInMin()
     this.getLikeDiffInMin()

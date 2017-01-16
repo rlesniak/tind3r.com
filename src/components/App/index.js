@@ -7,6 +7,7 @@ import _ from 'lodash'
 import Intercom from 'react-intercom'
 import { observer, inject } from 'mobx-react'
 import Alert from 'react-s-alert'
+import cmp from 'semver-compare'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/flip.css'
 import MatchAlert from '../MatchAlert'
@@ -15,8 +16,9 @@ import styles from './app.scss'
 import NavBar from '../NavBar'
 import User from '../../models/User'
 import Data from '../../data'
-import { checkIfInstalled } from '../../runtime'
+import { checkIfInstalled, checkVersion } from '../../runtime'
 import notificationFile from '../../static/notif.mp3'
+import ls from '../../local-storage'
 
 @inject('currentUser')
 @observer
@@ -32,11 +34,11 @@ export default class App extends Component {
     this.checkIfHasExtension(() => {
       this.props.currentUser.fetchMeta().then(resp => {
         if (resp.rating.super_likes.resets_at) {
-          localStorage.setItem('superLikeExpiration', resp.rating.super_likes.resets_at)
+          ls.set({ superLikeExpiration: resp.rating.super_likes.resets_at })
         }
 
         if (resp.rating.likes_remaining === 0) {
-          localStorage.setItem('likeExpiration', resp.rating.rate_limited_until)
+          ls.set({ likeExpiration: resp.rating.rate_limited_until })
         }
 
         this.userStore.core()
@@ -50,11 +52,11 @@ export default class App extends Component {
   }
 
   afterSucessLogin() {
-    const isFirstFetch = !localStorage.getItem('firstFetchDone')
+    const isFirstFetch = !ls.data.isFirstFetchDone
 
     if (isFirstFetch) {
       Data.updates(true).then(() => this.runInterval())
-      localStorage.setItem('firstFetchDone', true)
+      ls.set({ isFirstFetchDone: true })
     } else {
       this.runInterval()
     }
@@ -65,7 +67,6 @@ export default class App extends Component {
 
   runInterval() {
     if (process.env.NODE_ENV === 'production') {
-    // if (1) {
       setInterval(() => {
         Data.updates()
       }, 1500)
@@ -77,7 +78,13 @@ export default class App extends Component {
       if (!status) {
         window.location = '/welcome'
       } else {
-        successCallback()
+        checkVersion(version => {
+          if (cmp(version, '0.2.0') === -1) {
+            browserHistory.push('/update')
+          } else {
+            successCallback()
+          }
+        })
       }
     })
   }

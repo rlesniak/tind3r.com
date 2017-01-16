@@ -16,6 +16,7 @@ import Spinner from '../Spinner'
 import styles from './new-message-input.scss'
 import Data from '../../data'
 import GifInput from './GifInput'
+import ls from '../../local-storage'
 
 @observer
 @CSSModules(styles)
@@ -28,7 +29,7 @@ export default class NewMessageInput extends Component {
   constructor(props) {
     super(props)
 
-    const lsDelay = localStorage.getItem('sendDelay')
+    const lsDelay = ls.data.sendDelay
 
     this.sendTimeoutFn = n => n
     this.sendDelaySec = lsDelay === null ? '0' : lsDelay
@@ -128,7 +129,7 @@ export default class NewMessageInput extends Component {
   @autobind
   handleDelayChange(option) {
     this.sendDelaySec = option.value
-    localStorage.setItem('sendDelay', option.value)
+    ls.set({ sendDelay: this.sendDelaySec })
 
     ReactGA.event({
       category: 'Message',

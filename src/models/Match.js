@@ -1,6 +1,5 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
-import { user, meta } from '../runtime'
 import Data from '../data'
 import MessageStore from '../stores/MessageStore'
 import User from './User'

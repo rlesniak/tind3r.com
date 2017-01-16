@@ -1,9 +1,9 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
 import ReactGA from 'react-ga'
-import { user, meta } from '../runtime'
 import Data from '../data'
 import { miToKm } from '../utils'
+import API from '../api'
 
 const PROFILE_FIELDS = [
   'discoverable', 'gender_filter', 'age_filter_min', 'age_filter_max',
@@ -28,14 +28,14 @@ class User {
 
   @action fetch() {
     this.isFetching = true
-    user(this.id).then(action(resp => {
-      if (resp.message) {
-        this.message = resp.message
+    API.get(`/user/${this.id}`).then(action(({ data }) => {
+      if (data.message) {
+        this.message = data.message
         return
       }
 
       this.isFetching = false
-      extendObservable(this, resp.results)
+      extendObservable(this, data.results)
     })).catch(resp => {
       this.needFb = true
       this.isFetching = false
@@ -75,12 +75,12 @@ class User {
   @action fetchMeta() {
     this.isLoading = true
     return new Promise((resolve, reject) => {
-      meta().then(action(resp => {
-        extendObservable(this, resp.user)
+      API.get('/meta').then(action(({ data }) => {
+        extendObservable(this, data.user)
 
-        ReactGA.set({ userId: resp.user._id })
+        ReactGA.set({ userId: data.user._id })
 
-        resolve(resp)
+        resolve(data)
         this.isLoading = false
       })).catch(status => {
         reject(status)
@@ -90,9 +90,9 @@ class User {
 
   @action updateProfile(distanceMi) {
     return new Promise((resolve, reject) => {
-      Data.updateProfile(distanceMi, this.profileSettings).then(action(resp => {
-        this.distance_filter = resp.distance_filter
-        resolve(resp)
+      Data.updateProfile(distanceMi, this.profileSettings).then(action(({ data }) => {
+        this.distance_filter = data.distance_filter
+        resolve(data)
       })).catch(status => {
         reject(status)
       })

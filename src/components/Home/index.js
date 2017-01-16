@@ -13,6 +13,7 @@ import UserCardList from './UserCardList'
 import Loader from '../Loader'
 import Settings from './Settings'
 import styles from './styles.scss'
+import ls from '../../local-storage'
 
 @observer
 @CSSModules(styles)
@@ -22,7 +23,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
 
-    this.layout = localStorage.getItem('layout') || 'horizontal'
+    this.layout = ls.data.layout || 'horizontal'
   }
 
   @autobind
@@ -39,14 +40,14 @@ export default class Home extends Component {
   @autobind
   handleClose() {
     this.isShowingModal = false
-    localStorage.setItem('homepage-tour', true)
+    ls.set({ homepageTourDone: true })
   }
 
   @autobind
   setLayout(type) {
     this.layout = type
     this.forceUpdate()
-    localStorage.setItem('layout', type)
+    ls.set({ layout: type })
   }
 
   renderModal() {
@@ -136,7 +137,7 @@ export default class Home extends Component {
       return this.renderMsg()
     }
 
-    const shouldShowTour = !localStorage.getItem('homepage-tour')
+    const shouldShowTour = !ls.data.homepageTourDone
 
     return (
       <div styleName="home">

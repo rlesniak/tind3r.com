@@ -13,7 +13,7 @@ const PROFILE_FIELDS = [
 class User {
   id = null
   store = null
-  @observable isLoading = false
+  @observable isLoading = true
   @observable isFetching = true
   @observable done = 0
 

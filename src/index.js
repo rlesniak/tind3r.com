@@ -7,10 +7,10 @@ import './styles/main.scss'
 ReactDOM.render(<AppContainer><Root /></AppContainer>, document.getElementById('root'));
 
 if (module.hot) {
-  module.hot.accept('./components/Root', () => {
+  module.hot.accept('./config/Routes', () => {
     // If you use Webpack 2 in ES modules mode, you can
     // use <App /> here rather than require() a <NextApp />.
-    const NextApp = require('./components/Root').default;
+    const NextApp = require('./config/Routes').default;
     ReactDOM.render(
       <AppContainer>
          <NextApp />

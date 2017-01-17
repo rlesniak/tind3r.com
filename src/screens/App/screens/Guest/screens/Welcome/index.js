@@ -28,30 +28,19 @@ export default class Welcome extends Component {
     getFacebookToken()
   }
 
-  checkExtension() {
-    if (this.isInstalled) return
-
+  checkExtension(isFetchMeta = false) {
     checkIfInstalled(status => {
       this.isInstalled = status
-    })
-  }
 
-  checkTokenDate() {
-    if (!this.isInstalled) return
-
-    getTokenDate(date => {
-      const tokenDate = moment(date)
-      const nowDate = moment()
-
-      if (nowDate.diff(tokenDate, 'seconds') >= 0) {
-        browserHistory.push('/home');
+      if (isFetchMeta && status) {
+        this.props.fetchMeta()
       }
     })
   }
 
   componentDidMount() {
     window.onfocus = () => {
-      this.checkExtension()
+      this.checkExtension(true)
     }
   }
 

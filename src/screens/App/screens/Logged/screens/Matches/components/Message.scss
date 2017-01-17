@@ -1,0 +1,117 @@
+@import 'vars';
+
+.wrapper {
+  padding: 10px;
+  overflow: hidden;
+  width: 100%;
+
+  &:global(.align-right) {
+    text-align: right;
+
+    .avatar {
+      float: right;
+    }
+
+    .message {
+      margin-left: 0;
+      margin-right: 10px;
+      text-align: left;
+      background: #dcc9bd;
+      color: inherit;
+
+      &:before {
+        border-right-color: transparent;
+        border-left: 10px solid #dcc9bd;
+        left: auto;
+        right: -18px;
+      }
+    }
+  }
+
+  &:global(.sending) {
+    opacity: .5;
+  }
+
+  &:global(.error) {
+    opacity: .5;
+
+    .message {
+      background: red;
+
+      &:before {
+        border-right-color: red;
+      }
+    }
+  }
+
+  &:global(.with-gif) .message {
+    background: transparent;
+    padding-top: 0;
+
+    &:before {
+      border: none;
+    }
+  }
+}
+
+.avatar {
+  float: left;
+
+  .circle {
+    display: block;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.message {
+  margin-left: 10px;
+  background: #5f90b0;
+  color: #fff;
+  padding: 17px 14px;
+  display: inline-block;
+  border-radius: 10px;
+  max-width: calc(100% - 70px);
+  font-family: $lato;
+  font-size: 14px;
+  position: relative;
+
+  :global(.fa) {
+    margin-left: 15px;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right:10px solid #5f90b0;
+    left: -9px;
+    top: 11px;
+  }
+}
+
+.date {
+  font-size: 10px;
+  text-align: center;
+  display: block;
+  margin-top: 2px;
+  font-family: $lato;
+}
+
+.gif {
+  width: 100px;
+
+  img {
+    width: 100%;
+  }
+}

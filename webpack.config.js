@@ -25,6 +25,9 @@ module.exports = {
       context: path.join(__dirname, 'dist'),
       manifest: require('./vendor-manifest.json')
     }),
+    new webpack.ProvidePlugin({
+      autobind: 'autobind-decorator',
+    })
   ],
   resolve: {
     root: path.resolve('./src'),
@@ -51,7 +54,8 @@ module.exports = {
         loader: 'url-loader',
         options: {
           name: '[path][name].[hash].[ext]'
-        }
+        },
+        include: path.join(__dirname, 'src', 'images'),
       },
       {
         test: /\.(ogg|mp3)$/,

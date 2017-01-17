@@ -5,9 +5,12 @@ import ReactGA from 'react-ga'
 import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
 import App from '../screens/App'
 import Guest from '../screens/App/screens/Guest'
+import Welcome from '../screens/App/screens/Guest/screens/Welcome'
 import Logged from '../screens/App/screens/Logged'
 import Home from '../screens/App/screens/Logged/screens/Home'
-import Welcome from '../screens/App/screens/Guest/screens/Welcome'
+import Matches from '../screens/App/screens/Logged/screens/Matches'
+import User from '../screens/App/screens/Logged/screens/User'
+import History from '../screens/App/screens/Logged/screens/History'
 import Data from '../data'
 
 Router.prototype.componentWillReceiveProps = function(nextProps) {
@@ -50,6 +53,9 @@ const Root = () => (
         </Route>
         <Route component={Logged}>
           <Route path="home" component={Home} />
+          <Route path="matches" component={Matches} />
+          <Route path="history" component={History} />
+          <Route path="users/:userId" component={User} />
         </Route>
       </Route>
     </Router>

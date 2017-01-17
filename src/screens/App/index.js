@@ -26,17 +26,7 @@ export default class App extends Component {
     this.checkExtension()
   }
 
-  componentDidMount() {
-    window.onfocus = () => {
-      console.log('check');
-      this.checkExtension()
-    }
-  }
-
-  componentWillUnmount() {
-    window.onfocus = n => n
-  }
-
+  @autobind
   fetchMeta() {
     this.props.currentUser.fetchMeta().then(resp => {
       if (resp.rating.super_likes.resets_at) {
@@ -72,6 +62,7 @@ export default class App extends Component {
           {this.props.children && React.cloneElement(this.props.children, {
             currentUser: this.props.currentUser,
             isInstalled: this.isInstalled,
+            fetchMeta: this.fetchMeta,
           })}
         </div>
         <div styleName="footer">

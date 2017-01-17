@@ -12,7 +12,7 @@ import ReactGA from 'react-ga'
 import styles from './Settings.scss'
 import { miToKm, kmToMi } from 'utils'
 import 'rc-slider/assets/index.css'
-import 'select.scss'
+import 'styles/select.scss'
 
 @inject('currentUser')
 @observer

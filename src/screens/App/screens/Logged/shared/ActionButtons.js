@@ -243,19 +243,6 @@ export default class ActionButtons extends Component {
   render() {
     const { user } = this.props
 
-    if (user.isLoading) {
-      return (
-        <div styleName="buttons">
-          <div styleName="sending" className="sending">
-            Sending
-            {this.isLiked && <span styleName="l"> like</span>}
-            {this.isSuper && <span styleName="sl"> super like</span>}
-            {this.isPassed && <span styleName="p"> pass</span>}
-          </div>
-        </div>
-      )
-    }
-
     const matchText = this.isMatch ? 'Match!' : null
 
     const passedClass = cx({ done: this.isPassed })

@@ -8,17 +8,19 @@ import _ from 'lodash'
 import Alert from 'react-s-alert'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/flip.css'
-import MatchAlert from './components/MatchAlert'
-import UserStore from '../../stores/UserStore'
-import styles from './index.scss'
-import { checkIfInstalled } from '../../runtime'
 import ls from 'local-storage'
+import UserStore from 'stores/UserStore'
+import { checkIfInstalled } from 'runtime'
+import Loader from './shared/Loader'
+import MatchAlert from './components/MatchAlert'
+import styles from './index.scss'
 
 @inject('currentUser')
 @observer
 @CSSModules(styles)
 export default class App extends Component {
   @observable isInstalled = false
+  @observable isFetching = false
 
   constructor(props) {
     super(props)
@@ -28,6 +30,7 @@ export default class App extends Component {
 
   @autobind
   fetchMeta(cb = n => n) {
+    this.isFetching = true
     this.props.currentUser.fetchMeta().then(resp => {
       if (resp.rating.super_likes.resets_at) {
         ls.set({ superLikeExpiration: resp.rating.super_likes.resets_at })
@@ -38,8 +41,10 @@ export default class App extends Component {
       }
 
       cb()
+      this.isFetching = false
     }).catch(resp => {
       browserHistory.push('/welcome')
+      this.isFetching = false
     })
   }
 
@@ -64,6 +69,7 @@ export default class App extends Component {
             isInstalled: this.isInstalled,
             fetchMeta: this.fetchMeta,
           })}
+          {this.isFetching && <Loader isSimpleLoader />}
         </div>
         <div styleName="footer">
           Copyright &copy; <a href="https://goo.gl/6i11L7" target="_blank">Rafal Lesniak</a> | <Link to="/privacy-policy">Privacy Policy</Link>

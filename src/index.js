@@ -13,9 +13,9 @@ if (module.hot) {
     const NextApp = require('./config/Routes').default;
     ReactDOM.render(
       <AppContainer>
-         <NextApp />
+        <NextApp />
       </AppContainer>,
-      document.getElementById('root')
+      document.getElementById('root'),
     );
   });
 }

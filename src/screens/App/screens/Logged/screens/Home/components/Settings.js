@@ -45,7 +45,7 @@ export default class Settings extends Component {
     ReactGA.event({
       category: 'Settings',
       action: 'Layout change',
-      label: 'To vertical'
+      label: 'To vertical',
     })
   }
 
@@ -56,7 +56,7 @@ export default class Settings extends Component {
     ReactGA.event({
       category: 'Settings',
       action: 'Layout change',
-      label: 'To horizontal'
+      label: 'To horizontal',
     })
   }
 

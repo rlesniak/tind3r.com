@@ -43,7 +43,7 @@ export default class GifInput extends Component {
   @autobind
   onKeydown(e) {
     if (e.keyCode === 13) {
-      giphy.fetch(this.messageTxt).then(resp => {
+      giphy.fetch(this.messageTxt).then((resp) => {
         const { data } = resp.data
 
         this.gifs = _.map(data, g => ({
@@ -85,7 +85,7 @@ export default class GifInput extends Component {
     const { user, match } = this.props
 
     const sendStyle = cx({
-      disabled: _.trim(this.messageTxt).length === 0
+      disabled: _.trim(this.messageTxt).length === 0,
     })
 
     const inputWrapperStyle = cx({
@@ -93,7 +93,7 @@ export default class GifInput extends Component {
     })
 
     const options = [
-      { label: '0s', value: '0', },
+      { label: '0s', value: '0' },
       { label: '1s', value: '1' },
       { label: '2s', value: '2' },
       { label: '3s', value: '3' },
@@ -104,7 +104,7 @@ export default class GifInput extends Component {
         <input
           autoFocus
           type="text"
-          ref={ref => { this.inputRef = ref }}
+          ref={(ref) => { this.inputRef = ref }}
           onChange={this.handleMessageChange}
           onKeyDown={this.onKeydown}
           value={this.messageTxt}
@@ -113,8 +113,8 @@ export default class GifInput extends Component {
         />
         <button onClick={this.close}>Close</button>
         <div styleName="gifs">
-          <div styleName="main-wrapper" style={{width: this.gifsWidth}}>
-            {_.map(this.gifs, gif => {
+          <div styleName="main-wrapper" style={{ width: this.gifsWidth }}>
+            {_.map(this.gifs, (gif) => {
               const submit = this.handleSubmit.bind(this, gif)
               return <div styleName="gif" key={gif.id} onClick={submit}><img src={gif.url} /></div>
             })}

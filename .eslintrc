@@ -3,17 +3,29 @@
     "jsx": true,
     "modules": true
   },
+  "extends": "airbnb",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "autobind": true,
   },
   "parser": "babel-eslint",
   "rules": {
+    "semi": [0, "never"],
     "quotes": [2, "single"],
     "strict": [2, "never"],
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 2,
+    "no-underscore-dangle": 0,
+    "no-param-reassign": ["error", {
+			"props": false
+		}],
+    "class-methods-use-this": 0
   },
   "plugins": [
     "react"

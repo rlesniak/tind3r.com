@@ -21,7 +21,7 @@ export default class PrivacyPolicy extends Component {
 
           <h2>Collection of personal information</h2>
           <p>
-            Tind3r.com does not store any of your data on its server.<br/>
+            Tind3r.com does not store any of your data on its server.<br />
             We are using IndexedDB technology to store your data like: messages, likes, matches etc.
             IndexedDB is a low-level API for client-side.
           </p>

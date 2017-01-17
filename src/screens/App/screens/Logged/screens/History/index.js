@@ -13,7 +13,7 @@ export default class History extends Component {
     super(props)
 
     this.state = {
-      actions: []
+      actions: [],
     }
   }
 
@@ -24,13 +24,13 @@ export default class History extends Component {
   getActions() {
     const actions = []
 
-    Data.actions().then(data => {
-      _.each(_.orderBy(data, 'date', 'desc'), action => {
+    Data.actions().then((data) => {
+      _.each(_.orderBy(data, 'date', 'desc'), (action) => {
         actions.push(this.renderAction(action))
       })
 
       this.setState({
-        actions
+        actions,
       })
     })
   }

@@ -94,8 +94,8 @@ export default class Home extends Component {
         <Loader currentUser={currentUser} noAnimation />
         <Settings handleSetLayout={this.setLayout} userStore={userStore} />
         <div styleName="message">
-          There's no one new around you. {filterMsg}<br/>
-          (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br/>
+          There's no one new around you. {filterMsg}<br />
+          (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br />
           <button onClick={this.refresh}><i className="fa fa-refresh" /></button>
         </div>
       </div>

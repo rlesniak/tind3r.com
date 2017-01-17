@@ -1,5 +1,6 @@
 import { observable, extendObservable, action, computed } from 'mobx'
 import moment from 'moment'
+import _ from 'lodash'
 import ReactGA from 'react-ga'
 import Data from '../data'
 import { miToKm } from '../utils'
@@ -7,7 +8,7 @@ import API from '../api'
 
 const PROFILE_FIELDS = [
   'discoverable', 'gender_filter', 'age_filter_min', 'age_filter_max',
-  'distance_filter', 'squads_discoverable'
+  'distance_filter', 'squads_discoverable',
 ]
 
 class User {
@@ -36,7 +37,7 @@ class User {
 
       this.isFetching = false
       extendObservable(this, data.results)
-    })).catch(resp => {
+    })).catch(() => {
       this.needFb = true
       this.isFetching = false
     })
@@ -45,7 +46,7 @@ class User {
   @action asyncAction(method) {
     this.done = 1
     return new Promise((resolve, reject) => {
-      method(this.id).then(action(resp => {
+      method(this.id).then(action((resp) => {
         if (resp.likes_remaining === 0) {
           reject(resp)
         } else {
@@ -53,7 +54,7 @@ class User {
         }
 
         this.isLoading = false
-      })).catch(action(resp => {
+      })).catch(action((resp) => {
         reject(resp)
         this.isLoading = false
       }))
@@ -82,7 +83,7 @@ class User {
 
         resolve(data)
         this.isLoading = false
-      })).catch(status => {
+      })).catch((status) => {
         reject(status)
       })
     })
@@ -93,7 +94,7 @@ class User {
       Data.updateProfile(distanceMi, this.profileSettings).then(action(({ data }) => {
         this.distance_filter = data.distance_filter
         resolve(data)
-      })).catch(status => {
+      })).catch((status) => {
         reject(status)
       })
     })
@@ -144,9 +145,7 @@ class User {
   }
 
   @computed get mainPhoto() {
-    const photo = _.find(this.photos, photo => {
-      return photo.main
-    })
+    const photo = _.find(this.photos, p => p.main)
 
     if (!photo) {
       return this.getPhotoUrl(this.photos[0])
@@ -174,7 +173,7 @@ class User {
       return 'http://images.gotinder.com/0001unknown/640x640_pct_0_0_100_100_unknown.jpg'
     }
 
-    return `${baseUrl}/${this.id}/${size}x${size}_${photo.fileName || (photo.id + '.jpg')}`
+    return `${baseUrl}/${this.id}/${size}x${size}_${photo.fileName || (`${photo.id}.jpg`)}`
   }
 }
 

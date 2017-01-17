@@ -26,7 +26,7 @@ export default class Messages extends Component {
     }
 
     const lastId = match.messageStore.messages.length - 1
-    if(this[`msg${lastId}`]) {
+    if (this[`msg${lastId}`]) {
       this[`msg${lastId}`].wrappedInstance.scrollIntoView()
     }
   }

@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import { observer, inject } from 'mobx-react'
 import { observable } from 'mobx'
-import { browserHistory } from 'react-router'
-import { Link } from 'react-router'
-import _ from 'lodash'
-import Alert from 'react-s-alert'
+import { Link, browserHistory } from 'react-router'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/flip.css'
 import ls from 'local-storage'
-import UserStore from 'stores/UserStore'
 import { checkIfInstalled } from 'runtime'
 import Loader from './shared/Loader'
-import MatchAlert from './components/MatchAlert'
 import styles from './index.scss'
 
 @inject('currentUser')
@@ -31,7 +26,7 @@ export default class App extends Component {
   @autobind
   fetchMeta(cb = n => n) {
     this.isFetching = true
-    this.props.currentUser.fetchMeta().then(resp => {
+    this.props.currentUser.fetchMeta().then((resp) => {
       if (resp.rating.super_likes.resets_at) {
         ls.set({ superLikeExpiration: resp.rating.super_likes.resets_at })
       }
@@ -42,14 +37,14 @@ export default class App extends Component {
 
       cb()
       this.isFetching = false
-    }).catch(resp => {
+    }).catch(() => {
       browserHistory.push('/welcome')
       this.isFetching = false
     })
   }
 
   checkExtension() {
-    checkIfInstalled(status => {
+    checkIfInstalled((status) => {
       this.isInstalled = !!status
 
       if (status) {

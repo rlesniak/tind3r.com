@@ -10,12 +10,12 @@ const ls = {
   },
 
   set(newData) {
-    store.set('app', {...this.data, ...newData })
+    store.set('app', { ...this.data, ...newData })
   },
 
   clear() {
     store.clear()
-  }
+  },
 }
 
 export default ls

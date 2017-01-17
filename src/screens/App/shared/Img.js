@@ -5,7 +5,7 @@ export default class Img extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      failed: false
+      failed: false,
     }
 
     this.fallback = this.fallback.bind(this)

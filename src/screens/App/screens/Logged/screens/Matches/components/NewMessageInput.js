@@ -82,7 +82,7 @@ export default class NewMessageInput extends Component {
 
   @autobind
   submit() {
-    const msg =  _.trim(this.messageTxt)
+    const msg = _.trim(this.messageTxt)
 
     if (msg.length === 0) return
 
@@ -206,7 +206,7 @@ export default class NewMessageInput extends Component {
     const { user, match, removeMatch } = this.props
 
     const sendStyle = cx({
-      disabled: _.trim(this.messageTxt).length === 0
+      disabled: _.trim(this.messageTxt).length === 0,
     })
 
     const inputWrapperStyle = cx({
@@ -229,7 +229,7 @@ export default class NewMessageInput extends Component {
     }
 
     const options = [
-      { label: '0s', value: '0', },
+      { label: '0s', value: '0' },
       { label: '1s', value: '1' },
       { label: '2s', value: '2' },
       { label: '3s', value: '3' },
@@ -240,7 +240,7 @@ export default class NewMessageInput extends Component {
         <textarea
           autoFocus
           type="text"
-          ref={ref => { this.inputRef = ref }}
+          ref={(ref) => { this.inputRef = ref }}
           onChange={this.handleMessageChange}
           onKeyPress={this.handleSubmit}
           value={this.messageTxt}
@@ -254,11 +254,11 @@ export default class NewMessageInput extends Component {
             emojiSize={24}
             perLine={9}
             skin={1}
-            set='google'
+            set="google"
             title="Pick your Emoji!"
             style={{ position: 'absolute', bottom: '81px', right: '137px' }}
             onClick={this.emojiSelected}
-            ref={ref => { this.pickerRef = ref }}
+            ref={(ref) => { this.pickerRef = ref }}
           />}
         </div>
         <div styleName="actions">

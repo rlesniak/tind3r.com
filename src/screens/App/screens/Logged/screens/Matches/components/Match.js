@@ -84,7 +84,7 @@ export default class Match extends Component {
     const { match } = this.props
     const className = cx({
       unread: this.hasUnread(),
-      'super': match.isSuperLike,
+      super: match.isSuperLike,
       blocked: match.isBlocked,
     })
 

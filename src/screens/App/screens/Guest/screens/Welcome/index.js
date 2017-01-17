@@ -29,7 +29,7 @@ export default class Welcome extends Component {
   }
 
   checkExtension(isFetchMeta = false) {
-    checkIfInstalled(status => {
+    checkIfInstalled((status) => {
       this.isInstalled = status
 
       if (isFetchMeta && status) {
@@ -53,7 +53,7 @@ export default class Welcome extends Component {
   renderIfInstalled() {
     return (
       <div styleName="content">
-        <h1>Facebook token has expired or first visit. <br/>Renew it here:</h1>
+        <h1>Facebook token has expired or first visit. <br />Renew it here:</h1>
         <button onClick={this.connect}>Renew</button>
       </div>
     )
@@ -73,11 +73,12 @@ export default class Welcome extends Component {
             <h3>To be able to use tind3r.com you must download Chrome Extension:</h3>
             <a
               target="_blank"
-              href="https://chrome.google.com/webstore/detail/tnder-tind3r-tinder-web-c/iopleohdgiomebidpblllpaigodfhoia">
+              href="https://chrome.google.com/webstore/detail/tnder-tind3r-tinder-web-c/iopleohdgiomebidpblllpaigodfhoia"
+            >
               <img src="https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_340x96.png" alt="Download" />
             </a>
             <p>
-              Why do I need this? <br/>
+              Why do I need this? <br />
               To be able to comunicate with official Tinder Service.
             </p>
 

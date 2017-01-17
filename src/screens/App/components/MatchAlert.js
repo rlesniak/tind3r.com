@@ -15,14 +15,14 @@ class MatchAlert extends Component {
 
     return (
       <div className={this.props.classNames} id={this.props.id} style={this.props.styles}>
-        <div className='s-alert-box-inner'>
+        <div className="s-alert-box-inner">
           <div className="alert-match-avatar">
             <img src={customFields.avatar} alt="avatar" />
             <span>New match! It is <b>{customFields.userName}</b>!</span>
             <Link to="/matches">Message.</Link>
           </div>
         </div>
-        <span className='s-alert-close' onClick={this.props.handleClose}></span>
+        <span className="s-alert-close" onClick={this.props.handleClose} />
       </div>
     )
   }

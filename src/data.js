@@ -16,19 +16,19 @@ db.version(1).stores({
   messages: '_id, match_id, isNew, from -> users._id, to -> users._id',
 })
 
-db.open().catch(function (e) {
+db.open().catch((e) => {
   console.log('Open failed: ', e)
 })
 
 const Data = {
   registerMessagesHook(callback) {
-    db.messages.hook('creating', function(mods, primKey, obj, trans) {
+    db.messages.hook('creating', function (mods, primKey, obj, trans) {
       this.onsuccess = callback(primKey)
     })
   },
 
   registerMatchesHook(callback, type = 'creating') {
-    db.matches.hook(type, function(mods, primKey, obj, trans) {
+    db.matches.hook(type, function (mods, primKey, obj, trans) {
       this.onsuccess = callback(primKey)
     })
   },
@@ -58,14 +58,14 @@ const Data = {
       const lastActivityDate = ls.data.lastActivity
 
       API.post('/updates', { last_activity_date: lastActivityDate }).then(({
-        data: { blocks, matches, last_activity_date }
+        data: { blocks, matches, last_activity_date },
       }) => {
         ls.set({ lastActivity: last_activity_date })
 
-        db.transaction('rw', db.users, db.matches, db.messages, function() {
-          _.each(matches, match => {
+        db.transaction('rw', db.users, db.matches, db.messages, () => {
+          _.each(matches, (match) => {
             if (!match.is_new_message) {
-              db.users.where('_id').equals(match.person._id).first(p => {
+              db.users.where('_id').equals(match.person._id).first((p) => {
                 if (p) return
 
                 db.users.add({
@@ -74,7 +74,7 @@ const Data = {
                 })
               })
 
-              db.matches.where('_id').equals(match._id).first(m => {
+              db.matches.where('_id').equals(match._id).first((m) => {
                 if (!m) {
                   db.matches.add({
                     ...matchObj(match),
@@ -95,12 +95,12 @@ const Data = {
             db.messages.bulkPut(messages)
           })
 
-          _.each(blocks, matchId => {
+          _.each(blocks, (matchId) => {
             db.matches.update(matchId, { isBlocked: 1 })
           })
         }).then(() => {
           if (firstFetch) {
-            db.matches.count(c => {
+            db.matches.count((c) => {
               ReactGA.event({
                 category: 'Initial',
                 action: 'Matches loaded',
@@ -109,11 +109,11 @@ const Data = {
             })
           }
           resolve()
-        }).catch(error => {
+        }).catch((error) => {
           ReactGA.event({
             category: 'Initial',
             action: 'Error',
-            label: error
+            label: error,
           })
         })
       })
@@ -126,7 +126,7 @@ const Data = {
         const results = _.map(data.results, r => r.user)
         _.each(results, user => db.users.add({ ...user, done: 0 }))
 
-        resolve({ results: results, message: data.message })
+        resolve({ results, message: data.message })
       }).catch(resp => reject(resp))
     })
   },
@@ -136,7 +136,7 @@ const Data = {
       API.post(`/user/matches/${matchId}`, { message, ...payload }).then(({ data }) => {
         db.messages.put({
           ...data,
-          isNew: 0
+          isNew: 0,
         })
 
         resolve(data)
@@ -147,7 +147,7 @@ const Data = {
   like(id) {
     return new Promise((resolve, reject) => {
       API.get(`/like/${id}`).then(({ data }) => {
-        if(data.likes_remaining === 0) {
+        if (data.likes_remaining === 0) {
           if (data.rate_limited_until) {
             ls.set({ likeExpiration: data.rate_limited_until })
           }
@@ -216,10 +216,10 @@ const Data = {
 
   countUnread(currentUserId, callback) {
     let count = 0
-    db.transaction('rw', db.matches, db.messages, function() {
-      db.matches.where('isNew').equals(1).toArray().then(matches => {
-        _.each(matches, m => {
-          db.messages.where('match_id').equals(m._id).toArray().then(messages => {
+    db.transaction('rw', db.matches, db.messages, () => {
+      db.matches.where('isNew').equals(1).toArray().then((matches) => {
+        _.each(matches, (m) => {
+          db.messages.where('match_id').equals(m._id).toArray().then((messages) => {
             if ((messages.length && _.last(messages).from !== currentUserId) || messages.length === 0) {
               count += 1
             }
@@ -253,17 +253,17 @@ const Data = {
     db.messages.add({
       _id: data.id,
       isNew: 0,
-      sent_date: "2016-12-31T15:11:00.756Z",
-      created_date: "2016-12-31T15:11:00.756Z",
-      to: "580cf937f63079810a7537f5",
+      sent_date: '2016-12-31T15:11:00.756Z',
+      created_date: '2016-12-31T15:11:00.756Z',
+      to: '580cf937f63079810a7537f5',
       match_id: matchId,
-      ...data
+      ...data,
     })
   },
 
   _devAddNew(data) {
     db.matches.add(data)
-  }
+  },
 }
 
 global.Data = Data

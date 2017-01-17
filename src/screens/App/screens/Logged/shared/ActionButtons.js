@@ -84,7 +84,7 @@ export default class ActionButtons extends Component {
   checkLiked(id) {
     this.initExpirationTimes()
 
-    Data.getActions().where('_id').equals(id).first(r => {
+    Data.getActions().where('_id').equals(id).first((r) => {
       if (r) {
         this.props.user.done = true
       }
@@ -93,7 +93,7 @@ export default class ActionButtons extends Component {
       this.isPassed = (r && r.type == 'pass')
       this.isSuper = (r && r.type == 'superlike')
     })
-    Data.db().matches.where('userId').equals(id).first(r => {
+    Data.db().matches.where('userId').equals(id).first((r) => {
       if (!r) return
 
       if (r.isSuperLike === 0) {
@@ -113,7 +113,7 @@ export default class ActionButtons extends Component {
       customFields: {
         userName: this.props.user.name,
         avatar: this.props.user.mainPhoto,
-      }
+      },
     })
   }
 
@@ -156,11 +156,11 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Like',
-      label: this.props.user._id
+      label: this.props.user._id,
     })
 
     this.isLiked = true
-    this.props.user.like().then(resp => {
+    this.props.user.like().then((resp) => {
       IntercomAPI('trackEvent', 'like', {
         user_id: this.props.user._id,
       });
@@ -172,12 +172,12 @@ export default class ActionButtons extends Component {
           category: 'User',
           action: 'Like',
           label: 'Match',
-          nonInteraction: true
+          nonInteraction: true,
         })
 
         IntercomAPI('trackEvent', 'match');
       }
-    }).catch(r => {
+    }).catch((r) => {
       this.initExpirationTimes()
 
       this.isLiked = false
@@ -193,7 +193,7 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Pass',
-      label: this.props.user._id
+      label: this.props.user._id,
     })
     IntercomAPI('trackEvent', 'pass');
 
@@ -210,11 +210,11 @@ export default class ActionButtons extends Component {
     ReactGA.event({
       category: 'User',
       action: 'Superlike',
-      label: this.props.user._id
+      label: this.props.user._id,
     })
 
     this.isSuper = true
-    this.props.user.superLike().then(resp => {
+    this.props.user.superLike().then((resp) => {
       IntercomAPI('trackEvent', 'superlike', {
         user_id: this.props.user._id,
       })
@@ -228,12 +228,12 @@ export default class ActionButtons extends Component {
           category: 'User',
           action: 'Superlike',
           label: 'Match',
-          nonInteraction: true
+          nonInteraction: true,
         })
 
         IntercomAPI('trackEvent', 'superlike-match');
       }
-    }).catch(err => {
+    }).catch((err) => {
       this.initExpirationTimes()
 
       this.isSuper = false

@@ -75,7 +75,7 @@ export default class App extends Component {
 
   countUnread() {
     const currentUserId = this.props.currentUser._id
-    Data.countUnread(currentUserId, count => {
+    Data.countUnread(currentUserId, (count) => {
       if (this.newCount !== count) {
         this.newCount = count
 

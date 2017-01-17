@@ -20,8 +20,8 @@ const sortOptions = [
 ]
 
 const ORDER_DIR_MAP = {
-  'true': 'desc',
-  'false': 'asc',
+  true: 'desc',
+  false: 'asc',
 }
 
 @observer
@@ -43,19 +43,19 @@ export default class Matches extends Component {
   @computed get list() {
     let values = this.matchStore.byDate
     if (this.searchValue.length) {
-      values = values.filter(match => {
+      values = values.filter((match) => {
         const name = match.user.name || ''
         return _.includes(name.toLowerCase(), this.searchValue.toLowerCase())
       })
     }
     if (this.orderBy !== null) {
-      switch(this.orderBy) {
+      switch (this.orderBy) {
         case 'age':
           values = _.orderBy(values, m => m.user.age, ORDER_DIR_MAP[this.orderDirection.age])
-        break;
+          break;
         case 'date':
           values = _.orderBy(values, m => m.lastActvityTime, ORDER_DIR_MAP[this.orderDirection.date])
-        break;
+          break;
         default:
       }
     }

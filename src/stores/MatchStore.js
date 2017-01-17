@@ -1,7 +1,5 @@
-import { observable, transaction, computed, action, asFlat } from 'mobx'
+import { observable, transaction, computed, action } from 'mobx'
 import _ from 'lodash'
-import moment from 'moment'
-import Message from '../models/Message'
 import Data from '../data'
 import Match from '../models/Match'
 
@@ -14,17 +12,17 @@ class MatchStore {
     this.fetchFromRemote()
   }
 
-  fetch(isCharging = false) {
+  fetch() {
     Data.registerMatchesHook(this.newMatchHook.bind(this))
 
-    Data.matches().then(data => {
+    Data.matches().then((data) => {
       transaction(() => {
-        _.each(_.sortBy(data, 'lastActivityDate'), action(r => {
+        _.each(_.sortBy(data, 'lastActivityDate'), action((r) => {
           this.updateMatches(r)
         }))
         this.isLoading = false
       })
-    }).catch(resp => {
+    }).catch(() => {
       this.needFb = true
       this.isLoading = false
     })
@@ -35,7 +33,7 @@ class MatchStore {
   }
 
   fetchFromRemote() {
-    Data.updates().then(data => {
+    Data.updates().then(() => {
       this.fetch()
     })
   }
@@ -48,7 +46,7 @@ class MatchStore {
   }
 
   @action markAsRead() {
-    _.each(this.matches, match => {
+    _.each(this.matches, (match) => {
       match.isNew = false
     })
 
@@ -60,7 +58,7 @@ class MatchStore {
       return
     }
 
-    Data.db().users.where('_id').equals(resp.userId).first(action(user => {
+    Data.db().users.where('_id').equals(resp.userId).first(action((user) => {
       this.matches.push(new Match(this, resp, user))
     }))
   }

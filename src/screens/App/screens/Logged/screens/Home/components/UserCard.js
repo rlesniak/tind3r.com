@@ -97,14 +97,14 @@ export default class UserCard extends Component {
   renderInstagramSection() {
     const { user } = this.props
     if (user.instaLink) {
-      return <div styleName="with-insta">
+      return (<div styleName="with-insta">
         <a href={user.instaLink} target="_blank">
-          <i className="fa fa-instagram"></i>
+          <i className="fa fa-instagram" />
           <div styleName="instaname">{user.instaName}</div>
         </a>
-      </div>
+      </div>)
     }
-    return <i className="fa fa-instagram"></i>
+    return <i className="fa fa-instagram" />
   }
 
   renderSimpleSlider() {
@@ -112,7 +112,7 @@ export default class UserCard extends Component {
     const width = simple === true ? 220 : 350
     return (
       <div styleName="images">
-        <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
+        <Slider ref={(ref) => { this.sliderRef = ref }} {...this.sliderSettings}>
           {_.map(user.photosUrls, url => (
             <div key={_.uniqueId()}><Img src={url} style={{ width }} /></div>
           ))}
@@ -142,7 +142,7 @@ export default class UserCard extends Component {
     return (
       <div styleName="horizontal" className="body">
         <div styleName="photos">
-          <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings} slidesToShow="3" infinite>
+          <Slider ref={(ref) => { this.sliderRef = ref }} {...this.sliderSettings} slidesToShow="3" infinite>
             {_.map(user.photosUrls, url => (
               <div key={_.uniqueId()}><Img src={url} style={{ width: 250 }} /></div>
             ))}
@@ -224,7 +224,7 @@ export default class UserCard extends Component {
     const { user, simple, asLoader, horizontal } = this.props
 
     const className = cx({
-      simple
+      simple,
     })
 
     if (asLoader) {

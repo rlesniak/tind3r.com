@@ -14,8 +14,8 @@ import User from '../screens/App/screens/Logged/screens/User'
 import History from '../screens/App/screens/Logged/screens/History'
 import Data from '../data'
 
-Router.prototype.componentWillReceiveProps = function(nextProps) {
-  let components = [];
+Router.prototype.componentWillReceiveProps = function (nextProps) {
+  const components = [];
   function grabComponents(element) {
     // This only works for JSX routes, adjust accordingly for plain JS config
     if (element.props && element.props.component) {
@@ -37,7 +37,7 @@ const isProduction = process.env.NODE_ENV == 'production'
 const gaCode = isProduction ? 'UA-60241080-4' : 'UA-000000-1'
 
 ReactGA.initialize(gaCode, {
-  debug: false
+  debug: false,
 });
 
 const logPageView = () => {

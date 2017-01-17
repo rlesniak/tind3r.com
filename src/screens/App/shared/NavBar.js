@@ -40,14 +40,14 @@ export default class NavBar extends Component {
           </li>
           <li>
             <Link to="/home" activeClassName="active">
-              <i className="fa fa-home"></i>
+              <i className="fa fa-home" />
               Home
             </Link>
           </li>
           <li>
             <Link to="/matches" activeClassName="active">
               <div styleName="badge">
-                <i className="fa fa-heart"></i>
+                <i className="fa fa-heart" />
                 Matches
                 {newCount > 0 && <span>{newCount}</span>}
               </div>
@@ -55,7 +55,7 @@ export default class NavBar extends Component {
           </li>
           <li>
             <Link to="/history" activeClassName="active">
-              <i className="fa fa-history"></i>
+              <i className="fa fa-history" />
               History
             </Link>
           </li>

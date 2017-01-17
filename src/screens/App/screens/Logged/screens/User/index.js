@@ -93,7 +93,7 @@ export default class User extends Component {
               {user.bio.split('\n').map(item => (
                 <span key={_.uniqueId()}>
                   {item}
-                  <br/>
+                  <br />
                 </span>
               ))}
               {!user.bio && '[NO BIO]'}
@@ -118,7 +118,7 @@ export default class User extends Component {
             </div>
             {user.instaName && <div styleName="insta">
               <a href={user.instaLink} target="_blank">
-                <i className="fa fa-instagram"></i>
+                <i className="fa fa-instagram" />
                 <span>{user.instaName}</span>
               </a>
             </div>}
@@ -128,12 +128,12 @@ export default class User extends Component {
           </div>}
         </div>
         <div styleName="photos">
-          <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
+          <Slider ref={(ref) => { this.sliderRef = ref }} {...this.sliderSettings}>
             {_.map(user.photosUrls, url => (
-              <div key={_.uniqueId()}><Img src={url} style={{width: 600}} /></div>
+              <div key={_.uniqueId()}><Img src={url} style={{ width: 600 }} /></div>
             ))}
             {_.map(insta, photo => (
-              <div key={_.uniqueId()}><Img src={photo.image} style={{width: 600}} /></div>
+              <div key={_.uniqueId()}><Img src={photo.image} style={{ width: 600 }} /></div>
             ))}
           </Slider>
         </div>

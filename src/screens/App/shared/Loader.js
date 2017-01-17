@@ -5,7 +5,6 @@ import _ from 'lodash'
 import styles from './Loader.scss'
 
 export default inject('currentUser')(observer(CSSModules(({ currentUser, isSimpleLoader, noAnimation }) => {
-
   const pulse = (
     currentUser.photos ? <img src={currentUser.photos[0].url} alt="avatar" /> : null
   )
@@ -16,7 +15,7 @@ export default inject('currentUser')(observer(CSSModules(({ currentUser, isSimpl
         styleName="containter"
         className={noAnimation && 'no-animation'}
       >
-        <div styleName="dot"></div>
+        <div styleName="dot" />
         {!currentUser.isLoading && pulse && <div styleName="pulse">
           {pulse}
         </div>}

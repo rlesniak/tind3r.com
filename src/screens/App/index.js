@@ -15,7 +15,7 @@ import styles from './index.scss'
 @CSSModules(styles)
 export default class App extends Component {
   @observable isInstalled = false
-  @observable isFetching = false
+  @observable isFetching = true
 
   constructor(props) {
     super(props)
@@ -50,6 +50,7 @@ export default class App extends Component {
       if (status) {
         this.fetchMeta()
       } else {
+        this.isFetching = false
         browserHistory.push('/welcome')
       }
     })
@@ -59,7 +60,7 @@ export default class App extends Component {
     return (
       <div styleName="wrapper">
         <div styleName="page">
-          {this.props.children && React.cloneElement(this.props.children, {
+          {!this.isFetching && this.props.children && React.cloneElement(this.props.children, {
             currentUser: this.props.currentUser,
             isInstalled: this.isInstalled,
             fetchMeta: this.fetchMeta,

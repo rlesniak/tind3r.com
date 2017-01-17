@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
-import moment from 'moment'
-import { Link } from 'react-router'
-import _ from 'lodash'
+import { Link, browserHistory } from 'react-router'
 import CSSModules from 'react-css-modules'
+import moment from 'moment'
+import { checkIfInstalled, getFacebookToken, getTokenDate } from 'runtime'
+import { pageTitle } from 'utils'
 import styles from './index.scss'
-import { checkIfInstalled, checkVersion, getFacebookToken, getTokenDate } from 'runtime'
 
 @observer
 @CSSModules(styles)
@@ -28,14 +27,25 @@ export default class Welcome extends Component {
     getFacebookToken()
   }
 
+  checkTokenDate() {
+    getTokenDate((date) => {
+      const tokenDate = moment(date)
+      const nowDate = moment()
+
+      if (nowDate.diff(tokenDate, 'seconds') >= 0) {
+        this.props.fetchMeta(() => {
+          browserHistory.push('/home')
+        })
+      }
+    })
+  }
+
   checkExtension(isFetchMeta = false) {
     checkIfInstalled((status) => {
       this.isInstalled = status
 
       if (isFetchMeta && status) {
-        this.props.fetchMeta(() => {
-          browserHistory.push('/home')
-        })
+        this.checkTokenDate()
       }
     })
   }
@@ -44,6 +54,8 @@ export default class Welcome extends Component {
     window.onfocus = () => {
       this.checkExtension(true)
     }
+
+    document.title = pageTitle()
   }
 
   componentWillUnmount() {
@@ -53,8 +65,8 @@ export default class Welcome extends Component {
   renderIfInstalled() {
     return (
       <div styleName="content">
-        <h1>Facebook token has expired or first visit. <br />Renew it here:</h1>
-        <button onClick={this.connect}>Renew</button>
+        <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
+        <button className="button blue" onClick={this.connect}>Refresh</button>
       </div>
     )
   }

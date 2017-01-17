@@ -25,6 +25,9 @@ module.exports = {
       context: path.join(__dirname, 'dist'),
       manifest: require('./vendor-manifest.json')
     }),
+    new webpack.ProvidePlugin({
+      autobind: 'autobind-decorator',
+    })
   ],
   resolve: {
     root: path.resolve('./src'),
@@ -43,7 +46,7 @@ module.exports = {
           'style?sourceMap',
           'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
           'sass?sourceMap'
-        ]
+        ],
       },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       {
@@ -51,7 +54,8 @@ module.exports = {
         loader: 'url-loader',
         options: {
           name: '[path][name].[hash].[ext]'
-        }
+        },
+        include: path.join(__dirname, 'src', 'images'),
       },
       {
         test: /\.(ogg|mp3)$/,
@@ -59,5 +63,8 @@ module.exports = {
         loader: 'file-loader'
       }
     ]
+  },
+  sassLoader: {
+    includePaths: [ path.resolve(__dirname, 'src', 'styles') ]
   }
 };

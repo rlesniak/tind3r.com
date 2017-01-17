@@ -1,0 +1,35 @@
+@import '../../styles/main';
+
+.page {
+  margin: 0;
+}
+
+.wrapper {
+  height: 100%;
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 10px;
+
+  a {
+    text-decoration: none;
+    color: $red;
+  }
+}
+
+.footer,
+.page :after {
+  height: 30px;
+}
+
+.page  {
+  min-height: 100%;
+  margin-bottom: -30px;
+
+  &:after {
+    content: "";
+    display: block;
+  }
+}

@@ -6,6 +6,7 @@ import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
 import App from '../screens/App'
 import Guest from '../screens/App/screens/Guest'
 import Welcome from '../screens/App/screens/Guest/screens/Welcome'
+import PrivacyPolicy from '../screens/App/screens/Guest/screens/PrivacyPolicy'
 import Logged from '../screens/App/screens/Logged'
 import Home from '../screens/App/screens/Logged/screens/Home'
 import Matches from '../screens/App/screens/Logged/screens/Matches'
@@ -47,6 +48,7 @@ const logPageView = () => {
 const Root = () => (
   <Provider currentUser={new UserModel()}>
     <Router history={browserHistory} onUpdate={logPageView}>
+      <Route path="privacy-policy" component={PrivacyPolicy} />
       <Route path="/" component={App}>
         <Route component={Guest}>
           <Route path="welcome" component={Welcome} />

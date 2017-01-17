@@ -33,7 +33,9 @@ export default class Welcome extends Component {
       this.isInstalled = status
 
       if (isFetchMeta && status) {
-        this.props.fetchMeta()
+        this.props.fetchMeta(() => {
+          browserHistory.push('/home')
+        })
       }
     })
   }

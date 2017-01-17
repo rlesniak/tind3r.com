@@ -27,7 +27,7 @@ export default class App extends Component {
   }
 
   @autobind
-  fetchMeta() {
+  fetchMeta(cb = n => n) {
     this.props.currentUser.fetchMeta().then(resp => {
       if (resp.rating.super_likes.resets_at) {
         ls.set({ superLikeExpiration: resp.rating.super_likes.resets_at })
@@ -37,7 +37,7 @@ export default class App extends Component {
         ls.set({ likeExpiration: resp.rating.rate_limited_until })
       }
 
-      browserHistory.push('/home')
+      cb()
     }).catch(resp => {
       browserHistory.push('/welcome')
     })

@@ -4,13 +4,13 @@ export const getFacebookToken = (resolve, reject) => {
   chrome.runtime.sendMessage(EXT_ID, { type: 'FACEBOOK_TOKEN' })
 }
 
-export const getTokenDate = (callback) => {
+export const getTokenDate = callback => {
   chrome.runtime.sendMessage(EXT_ID, {
     type: 'TOKEN_DATE'
   }, date => callback(date))
 }
 
-export const checkIfInstalled = (callback) => {
+export const checkIfInstalled = callback => {
   try {
     chrome.runtime.sendMessage(EXT_ID, {
       type: 'CHECK_INSTALLED'

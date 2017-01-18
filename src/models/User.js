@@ -162,6 +162,20 @@ class User {
     return _.pick(this, PROFILE_FIELDS)
   }
 
+  @computed get job() {
+    if (this.jobs) {
+      return _.map(this.jobs, job => {
+        if (job.title) {
+          return `${job.title.name} at ${job.company.name}`
+        }
+
+        return `${job.company.name}`
+      })
+    }
+
+    return ''
+  }
+
   getPhotoUrl(photo, size = 640) {
     const baseUrl = 'http://images.gotinder.com'
 

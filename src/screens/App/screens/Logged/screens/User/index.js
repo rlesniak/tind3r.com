@@ -11,6 +11,9 @@ import Img from 'screens/App/shared/Img'
 import styles from './index.scss'
 import ActionButtons from '../../shared/ActionButtons'
 import UserCard from '../Home/components/UserCard'
+import Tooltip from 'screens/App/shared/Tooltip'
+
+const fbUserSearchUrl = (school, name) => `https://www.facebook.com/search/str/${school}/pages-named/students/present/str/${name}/users-named/intersect/`
 
 @inject('currentUser')
 @observer
@@ -65,6 +68,39 @@ export default class User extends Component {
     }
   }
 
+  renderSchools() {
+    const { user, props: { currentUser } } = this
+
+    return (
+      <div styleName="schools">
+        {_.map(_.filter(user.schools, s => s.id), s => (
+          <div key={s.id} styleName="school">
+            {user.id !== currentUser._id && <a
+              href={fbUserSearchUrl(s.name, user.name)}
+              target="_blank"
+              rel="noopener noreferrer"
+              styleName="try-find"
+            >
+              <Tooltip
+                triggerEl={<i className="fa fa-eye" />}
+                position="top-right"
+              >
+                Do Facebook search based on school and name. <br />
+                Tinder user has to have at least one Facebook photo
+                so you can compare and find right person.
+              </Tooltip>
+            </a>}
+            <a
+              href={`http://facebook.com/${s.id}`}
+              target="_blank"
+              rel="noreferrer noopener"
+              >{s.name}</a>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   renderUser() {
     const { user, props: { currentUser } } = this
     const insta = (user.instagram && user.instagram.photos) || []
@@ -74,21 +110,21 @@ export default class User extends Component {
         <div styleName="intro-wrapper">
           <div styleName="intro">
             <h1>
-              <div styleName="back" onClick={browserHistory.goBack}><i className="fa fa-long-arrow-left" /></div>
               <span>{user.name}, {user.age}</span>
-              <div styleName="km">{user.km} km, <span>{user.seenMin}</span></div>
-              <ul styleName="school-job">
-                {_.map(_.filter(user.schools, s => s.id), s => (
-                  <li key={s.id}>{s.name}</li>
-                ))}
-                {_.map(_.filter(user.jobs, s => s.id), s => (
-                  <li key={s.id}>{s.name}</li>
-                ))}
-              </ul>
             </h1>
+            <div styleName="back" onClick={browserHistory.goBack}>
+              <i className="fa fa-long-arrow-left" />
+            </div>
+            <div styleName="km">{user.km} km, <span>{user.seenMin}</span></div>
             <h2 styleName="last-seen">
               Last seen: {user.seen}
             </h2>
+            {this.renderSchools()}
+            <ul styleName="school-job">
+              {_.map(user.job, job => (
+                <li key={_.uniqueId()}>{job}</li>
+              ))}
+            </ul>
             <p styleName="full-bio">
               {user.bio.split('\n').map(item => (
                 <span key={_.uniqueId()}>

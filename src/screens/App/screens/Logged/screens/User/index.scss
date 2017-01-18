@@ -7,6 +7,11 @@
   border-radius: 4px;
   overflow: hidden;
   box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .container {
@@ -36,7 +41,7 @@
   }
 
   .last-seen {
-    margin: 12px 0 0 0;
+    margin: 0 0 12px 0;
     font-size: 14px;
     font-family: $lato;
   }
@@ -71,8 +76,13 @@
 }
 
 .school-job:not(:empty) {
-  font-size: 16px;
+  font-size: 13px;
   margin-top: 7px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .photos {
@@ -127,7 +137,7 @@
 
 .km {
   font-size: 18px;
-  margin: 10px 0 20px;
+  margin: 10px 0 3px;
 
   span {
     color: $blue;
@@ -141,8 +151,25 @@
   background: $hover-c;
   padding: 0 11px;
   cursor: pointer;
+  font-size: 30px;
 
   &:hover {
     color: $blue;
+  }
+}
+
+.schools {
+  font-size: 16px;
+
+  .school {
+    margin-bottom: 10px;
+    clear: both;
+  }
+
+  .try-find {
+    font-size: 21px;
+    color: #3b5998;
+    margin-right: 9px;
+    vertical-align: middle;
   }
 }

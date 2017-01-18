@@ -4,7 +4,6 @@ import autobind from 'autobind-decorator'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import RCSlider from 'rc-slider'
-import _ from 'lodash'
 import { IntercomAPI } from 'react-intercom'
 import cx from 'classnames'
 import Select from 'react-basic-dropdown'
@@ -20,10 +19,6 @@ import 'styles/select.scss'
 export default class Settings extends Component {
   @observable isOpenSettings = false
   @observable isOpenFilter = false
-
-  constructor(props) {
-    super(props)
-  }
 
   @autobind
   showSettings() {
@@ -69,6 +64,10 @@ export default class Settings extends Component {
   @autobind
   handleDistanceChange(value) {
     this.props.currentUser.updateProfile(kmToMi(value))
+
+    if (this.props.userStore.all.length === 0) {
+      this.props.userStore.core()
+    }
 
     ReactGA.event({
       category: 'Settings',

@@ -50,6 +50,7 @@ const Root = () => (
     <Router history={browserHistory} onUpdate={logPageView}>
       <Route path="privacy-policy" component={PrivacyPolicy} />
       <Route path="/" component={App}>
+        <IndexRedirect to="home" />
         <Route component={Guest}>
           <Route path="welcome" component={Welcome} />
         </Route>

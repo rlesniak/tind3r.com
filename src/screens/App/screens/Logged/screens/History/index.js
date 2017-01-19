@@ -41,7 +41,7 @@ export default class History extends Component {
 
     if (searchQuery) {
       computed = _.filter(computed, a =>
-        _.includes(a.user.name.toLowerCase(), searchQuery.toLowerCase()),
+        _.includes((a.user ? a.user.name : '').toLowerCase(), searchQuery.toLowerCase()),
       )
     }
 

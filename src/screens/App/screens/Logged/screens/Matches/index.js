@@ -14,9 +14,10 @@ import Profile from './components/Profile'
 import Data from 'data'
 
 const sortOptions = [
-  { label: 'Most recent', value: 1 },
-  { label: 'Age', value: 2 },
-  { label: 'Distance', value: 3 },
+  { label: 'Select filter', value: -1, disabled: true },
+  { label: 'None', value: '' },
+  { label: 'Without messages', value: 'withoutMsgs' },
+  { label: 'Unaswered', value: 'unanswered' },
 ]
 
 const ORDER_DIR_MAP = {
@@ -30,9 +31,11 @@ export default class Matches extends Component {
   @observable seletedMatch
   @observable searchValue = ''
   @observable orderBy = ''
+  @observable filterOption = -1
   @observable orderDirection = {
     age: null,
-    date: null,
+    date: true,
+    messages: null,
   }
 
   constructor(props) {
@@ -48,13 +51,21 @@ export default class Matches extends Component {
         return _.includes(name.toLowerCase(), this.searchValue.toLowerCase())
       })
     }
+
     if (this.orderBy !== null) {
       switch (this.orderBy) {
         case 'age':
           values = _.orderBy(values, m => m.user.age, ORDER_DIR_MAP[this.orderDirection.age])
           break;
         case 'date':
-          values = _.orderBy(values, m => m.lastActvityTime, ORDER_DIR_MAP[this.orderDirection.date])
+          values = _.orderBy(values, m =>
+            m.lastActvityTime, ORDER_DIR_MAP[this.orderDirection.date],
+          )
+          break;
+        case 'messages':
+          values = _.orderBy(values, m =>
+            m.messageStore.messages.length, ORDER_DIR_MAP[this.orderDirection.messages],
+          )
           break;
         default:
       }
@@ -119,9 +130,25 @@ export default class Matches extends Component {
   }
 
   @autobind
-  handleRemoveMatch(id) {
+  handleRemoveMatch() {
     this.seletedMatch.remove()
     this.seletedMatch = null
+  }
+
+  @autobind
+  handleFilterChange({ value }) {
+    this.filterOption = value
+    this.matchStore.setFilter(value)
+  }
+
+  @autobind
+  reset() {
+    this.orderBy = 'date'
+    this.orderDirection = {
+      age: null,
+      date: true,
+      messages: null,
+    }
   }
 
   render() {
@@ -143,14 +170,28 @@ export default class Matches extends Component {
               </span>
             </div>}
             <div styleName="quick">
-              <button onClick={this.handleOrder.bind(this, 'age')}>
-                {this.renderOrderIcon('age')}
-                by age
-              </button>
               <button onClick={this.handleOrder.bind(this, 'date')}>
                 {this.renderOrderIcon('date')}
                 by recent
               </button>
+              <button onClick={this.handleOrder.bind(this, 'age')}>
+                {this.renderOrderIcon('age')}
+                by age
+              </button>
+              <button onClick={this.handleOrder.bind(this, 'messages')}>
+                {this.renderOrderIcon('messages')}
+                by messages count
+              </button>
+              <button onClick={this.reset}>
+                <i className="fa fa-times" />
+              </button>
+            </div>
+            <div styleName="action-wrapper" className="filter">
+              <Select
+                options={sortOptions}
+                value={this.filterOption}
+                onChange={this.handleFilterChange}
+              />
             </div>
           </div>}
           {this.matchStore.isLoading && <h1>Loading...</h1>}

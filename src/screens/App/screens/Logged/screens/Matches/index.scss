@@ -66,6 +66,12 @@
     outline: none;
     width: 100%;
   }
+
+  &:global(.filter) {
+    :global(.container) {
+      width: 200px;
+    }
+  }
 }
 
 .quick {

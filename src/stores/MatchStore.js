@@ -7,6 +7,7 @@ class MatchStore {
   @observable matches = []
   @observable isLoading = true;
   @observable isCharging = true;
+  @observable activeFilter = null;
 
   constructor() {
     this.fetchFromRemote()
@@ -72,12 +73,31 @@ class MatchStore {
     return _.find(this.matches, { id })
   }
 
+  @action setFilter(value) {
+    this.activeFilter = value
+  }
+
   @computed get unreadCount() {
     return _.filter(this.matches, match => match.isNew).length
   }
 
   @computed get byDate() {
-    return _.orderBy(this.matches, 'lastActvityTime').reverse()
+    return _.orderBy(this.filtered, 'lastActvityTime').reverse()
+  }
+
+  @computed get filtered() {
+    switch (this.activeFilter) {
+      case 'withoutMsgs':
+        return _.filter(this.matches, match => (
+          match.messageStore.messages.length === 0
+        ))
+      case 'unanswered':
+        return _.filter(this.matches, match => (
+          match.messageStore.messages.length === 1
+        ))
+      default:
+        return this.matches
+    }
   }
 }
 

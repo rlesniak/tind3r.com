@@ -19,7 +19,8 @@
       width: 100%;
       position: absolute;
       left: 0;
-      top: 23px;
+      top: 22px;
+      z-index: 1;
     }
 
     .option {
@@ -32,10 +33,18 @@
       &:last-child {
         border-radius: 0 0 10px 10px;
       }
+
+      &:hover {
+        background: #eef8ff;
+      }
     }
 
     &.show .list {
       display: block;
+    }
+
+    &.show .display {
+      border-radius: 10px 10px 0 0;
     }
   }
 }

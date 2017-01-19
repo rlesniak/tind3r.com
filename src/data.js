@@ -244,6 +244,10 @@ const Data = {
     purge()
   },
 
+  removeActions() {
+    db.actions.clear()
+  },
+
   removeMessage(id) {
     db.messages.where('_id').equals(id).delete()
   },

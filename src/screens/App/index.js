@@ -38,7 +38,7 @@ export default class App extends Component {
       cb()
       this.isFetching = false
     }).catch(() => {
-      browserHistory.push('/welcome')
+      // browserHistory.push('/welcome')
       this.isFetching = false
     })
   }

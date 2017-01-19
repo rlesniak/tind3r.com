@@ -68,7 +68,7 @@ export default class App extends Component {
           {this.isFetching && <Loader isSimpleLoader />}
         </div>
         <div styleName="footer">
-          Copyright &copy; <a href="https://goo.gl/6i11L7" target="_blank">Rafal Lesniak</a> | <Link to="/privacy-policy">Privacy Policy</Link>
+          Copyright &copy; <a href="https://goo.gl/6i11L7" target="_blank">Rafal Lesniak</a> | <Link to="/privacy-policy">Privacy Policy</Link> | <a href="https://goo.gl/1b1JZD" target="_blank">Source</a>
         </div>
       </div>
     );

@@ -84,7 +84,7 @@ export default class Match extends Component {
     })
 
     return (
-      <Link to={`/matches/${match.id}`} styleName="match" className={className}activeClassName="active">
+      <Link to={`/matches/${match.id}`} styleName="match" className={className} activeClassName="active">
         <div styleName="type-icon">{this.renderTypeIcon()}</div>
         <div styleName="avatar">
           <img src={match.user.mainPhoto} />

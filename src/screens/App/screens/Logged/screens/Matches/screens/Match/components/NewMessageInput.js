@@ -86,6 +86,8 @@ export default class NewMessageInput extends Component {
 
     if (msg.length === 0) return
 
+    this.setAsRead()
+
     this.isTryingToSend = true
     this.sendTimeoutFn = setTimeout(() => {
       this.isTryingToSend = false

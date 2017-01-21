@@ -9,9 +9,8 @@ import { observer } from 'mobx-react'
 import MatchStore from 'stores/MatchStore'
 import styles from './index.scss'
 import Match from './components/Match'
-import Messages from './components/Messages'
-import Profile from './components/Profile'
 import Data from 'data'
+import Loader from 'screens/App/shared/Loader'
 
 const sortOptions = [
   { label: 'Select filter', value: -1, disabled: true },
@@ -130,12 +129,6 @@ export default class Matches extends Component {
   }
 
   @autobind
-  handleRemoveMatch() {
-    this.seletedMatch.remove()
-    this.seletedMatch = null
-  }
-
-  @autobind
   handleFilterChange({ value }) {
     this.filterOption = value
     this.matchStore.setFilter(value)
@@ -194,23 +187,15 @@ export default class Matches extends Component {
               />
             </div>
           </div>}
-          {this.matchStore.isLoading && <h1>Loading...</h1>}
+          {this.matchStore.isLoading && <Loader isSimpleLoader />}
           {!this.matchStore.isLoading && _.map(this.list, match => (
-            <Match
-              key={match.id}
-              match={match}
-              handleSelect={this.handleSelect}
-            />
+            <Match key={match.id} match={match} />
           ))}
         </div>
         <div styleName="messages">
-          <Messages
-            match={this.seletedMatch}
-            removeMatch={this.handleRemoveMatch}
-          />
-        </div>
-        <div styleName="profile">
-          {this.seletedMatch && <Profile user={this.seletedMatch.user} />}
+          {this.props.children && React.cloneElement(this.props.children, {
+            matchStore: this.matchStore,
+          })}
         </div>
       </div>
     );

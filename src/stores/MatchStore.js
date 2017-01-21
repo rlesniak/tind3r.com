@@ -1,4 +1,4 @@
-import { observable, transaction, computed, action } from 'mobx'
+import { observable, computed, action } from 'mobx'
 import _ from 'lodash'
 import Data from '../data'
 import Match from '../models/Match'
@@ -9,20 +9,19 @@ class MatchStore {
   @observable isCharging = true;
   @observable activeFilter = null;
 
+  matchesProcessed = 0
+
   constructor() {
     this.fetchFromRemote()
   }
 
-  fetch() {
+  @action fetch() {
     Data.registerMatchesHook(this.newMatchHook.bind(this))
 
     Data.matches().then((data) => {
-      transaction(() => {
-        _.each(_.sortBy(data, 'lastActivityDate'), action((r) => {
-          this.updateMatches(r)
-        }))
-        this.isLoading = false
-      })
+      _.each(data, action((r) => {
+        this.updateMatches(r, true)
+      }))
     }).catch(() => {
       this.needFb = true
       this.isLoading = false
@@ -34,9 +33,9 @@ class MatchStore {
   }
 
   fetchFromRemote() {
-    Data.updates().then(() => {
+    // Data.updates().then(() => {
       this.fetch()
-    })
+    // })
   }
 
   @action remove(id) {
@@ -54,17 +53,23 @@ class MatchStore {
     Data.db().matches.where('isNew').equals(1).modify({ isNew: 0 })
   }
 
-  @action updateMatches(resp) {
+  @action updateMatches(resp, withCallback) {
     if (_.find(this.matches, { id: resp._id }) || !resp.userId) {
       return
     }
 
-    Data.db().users.where('_id').equals(resp.userId).first(action((user) => {
-      this.matches.push(new Match(this, resp, user))
+    this.matches.push(new Match(this, resp, resp.user, () => {
+      if (!withCallback) return
+
+      this.matchesProcessed += 1
+
+      if (this.matchesProcessed === this.matches.length) {
+        this.isLoading = false
+      }
     }))
   }
 
-  setAsDone(match) {
+  setAsRead(match) {
     match.isNew = false
     Data.db().matches.update(match.id, { isNew: 0 })
   }

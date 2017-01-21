@@ -10,6 +10,7 @@ import PrivacyPolicy from '../screens/App/screens/Guest/screens/PrivacyPolicy'
 import Logged from '../screens/App/screens/Logged'
 import Home from '../screens/App/screens/Logged/screens/Home'
 import Matches from '../screens/App/screens/Logged/screens/Matches'
+import Match from '../screens/App/screens/Logged/screens/Matches/screens/Match'
 import User from '../screens/App/screens/Logged/screens/User'
 import History from '../screens/App/screens/Logged/screens/History'
 import Data from '../data'
@@ -56,7 +57,9 @@ const Root = () => (
         </Route>
         <Route component={Logged}>
           <Route path="home" component={Home} />
-          <Route path="matches" component={Matches} />
+          <Route path="matches" component={Matches}>
+            <Route path=":matchId" component={Match} />
+          </Route>
           <Route path="history" component={History} />
           <Route path="users/:userId" component={User} />
         </Route>

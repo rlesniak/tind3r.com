@@ -13,7 +13,7 @@ import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import Data from 'data'
 import giphy from 'giphy'
-import Spinner from '../shared/Spinner'
+import Spinner from '../../../shared/Spinner'
 import styles from './GifInput.scss'
 
 @observer

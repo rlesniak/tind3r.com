@@ -7,22 +7,24 @@ class MessageStore {
   @observable messages = []
   @observable isLoading = true
 
-  constructor(match, json) {
+  constructor(match, json, fetchDoneCallback) {
     this.match = match
     this.authorId = json.userId
     this.matchId = json._id
     this.participant = json.participants[0]
 
-    this.fetch()
+    this.fetch(fetchDoneCallback)
   }
 
-  @action fetch() {
+  @action fetch(fetchDoneCallback) {
     Data.registerMessagesHook(this.newMessageHook.bind(this))
 
     Data.db().users.where('_id').equals(this.participant).first((user) => {
       Data.messages(this.matchId).then(action((allMsgs) => {
         _.each(allMsgs, msg => this.updateMessages(msg, user))
         this.isLoading = false
+
+        fetchDoneCallback()
       }))
     })
   }

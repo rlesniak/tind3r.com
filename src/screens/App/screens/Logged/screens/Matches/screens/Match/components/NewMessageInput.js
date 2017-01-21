@@ -12,11 +12,11 @@ import cx from 'classnames'
 import { observer } from 'mobx-react'
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
-import Spinner from '../shared/Spinner'
-import styles from './NewMessageInput.scss'
 import Data from 'data'
-import GifInput from './GifInput'
 import ls from 'local-storage'
+import Spinner from '../../../shared/Spinner'
+import styles from './NewMessageInput.scss'
+import GifInput from './GifInput'
 
 @observer
 @CSSModules(styles)
@@ -246,7 +246,6 @@ export default class NewMessageInput extends Component {
           value={this.messageTxt}
           placeholder="Type your message..."
           disabled={this.isTryingToSend}
-          onFocus={this.setAsRead}
           onBlur={this.setAsRead}
         />
         <div styleName="emotions">

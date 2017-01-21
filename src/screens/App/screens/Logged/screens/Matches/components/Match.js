@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import _ from 'lodash'
 import cx from 'classnames'
+import { Link } from 'react-router'
 import { observer } from 'mobx-react'
 import styles from './Match.scss'
 import MatchStore from 'stores/MatchStore'
@@ -13,12 +14,6 @@ import Data from 'data'
 export default class Match extends Component {
   constructor(props) {
     super(props)
-  }
-
-  @autobind
-  handleSelect() {
-    const { match } = this.props
-    this.props.handleSelect(match.id)
   }
 
   @autobind
@@ -89,7 +84,7 @@ export default class Match extends Component {
     })
 
     return (
-      <div styleName="match" className={className} onClick={this.handleSelect}>
+      <Link to={`/matches/${match.id}`} styleName="match" className={className}activeClassName="active">
         <div styleName="type-icon">{this.renderTypeIcon()}</div>
         <div styleName="avatar">
           <img src={match.user.mainPhoto} />
@@ -99,7 +94,7 @@ export default class Match extends Component {
           <span>{this.renderIcon()} {this.renderLastMessageContent()}</span>
           <div styleName="date">{match.ago}</div>
         </div>
-      </div>
+      </Link>
     );
   }
 }

@@ -20,4 +20,27 @@ $padding: 20px;
 
 .wrapper {
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+
+.messages-wrapper {
+  width: 68%;
+  order: 0;
+  flex: 1 1 auto;
+  align-self: auto;
+  height: 100%;
+}
+
+.profile {
+  width: 32%;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+  height: 100%;
+  overflow-y: scroll;
 }

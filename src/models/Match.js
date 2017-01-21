@@ -8,6 +8,8 @@ class Match {
   id = null
   store = null
 
+  isMessageStoreFetched = false
+
   @observable lastActivityDate
   @observable user
   @observable isNew
@@ -16,21 +18,21 @@ class Match {
   @observable isBlocked
   @observable messageStore
 
-  constructor(store, json = {}, user = {}) {
+  constructor(store, json = {}, user = {}, allMessagesFetchedCallback) {
     this.store = store
     this.id = json._id
     this.authorId = json.userId
     this.user = new User(this, user._id, user)
-    this.setFromJson(json)
+    this.setFromJson(json, allMessagesFetchedCallback)
   }
 
-  @action setFromJson(json) {
+  @action setFromJson(json, allMessagesFetchedCallback) {
     this.lastActivityDate = json.lastActivityDate
     this.isNew = json.isNew
     this.isSuperLike = json.isSuperLike
     this.isBoostMatch = json.isBoostMatch
     this.isBlocked = json.isBlocked
-    this.messageStore = new MessageStore(this, json)
+    this.messageStore = new MessageStore(this, json, allMessagesFetchedCallback)
   }
 
   @action remove() {

@@ -3,10 +3,10 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import Logo from '../../shared/Logo'
 
-const App = () => (
+const App = props => (
   <div styleName="wrapper">
     <Logo />
-    {this.props.children && React.cloneElement(this.props.children, this.props)}
+    {props.children && React.cloneElement(props.children, props)}
   </div>
 )
 

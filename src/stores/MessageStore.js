@@ -19,8 +19,8 @@ class MessageStore {
   @action fetch(fetchDoneCallback) {
     Data.registerMessagesHook(this.newMessageHook.bind(this))
 
-    Data.db().users.where('_id').equals(this.participant).first((user) => {
-      Data.messages(this.matchId).then(action((allMsgs) => {
+    Data.db().users.where('_id').equals(this.participant).first(user => {
+      Data.messages(this.matchId).then(action(allMsgs => {
         _.each(allMsgs, msg => this.updateMessages(msg, user))
         this.isLoading = false
 

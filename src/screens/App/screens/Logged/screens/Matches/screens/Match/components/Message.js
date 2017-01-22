@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
-import autobind from 'autobind-decorator'
 import { Link } from 'react-router'
-import _ from 'lodash'
 import moment from 'moment'
 import cx from 'classnames'
 import { observer, inject } from 'mobx-react'
-import styles from './Message.scss'
 import Img from 'screens/App/shared/Img'
+import styles from './Message.scss'
 
 @inject('currentUser')
 @observer
@@ -56,7 +54,7 @@ export default class Message extends Component {
       <div
         styleName="wrapper"
         className={className}
-        ref={ref => this.wrapper = ref}
+        ref={ref => { this.wrapper = ref }}
         title={message.date}
       >
         <div styleName="avatar">

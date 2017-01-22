@@ -17,16 +17,14 @@ export default class App extends Component {
   @observable isInstalled = false
   @observable isFetching = true
 
-  constructor(props) {
-    super(props)
-
+  componentDidMount() {
     this.checkExtension()
   }
 
   @autobind
   fetchMeta(cb = n => n) {
     this.isFetching = true
-    this.props.currentUser.fetchMeta().then((resp) => {
+    this.props.currentUser.fetchMeta().then(resp => {
       if (resp.rating.super_likes.resets_at) {
         ls.set({ superLikeExpiration: resp.rating.super_likes.resets_at })
       }
@@ -44,11 +42,11 @@ export default class App extends Component {
   }
 
   checkExtension() {
-    checkIfInstalled((status) => {
+    checkIfInstalled(status => {
       this.isInstalled = !!status
 
       if (status) {
-        this.fetchMeta()
+        this.fetchMeta(() => browserHistory.push('/home'))
       } else {
         this.isFetching = false
         browserHistory.push('/welcome')

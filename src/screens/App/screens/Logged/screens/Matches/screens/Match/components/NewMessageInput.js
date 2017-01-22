@@ -242,7 +242,7 @@ export default class NewMessageInput extends Component {
         <textarea
           autoFocus
           type="text"
-          ref={(ref) => { this.inputRef = ref }}
+          ref={ref => { this.inputRef = ref }}
           onChange={this.handleMessageChange}
           onKeyPress={this.handleSubmit}
           value={this.messageTxt}
@@ -259,7 +259,7 @@ export default class NewMessageInput extends Component {
             title="Pick your Emoji!"
             style={{ position: 'absolute', bottom: '81px', right: '137px' }}
             onClick={this.emojiSelected}
-            ref={(ref) => { this.pickerRef = ref }}
+            ref={ref => { this.pickerRef = ref }}
           />}
         </div>
         <div styleName="actions">

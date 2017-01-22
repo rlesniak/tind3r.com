@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react'
+import React from 'react';
 import CSSModules from 'react-css-modules';
-import _ from 'lodash'
 import styles from './Logo.scss'
 
-export default CSSModules(({ align, children }) => (
+export default CSSModules(() => (
   <div styleName="logo-wrapper">
     <div styleName="logo">
       <a href="/">

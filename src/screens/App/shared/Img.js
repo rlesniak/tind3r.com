@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import './Img.scss'
 
 export default class Img extends Component {
@@ -27,8 +27,8 @@ export default class Img extends Component {
           Image broken :(
         </div>
       )
-    } else {
-      return <img src={src} onError={this.fallback} {...this.props} />
     }
+
+    return <img src={src} onError={this.fallback} {...this.props} />
   }
 }

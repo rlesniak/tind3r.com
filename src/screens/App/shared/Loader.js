@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { observer, inject } from 'mobx-react'
 import CSSModules from 'react-css-modules';
-import _ from 'lodash'
 import styles from './Loader.scss'
 
 export default inject('currentUser')(observer(CSSModules(({ currentUser, isSimpleLoader, noAnimation }) => {

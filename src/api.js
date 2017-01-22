@@ -1,7 +1,7 @@
 import { EXT_ID } from './const/index'
 
 const chromeRuntime = (type, url, params) => new Promise((resolve, reject) => {
-  chrome.runtime.sendMessage(EXT_ID, { type, url, params }, (response) => {
+  chrome.runtime.sendMessage(EXT_ID, { type, url, params }, response => {
     if (response.success) {
       resolve(response.resp)
     } else {

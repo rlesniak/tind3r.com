@@ -94,7 +94,7 @@ export default class User extends Component {
               href={`http://facebook.com/${s.id}`}
               target="_blank"
               rel="noreferrer noopener"
-              >{s.name}</a>
+            >{s.name}</a>
           </div>
         ))}
       </div>
@@ -164,7 +164,7 @@ export default class User extends Component {
           </div>}
         </div>
         <div styleName="photos">
-          <Slider ref={(ref) => { this.sliderRef = ref }} {...this.sliderSettings}>
+          <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
             {_.map(user.photosUrls, url => (
               <div key={_.uniqueId()}><Img src={url} style={{ width: 600 }} /></div>
             ))}

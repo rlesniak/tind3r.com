@@ -19,7 +19,7 @@ class UserStore {
 
     this.chargeReaction = reaction(
       () => this.all.length,
-      (length) => {
+      length => {
         if (length <= 3 && !this.isCharging && !this.isLoading) {
           this.core(true)
         }
@@ -34,7 +34,7 @@ class UserStore {
       this.isLoading = true
     }
 
-    Data.core().then(action((resp) => {
+    Data.core().then(action(resp => {
       if (!resp.results.length) {
         this.noRecs = true
         this.isCharging = false
@@ -74,7 +74,7 @@ class UserStore {
     this.activeFilter = option
 
     if (this.activeFilter === 'insta') {
-      _.remove(this.users, (user) => {
+      _.remove(this.users, user => {
         if (!user.hasInsta) {
           Data.removePerson(user._id)
           return true
@@ -94,7 +94,7 @@ class UserStore {
   }
 
   @computed get all() {
-    return _.filter(this.users, (user) => {
+    return _.filter(this.users, user => {
       let filterValue = true
       if (this.activeFilter === 'insta') {
         filterValue = user.hasInsta

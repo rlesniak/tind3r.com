@@ -1,32 +1,19 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
-import _ from 'lodash'
 import cx from 'classnames'
 import { Link } from 'react-router'
 import { observer } from 'mobx-react'
 import styles from './Match.scss'
-import MatchStore from 'stores/MatchStore'
 import Data from 'data'
 
 @observer
 @CSSModules(styles)
 export default class Match extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   @autobind
   remove() {
     const { match } = this.props
     Data.db().matches.where('_id').equals(match.id).delete()
-  }
-
-  renderLastMessageContent() {
-    const { match } = this.props
-    const { last } = match.messageStore
-
-    return last.type === 'gif' ? '[ GIF ]' : last.message
   }
 
   hasUnread() {
@@ -41,6 +28,13 @@ export default class Match extends Component {
     }
 
     return false
+  }
+
+  renderLastMessageContent() {
+    const { match } = this.props
+    const { last } = match.messageStore
+
+    return last.type === 'gif' ? '[ GIF ]' : last.message
   }
 
   renderIcon() {

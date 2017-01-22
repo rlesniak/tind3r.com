@@ -23,6 +23,7 @@ export default class Messages extends Component {
 
   componentDidMount() {
     this.scrollIntoView()
+    this.setAsRead()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,8 +74,6 @@ export default class Messages extends Component {
   }
 
   render() {
-    const { removeMatch } = this.props
-
     if (!this.match) {
       return null
     }
@@ -82,11 +81,11 @@ export default class Messages extends Component {
     return (
       <div styleName="wrapper">
         <div styleName="messages-wrapper">
-          <div styleName="messages" ref={ref => this.messagesRef = ref}>
+          <div styleName="messages" ref={ref => { this.messagesRef = ref }}>
             {_.map(this.match.messageStore.messages, (msg, i) => (
               <Message
                 key={msg.id}
-                ref={ref => this[`msg${i}`] = ref}
+                ref={ref => { this[`msg${i}`] = ref }}
                 message={msg}
                 recipient={this.match.user}
               />

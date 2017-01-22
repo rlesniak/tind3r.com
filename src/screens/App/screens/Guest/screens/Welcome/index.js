@@ -28,7 +28,7 @@ export default class Welcome extends Component {
   }
 
   checkTokenDate() {
-    getTokenDate((date) => {
+    getTokenDate(date => {
       const tokenDate = moment(date)
       const nowDate = moment()
 
@@ -41,7 +41,7 @@ export default class Welcome extends Component {
   }
 
   checkExtension(isFetchMeta = false) {
-    checkIfInstalled((status) => {
+    checkIfInstalled(status => {
       this.isInstalled = status
 
       if (isFetchMeta && status) {

@@ -4,7 +4,6 @@ import { observer } from 'mobx-react'
 import moment from 'moment'
 import autobind from 'autobind-decorator'
 import CSSModules from 'react-css-modules'
-import _ from 'lodash'
 import ReactGA from 'react-ga'
 import { IntercomAPI } from 'react-intercom'
 import cx from 'classnames'
@@ -33,11 +32,6 @@ export default class ActionButtons extends Component {
     this.checkLiked(props.user._id)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.user._id) return
-    this.checkLiked(nextProps.user._id)
-  }
-
   componentDidMount() {
     if (this.props.withSuperLikeCounter) {
       this.superLikecount()
@@ -47,6 +41,11 @@ export default class ActionButtons extends Component {
     if (this.props.withKeyActions) {
       document.addEventListener('keydown', this.onKeydown)
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.user._id) return
+    this.checkLiked(nextProps.user._id)
   }
 
   componentWillUnmount() {
@@ -84,16 +83,16 @@ export default class ActionButtons extends Component {
   checkLiked(id) {
     this.initExpirationTimes()
 
-    Data.getActions().where('_id').equals(id).first((r) => {
+    Data.getActions().where('_id').equals(id).first(r => {
       if (r) {
         this.props.user.done = true
       }
 
-      this.isLiked = (r && r.type == 'like')
-      this.isPassed = (r && r.type == 'pass')
-      this.isSuper = (r && r.type == 'superlike')
+      this.isLiked = (r && r.type === 'like')
+      this.isPassed = (r && r.type === 'pass')
+      this.isSuper = (r && r.type === 'superlike')
     })
-    Data.db().matches.where('userId').equals(id).first((r) => {
+    Data.db().matches.where('userId').equals(id).first(r => {
       if (!r) return
 
       if (r.isSuperLike === 0) {
@@ -160,7 +159,7 @@ export default class ActionButtons extends Component {
     })
 
     this.isLiked = true
-    this.props.user.like().then((resp) => {
+    this.props.user.like().then(resp => {
       IntercomAPI('trackEvent', 'like', {
         user_id: this.props.user._id,
       });
@@ -177,7 +176,7 @@ export default class ActionButtons extends Component {
 
         IntercomAPI('trackEvent', 'match');
       }
-    }).catch((r) => {
+    }).catch(() => {
       this.initExpirationTimes()
 
       this.isLiked = false
@@ -214,7 +213,7 @@ export default class ActionButtons extends Component {
     })
 
     this.isSuper = true
-    this.props.user.superLike().then((resp) => {
+    this.props.user.superLike().then(resp => {
       IntercomAPI('trackEvent', 'superlike', {
         user_id: this.props.user._id,
       })
@@ -233,7 +232,7 @@ export default class ActionButtons extends Component {
 
         IntercomAPI('trackEvent', 'superlike-match');
       }
-    }).catch((err) => {
+    }).catch(() => {
       this.initExpirationTimes()
 
       this.isSuper = false
@@ -241,12 +240,12 @@ export default class ActionButtons extends Component {
   }
 
   render() {
-    const { user } = this.props
-
     const matchText = this.isMatch ? 'Match!' : null
 
     const passedClass = cx({ done: this.isPassed })
-    const superClassN = cx({ done: this.isSuper, disabled: this.superlikeDiffMin > 0 && !this.isSuper })
+    const superClassN = cx({
+      done: this.isSuper, disabled: this.superlikeDiffMin > 0 && !this.isSuper,
+    })
     const likedClass = cx({ done: this.isLiked, disabled: this.likeDiffMin > 0 && !this.isLiked })
 
     return (
@@ -255,11 +254,13 @@ export default class ActionButtons extends Component {
         <div onClick={this.handlePass} className={passedClass}>
           <i className="fa fa-thumbs-o-down" />
         </div>}
-        {(this.isSuper || (!this.isPassed && !this.isLiked)) && <div onClick={this.handleSuperlike} className={superClassN}>
-          <i className="fa fa-star" />
-          <span styleName="match-text">{matchText}</span>
-          {this.superlikeDiffMin > 0 && !this.isSuper && <span styleName="counter">{this.counterSuperLike}</span>}
-        </div>}
+        {(this.isSuper || (!this.isPassed && !this.isLiked)) &&
+          <div onClick={this.handleSuperlike} className={superClassN}>
+            <i className="fa fa-star" />
+            <span styleName="match-text">{matchText}</span>
+            {this.superlikeDiffMin > 0 && !this.isSuper &&
+              <span styleName="counter">{this.counterSuperLike}</span>}
+          </div>}
         {(this.isLiked || (!this.isPassed && !this.isSuper)) &&
         <div onClick={this.handleLike} className={likedClass}>
           <i className="fa fa-heart" />

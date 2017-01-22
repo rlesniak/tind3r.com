@@ -46,7 +46,7 @@ class User {
   @action asyncAction(method) {
     this.done = 1
     return new Promise((resolve, reject) => {
-      method(this.id).then(action((resp) => {
+      method(this.id).then(action(resp => {
         if (resp.likes_remaining === 0) {
           reject(resp)
         } else {
@@ -54,7 +54,7 @@ class User {
         }
 
         this.isLoading = false
-      })).catch(action((resp) => {
+      })).catch(action(resp => {
         reject(resp)
         this.isLoading = false
       }))
@@ -83,7 +83,7 @@ class User {
 
         resolve(data)
         this.isLoading = false
-      })).catch((status) => {
+      })).catch(status => {
         reject(status)
       })
     })
@@ -94,7 +94,7 @@ class User {
       Data.updateProfile(distanceMi, this.profileSettings).then(action(({ data }) => {
         this.distance_filter = data.distance_filter
         resolve(data)
-      })).catch((status) => {
+      })).catch(status => {
         reject(status)
       })
     })

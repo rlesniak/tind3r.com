@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react'
 import CSSModules from 'react-css-modules'
-import _ from 'lodash'
-import UserStore from 'stores/UserStore'
 import UserCard from './UserCard'
 import styles from './UserCardList.scss'
 

@@ -18,8 +18,8 @@ class MatchStore {
   @action fetch() {
     Data.registerMatchesHook(this.newMatchHook.bind(this))
 
-    Data.matches().then((data) => {
-      _.each(data, action((r) => {
+    Data.matches().then(data => {
+      _.each(data, action(r => {
         this.updateMatches(r, true)
       }))
     }).catch(() => {
@@ -33,9 +33,9 @@ class MatchStore {
   }
 
   fetchFromRemote() {
-    // Data.updates().then(() => {
+    Data.updates().then(() => {
       this.fetch()
-    // })
+    })
   }
 
   @action remove(id) {
@@ -46,7 +46,7 @@ class MatchStore {
   }
 
   @action markAsRead() {
-    _.each(this.matches, (match) => {
+    _.each(this.matches, match => {
       match.isNew = false
     })
 

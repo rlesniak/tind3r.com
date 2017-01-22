@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import Slider from 'react-slick'
@@ -30,7 +30,7 @@ export default class UserCard extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (!this.props.simple && this.sliderRef) {
       setTimeout(() => this.sliderRef.slickGoTo(0), 0)
     }
@@ -112,7 +112,7 @@ export default class UserCard extends Component {
     const width = simple === true ? 220 : 350
     return (
       <div styleName="images">
-        <Slider ref={(ref) => { this.sliderRef = ref }} {...this.sliderSettings}>
+        <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings}>
           {_.map(user.photosUrls, url => (
             <div key={_.uniqueId()}><Img src={url} style={{ width }} /></div>
           ))}
@@ -142,7 +142,7 @@ export default class UserCard extends Component {
     return (
       <div styleName="horizontal" className="body">
         <div styleName="photos">
-          <Slider ref={(ref) => { this.sliderRef = ref }} {...this.sliderSettings} slidesToShow="3" infinite>
+          <Slider ref={ref => { this.sliderRef = ref }} {...this.sliderSettings} slidesToShow="3" infinite>
             {_.map(user.photosUrls, url => (
               <div key={_.uniqueId()}><Img src={url} style={{ width: 250 }} /></div>
             ))}
@@ -221,7 +221,7 @@ export default class UserCard extends Component {
   }
 
   render() {
-    const { user, simple, asLoader, horizontal } = this.props
+    const { simple, asLoader, horizontal } = this.props
 
     const className = cx({
       simple,
@@ -241,9 +241,4 @@ export default class UserCard extends Component {
       </div>
     );
   }
-}
-
-UserCard.propTypes = {
-  withSuperLikeCounter: PropTypes.bool,
-  horizontal: PropTypes.bool,
 }

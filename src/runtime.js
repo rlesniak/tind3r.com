@@ -1,26 +1,26 @@
 import { EXT_ID } from './const/index'
 
-export const getFacebookToken = (resolve, reject) => {
+export const getFacebookToken = () => {
   chrome.runtime.sendMessage(EXT_ID, { type: 'FACEBOOK_TOKEN' })
 }
 
-export const getTokenDate = (callback) => {
+export const getTokenDate = callback => {
   chrome.runtime.sendMessage(EXT_ID, {
     type: 'TOKEN_DATE',
   }, date => callback(date))
 }
 
-export const checkIfInstalled = (callback) => {
-  try {
+export const checkIfInstalled = callback => {
+  if (window.chrome) {
     chrome.runtime.sendMessage(EXT_ID, {
       type: 'CHECK_INSTALLED',
     }, response => callback(response))
-  } catch (err) {
+  } else {
     callback(false)
   }
 }
 
-export const checkVersion = (cb) => {
+export const checkVersion = cb => {
   chrome.runtime.sendMessage(EXT_ID, {
     type: 'GET_VERSION',
   }, response => cb(response))

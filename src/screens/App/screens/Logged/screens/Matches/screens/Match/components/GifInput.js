@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
-import ReactGA from 'react-ga'
 import _ from 'lodash'
-import { Link } from 'react-router'
-import Select from 'react-basic-dropdown'
 import cx from 'classnames'
 import { observer } from 'mobx-react'
-import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
-import Data from 'data'
 import giphy from 'giphy'
-import Spinner from '../../../shared/Spinner'
 import styles from './GifInput.scss'
 
 @observer
@@ -24,11 +17,7 @@ export default class GifInput extends Component {
   @observable gifs = []
   @observable gifsWidth = 0
 
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (this.inputRef) {
       this.inputRef.focus()
     }
@@ -43,7 +32,7 @@ export default class GifInput extends Component {
   @autobind
   onKeydown(e) {
     if (e.keyCode === 13) {
-      giphy.fetch(this.messageTxt).then((resp) => {
+      giphy.fetch(this.messageTxt).then(resp => {
         const { data } = resp.data
 
         this.gifs = _.map(data, g => ({
@@ -82,29 +71,16 @@ export default class GifInput extends Component {
   }
 
   render() {
-    const { user, match } = this.props
-
-    const sendStyle = cx({
-      disabled: _.trim(this.messageTxt).length === 0,
-    })
-
     const inputWrapperStyle = cx({
       trying: this.isTryingToSend && this.sendDelaySec > 0,
     })
-
-    const options = [
-      { label: '0s', value: '0' },
-      { label: '1s', value: '1' },
-      { label: '2s', value: '2' },
-      { label: '3s', value: '3' },
-    ]
 
     return (
       <div styleName="gif-wrapper" className={inputWrapperStyle}>
         <input
           autoFocus
           type="text"
-          ref={(ref) => { this.inputRef = ref }}
+          ref={ref => { this.inputRef = ref }}
           onChange={this.handleMessageChange}
           onKeyDown={this.onKeydown}
           value={this.messageTxt}
@@ -114,7 +90,7 @@ export default class GifInput extends Component {
         <button onClick={this.close}>Close</button>
         <div styleName="gifs">
           <div styleName="main-wrapper" style={{ width: this.gifsWidth }}>
-            {_.map(this.gifs, (gif) => {
+            {_.map(this.gifs, gif => {
               const submit = this.handleSubmit.bind(this, gif)
               return <div styleName="gif" key={gif.id} onClick={submit}><img src={gif.url} /></div>
             })}

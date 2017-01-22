@@ -3,11 +3,8 @@ import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import autobind from 'autobind-decorator'
 import CSSModules from 'react-css-modules'
-import moment from 'moment'
 import ReactGA from 'react-ga'
-import _ from 'lodash'
 import { ModalContainer, ModalDialog } from 'react-modal-dialog'
-import UserStore from 'stores/UserStore'
 import UserCard from './components/UserCard'
 import UserCardList from './components/UserCardList'
 import Loader from '../../shared/Loader'
@@ -75,7 +72,7 @@ export default class Home extends Component {
   }
 
   renderLoader() {
-    const { userStore, currentUser } = this.props
+    const { currentUser } = this.props
 
     return (
       <div styleName="home">
@@ -123,9 +120,9 @@ export default class Home extends Component {
   }
 
   render() {
-    const { userStore, currentUser } = this.props
+    const { userStore } = this.props
 
-    if (userStore.isLoading || userStore.isCharging && userStore.all.length == 0) {
+    if (userStore.isLoading || (userStore.isCharging && userStore.all.length === 0)) {
       return this.renderLoader()
     }
 

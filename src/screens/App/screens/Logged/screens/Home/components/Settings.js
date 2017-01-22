@@ -91,7 +91,6 @@ export default class Settings extends Component {
 
   render() {
     const classNameSettings = cx({ open: this.isOpenSettings })
-    const classNameFilter = cx({ open: this.isOpenFilter })
     const distance = this.props.currentUser.profileSettings.distance_filter
 
     const filterOptions = [

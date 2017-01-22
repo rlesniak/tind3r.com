@@ -21,12 +21,12 @@ class Message {
   @action create(matchId, body, payload = {}) {
     this.isSending = true
 
-    Data.sendMessage(matchId, body, payload).then((resp) => {
+    Data.sendMessage(matchId, body, payload).then(resp => {
       this.isSending = false
       this.isError = false
 
       this.setFromJson(resp)
-    }).catch((resp) => {
+    }).catch(() => {
       this.isError = true
     })
 
@@ -49,6 +49,8 @@ class Message {
     if (this.created_date) {
       return moment(this.created_date).format('DD/MM HH:mm')
     }
+
+    return null
   }
 }
 

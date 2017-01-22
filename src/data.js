@@ -16,7 +16,7 @@ db.version(1).stores({
   messages: '_id, match_id, isNew, from -> users._id, to -> users._id',
 })
 
-db.open().catch((e) => {
+db.open().catch(e => {
   console.log('Open failed: ', e)
 })
 
@@ -63,9 +63,9 @@ const Data = {
         ls.set({ lastActivity: last_activity_date })
 
         db.transaction('rw', db.users, db.matches, db.messages, () => {
-          _.each(matches, (match) => {
+          _.each(matches, match => {
             if (!match.is_new_message) {
-              db.users.where('_id').equals(match.person._id).first((p) => {
+              db.users.where('_id').equals(match.person._id).first(p => {
                 if (p) return
 
                 db.users.add({
@@ -74,7 +74,7 @@ const Data = {
                 })
               })
 
-              db.matches.where('_id').equals(match._id).first((m) => {
+              db.matches.where('_id').equals(match._id).first(m => {
                 if (!m) {
                   db.matches.add({
                     ...matchObj(match),
@@ -95,12 +95,12 @@ const Data = {
             db.messages.bulkPut(messages)
           })
 
-          _.each(blocks, (matchId) => {
+          _.each(blocks, matchId => {
             db.matches.update(matchId, { isBlocked: 1 })
           })
         }).then(() => {
           if (firstFetch) {
-            db.matches.count((c) => {
+            db.matches.count(c => {
               ReactGA.event({
                 category: 'Initial',
                 action: 'Matches loaded',
@@ -109,7 +109,7 @@ const Data = {
             })
           }
           resolve()
-        }).catch((error) => {
+        }).catch(error => {
           ReactGA.event({
             category: 'Initial',
             action: 'Error',
@@ -217,9 +217,9 @@ const Data = {
   countUnread(currentUserId, callback) {
     let count = 0
     db.transaction('rw', db.matches, db.messages, () => {
-      db.matches.where('isNew').equals(1).toArray().then((matches) => {
-        _.each(matches, (m) => {
-          db.messages.where('match_id').equals(m._id).toArray().then((messages) => {
+      db.matches.where('isNew').equals(1).toArray().then(matches => {
+        _.each(matches, m => {
+          db.messages.where('match_id').equals(m._id).toArray().then(messages => {
             if ((messages.length && _.last(messages).from !== currentUserId) || messages.length === 0) {
               count += 1
             }

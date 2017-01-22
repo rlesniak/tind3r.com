@@ -1,8 +1,8 @@
 import React from 'react'
 import { Provider } from 'mobx-react'
-import UserModel from '../models/User'
 import ReactGA from 'react-ga'
-import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
+import { browserHistory, Router, Route } from 'react-router'
+import UserModel from '../models/User'
 import App from '../screens/App'
 import Guest from '../screens/App/screens/Guest'
 import Welcome from '../screens/App/screens/Guest/screens/Welcome'
@@ -34,7 +34,7 @@ const clearRecsOnPageEnterOrReload = (nextState, replace, callback) => {
   Data.clearRecs().then(() => callback())
 }
 
-const isProduction = process.env.NODE_ENV == 'production'
+const isProduction = process.env.NODE_ENV === 'production'
 const gaCode = isProduction ? 'UA-60241080-4' : 'UA-000000-1'
 
 ReactGA.initialize(gaCode, {
@@ -50,8 +50,7 @@ const Root = () => (
   <Provider currentUser={new UserModel()}>
     <Router history={browserHistory} onUpdate={logPageView}>
       <Route path="privacy-policy" component={PrivacyPolicy} />
-      <Route path="/" component={App}>
-        <IndexRedirect to="home" />
+      <Route path="/" component={App} onEnter={clearRecsOnPageEnterOrReload}>
         <Route component={Guest}>
           <Route path="welcome" component={Welcome} />
         </Route>

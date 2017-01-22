@@ -7,7 +7,7 @@
     "dll": "webpack -p --config=webpack.dll.config.js --colors",
     "dllDev": "webpack --config=webpack.dll.config.js --colors",
     "start": "node server.js",
-    "lint": "eslint src"
+    "lint": "eslint src --fix"
   },
   "repository": {
     "type": "git",

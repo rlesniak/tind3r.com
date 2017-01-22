@@ -51,8 +51,8 @@ export default class History extends Component {
   fetchActions() {
     const actions = []
 
-    Data.actions().then((data) => {
-      _.each(_.orderBy(data, 'date', 'desc'), (action) => {
+    Data.actions().then(data => {
+      _.each(_.orderBy(data, 'date', 'desc'), action => {
         actions.push(action)
       })
 
@@ -96,7 +96,7 @@ export default class History extends Component {
   renderTopBar(count) {
     return (
       <div styleName="bar">
-        <span  styleName="count">({count})</span>
+        <span styleName="count">({count})</span>
         <div styleName="search">
           <input
             type="text"
@@ -106,7 +106,7 @@ export default class History extends Component {
           />
         </div>
         <div styleName="filters">
-          {_.map(filtersButtonsMap, (data) => {
+          {_.map(filtersButtonsMap, data => {
             const className = cx({
               active: this.state.filter === data.filter,
             })

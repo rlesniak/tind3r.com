@@ -46,7 +46,11 @@ export default class App extends Component {
       this.isInstalled = !!status
 
       if (status) {
-        this.fetchMeta()
+        this.fetchMeta(() => {
+          if (this.props.location.pathname === '/') {
+            browserHistory.push('/home')
+          }
+        })
       } else {
         this.isFetching = false
         browserHistory.push('/welcome')

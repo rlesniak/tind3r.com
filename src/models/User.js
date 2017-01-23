@@ -175,14 +175,22 @@ class User {
     if (this.jobs) {
       return _.map(this.jobs, job => {
         if (job.title) {
-          return `${job.title.name} at ${job.company.name}`
+          if (job.company.name) {
+            return `${job.title.name} at ${job.company.name}`
+          }
+
+          return job.title.name
         }
 
-        return `${job.company.name}`
+        if (job.company) {
+          return `${job.company.name}`
+        }
+
+        return ''
       })
     }
 
-    return ''
+    return []
   }
 
   getPhotoUrl(photo, size = 640) {

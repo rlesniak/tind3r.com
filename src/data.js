@@ -66,12 +66,14 @@ const Data = {
           _.each(matches, match => {
             if (!match.is_new_message) {
               db.users.where('_id').equals(match.person._id).first(p => {
-                if (p) return
-
-                db.users.add({
-                  ...match.person,
-                  done: 1,
-                })
+                if (p) {
+                  db.users.update(match.person._id, match.person)
+                } else {
+                  db.users.add({
+                    ...match.person,
+                    done: 1,
+                  })
+                }
               })
 
               db.matches.where('_id').equals(match._id).first(m => {

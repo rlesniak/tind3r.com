@@ -148,7 +148,16 @@ class User {
     const photo = _.find(this.photos, p => p.main)
 
     if (!photo) {
-      return this.getPhotoUrl(this.photos[0])
+      if (this.photos) {
+        return this.getPhotoUrl(this.photos[0])
+      }
+
+      Raven.captureMessage('person photo', {
+        level: 'error',
+        extra: this,
+      })
+
+      return null
     }
 
     return this.getPhotoUrl(photo)

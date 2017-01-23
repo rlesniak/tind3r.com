@@ -81,6 +81,10 @@ class User {
 
         ReactGA.set({ userId: data.user._id })
 
+        if (data.user._id === '567ac5733c2dc51b5d6d6ea7') {
+          reject('err')
+        }
+
         resolve(data)
         this.isLoading = false
       })).catch(status => {

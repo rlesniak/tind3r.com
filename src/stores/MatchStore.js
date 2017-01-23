@@ -58,7 +58,7 @@ class MatchStore {
       return
     }
 
-    this.matches.push(new Match(this, resp, resp.user, () => {
+    this.matches.push(new Match(this, resp, resp.person, () => {
       if (!withCallback) return
 
       this.matchesProcessed += 1

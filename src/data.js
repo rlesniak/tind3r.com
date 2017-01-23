@@ -42,7 +42,7 @@ const Data = {
   },
 
   matches() {
-    return db.matches.with({ user: 'userId' })
+    return db.matches.with({ person: 'userId' })
   },
 
   messages(matchId) {

@@ -66,8 +66,6 @@ export default class App extends Component {
 
     Data.registerMatchesHook(() => {
       setTimeout(() => {
-        this.audio.play()
-
         this.countUnread()
       }, 0) // TODO: remove timeout
     })
@@ -80,6 +78,7 @@ export default class App extends Component {
         this.newCount = count
 
         if (count > 0) {
+          this.audio.play()
           document.title = pageTitle(`(${count})`)
         } else {
           document.title = pageTitle()

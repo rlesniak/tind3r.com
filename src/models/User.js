@@ -175,7 +175,7 @@ class User {
     if (this.jobs) {
       return _.map(this.jobs, job => {
         if (job.title) {
-          if (job.company.name) {
+          if (job.company) {
             return `${job.title.name} at ${job.company.name}`
           }
 

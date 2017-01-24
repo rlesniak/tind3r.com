@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import { observable } from 'mobx'
-import { browserHistory } from 'react-router'
-import { Link } from 'react-router'
-import _ from 'lodash'
 import Intercom from 'react-intercom'
 import { observer } from 'mobx-react'
 import Alert from 'react-s-alert'
-import cmp from 'semver-compare'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/flip.css'
-import User from 'models/User'
 import Data from 'data'
-import { checkIfInstalled, checkVersion } from 'runtime'
 import notificationFile from 'static/notif.mp3'
 import UserStore from 'stores/UserStore'
 import ls from 'local-storage'
+import { pageTitle } from 'utils'
 import NavBar from '../../shared/NavBar'
 import MatchAlert from './components/MatchAlert'
 import styles from './index.scss'
-import { pageTitle } from 'utils'
 
 @observer
 @CSSModules(styles)
@@ -55,7 +49,7 @@ export default class App extends Component {
     if (process.env.NODE_ENV === 'production') {
       setInterval(() => {
         Data.updates()
-      }, 1500)
+      }, 1800)
     }
   }
 
@@ -78,7 +72,10 @@ export default class App extends Component {
         this.newCount = count
 
         if (count > 0) {
-          this.audio.play()
+          if (this.props.route.path !== 'matches') {
+            this.audio.play()
+          }
+
           document.title = pageTitle(`(${count})`)
         } else {
           document.title = pageTitle()

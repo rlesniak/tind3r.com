@@ -69,10 +69,8 @@ export default class App extends Component {
     const currentUserId = this.props.currentUser._id
     Data.countUnread(currentUserId, count => {
       if (this.newCount !== count) {
-        this.newCount = count
-
         if (count > 0) {
-          if (this.props.route.path !== 'matches') {
+          if (this.props.route.path !== 'matches' && count > this.newCount) {
             this.audio.play()
           }
 
@@ -80,6 +78,8 @@ export default class App extends Component {
         } else {
           document.title = pageTitle()
         }
+
+        this.newCount = count
       }
     })
   }

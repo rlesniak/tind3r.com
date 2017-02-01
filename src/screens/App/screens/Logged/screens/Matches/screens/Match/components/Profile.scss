@@ -49,3 +49,18 @@
     }
   }
 }
+
+.unmatch {
+  text-align: center;
+
+  a {
+    padding: 2px 10px;
+    border: 1px solid $red;
+    text-decoration: none;
+    margin: 20px 0;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 6px;
+    color: $red;
+  }
+}

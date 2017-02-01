@@ -2,6 +2,8 @@ import { observable, action, computed } from 'mobx'
 import moment from 'moment'
 import MessageStore from '../stores/MessageStore'
 import User from './User'
+import API from '../api'
+import Data from '../data'
 
 class Match {
   id = null
@@ -36,6 +38,16 @@ class Match {
 
   @action remove() {
     this.store.remove(this.id)
+  }
+
+  @action unmatch() {
+    this.isBlocked = true
+
+    API.del(`/user/matches/${this.id}`).then(() => {
+      Data.db().matches.update(this.id, { isBlocked: 1 })
+    }).catch(() => {
+      this.isBlocked = false
+    })
   }
 
   @computed get ago() {

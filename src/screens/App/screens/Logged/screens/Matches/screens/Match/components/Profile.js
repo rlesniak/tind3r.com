@@ -18,8 +18,13 @@ export default class Profile extends Component {
     super(props)
   }
 
+  @autobind
+  handleUnmatch() {
+    this.props.match.unmatch()
+  }
+
   render() {
-    const { user } = this.props
+    const { user, match } = this.props
 
     const sliderSettings = {
       infinite: false,
@@ -41,6 +46,12 @@ export default class Profile extends Component {
         <div styleName="bio">
           {user.bio}
         </div>
+        {!match.isBlocked &&
+          <div styleName="unmatch">
+            <a onClick={this.handleUnmatch}>
+              Unmatch
+            </a>
+          </div>}
       </div>
     );
   }

@@ -99,7 +99,7 @@ export default class Messages extends Component {
           />
         </div>
         <div styleName="profile">
-          {this.match && <Profile user={this.match.user} />}
+          {this.match && <Profile user={this.match.user} match={this.match} />}
         </div>
       </div>
     )

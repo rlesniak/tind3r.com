@@ -20,7 +20,9 @@ export default class Profile extends Component {
 
   @autobind
   handleUnmatch() {
-    this.props.match.unmatch()
+    if (confirm('Are you sure?')) {
+      this.props.match.unmatch()
+    }
   }
 
   render() {

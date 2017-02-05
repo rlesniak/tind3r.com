@@ -25,7 +25,7 @@ export default class App extends Component {
   fetchMeta(cb = n => n) {
     this.isFetching = true
     this.props.currentUser.fetchMeta().then(resp => {
-      if (resp.rating.super_likes.resets_at) {
+      if (resp.rating.super_likes.resets_at && resp.rating.super_likes.remaining === 0) {
         ls.set({ superLikeExpiration: resp.rating.super_likes.resets_at })
       }
 

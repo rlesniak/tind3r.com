@@ -152,6 +152,7 @@ const Data = {
         if (data.likes_remaining === 0) {
           if (data.rate_limited_until) {
             ls.set({ likeExpiration: data.rate_limited_until })
+            reject()
           }
         } else {
           db.users.update(id, { done: 1 })
@@ -184,8 +185,6 @@ const Data = {
   superLike(id) {
     return new Promise((resolve, reject) => {
       API.post(`/like/${id}/super`).then(({ data }) => {
-        ls.set({ superlikeExpiration: data.super_likes.resets_at })
-
         if (!data.limit_exceeded) {
           db.users.update(id, { done: 1 })
           db.actions.add({ _id: id, type: 'superlike', date: new Date() })
@@ -199,6 +198,7 @@ const Data = {
 
           resolve(data)
         } else {
+          ls.set({ superLikeExpiration: data.super_likes.resets_at })
           reject('limit_exceeded')
         }
       })

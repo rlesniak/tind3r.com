@@ -47,8 +47,9 @@ class User {
     this.done = 1
     return new Promise((resolve, reject) => {
       method(this.id).then(action(resp => {
-        if (resp.likes_remaining === 0) {
+        if (resp.likes_remaining === 0 || (resp.super_likes && resp.super_likes.remaining === 0)) {
           reject(resp)
+          this.done = 0
         } else {
           resolve(resp)
         }
@@ -57,6 +58,7 @@ class User {
       })).catch(action(resp => {
         reject(resp)
         this.isLoading = false
+        this.done = 0
       }))
     })
   }

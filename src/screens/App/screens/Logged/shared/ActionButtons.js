@@ -162,10 +162,12 @@ export default class ActionButtons extends Component {
     this.props.user.like().then(resp => {
       IntercomAPI('trackEvent', 'like', {
         user_id: this.props.user._id,
-      });
+      })
 
       if (resp.match) {
         this.showAlert()
+
+        this.isMatch = true
 
         ReactGA.event({
           category: 'User',
@@ -218,10 +220,10 @@ export default class ActionButtons extends Component {
         user_id: this.props.user._id,
       })
 
-      this.getSuperLikeDiffInMin()
-
       if (resp.match) {
         this.showAlert()
+
+        this.isMatch = true
 
         ReactGA.event({
           category: 'User',

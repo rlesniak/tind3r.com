@@ -59,6 +59,12 @@ export default class NavBar extends Component {
               History
             </Link>
           </li>
+          <li>
+            <Link to="/discussion" activeClassName="active">
+              <i className="fa fa-comments-o" />
+              Discussion
+            </Link>
+          </li>
           <li styleName="profile">
             <Link to={`/users/${this.props.user._id}`} activeClassName="active">
               <div styleName="avatar">

@@ -168,6 +168,10 @@ export default class History extends Component {
   render() {
     const { actions, isLoading } = this.state
 
+    if (isLoading) {
+      return null
+    }
+
     if (actions.length === 0 && !isLoading) {
       return (
         <div styleName="wrapper" className="main-wrapper table">

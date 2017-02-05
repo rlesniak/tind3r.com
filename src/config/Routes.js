@@ -13,6 +13,7 @@ import Matches from '../screens/App/screens/Logged/screens/Matches'
 import Match from '../screens/App/screens/Logged/screens/Matches/screens/Match'
 import User from '../screens/App/screens/Logged/screens/User'
 import History from '../screens/App/screens/Logged/screens/History'
+import Comments from '../screens/App/screens/Logged/screens/Comments'
 import Data from '../data'
 
 Router.prototype.componentWillReceiveProps = function (nextProps) {
@@ -60,6 +61,7 @@ const Root = () => (
             <Route path=":matchId" component={Match} />
           </Route>
           <Route path="history" component={History} />
+          <Route path="discussion" component={Comments} />
           <Route path="users/:userId" component={User} />
         </Route>
       </Route>

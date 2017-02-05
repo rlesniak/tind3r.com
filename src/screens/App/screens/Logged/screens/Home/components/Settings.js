@@ -66,7 +66,7 @@ export default class Settings extends Component {
     this.props.currentUser.updateProfile(kmToMi(value))
 
     if (this.props.userStore.all.length === 0) {
-      this.props.userStore.core()
+      setTimeout(() => this.props.userStore.core(), 20)
     }
 
     ReactGA.event({

@@ -39,6 +39,11 @@ export default class User extends Component {
   }
 
   componentDidMount() {
+    if (this.props.params.userId === 'undefined') {
+      this.props.router.push('/home')
+      return
+    }
+
     document.addEventListener('keydown', this.onKeydown)
   }
 

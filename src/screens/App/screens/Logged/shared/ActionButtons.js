@@ -220,6 +220,11 @@ export default class ActionButtons extends Component {
         user_id: this.props.user._id,
       })
 
+      if (resp.super_likes.remaining === 0) {
+        ls.set({ superLikeExpiration: resp.super_likes.resets_at })
+        this.initExpirationTimes()
+      }
+
       if (resp.match) {
         this.showAlert()
 

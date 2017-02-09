@@ -23,7 +23,7 @@ export default class ActionButtons extends Component {
   @observable isMatch = false
   @observable counterSuperLike = ''
   @observable counterLike = ''
-  @observable superlikeDiffMin = 0
+  @observable superlikeDiffMin = -1
   @observable likeDiffMin = 0
 
   constructor(props) {
@@ -65,7 +65,9 @@ export default class ActionButtons extends Component {
   }
 
   getSuperLikeDiffInMin() {
-    this.superlikeDiffMin = moment(Number(this.superLikeExpiration)).diff(moment(), 'minutes')
+    if (this.superLikeExpiration) {
+      this.superlikeDiffMin = moment(this.superLikeExpiration).diff(moment(), 'minutes')
+    }
   }
 
   getLikeDiffInMin() {

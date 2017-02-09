@@ -107,9 +107,9 @@ export default class User extends Component {
   }
 
   renderUser() {
-    const { user, props: { currentUser } } = this
+    const { user, props: { currentUser, userStore } } = this
     const insta = (user.instagram && user.instagram.photos) || []
-
+    console.log(userStore);
     return (
       <div styleName="wrapper">
         <div styleName="intro-wrapper">
@@ -165,7 +165,7 @@ export default class User extends Component {
             </div>}
           </div>
           {user.id !== currentUser._id && <div styleName="actions">
-            <ActionButtons user={user} withSuperLikeCounter withKeyActions />
+            <ActionButtons user={user} userStore={userStore} withSuperLikeCounter withKeyActions />
           </div>}
         </div>
         <div styleName="photos">

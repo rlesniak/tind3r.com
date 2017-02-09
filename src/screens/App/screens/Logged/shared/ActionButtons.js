@@ -65,7 +65,7 @@ export default class ActionButtons extends Component {
   }
 
   getSuperLikeDiffInMin() {
-    this.superlikeDiffMin = moment(this.superLikeExpiration).diff(moment(), 'minutes')
+    this.superlikeDiffMin = moment(Number(this.superLikeExpiration)).diff(moment(), 'minutes')
   }
 
   getLikeDiffInMin() {
@@ -208,6 +208,8 @@ export default class ActionButtons extends Component {
       return
     }
 
+    const { userStore } = this.props
+
     ReactGA.event({
       category: 'User',
       action: 'Superlike',
@@ -215,10 +217,13 @@ export default class ActionButtons extends Component {
     })
 
     this.isSuper = true
+
     this.props.user.superLike().then(resp => {
       IntercomAPI('trackEvent', 'superlike', {
         user_id: this.props.user._id,
       })
+
+      userStore.setSuperlikesRemaining(resp.super_likes.remaining)
 
       if (resp.super_likes.remaining === 0) {
         ls.set({ superLikeExpiration: resp.super_likes.resets_at })
@@ -247,6 +252,7 @@ export default class ActionButtons extends Component {
   }
 
   render() {
+    const { userStore } = this.props
     const matchText = this.isMatch ? 'Match!' : null
 
     const passedClass = cx({ done: this.isPassed })
@@ -265,6 +271,8 @@ export default class ActionButtons extends Component {
           <div onClick={this.handleSuperlike} className={superClassN}>
             <i className="fa fa-star" />
             <span styleName="match-text">{matchText}</span>
+            {this.superlikeDiffMin < 0 && !this.isSuper &&
+              <span styleName="remaining-text">{userStore.superLikeRemaining}</span>}
             {this.superlikeDiffMin > 0 && !this.isSuper &&
               <span styleName="counter">{this.counterSuperLike}</span>}
           </div>}

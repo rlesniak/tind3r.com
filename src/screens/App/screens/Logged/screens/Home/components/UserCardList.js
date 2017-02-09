@@ -8,8 +8,9 @@ import styles from './UserCardList.scss'
 @CSSModules(styles)
 export default class UserCardList extends Component {
   renderUser(user) {
+    const { userStore } = this.props
     return (
-      <UserCard key={user.id} user={user} simple />
+      <UserCard key={user.id} user={user} userStore={userStore} simple />
     )
   }
 

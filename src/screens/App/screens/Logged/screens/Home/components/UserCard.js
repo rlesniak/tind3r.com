@@ -122,12 +122,14 @@ export default class UserCard extends Component {
   }
 
   renderActionsRow() {
-    const { user, simple } = this.props
+    const { user, simple, userStore } = this.props
+
     return (
       <tr styleName="actions">
         <td colSpan="3">
           <ActionButtons
             user={user}
+            userStore={userStore}
             withKeyActions={!simple}
             withSuperLikeCounter={this.props.withSuperLikeCounter}
           />

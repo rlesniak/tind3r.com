@@ -2,6 +2,7 @@ import { observable, transaction, computed, reaction, action } from 'mobx'
 import _ from 'lodash'
 import User from '../models/User'
 import Data from '../data'
+import ls from 'local-storage'
 
 class UserStore {
   @observable users = []
@@ -9,9 +10,11 @@ class UserStore {
   @observable isLoading = true;
   @observable isCharging = true;
   @observable activeFilter = null;
+  @observable superLikeRemaining = 0;
 
   constructor() {
     this.chargeReaction = null
+    this.superLikeRemaining = ls.data.superLikeRemaining
   }
 
   initChargeReaction() {
@@ -68,6 +71,11 @@ class UserStore {
 
   find(id) {
     return _.find(this.users, { id }) || new User(this, id)
+  }
+
+  @action setSuperlikesRemaining(value) {
+    this.superLikeRemaining = value
+    ls.set({ superLikeRemaining: value })
   }
 
   @action setFilter(option) {

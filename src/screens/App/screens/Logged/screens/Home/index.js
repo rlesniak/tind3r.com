@@ -104,7 +104,7 @@ export default class Home extends Component {
 
     return (
       <div styleName="recommendation">
-        <UserCard user={userStore.first} withSuperLikeCounter />
+        <UserCard user={userStore.first} userStore={userStore} withSuperLikeCounter />
       </div>
     )
   }
@@ -114,7 +114,7 @@ export default class Home extends Component {
 
     return (
       <div styleName="horizontal" className="horizontal">
-        <UserCard user={userStore.first} withSuperLikeCounter horizontal />
+        <UserCard user={userStore.first} userStore={userStore} withSuperLikeCounter horizontal />
       </div>
     )
   }

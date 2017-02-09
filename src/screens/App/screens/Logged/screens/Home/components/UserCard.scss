@@ -9,6 +9,17 @@
     box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
   }
 
+  &:global(.load-more) {
+    text-align: center;
+    width: $small-card-w;
+    line-height: 417px;
+    cursor: pointer;
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
   &:global(.simple) {
     width: $small-card-w;
     margin: 0 5px 5px;

@@ -223,7 +223,7 @@ export default class UserCard extends Component {
   }
 
   render() {
-    const { simple, asLoader, horizontal } = this.props
+    const { simple, asLoader, asLoadMore, horizontal, handleLoadMore } = this.props
 
     const className = cx({
       simple,
@@ -233,6 +233,14 @@ export default class UserCard extends Component {
       return (
         <div styleName="wrapper" className="simple">
           <Loader isSimpleLoader />
+        </div>
+      )
+    }
+
+    if (asLoadMore) {
+      return (
+        <div styleName="wrapper" className="load-more" onClick={handleLoadMore}>
+          Load more
         </div>
       )
     }

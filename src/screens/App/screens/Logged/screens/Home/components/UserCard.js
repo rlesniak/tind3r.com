@@ -22,6 +22,8 @@ export default class UserCard extends Component {
       currentSlide: 0,
       slide: 0,
     }
+
+    this.slickGoToInterval = null
   }
 
   componentDidMount() {
@@ -32,7 +34,15 @@ export default class UserCard extends Component {
 
   componentDidUpdate() {
     if (!this.props.simple && this.sliderRef) {
-      setTimeout(() => this.sliderRef.slickGoTo(0), 0)
+      clearInterval(this.slickGoToInterval)
+
+      this.slickGoToInterval = setInterval(() => {
+        if (this.sliderRef.slickGoTo) {
+          this.sliderRef.slickGoTo(0)
+
+          clearInterval(this.slickGoToInterval)
+        }
+      }, 10)
     }
   }
 

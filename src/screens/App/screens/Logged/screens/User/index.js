@@ -59,6 +59,8 @@ export default class User extends Component {
       e.preventDefault()
     }
 
+    if (!this.sliderRef) return
+
     switch (e.keyCode) {
       case 39:
         this.sliderRef.slickNext()

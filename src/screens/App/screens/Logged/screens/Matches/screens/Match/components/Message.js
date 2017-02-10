@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules'
 import { Link } from 'react-router'
 import moment from 'moment'
 import cx from 'classnames'
+import _ from 'lodash'
 import { observer, inject } from 'mobx-react'
 import Img from 'screens/App/shared/Img'
 import styles from './Message.scss'
@@ -45,7 +46,7 @@ export default class Message extends Component {
     let avatar
 
     if (message.isAuthor) {
-      avatar = _.isArray(recipient.photos.slice()) ? recipient.photos[0].url : ''
+      avatar = _.isArray(recipient.photos && recipient.photos.slice()) ? recipient.photos[0].url : ''
     } else {
       avatar = currentUser.photos[0].url
     }

@@ -37,7 +37,7 @@ export default class UserCard extends Component {
       clearInterval(this.slickGoToInterval)
 
       this.slickGoToInterval = setInterval(() => {
-        if (this.sliderRef.slickGoTo) {
+        if (this.sliderRef && this.sliderRef.slickGoTo) {
           this.sliderRef.slickGoTo(0)
 
           clearInterval(this.slickGoToInterval)

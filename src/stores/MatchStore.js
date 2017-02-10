@@ -39,7 +39,7 @@ class MatchStore {
   }
 
   @action remove(id) {
-    _.remove(this.matches, { id })
+    this.matches.remove(this.matches.find(m => m.id === id))
 
     Data.db().matches.where('_id').equals(id).delete()
     Data.db().messages.where('match_id').equals(id).delete()

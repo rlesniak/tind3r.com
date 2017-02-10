@@ -60,6 +60,7 @@ export default class Messages extends Component {
 
   @autobind
   handleRemoveMatch() {
+    this.props.router.push('/matches')
     this.match.remove()
   }
 

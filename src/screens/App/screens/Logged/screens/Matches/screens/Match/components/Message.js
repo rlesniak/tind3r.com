@@ -45,7 +45,7 @@ export default class Message extends Component {
     let avatar
 
     if (message.isAuthor) {
-      avatar = recipient.photos ? recipient.photos[0].url : ''
+      avatar = _.isArray(recipient.photos) ? recipient.photos[0].url : ''
     } else {
       avatar = currentUser.photos[0].url
     }

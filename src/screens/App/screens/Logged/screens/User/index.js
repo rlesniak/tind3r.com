@@ -133,7 +133,7 @@ export default class User extends Component {
               ))}
             </ul>
             <p styleName="full-bio">
-              {user.bio.split('\n').map(item => (
+              {user.bio && user.bio.split('\n').map(item => (
                 <span key={_.uniqueId()}>
                   {item}
                   <br />

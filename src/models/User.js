@@ -153,10 +153,12 @@ class User {
         return this.getPhotoUrl(this.photos[0])
       }
 
-      Raven.captureMessage('person photo', {
-        level: 'error',
-        extra: this,
-      })
+      if (Raven) {
+        Raven.captureMessage('person photo', {
+          level: 'error',
+          extra: this,
+        })
+      }
 
       return null
     }

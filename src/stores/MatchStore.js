@@ -58,7 +58,7 @@ class MatchStore {
       return
     }
 
-    this.matches.push(new Match(this, resp, resp.person, () => {
+    const match = new Match(this, resp, resp.person, () => {
       if (!withCallback) return
 
       this.matchesProcessed += 1
@@ -66,7 +66,15 @@ class MatchStore {
       if (this.matchesProcessed === this.matches.length) {
         this.isLoading = false
       }
-    }))
+    })
+
+    if (!resp.person) {
+      Data.db().users.where('_id').equals(resp.userId).first(p => {
+        match.assignUser(p)
+      })
+    }
+
+    this.matches.push(match)
   }
 
   setAsRead(match) {

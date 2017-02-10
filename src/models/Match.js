@@ -23,8 +23,13 @@ class Match {
     this.store = store
     this.id = json._id
     this.authorId = json.userId
-    this.user = new User(this, user._id, user)
+
+    this.assignUser(user)
     this.setFromJson(json, allMessagesFetchedCallback)
+  }
+
+  @action assignUser(json) {
+    this.user = new User(this, json._id, json)
   }
 
   @action setFromJson(json, allMessagesFetchedCallback) {

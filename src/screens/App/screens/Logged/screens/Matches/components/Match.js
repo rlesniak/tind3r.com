@@ -4,16 +4,23 @@ import autobind from 'autobind-decorator'
 import cx from 'classnames'
 import { Link } from 'react-router'
 import { observer } from 'mobx-react'
-import styles from './Match.scss'
 import Data from 'data'
+import styles from './Match.scss'
 
 @observer
 @CSSModules(styles)
 export default class Match extends Component {
+  constructor(props) {
+    super(props)
+
+    if (Raven && !props.match.user.name) {
+      Raven.captureMessage('no match data')
+    }
+  }
+
   @autobind
   remove() {
-    const { match } = this.props
-    Data.db().matches.where('_id').equals(match.id).delete()
+    Data.db().matches.where('_id').equals(this.props.match.id).delete()
   }
 
   hasUnread() {
@@ -54,16 +61,16 @@ export default class Match extends Component {
   renderTypeIcon() {
     const { match } = this.props
 
+    if (match.isBlocked) {
+      return <i className="fa fa-ban" />
+    }
+
     if (match.isSuperLike) {
       return <i className="fa fa-star" />
     }
 
     if (match.isBoostMatch) {
       return <i className="fa fa-bolt" />
-    }
-
-    if (match.isBlocked) {
-      return <i className="fa fa-ban" />
     }
 
     return null
@@ -89,6 +96,6 @@ export default class Match extends Component {
           <div styleName="date">{match.ago}</div>
         </div>
       </Link>
-    );
+    )
   }
 }

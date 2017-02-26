@@ -60,6 +60,12 @@ export default class NavBar extends Component {
             </Link>
           </li>
           <li>
+            <Link to="/profile-edit" activeClassName="active">
+              <i className="fa fa-cog" />
+              Profile edit
+            </Link>
+          </li>
+          <li>
             <Link to="/discussion" activeClassName="active">
               <i className="fa fa-comments-o" />
               Discussion

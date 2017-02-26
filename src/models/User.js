@@ -17,6 +17,7 @@ class User {
   @observable isLoading = true
   @observable isFetching = true
   @observable done = 0
+  @observable pos = {}
 
   constructor(store, id, json) {
     this.store = store
@@ -90,10 +91,10 @@ class User {
     })
   }
 
-  @action updateProfile(distanceMi) {
+  @action updateProfile(payload: Object) {
     return new Promise((resolve, reject) => {
-      Data.updateProfile(distanceMi, this.profileSettings).then(action(({ data }) => {
-        this.distance_filter = data.distance_filter
+      Data.updateProfile({ ...this.profileSettings, ...payload }).then(action(({ data }) => {
+        this.setFromJson(data)
         resolve(data)
       })).catch(status => {
         reject(status)

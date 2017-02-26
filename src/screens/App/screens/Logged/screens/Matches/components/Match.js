@@ -13,7 +13,7 @@ export default class Match extends Component {
   constructor(props) {
     super(props)
 
-    if (Raven && !props.match.user.name) {
+    if (window.Raven && !props.match.user.name) {
       Raven.captureMessage('no match data')
     }
   }

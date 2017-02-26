@@ -63,7 +63,9 @@ export default class Settings extends Component {
 
   @autobind
   handleDistanceChange(value) {
-    this.props.currentUser.updateProfile(kmToMi(value))
+    this.props.currentUser.updateProfile({
+      distance_filter: kmToMi(value),
+    })
 
     if (this.props.userStore.all.length === 0) {
       setTimeout(() => this.props.userStore.core(), 20)

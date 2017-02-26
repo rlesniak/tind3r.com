@@ -1,7 +1,8 @@
 @import 'vars';
 
 :global {
-  input[type=text] {
+  input[type=text],
+  textarea {
     border-radius: $border-radius;
     padding: 4px;
     border: 1px solid $bg;

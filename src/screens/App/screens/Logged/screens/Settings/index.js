@@ -11,6 +11,8 @@ import Marker from './components/Marker'
 import styles from './index.scss'
 
 const reactiveFileds = ['bio', 'age_filter_max', 'age_filter_min', 'distance_filter']
+const RCSlider = Slider.createSliderWithTooltip(Slider)
+const RangeT = Slider.createSliderWithTooltip(Range)
 
 @inject('currentUser')
 @observer
@@ -43,6 +45,19 @@ export default class User extends Component {
     currentUser.distance_filter = kmToMi(value)
   }
 
+  @autobind
+  handleRangeChange(value: Array) {
+    const { currentUser } = this.props
+    const [min, max] = value
+
+    if (min !== currentUser.age_filter_min) {
+      currentUser.age_filter_min = min
+    }
+    if (max !== currentUser.age_filter_max) {
+      currentUser.age_filter_max = max
+    }
+  }
+
   render() {
     const { currentUser } = this.props
 
@@ -54,7 +69,7 @@ export default class User extends Component {
               <tr>
                 <td styleName="label">Distance:</td>
                 <td styleName="value">
-                  <Slider
+                  <RCSlider
                     min={2}
                     max={160}
                     defaultValue={miToKm(currentUser.distance_filter) || 0}
@@ -66,15 +81,12 @@ export default class User extends Component {
               <tr>
                 <td styleName="label">Age range:</td>
                 <td styleName="range">
-                  <input
-                    type="text"
-                    defaultValue={currentUser.age_filter_min}
-                    onBlur={({ target }) => { currentUser.age_filter_min = Number(target.value) }}
-                  />
-                  <input
-                    type="text"
-                    defaultValue={currentUser.age_filter_max}
-                    onBlur={({ target }) => { currentUser.age_filter_max = Number(target.value) }}
+                  <RangeT
+                    min={18}
+                    max={50}
+                    allowCross={false}
+                    defaultValue={[currentUser.age_filter_min, currentUser.age_filter_max]}
+                    onAfterChange={this.handleRangeChange}
                   />
                 </td>
               </tr>

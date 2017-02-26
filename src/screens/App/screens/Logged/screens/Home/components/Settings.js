@@ -13,6 +13,8 @@ import { miToKm, kmToMi } from 'utils'
 import 'rc-slider/assets/index.css'
 import 'styles/select.scss'
 
+const RCSliderT = RCSlider.createSliderWithTooltip(RCSlider)
+
 @inject('currentUser')
 @observer
 @CSSModules(styles)
@@ -116,7 +118,7 @@ export default class Settings extends Component {
           <div styleName="option">
             <div styleName="label">Search distance: {miToKm(distance)}KM</div>
             <span>
-              <RCSlider
+              <RCSliderT
                 min={2}
                 max={160}
                 defaultValue={miToKm(distance) || 0}

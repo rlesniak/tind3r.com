@@ -197,6 +197,10 @@ class User {
     return []
   }
 
+  @computed get hasBio() {
+    return !!_.trim(this.bio).length
+  }
+
   getPhotoUrl(photo, size = 640) {
     const baseUrl = 'http://images.gotinder.com'
 

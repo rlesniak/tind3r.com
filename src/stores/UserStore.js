@@ -82,13 +82,13 @@ class UserStore {
     this.activeFilter = option
 
     if (this.activeFilter === 'insta') {
-      _.remove(this.users, user => {
-        if (!user.hasInsta) {
+      _.each(this.users, user => {
+        if (
+          (this.activeFilter === 'insta' && !user.hasInsta) ||
+          (this.activeFilter === 'bio' && !user.hasBio)
+        ) {
           Data.removePerson(user._id)
-          return true
         }
-
-        return false
       })
     }
   }
@@ -106,6 +106,10 @@ class UserStore {
       let filterValue = true
       if (this.activeFilter === 'insta') {
         filterValue = user.hasInsta
+      }
+
+      if (this.activeFilter === 'bio') {
+        filterValue = user.hasBio
       }
 
       return filterValue && user.done === 0

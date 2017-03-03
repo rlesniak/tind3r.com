@@ -100,6 +100,7 @@ export default class Settings extends Component {
     const filterOptions = [
       { value: '', label: 'None' },
       { value: 'insta', label: 'Instagram' },
+      { value: 'bio', label: 'With bio' },
     ]
 
     return (
@@ -131,7 +132,7 @@ export default class Settings extends Component {
           <div styleName="option">
             <div styleName="label">Filter by: </div>
             <Select
-              value=""
+              value={this.props.userStore.activeFilter || ''}
               options={filterOptions}
               onChange={this.handleFilterChange}
             />

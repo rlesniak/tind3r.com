@@ -90,6 +90,16 @@ export default class Matches extends Component {
   }
 
   @autobind
+  clearBlocked() {
+    this.matchStore.clearBlocked()
+
+    ReactGA.event({
+      category: 'Match',
+      action: 'Clear blocked',
+    })
+  }
+
+  @autobind
   handleSearch(e) {
     this.searchValue = e.target.value
   }
@@ -157,11 +167,22 @@ export default class Matches extends Component {
                 onChange={this.handleSearch}
               />
             </div>
-            {this.matchStore.unreadCount > 0 && <div styleName="action-wrapper" onClick={this.markAsRead}>
-              <span styleName="action">
-                <i className="fa fa-check-square-o" /> Mark all as seen
-              </span>
-            </div>}
+            {
+              this.matchStore.unreadCount > 0 &&
+              <div styleName="action-wrapper" onClick={this.markAsRead}>
+                <span styleName="action">
+                  <i className="fa fa-check-square-o" /> Mark all as seen
+                </span>
+              </div>
+            }
+            {
+              this.matchStore.blockedCount > 0 &&
+              <div styleName="action-wrapper" onClick={this.clearBlocked}>
+                <span styleName="action">
+                  <i className="fa fa-check-square-o" /> Clear all blocked
+                </span>
+              </div>
+            }
             <div styleName="quick">
               <button onClick={this.handleOrder.bind(this, 'date')}>
                 {this.renderOrderIcon('date')}

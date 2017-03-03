@@ -53,6 +53,14 @@ class MatchStore {
     Data.db().matches.where('isNew').equals(1).modify({ isNew: 0 })
   }
 
+  @action clearBlocked() {
+    _.each(this.matches, match => {
+      if (match && match.isBlocked) {
+        this.remove(match.id)
+      }
+    })
+  }
+
   @action updateMatches(resp, withCallback) {
     if (_.find(this.matches, { id: resp._id }) || !resp.userId) {
       return
@@ -92,6 +100,10 @@ class MatchStore {
 
   @computed get unreadCount() {
     return _.filter(this.matches, match => match.isNew).length
+  }
+
+  @computed get blockedCount() {
+    return _.filter(this.matches, match => match.isBlocked).length
   }
 
   @computed get byDate() {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules'
 import _ from 'lodash'
+import cx from 'classnames'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import sentences from 'const/sentence'
@@ -13,6 +14,7 @@ import Profile from './components/Profile'
 @CSSModules(styles)
 export default class Messages extends Component {
   @observable match = {}
+  @observable isProfileVisible = true;
 
   constructor(props) {
     super(props)
@@ -64,6 +66,11 @@ export default class Messages extends Component {
     this.match.remove()
   }
 
+  @autobind
+  toggleVisible() {
+    this.isProfileVisible = !this.isProfileVisible
+  }
+
   renderSentence() {
     const id = _.random(sentences.length - 1)
 
@@ -98,9 +105,20 @@ export default class Messages extends Component {
             messageStore={this.match.messageStore}
             removeMatch={this.handleRemoveMatch}
           />
+          <div
+            styleName="toggle"
+            className={cx({ hidden: !this.isProfileVisible })}
+            onClick={this.toggleVisible}
+          >
+            {this.isProfileVisible && <i className="fa fa-chevron-right" />}
+            {!this.isProfileVisible && <i className="fa fa-chevron-left" />}
+          </div>
         </div>
-        <div styleName="profile">
-          {this.match && <Profile user={this.match.user} match={this.match} />}
+        <div styleName="profile" className={cx({ hidden: !this.isProfileVisible })}>
+          {
+            this.match && this.isProfileVisible &&
+            <Profile user={this.match.user} match={this.match} />
+          }
         </div>
       </div>
     )

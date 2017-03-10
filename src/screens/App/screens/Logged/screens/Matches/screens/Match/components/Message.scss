@@ -1,9 +1,52 @@
 @import 'vars';
 
+.wrapper:not(:global(.align-right)) + .wrapper:not(:global(.align-right)),
+.wrapper:global(.align-right) + .wrapper:global(.align-right) {
+  padding-top: 0;
+
+  .avatar {
+    display: none;
+  }
+
+  .message {
+    margin-left: 50px;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  .message:hover .hidden-date {
+    display: block;
+    left: 5px;
+  }
+}
+
+.wrapper:global(.align-right) + .wrapper:global(.align-right) {
+  .message:hover .hidden-date {
+    right: 5px;
+    left: auto;
+  }
+
+  .message {
+    margin-right: 50px;
+    margin-left: 0;
+  }
+}
+
+.hidden-date {
+  display: none;
+  font-size: 11px;
+  transform: translateY(-50%);
+  bottom: -2px;
+  position: absolute;
+}
+
 .wrapper {
   padding: 10px;
   overflow: hidden;
   width: 100%;
+  position: relative;
 
   &:global(.align-right) {
     text-align: right;

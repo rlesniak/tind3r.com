@@ -56,14 +56,14 @@ export default class Message extends Component {
         styleName="wrapper"
         className={className}
         ref={ref => { this.wrapper = ref }}
-        title={message.date}
       >
         <div styleName="avatar">
           <Link to={`users/${message.from}`} styleName="circle"><Img src={avatar} style={{ width: 40 }} /></Link>
           <span styleName="date">{moment(message.created_date).format('HH:mm')}</span>
         </div>
-        <div styleName="message">
+        <div styleName="message" title={message.date}>
           {this.renderMessageContent()}
+          <span styleName="hidden-date">{moment(message.created_date).format('HH:mm')}</span>
           {message.isSending && <i className="fa fa-envelope-open-o" />}
           {message.isError && <i className="fa fa-exclamation-triangle" />}
         </div>

@@ -16,6 +16,9 @@ class User {
   store = null
   @observable isLoading = true
   @observable isFetching = true
+  @observable isRefreshingSeenTime = false
+  @observable update_date = 0
+  @observable ping_time = 0
   @observable done = 0
   @observable pos = {}
 
@@ -35,6 +38,12 @@ class User {
         this.message = data.message
         return
       }
+
+      const date = new Date().toISOString()
+      Data.db().users.update(this.id, {
+        ping_time: data.results.ping_time,
+        update_date: date,
+      })
 
       this.isFetching = false
       extendObservable(this, data.results)
@@ -104,6 +113,36 @@ class User {
 
   @action setFromJson(json) {
     extendObservable(this, json)
+  }
+
+  @action refreshSeenTime() {
+    this.isRefreshingSeenTime = true
+    API.get(`/user/${this.id}`).then(action(({ data: { results } }) => {
+      const date = new Date().toISOString()
+      this.ping_time = results.ping_time
+      this.update_date = date
+      this.isRefreshingSeenTime = false
+
+      Data.db().users.update(this.id, {
+        ping_time: results.ping_time,
+        update_date: date,
+      })
+    })).catch(() => {
+      this.isRefreshingSeenTime = false
+    })
+  }
+
+  @computed get updateDate() {
+    if (!this.update_date) return ''
+
+    const targetTime = moment(this.update_date)
+    const today = moment()
+
+    if (!today.isSame(targetTime, 'd')) {
+      return targetTime.format('DD/MM HH:mm')
+    }
+
+    return targetTime.format('HH:mm')
   }
 
   @computed get age() {

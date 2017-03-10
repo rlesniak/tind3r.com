@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import Slider from 'react-slick'
 import cx from 'classnames'
 import { observer } from 'mobx-react'
+import ReactGA from 'react-ga'
 import Data from 'data'
 import Img from 'screens/App/shared/Img'
 import styles from './Profile.scss'
@@ -23,6 +24,16 @@ export default class Profile extends Component {
     if (confirm('Are you sure?')) {
       this.props.match.unmatch()
     }
+  }
+
+  @autobind
+  refreshSeen() {
+    this.props.user.refreshSeenTime()
+
+    ReactGA.event({
+      category: 'Match',
+      action: 'Refresh seen',
+    })
   }
 
   render() {
@@ -45,6 +56,13 @@ export default class Profile extends Component {
         <Link to={`/users/${user._id}`} styleName="name">
           {user.name}, {user.age}
         </Link>
+        <div styleName="seen" title={user.seen}>
+          {user.seenMin}
+          {user.isRefreshingSeenTime && <i className="fa fa-spinner" />}
+          {!user.isRefreshingSeenTime && <i className="fa fa-refresh" onClick={this.refreshSeen} />}
+          {user.updateDate && !user.isRefreshingSeenTime && <span>(as of: {user.updateDate})</span>}
+          {!user.updateDate && !user.isRefreshingSeenTime && <span>(as of: outdated)</span>}
+        </div>
         <div styleName="bio">
           {user.bio}
         </div>

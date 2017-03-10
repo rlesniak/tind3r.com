@@ -64,3 +64,22 @@
     color: $red;
   }
 }
+
+.seen {
+  margin: 5px 0;
+  color: $blue;
+  font-size: 13px;
+
+  i {
+    margin: 0 5px;
+  }
+
+  :global(.fa-refresh) {
+    cursor: pointer;
+  }
+
+  span {
+    font-size: 10px;
+    color: #000;
+  }
+}

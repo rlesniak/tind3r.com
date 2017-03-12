@@ -3,45 +3,19 @@
     "jsx": true,
     "modules": true
   },
-  "extends": "airbnb",
   "env": {
     "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "globals": {
-    "autobind": true,
-    "chrome": true,
-    "Raven": true,
+    "node": true
   },
   "parser": "babel-eslint",
   "rules": {
-    "semi": [0, "never"],
     "quotes": [2, "single"],
     "strict": [2, "never"],
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
-    "react/prop-types": 0,
-    "react/react-in-jsx-scope": 2,
-    "no-underscore-dangle": 0,
-    "no-param-reassign": ["error", {
-			"props": false
-		}],
-    "arrow-parens": ["error", "as-needed"],
-    "class-methods-use-this": 0,
-    "jsx-a11y/no-static-element-interactions": 0,
-    "jsx-a11y/img-has-alt": 0,
-    "react/jsx-no-target-blank": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/react-in-jsx-scope": 2
   },
   "plugins": [
     "react"
-  ],
-  "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": "webpack.dev.config.js"
-      }
-    }
-  }
+  ]
 }

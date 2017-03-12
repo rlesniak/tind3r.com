@@ -1,73 +1,106 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var env = process.env.NODE_ENV || 'development'
+var env = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  entry: {
-    bundle: [
-      'babel-polyfill',
-      './src/index'
-    ]
-  },
+  entry: [
+    'babel-polyfill',
+
+    'react-hot-loader/patch',
+    // activate HMR for React
+
+    'webpack-dev-server/client?http://localhost:3000',
+    // bundle the client for webpack-dev-server
+    // and connect to the provided endpoint
+
+    'webpack/hot/only-dev-server',
+    // bundle the client for hot reloading
+    // only- means to only hot reload for successful updates
+
+    './src/index.js',
+    // the entry point of our app
+  ],
+
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
-    publicPath: '/dist/'
+    filename: 'bundle.js',
+    // the output bundle
+
+    path: path.resolve(__dirname, 'dist'),
+
+    publicPath: '/static/'
+      // necessary for HMR to know where to load the hot update chunks
   },
+
+  resolve: {
+    modules: [path.resolve(__dirname, 'src/'), 'node_modules'],
+    alias: {
+      Components: path.resolve(__dirname, 'src/components/'),
+      Containers: path.resolve(__dirname, 'src/containers/'),
+      Utils: path.resolve(__dirname, 'src/utils/'),
+    }
+  },
+
+  devtool: 'inline-source-map',
+
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [
+          'babel-loader',
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: "style-loader" // creates style nodes from JS strings
+          }, {
+            loader: "css-loader",
+            options: {
+              sourceMap: true
+            }
+          }, {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              includePaths: [ path.resolve(__dirname, 'src', 'styles') ]
+            }
+          }
+        ]
+      }
+    ],
+  },
+
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // enable HMR globally
+
+    new webpack.NamedModulesPlugin(),
+    // prints more readable module names in the browser console on HMR updates
+
+    new webpack.NoEmitOnErrorsPlugin(),
+    // do not emit compiled assets that include errors
+    new webpack.ProvidePlugin({
+      autobind: 'autobind-decorator',
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(env)
       }
     }),
-    new webpack.DllReferencePlugin({
-      context: path.join(__dirname, 'dist'),
-      manifest: require('./vendor-manifest.json')
-    }),
-    new webpack.ProvidePlugin({
-      autobind: 'autobind-decorator',
-    })
   ],
-  resolve: {
-    root: path.resolve('./src'),
-    extensions: ['', '.js']
+
+  devServer: {
+    host: 'localhost',
+    port: 3000,
+
+    historyApiFallback: true,
+    // respond to 404s with index.html
+
+    hot: true,
+    // enable HMR on the server
   },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'src')
-      },
-      {
-        test: /\.scss$/,
-        loaders: [
-          'style?sourceMap',
-          'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'sass?sourceMap'
-        ],
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      },
-      {
-        test: /\.(jpg|png)$/,
-        loader: 'url-loader',
-        options: {
-          name: '[path][name].[hash].[ext]'
-        },
-        include: path.join(__dirname, 'src', 'images'),
-      },
-      {
-        test: /\.(ogg|mp3)$/,
-        include: path.join(__dirname, 'src', 'static'),
-        loader: 'file-loader'
-      }
-    ]
-  },
-  sassLoader: {
-    includePaths: [ path.resolve(__dirname, 'src', 'styles') ]
-  }
 };

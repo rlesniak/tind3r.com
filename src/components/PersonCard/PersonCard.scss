@@ -1,0 +1,84 @@
+@import 'const';
+
+.person-card {
+  width: 220px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 5px 5px;
+
+  &__content {
+    background: #fff;
+    text-align: center;
+    padding-top: 30px;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 22px;
+    margin: 0;
+    margin-bottom: 10px;
+    line-height: 22px;
+  }
+
+  &__seen-min {
+    font-size: 11px;
+    font-weight: normal;
+  }
+
+  &__bio {
+    font-family: $font-lato;
+    margin: 12px;
+    font-size: 12px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 37px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+  }
+
+  &__employ {
+    padding: 8px 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 30px;
+    white-space: nowrap;
+    background: $primary-color-light;
+    border-bottom: 1px solid #fff;
+
+    &__actions {
+      display: none;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    height: 45px;
+    font-size: 13px;
+    background: $primary-color-light;
+
+    &--distance,
+    &--instagram {
+      align-self: center;
+      padding: 8px;
+    }
+
+    &--instagram {
+      i {
+        font-size: 28px;
+        color: gray;
+      }
+
+      a i {
+        color: $green;
+      }
+
+      a {
+        text-decoration: none;
+        color: $green;
+        display: block;
+      }
+    }
+  }
+}

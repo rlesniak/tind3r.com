@@ -1,4 +1,5 @@
 @import 'const';
+@import 'globals';
 
 .person-card {
   width: 220px;
@@ -38,7 +39,6 @@
   }
 
   &__employ {
-    padding: 8px 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     height: 30px;
@@ -46,8 +46,14 @@
     background: $primary-color-light;
     border-bottom: 1px solid #fff;
 
-    &__actions {
+    > span {
+      padding: 8px 5px;
       display: none;
+    }
+
+    &__actions {
+      height: 100%;
+      // display: none;
     }
   }
 
@@ -77,6 +83,20 @@
       a {
         text-decoration: none;
         color: $green;
+        display: block;
+      }
+    }
+  }
+}
+
+.person-card {
+  &:hover & {
+    &__employ {
+      > span {
+        display: none;
+      }
+
+      &__actions {
         display: block;
       }
     }

@@ -15,15 +15,15 @@ const sliderOptions = {
   slide: 0,
 };
 
-const Gallery = ({ images, width }) => (
+const Gallery = ({ images = [], width }) => (
   <div className="gallery">
-    <div className="gallery__slider">
+    {images.length && <div className="gallery__slider">
       <Slider {...sliderOptions}>
         {map(images, image => (
           <div key={uniqueId()}><Image src={image.url} style={{ width }} /></div>
         ))}
       </Slider>
-    </div>
+    </div>}
   </div>
 );
 

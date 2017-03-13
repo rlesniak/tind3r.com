@@ -1,0 +1,38 @@
+@import 'const';
+
+.action-button {
+  border: none;
+  background: transparent;
+  font-size: 19px;
+  text-align: center;
+  color: $icons-color;
+  outline: none;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+
+  &__active, &:hover.action-button {
+    &.action-button__color {
+      &--red {
+        color: $red;
+      }
+
+      &--blue {
+        color: $blue;
+      }
+
+      &--green {
+        color: $green;
+      }
+    }
+  }
+
+  &__disabled {
+    cursor: default;
+  }
+
+  &__disabled i {
+    opacity: 0.6;
+    color: #c7c7c7;
+  }
+}

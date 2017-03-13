@@ -1,0 +1,26 @@
+@import 'const';
+
+.action-buttons {
+  display: flex;
+  height: 100%;
+
+  &__button {
+    flex: 1;
+    border-right: 1px solid #fff;
+    color: $icons-color;
+    text-align: center;
+    position: relative;
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  &__timer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: $red;
+  }
+}

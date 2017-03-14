@@ -1,10 +1,20 @@
+// @flow
+
 import './Button.scss';
 
 import React from 'react';
 import cx from 'classnames';
 
-const Button = ({ disabled, children, onClick, active, color }) => {
-  const className = cx('action-button', className, {
+type PropsType = {
+  children: any,
+  onClick: () => void,
+  disabled?: boolean,
+  active?: boolean,
+  color?: 'red' | 'green' | 'blue',
+}
+
+const Button = ({ disabled, children, onClick, active, color = '' }: PropsType) => {
+  const className = cx('action-button', {
     'action-button__active': active,
     'action-button__disabled': disabled,
     [`action-button__color--${color}`]: color,

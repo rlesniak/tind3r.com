@@ -1,3 +1,5 @@
+// @flow
+
 import { observable, extendObservable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend'
@@ -5,10 +7,18 @@ import get from 'lodash/get'
 
 import { miToKm } from 'Utils';
 
-class Person {
-  @observable ping_time;
+import type { SchoolType, InstagramType } from '../types/person';
 
-  constructor(store, json) {
+class Person {
+  store: any;
+  birth_date: string;
+  distance_mi: number;
+  schools: ?Array<SchoolType>;
+  instagram: ?InstagramType;
+
+  @observable ping_time: Date;
+
+  constructor(store: any, json: Object) {
     this.store = store;
 
     if (json) {
@@ -16,32 +26,32 @@ class Person {
     }
   }
 
-  @computed get age() {
+  @computed get age(): string {
     return moment().diff(this.birth_date, 'years');
   }
 
-  @computed get seenMin() {
+  @computed get seenMin(): string {
     return moment(this.ping_time).fromNow();
   }
 
-  @computed get school() {
-    return get(this.schools, [0, 'name'])
+  @computed get school(): string {
+    return get(this.schools, [0, 'name'], '')
   }
 
-  @computed get distanceKm() {
+  @computed get distanceKm(): string {
     return `${miToKm(this.distance_mi)} KM`;
   }
 
-  @computed get instagramProfileLink() {
+  @computed get instagramProfileLink(): string {
     if (this.instagram && this.instagram.username) {
       return `https://www.instagram.com/${this.instagram.username}/`
     }
 
-    return null
+    return ''
   }
 
-  @computed get instagramUsername() {
-    return get(this.instagram, 'username');
+  @computed get instagramUsername(): string {
+    return get(this.instagram, 'username', '');
   }
 }
 

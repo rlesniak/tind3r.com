@@ -57,6 +57,7 @@
     "dexie-relationships": "^1.2.3",
     "eslint": "^3.14.1",
     "eslint-plugin-react": "^6.9.0",
+    "flow-bin": "^0.41.0",
     "lodash": "^4.17.4",
     "mobx": "^3.1.5",
     "mobx-react": "^4.1.3",

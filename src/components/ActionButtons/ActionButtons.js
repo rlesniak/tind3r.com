@@ -1,34 +1,48 @@
+// @flow
+
 import './ActionButtons.scss';
 
 import React from 'react';
 import { compose, withHandlers, withState, pure } from 'recompose';
 
 import Button from '../actions/Button';
+import { ACTION_TYPES } from 'const';
+
+import type { ActionsType } from 'types/person';
 
 const enhance = compose(
   withState('activeActionType', 'setActionType', props => props.activeActionType),
   withHandlers({
     handleLike: (props) => () => {
       console.log(props)
-      props.onButtonClick('like')
+      props.onButtonClick(ACTION_TYPES.LIKE)
     },
     handleSuperlike: (props) => () => {
-      props.onButtonClick('superlike')
+      props.onButtonClick(ACTION_TYPES.SUPERLIKE)
     },
     handleDislike: (props) => () => {
-      props.onButtonClick('dislike')
+      props.onButtonClick(ACTION_TYPES.DISLIKE)
     },
   }),
   pure,
 );
 
-const isDisliked = type => type === 'dislike';
-const isLiked = type => type === 'like';
-const isSuperlike = type => type === 'superlike';
+const isDisliked = type => type === ACTION_TYPES.DISLIKE;
+const isLiked = type => type === ACTION_TYPES.LIKE;
+const isSuperlike = type => type === ACTION_TYPES.SUPERLIKE;
+
+type PropsType = {
+  handleLike: () => void,
+  handleDislike: () => void,
+  handleSuperlike: () => void,
+  activeActionType: ActionsType,
+  superLikeTimeout?: string,
+  likeTimeout?: string,
+}
 
 const ActionButtons = ({
   handleLike, handleDislike, handleSuperlike, activeActionType, superLikeTimeout, likeTimeout
-}) => (
+}: PropsType) => (
   <div className="action-buttons">
     {
       !isSuperlike(activeActionType) && !isLiked(activeActionType) &&

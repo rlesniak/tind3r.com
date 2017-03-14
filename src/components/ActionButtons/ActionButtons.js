@@ -4,17 +4,17 @@ import './ActionButtons.scss';
 
 import React from 'react';
 import { compose, withHandlers, withState, pure } from 'recompose';
+import cx from 'classnames';
 
 import Button from '../actions/Button';
-import { ACTION_TYPES } from 'const';
+import { ACTION_TYPES } from '../../const';
 
 import type { ActionsType } from 'types/person';
 
 const enhance = compose(
   withState('activeActionType', 'setActionType', props => props.activeActionType),
   withHandlers({
-    handleLike: (props) => () => {
-      console.log(props)
+    handleLike: (props) => (e) => {
       props.onButtonClick(ACTION_TYPES.LIKE)
     },
     handleSuperlike: (props) => () => {
@@ -27,29 +27,31 @@ const enhance = compose(
   pure,
 );
 
-const isDisliked = type => type === ACTION_TYPES.DISLIKE;
-const isLiked = type => type === ACTION_TYPES.LIKE;
-const isSuperlike = type => type === ACTION_TYPES.SUPERLIKE;
-
 type PropsType = {
   handleLike: () => void,
   handleDislike: () => void,
   handleSuperlike: () => void,
-  activeActionType: ActionsType,
+  onButtonClick: (type: ActionsType) => void,
+  size: 'small' | 'large',
   superLikeTimeout?: string,
   likeTimeout?: string,
+  disliked?: boolean,
+  liked?: boolean,
+  superliked?: boolean,
+  hideTimer?: boolean,
 }
 
 const ActionButtons = ({
-  handleLike, handleDislike, handleSuperlike, activeActionType, superLikeTimeout, likeTimeout
+  handleLike, handleDislike, handleSuperlike, activeActionType, superLikeTimeout, likeTimeout,
+  disliked, liked, superliked, hideTimer, size = 'small',
 }: PropsType) => (
-  <div className="action-buttons">
+  <div className={cx('action-buttons', `action-buttons--${size}`)}>
     {
-      !isSuperlike(activeActionType) && !isLiked(activeActionType) &&
+      !superliked && !liked &&
       <div className="action-buttons__button">
         <Button
           color="red"
-          active={isDisliked(activeActionType)}
+          active={disliked}
           onClick={handleDislike}
         >
           <i className="fa fa-thumbs-o-down" />
@@ -57,31 +59,31 @@ const ActionButtons = ({
       </div>
     }
     {
-      !isDisliked(activeActionType) && !isLiked(activeActionType) &&
+      !disliked && !liked &&
       <div className="action-buttons__button">
         <Button
           color="blue"
-          active={isSuperlike(activeActionType)}
-          disabled={superLikeTimeout}
+          active={superliked}
+          disabled={!!superLikeTimeout}
           onClick={handleSuperlike}
         >
           <i className="fa fa-star" />
-          {!!superLikeTimeout && isSuperlike(activeActionType) &&
+          {!hideTimer && !!superLikeTimeout && !superliked &&
             <span className="action-buttons__timer">{superLikeTimeout}</span>}
         </Button>
       </div>
     }
     {
-      !isDisliked(activeActionType) && !isSuperlike(activeActionType) &&
+      !disliked && !superliked &&
       <div className="action-buttons__button">
         <Button
           color="green"
-          active={isLiked(activeActionType)}
-          disabled={likeTimeout}
+          active={liked}
+          disabled={!!likeTimeout}
           onClick={handleLike}
         >
           <i className="fa fa-heart" />
-          {!!likeTimeout && !isLiked(activeActionType) &&
+          {!hideTimer && !!likeTimeout && !liked &&
             <span className="action-buttons__timer">{likeTimeout}</span>}
         </Button>
       </div>

@@ -1,24 +1,34 @@
 @import 'const';
 @import 'globals';
 
-.person-card {
-  width: 220px;
+$wrapper-width: 1000;
+$content-width: 400;
+
+.person-card-full {
   display: inline-block;
   vertical-align: top;
   margin: 0 5px 5px;
+  width: #{$wrapper-width}px;
+  display: flex;
+
+  &__gallery {
+    width: #{$wrapper-width - $content-width}px;
+    order: 2;
+  }
 
   &__content {
+    width: #{$content-width}px;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
     background: #fff;
-    text-align: center;
     padding-top: 30px;
   }
 
   &__name {
-    font-weight: 700;
-    font-size: 22px;
+    font-size: 30px;
     margin: 0;
     margin-bottom: 10px;
-    line-height: 22px;
   }
 
   &__seen-min {
@@ -28,18 +38,34 @@
 
   &__bio {
     font-family: $font-lato;
-    margin: 12px;
+    margin: 12px 12px 12px;
+    border-top: 1px solid $primary-color-light;
+    padding-top: 12px;
     font-size: 12px;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 37px;
-    text-overflow: ellipsis;
-    display: -webkit-box;
+    flex-grow: 2;
   }
 
-  &__employ,
-  &__school {
+  &__details {
+    line-height: 22px;
+    h1 {
+      font-size: 18px;
+
+      span {
+        color: $blue;
+      }
+    }
+
+    h2 {
+      font-size: 14px;
+    }
+  }
+
+  &__schools {
+    margin: 10px 0;
+  }
+
+  &__employ {
     overflow: hidden;
     text-overflow: ellipsis;
     height: 30px;
@@ -54,13 +80,9 @@
 
     &__actions {
       height: 100%;
-      display: none;
+      // display: none;
     }
   }
-
-  &__school span {
-    display: inline-block;
-  }  
 
   &__footer {
     display: flex;
@@ -103,47 +125,6 @@
 
       &__actions {
         display: block;
-      }
-    }
-  }
-}
-.person-card {
-  &--large {
-    $wrapper-width: 700;
-    $content-width: 300;
-
-    width: #{$wrapper-width}px;
-    display: flex;
-
-    .person-card {
-      &__gallery {
-        width: #{$wrapper-width - $content-width}px;
-        order: 2;
-      }
-
-      &__content {
-        width: #{$content-width}px;
-        display: flex;
-        flex-direction: column;
-        align-content: stretch;
-      }
-
-      &__bio {
-        flex-grow: 2;
-      }
-
-      &__footer {
-        border-bottom: 1px solid #fff;
-      }
-
-      &__employ {
-        order: 1;
-        height: 50px;
-        line-height: 50px;
-
-        &__actions {
-          display: block !important;
-        }
       }
     }
   }

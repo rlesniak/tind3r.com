@@ -16,7 +16,7 @@ module.exports = {
      // Other loaders that are needed for your components
      {
         test: /\.scss$/,
-        include: dir,
+        include: [dir, path.join(__dirname, 'styleguide')],
         loaders: [{
                 loader: "style-loader"
             }, {
@@ -29,6 +29,8 @@ module.exports = {
             }],
       }
    );
+
+   webpackConfig.entry.push(path.join(__dirname, 'styleguide/style.scss'));
 
    webpackConfig.resolve.alias = Object.assign({}, webpackConfig.resolve.alias, {
       Components: path.resolve(__dirname, 'src/components/'),

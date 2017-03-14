@@ -7,23 +7,28 @@ import get from 'lodash/get'
 
 import { miToKm } from 'Utils';
 
-import type { SchoolType, InstagramType } from '../types/person';
+import type { SchoolType, InstagramType, ActionsType } from '../types/person';
 
 class Person {
   store: any;
   birth_date: string;
   distance_mi: number;
-  schools: ?Array<SchoolType>;
+  schools: Array<SchoolType>;
   instagram: ?InstagramType;
 
   @observable ping_time: Date;
+  @observable is_liked: boolean = false;
 
-  constructor(store: any, json: Object) {
+  constructor(store: Object, json: Object) {
     this.store = store;
 
     if (json) {
       extend(this, json);
     }
+  }
+
+  @action callAction(type: ActionsType) {
+    this.is_liked = true;
   }
 
   @computed get age(): string {
@@ -32,6 +37,10 @@ class Person {
 
   @computed get seenMin(): string {
     return moment(this.ping_time).fromNow();
+  }
+
+  @computed get seen(): string {
+    return moment(this.ping_time).format('DD/MM HH:mm')
   }
 
   @computed get school(): string {
@@ -44,14 +53,18 @@ class Person {
 
   @computed get instagramProfileLink(): string {
     if (this.instagram && this.instagram.username) {
-      return `https://www.instagram.com/${this.instagram.username}/`
+      return `https://www.instagram.com/${this.instagram.username}/`;
     }
 
-    return ''
+    return '';
   }
 
   @computed get instagramUsername(): string {
     return get(this.instagram, 'username', '');
+  }
+
+  @computed get isLiked(): boolean {
+    return this.is_liked;
   }
 }
 

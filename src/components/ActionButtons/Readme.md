@@ -1,4 +1,6 @@
 ### Action button
 ```
-  <ActionButtons activeActionType="" />
+  <ActionButtons
+    onButtonClick={console.log}
+  />
 ```

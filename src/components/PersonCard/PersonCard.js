@@ -1,8 +1,10 @@
 import './PersonCard.scss';
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { compose, withHandlers, withState, pure } from 'recompose';
+import cx from 'classnames';
 
 import Gallery from 'Components/Gallery';
 import ActionButtons from 'Components/ActionButtons';
@@ -15,6 +17,9 @@ const enhance = compose(
       setInterval(() => {
         props.setCounter(n => n + 1)
       }, 1000)
+    },
+    onActionClick: props => (actionType) => {
+      props.person.callAction(actionType)
     }
   })
 )
@@ -24,26 +29,15 @@ const renderInstagramLink = (link, name, small) => (
     <i className="fa fa-instagram" />
     {!small && <div className="instaname">{name}</div>}
   </a>
-)
-
-const renderEmployOrActions = (person, counter) => (
-  <div className="person-card__employ">
-    <span>{person.school}</span>
-    <div className="person-card__employ__actions">
-      <ActionButtons
-        activeActionType="superlike"
-        superLikeTimeout={counter}
-        onButtonClick={console.log}
-      />
-    </div>
-  </div>
-)
+);
 
 const PersonCard = ({
-  person, small, counter, startCount,
+  person, small, counter, startCount, onActionClick,
 }) => (
-  <div className="person-card">
-    <Gallery key={person._id} images={person.photos} width={220} />
+  <div className={cx('person-card', { 'person-card--large': !small })}>
+    <div className="person-card__gallery">
+      <Gallery key={person._id} images={person.photos} width={small ? 220 : 400} />
+    </div>
     <div className="person-card__content">
       <div className="person-card__name">
         <Link to={`/user/${person._id}`}>{person.name}, {person.age}</Link>
@@ -51,7 +45,21 @@ const PersonCard = ({
       <div className="person-card__seen-min">{person.seenMin}</div>
       <div className="person-card__bio" onClick={startCount}>{person.bio}</div>
 
-      {renderEmployOrActions(person, counter)}
+      {!small && <div className="person-card__school">
+        <span>{person.school}</span>
+      </div>}
+      <div className="person-card__employ">
+        <span>{person.school}</span>
+        <div className="person-card__employ__actions">
+          <ActionButtons
+            liked={person.is_liked}
+            superLikeTimeout={counter}
+            onButtonClick={onActionClick}
+            hideTimer={!small}
+            size={small ? 'small' : 'large'}
+          />
+        </div>
+      </div>
 
       <div className="person-card__footer">
         <div className="person-card__footer--distance">{person.distanceKm}</div>
@@ -65,11 +73,6 @@ const PersonCard = ({
       </div>
     </div>
   </div>
-)
+);
 
-PersonCard.propTypes = {
-  person: PropTypes.object.isRequired,
-  small: PropTypes.bool,
-};
-
-export default enhance(PersonCard);
+export default enhance(observer(PersonCard));

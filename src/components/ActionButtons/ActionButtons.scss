@@ -23,4 +23,10 @@
     transform: translateX(-50%) translateY(-50%);
     color: $red;
   }
+
+  &--large {
+    .action-button {
+      font-size: 30px;
+    }
+  }
 }

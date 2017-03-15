@@ -36,7 +36,11 @@ const PersonCard = ({
 }) => (
   <div className={cx('person-card', { 'person-card--large': !small })}>
     <div className="person-card__gallery">
-      <Gallery key={person._id} images={person.photos} width={small ? 220 : 400} />
+      <Gallery
+        scrolling={!small}
+        images={person.photos}
+        width={small ? 220 : 400}
+      />
     </div>
     <div className="person-card__content">
       <div className="person-card__name">

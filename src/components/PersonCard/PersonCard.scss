@@ -112,12 +112,12 @@
     $wrapper-width: 700;
     $content-width: 300;
 
-    width: #{$wrapper-width}px;
+    width: 100%;
     display: flex;
 
     .person-card {
       &__gallery {
-        width: #{$wrapper-width - $content-width}px;
+        width: calc(100% - #{$content-width}px);
         order: 2;
       }
 

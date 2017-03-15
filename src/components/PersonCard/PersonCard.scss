@@ -7,6 +7,10 @@
   vertical-align: top;
   margin: 0 5px 5px;
 
+  &__gallery {
+    height: 220px;
+  }
+
   &__content {
     background: #fff;
     text-align: center;
@@ -118,6 +122,7 @@
     .person-card {
       &__gallery {
         width: calc(100% - #{$content-width}px);
+        height: $wrapper-width;
         order: 2;
       }
 

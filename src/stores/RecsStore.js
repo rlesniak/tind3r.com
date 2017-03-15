@@ -13,7 +13,7 @@ class RecsStore {
   async core() {
     try {
       const { data } = await get('/recs/core');
-
+      
       const results = map(data.results, r => r.user)
 
       return { results, message: data.message };

@@ -1,10 +1,16 @@
-var person = require('../mocks/person');
+const person = require('../mocks/person');
+const updates = require('../mocks/updates');
 
-module.exports = function() {
-  var data = { recs: { results: [] } }
+module.exports = function () {
+  const data = {
+    recs: { results: [] },
+    updates: updates(),
+  };
 
-  for (var i = 0; i < 5; i++) {
-    data.recs.results.push({ user: person() })
+
+  for (let i = 0; i < 5; i++) {
+    data.recs.results.push({ user: person() });
   }
-  return data
-}
+
+  return data;
+};

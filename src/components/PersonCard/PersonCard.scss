@@ -118,12 +118,15 @@
 
     width: 100%;
     display: flex;
+    height: 400px;
 
     .person-card {
       &__gallery {
         width: calc(100% - #{$content-width}px);
-        height: $wrapper-width;
+        height: 400px;
         order: 2;
+        overflow-x: scroll;
+        overflow-y: hidden;
       }
 
       &__content {

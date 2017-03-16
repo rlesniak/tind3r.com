@@ -1,0 +1,28 @@
+.home {
+  position: relative;
+  padding-top: 20px;
+
+  &__settings {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+
+    &__wrapper {
+      display: none;
+      background: #fff;
+      width: 300px;
+      padding: 10px;
+    }
+
+    &__trigger {
+      background: #fff;
+      padding: 10px;
+      margin: 0 auto;
+      width: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

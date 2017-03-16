@@ -2,8 +2,8 @@
 
 import { observable, extendObservable, action, computed } from 'mobx';
 import moment from 'moment';
-import extend from 'lodash/extend'
-import get from 'lodash/get'
+import extend from 'lodash/extend';
+import get from 'lodash/get';
 
 import { miToKm } from 'Utils';
 
@@ -40,11 +40,11 @@ class Person {
   }
 
   @computed get seen(): string {
-    return moment(this.ping_time).format('DD/MM HH:mm')
+    return moment(this.ping_time).format('DD/MM HH:mm');
   }
 
   @computed get school(): string {
-    return get(this.schools, [0, 'name'], '')
+    return get(this.schools, [0, 'name'], '');
   }
 
   @computed get distanceKm(): string {

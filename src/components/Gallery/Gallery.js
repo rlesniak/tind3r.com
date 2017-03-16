@@ -2,6 +2,7 @@ import './Gallery.scss';
 
 import React, { Component } from 'react';
 import Slider from 'react-slick';
+import { pure } from 'recompose';
 import uniqueId from 'lodash/uniqueId';
 import map from 'lodash/map';
 import cx from 'classnames';
@@ -25,7 +26,7 @@ const Gallery = ({ images = [], width, scrolling }) => (
         ))}
       </Slider>
     </div>}
-    {scrolling && <div className="gallery__scrolling-area" style={{ width: width*images.length }}>
+    {scrolling && <div className="gallery__scrolling-area" style={{ width: width * images.length }}>
       {map(images, image => (
         <div key={uniqueId()} className="gallery__scrolling-area--image">
           <Image src={image.url} style={{ width }} />
@@ -35,4 +36,4 @@ const Gallery = ({ images = [], width, scrolling }) => (
   </div>
 );
 
-export default Gallery;
+export default pure(Gallery);

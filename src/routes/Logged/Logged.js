@@ -1,6 +1,8 @@
+import './Logged.scss';
+
 import React, { Component } from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react';
 
 import NavBar from 'Components/NavBar';
 
@@ -19,20 +21,22 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    this.recsStore.fetchCore()
+    this.recsStore.fetchCore();
   }
 
   render() {
     return (
       <div>
         <NavBar />
-        <Switch>
-          <Route exact path="/" render={() => <Home recsStore={this.recsStore} />} />
-          <Route exact path="/home" render={() => <Home recsStore={this.recsStore} />} />
-          <Route path="/matches" component={Matches} />
-          <Route component={NotFound} />
-        </Switch>
-      </div> 
+        <div className="logged">
+          <Switch>
+            <Route exact path="/" render={() => <Home recsStore={this.recsStore} />} />
+            <Route exact path="/home" render={() => <Home recsStore={this.recsStore} />} />
+            <Route path="/matches" component={Matches} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+      </div>
     );
   }
 }

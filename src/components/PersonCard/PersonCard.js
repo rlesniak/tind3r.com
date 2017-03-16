@@ -13,16 +13,17 @@ const enhance = compose(
   withState('counter', 'setCounter', 0),
   withHandlers({
     startCount: props => () => {
-      console.log(props)
+      console.log(props);
       setInterval(() => {
-        props.setCounter(n => n + 1)
-      }, 1000)
+        props.setCounter(n => n + 1);
+      }, 1000);
     },
     onActionClick: props => (actionType) => {
-      props.person.callAction(actionType)
-    }
-  })
-)
+      props.person.callAction(actionType);
+    },
+  }),
+  pure,
+);
 
 const renderInstagramLink = (link, name, small) => (
   <a href={link} target="_blank" title={name}>
@@ -47,7 +48,7 @@ const PersonCard = ({
         <Link to={`/user/${person._id}`}>{person.name}, {person.age}</Link>
       </div>
       <div className="person-card__seen-min">{person.seenMin}</div>
-      <div className="person-card__bio" onClick={startCount}>{person.bio}</div>
+      <div className="person-card__bio" onClick={startCount}>{person.bio || '&nbsp;'}</div>
 
       {!small && <div className="person-card__school">
         <span>{person.school}</span>
@@ -59,7 +60,7 @@ const PersonCard = ({
             liked={person.is_liked}
             superLikeTimeout={counter}
             onButtonClick={onActionClick}
-            hideTimer={!small}
+            hideTimer={small}
             size={small ? 'small' : 'large'}
           />
         </div>

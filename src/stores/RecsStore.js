@@ -23,7 +23,7 @@ class RecsStore {
   }
 
   @action fetchCore() {
-    this.core().then(action((resp) => {
+    this.core().then(action(resp => {
       if (resp.results.length > 0) {
         each(resp.results, json => this.setPerson(json))
       }

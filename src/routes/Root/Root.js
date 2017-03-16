@@ -6,7 +6,7 @@ import {
   Route,
   Link,
   Switch,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 
 import NavBar from 'Containers/NavBar';
@@ -23,9 +23,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    checkIfInstalled(isInstalled => {
-      this.setState({ isInstalled })
-    })
+    checkIfInstalled((isInstalled) => {
+      this.setState({ isInstalled });
+    });
   }
 
   render() {
@@ -41,7 +41,7 @@ class App extends Component {
             </Switch>
           </div>
         </Router>
-      )
+      );
     } else if (isInstalled === false) {
       return (
         <Router>
@@ -51,11 +51,10 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </Router>
-      )
+      );
     }
 
-    return <h1>Spinner</h1>
-
+    return <h1>Spinner</h1>;
   }
 }
 

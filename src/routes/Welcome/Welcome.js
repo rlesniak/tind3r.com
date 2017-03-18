@@ -8,7 +8,7 @@ import {
 
 import NotFound from '../NotFound';
 
-const Home = () => <h1>Welcome!</h1>
+const Home = () => <h1>Home!</h1>
 
 export default class Welcome extends Component {
   render() {

@@ -20,8 +20,8 @@ const enhance = compose(
     handleSuperlike: (props) => () => {
       props.onButtonClick(ACTION_TYPES.SUPERLIKE)
     },
-    handleDislike: (props) => () => {
-      props.onButtonClick(ACTION_TYPES.DISLIKE)
+    handlePass: (props) => () => {
+      props.onButtonClick(ACTION_TYPES.PASS)
     },
   }),
   pure,
@@ -29,21 +29,21 @@ const enhance = compose(
 
 type PropsType = {
   handleLike: () => void,
-  handleDislike: () => void,
+  handlePass: () => void,
   handleSuperlike: () => void,
   onButtonClick: (type: ActionsType) => void,
   size: 'small' | 'large',
   superLikeTimeout?: string,
   likeTimeout?: string,
-  disliked?: boolean,
+  passed?: boolean,
   liked?: boolean,
   superliked?: boolean,
   hideTimer?: boolean,
 }
 
 const ActionButtons = ({
-  handleLike, handleDislike, handleSuperlike, activeActionType, superLikeTimeout, likeTimeout,
-  disliked, liked, superliked, hideTimer, size = 'small',
+  handleLike, handlePass, handleSuperlike, activeActionType, superLikeTimeout, likeTimeout,
+  passed, liked, superliked, hideTimer, size = 'small',
 }: PropsType) => (
   <div className={cx('action-buttons', `action-buttons--${size}`)}>
     {
@@ -51,15 +51,15 @@ const ActionButtons = ({
       <div className="action-buttons__button">
         <Button
           color="red"
-          active={disliked}
-          onClick={handleDislike}
+          active={passed}
+          onClick={handlePass}
         >
           <i className="fa fa-thumbs-o-down" />
         </Button>
       </div>
     }
     {
-      !disliked && !liked &&
+      !passed && !liked &&
       <div className="action-buttons__button">
         <Button
           color="blue"
@@ -74,7 +74,7 @@ const ActionButtons = ({
       </div>
     }
     {
-      !disliked && !superliked &&
+      !passed && !superliked &&
       <div className="action-buttons__button">
         <Button
           color="green"

@@ -21,4 +21,4 @@ export type InstagramType = {
   id: string,
 }
 
-export type ActionsType = 'dislike' | 'superlike' | 'like';
+export type ActionsType = 'pass' | 'superlike' | 'like';

@@ -55,4 +55,4 @@ const person = () => ({
   common_connections: [],
 });
 
-module.exports = person;
+module.exports = { person, getPhotos };

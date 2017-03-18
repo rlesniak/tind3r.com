@@ -7,17 +7,24 @@ import get from 'lodash/get';
 
 import { miToKm } from 'Utils';
 
+import { pass, like, superlike } from 'services/person-actions';
+
 import type { SchoolType, InstagramType, ActionsType } from '../types/person';
 
 class Person {
   store: any;
+  _id: string;
   birth_date: string;
   distance_mi: number;
   schools: Array<SchoolType>;
   instagram: ?InstagramType;
 
+  @observable is_loading: boolean = false;
   @observable ping_time: Date;
   @observable is_liked: boolean = false;
+  @observable is_done: number = 0;
+  @observable like_limit_reset: ?string = null;
+  @observable superlike_limit_reset: ?string = null;
 
   constructor(store: Object, json: Object) {
     this.store = store;
@@ -28,7 +35,29 @@ class Person {
   }
 
   @action callAction(type: ActionsType) {
-    this.is_liked = true;
+    this.is_done = 1;
+
+    switch(type) {
+      case 'pass':
+        pass(this._id)
+          .catch(() => {
+            setTimeout(() => this.is_done = 0, 500);
+          });
+        break;
+      case 'like':
+        like(this._id)
+          .catch(resp => {
+            if (resp.error) {
+            }
+            this.is_done = 0;
+          });
+        break;
+      case 'superlike':
+        superlike(this._id)
+          .catch(() => {
+            this.is_done = 0;
+          });
+    }
   }
 
   @computed get age(): string {

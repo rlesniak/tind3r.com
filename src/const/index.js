@@ -2,6 +2,6 @@ export const EXT_ID = process.env.NODE_ENV === 'production' ? 'iopleohdgiomebidp
 
 export const ACTION_TYPES = {
   LIKE: 'like',
-  DISLIKE: 'dislike',
+  PASS: 'pass',
   SUPERLIKE: 'superlike',
 };

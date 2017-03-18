@@ -2,41 +2,61 @@ import './Logged.scss';
 
 import React, { Component } from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
-import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { observer, Provider } from 'mobx-react';
 
-import NavBar from 'Components/NavBar';
+import NavBar from 'Containers/NavBar';
 
 import NotFound from '../NotFound';
 import Matches from '../Matches';
 import Home from './screens/Home';
 
-import RecsStore from 'stores/RecsStore';
+import currentUser from 'models/CurrentUser';
+import recsStore from 'stores/RecsStore';
+
+import { meta } from 'services/fetch-service';
 
 @observer
 class Welcome extends Component {
-  constructor(props) {
-    super(props);
-
-    this.recsStore = new RecsStore();
-  }
+  @observable isLogged: boolean = false;
+  @observable isLogging: boolean = true;
 
   componentDidMount() {
-    this.recsStore.fetchCore();
+    meta().then(data => {
+      recsStore.fetchCore();
+      currentUser.set(data.user);
+
+      this.isLogged = true;
+      this.isLogging = false;
+    }).catch(err => {
+      this.isLogged = false;
+      this.isLogging = false;
+    })
   }
 
   render() {
     return (
-      <div>
-        <NavBar />
-        <div className="logged">
-          <Switch>
-            <Route exact path="/" render={() => <Home recsStore={this.recsStore} />} />
-            <Route exact path="/home" render={() => <Home recsStore={this.recsStore} />} />
-            <Route path="/matches" component={Matches} />
-            <Route component={NotFound} />
-          </Switch>
+      <Provider currentUser={currentUser}>
+        <div>
+          <NavBar />
+          {this.isLogging && !this.isLogged && <div>Logowanie...</div>}
+          {!this.isLogging && this.isLogged ? 
+            <div className="logged">
+              <Switch>
+                <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
+                <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
+                <Route path="/matches" component={Matches} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+            :
+            <div className="not-logged">
+              <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
+              <button className="button blue" onClick={this.connect}>Refresh</button>
+            </div>
+          }
         </div>
-      </div>
+      </Provider>
     );
   }
 }

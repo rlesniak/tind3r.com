@@ -9,6 +9,8 @@ import cx from 'classnames';
 import Gallery from 'Components/Gallery';
 import ActionButtons from 'Components/ActionButtons';
 
+import type { PersonType, ActionsType } from 'types/person';
+
 const enhance = compose(
   withState('counter', 'setCounter', 0),
   withHandlers({
@@ -18,7 +20,7 @@ const enhance = compose(
         props.setCounter(n => n + 1);
       }, 1000);
     },
-    onActionClick: props => (actionType) => {
+    onActionClick: props => (actionType: ActionsType) => {
       props.person.callAction(actionType);
     },
   }),
@@ -31,6 +33,14 @@ const renderInstagramLink = (link, name, small) => (
     {!small && <div className="instaname">{name}</div>}
   </a>
 );
+
+type PersonCardType = {
+  person: PersonType,
+  small?: bollean,
+  counter?: string,
+  startCount: () => void,
+  onActionClick: (type: ActionsType) => void,
+};
 
 const PersonCard = ({
   person, small, counter, startCount, onActionClick,

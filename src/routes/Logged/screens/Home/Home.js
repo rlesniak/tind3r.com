@@ -13,6 +13,11 @@ class Home extends Component {
   }
 
   render() {
+    const { recsStore } = this.props;
+
+    if (recsStore.is_fetching) {
+      return <h1>Searching</h1>
+    }
     return (
       <div className="home">
         <div className="home__settings">
@@ -21,7 +26,7 @@ class Home extends Component {
             <i className="fa fa-cog" onClick={this.showSettings} />
           </div>
         </div>
-        {this.props.recsStore.persons.map((person, i) => (
+        {this.props.recsStore.allVisible.map((person, i) => (
           <PersonCard key={person._id} person={person} small={i !== 0} />
         ))}
       </div>

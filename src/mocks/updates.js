@@ -1,4 +1,4 @@
-const person = require('./person');
+const person = require('./person').person;
 
 const updates = () => ({
   matches: [{

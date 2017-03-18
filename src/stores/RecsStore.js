@@ -21,11 +21,29 @@ async function core() {
 }
 
 class RecsStore {
+  loadMoreHandler = null;
+
   @observable persons = [];
   @observable is_fetching: boolean = false;
+  @observable is_loading_more: boolean = false;
 
-  @action fetchCore() {
-    this.is_fetching = true;
+  constructor() {
+    this.loadMoreHandler = reaction(
+      () => this.allVisible.length,
+      length => {
+        if (length <= 3 && !this.is_fetching && !this.is_loading_more) {
+          this.fetchCore(true)
+        }
+      },
+    )
+  }
+
+  @action fetchCore(asLoadMore = false) {
+    if (asLoadMore) {
+      this.is_loading_more = true;
+    } else {
+      this.is_fetching = true;
+    }
 
     core().then(action(resp => {
       if (resp.results.length > 0) {
@@ -33,6 +51,7 @@ class RecsStore {
       }
 
       this.is_fetching = false;    
+      this.is_loading_more = false;
     }));
   }
 
@@ -47,6 +66,10 @@ class RecsStore {
 
   @computed get allVisible(): Array {
     return filter(this.persons, p => p.is_done === 0);
+  }
+
+  @computed get areRecsExhaust(): boolean {
+    return !this.is_fetching && this.allVisible.length === 0;
   }
 }
 

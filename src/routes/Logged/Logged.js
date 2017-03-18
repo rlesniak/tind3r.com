@@ -36,7 +36,7 @@ class Welcome extends Component {
 
   renderWhenLogged() {
     return (
-      this.isLogged ? 
+      this.isLogged ? (
         <div className="logged">
           <Switch>
             <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
@@ -45,11 +45,12 @@ class Welcome extends Component {
             <Route component={NotFound} />
           </Switch>
         </div>
-        :
+      ) : (
         <div className="not-logged">
           <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
           <button className="button blue" onClick={this.connect}>Refresh</button>
         </div>
+      )
     )
   }
 

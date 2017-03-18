@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 import PersonCard from 'Components/PersonCard';
+import LoadMoreCard from 'Components/LoadMoreCard';
 
 @inject('currentUser')
 @observer
@@ -31,9 +32,20 @@ class Home extends Component {
 
   @autobind
   handleSuperlike(remaining: number) {
-    console.log(remaining);
-
     currentUser.superlike_remaining = remaining;
+  }
+
+  @autobind
+  handleLoadMoreClick() {
+    const { recsStore } = this.props;
+
+    recsStore.fetchCore(true);
+  }
+
+  renderNooneNew() {
+    return (
+      <h2>There is no one new</h2>
+    )
   }
 
   render() {
@@ -51,16 +63,27 @@ class Home extends Component {
             <i className="fa fa-cog" onClick={this.showSettings} />
           </div>
         </div>
-        {this.props.recsStore.allVisible.map((person, i) => (
-          <PersonCard
-            key={person._id}
-            person={person}
-            small={i !== 0}
-            onMatch={this.handleMatch}
-            onError={this.handleError}
-            onSuperlike={this.handleSuperlike}
-          />
-        ))}
+        <div className="home__persons-cards">
+          {recsStore.allVisible.map((person, i) => (
+            <PersonCard
+              key={person._id}
+              person={person}
+              small={i !== 0}
+              onMatch={this.handleMatch}
+              onError={this.handleError}
+              onSuperlike={this.handleSuperlike}
+            />
+          ))}
+          {
+            recsStore.allVisible.length > 0 &&
+            <LoadMoreCard
+              onClick={this.handleLoadMoreClick}
+              loading={recsStore.is_loading_more}
+            />
+          }
+
+          {recsStore.areRecsExhaust && this.renderNooneNew()}
+        </div>
       </div>
     );
   }

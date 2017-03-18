@@ -23,7 +23,7 @@ module.exports = {
   ],
 
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     // the output bundle
 
     path: path.resolve(__dirname, 'dist'),
@@ -91,6 +91,13 @@ module.exports = {
         NODE_ENV: JSON.stringify(env)
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        // this assumes your vendor imports exist in the node_modules directory
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
+    })
   ],
 
   devServer: {

@@ -1,15 +1,39 @@
 import './Home.scss';
 
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import PersonCard from 'Components/PersonCard';
 
+@inject('currentUser')
 @observer
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { counter: 0 };
+  }
+
+  @autobind
+  handleMatch() {
+    alert('Match')
+  }
+
+  @autobind
+  handleError(reason) {
+    const { currentUser } = this.props;
+
+    if (reason.type === 'like') {
+      currentUser.like_limit_reset = reason.resetsAt;
+    } else {
+      currentUser.superlike_limit_reset = reason.resetsAt;
+    }
+  }
+
+  @autobind
+  handleSuperlike(remaining: number) {
+    console.log(remaining);
+
+    currentUser.superlike_remaining = remaining;
   }
 
   render() {
@@ -18,6 +42,7 @@ class Home extends Component {
     if (recsStore.is_fetching) {
       return <h1>Searching</h1>
     }
+
     return (
       <div className="home">
         <div className="home__settings">
@@ -27,7 +52,14 @@ class Home extends Component {
           </div>
         </div>
         {this.props.recsStore.allVisible.map((person, i) => (
-          <PersonCard key={person._id} person={person} small={i !== 0} />
+          <PersonCard
+            key={person._id}
+            person={person}
+            small={i !== 0}
+            onMatch={this.handleMatch}
+            onError={this.handleError}
+            onSuperlike={this.handleSuperlike}
+          />
         ))}
       </div>
     );

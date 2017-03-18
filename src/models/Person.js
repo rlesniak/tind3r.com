@@ -4,10 +4,12 @@ import { observable, extendObservable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
 import get from 'lodash/get';
+import noop from 'lodash/noop';
 
 import { miToKm } from 'Utils';
 
 import { pass, like, superlike } from 'services/person-actions';
+import { ACTION_TYPES } from 'const';
 
 import type { SchoolType, InstagramType, ActionsType } from '../types/person';
 
@@ -34,27 +36,47 @@ class Person {
     }
   }
 
-  @action callAction(type: ActionsType) {
+  @action callAction(
+    type: ActionsType,
+    superlikeCallback: (remaining: number) => void = noop,
+    matchCallback: (data?: Object) => void = noop,
+    errorCallback: (reason: Object) => void = noop,
+  ) {
     this.is_done = 1;
 
     switch(type) {
-      case 'pass':
+      case ACTION_TYPES.PASS:
         pass(this._id)
           .catch(() => {
             setTimeout(() => this.is_done = 0, 500);
           });
         break;
-      case 'like':
-        like(this._id)
-          .catch(resp => {
-            if (resp.error) {
+      case ACTION_TYPES.LIKE:
+        like(this._id).
+          then(data => {
+            if (data.match) {
+              matchCallback();
             }
+          }).catch(resp => {
+            if (resp.error) {
+              errorCallback({ type: 'like', resetsAt: resp.resetsAt })
+            }
+
             this.is_done = 0;
           });
         break;
-      case 'superlike':
-        superlike(this._id)
-          .catch(() => {
+      case ACTION_TYPES.SUPERLIKE:
+        superlike(this._id).
+          then(data => {
+            if (data.match) {
+              matchCallback();
+            }
+            superlikeCallback(data.super_likes.remaining)
+          }).catch(resp => {
+            if (resp.error) {
+              errorCallback({ type: 'superlike', resetsAt: resp.resetsAt })
+            }
+
             this.is_done = 0;
           });
     }

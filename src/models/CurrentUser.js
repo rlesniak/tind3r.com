@@ -21,6 +21,7 @@ class CurrentUser {
   @observable is_error: boolean = false;
   @observable like_limit_reset: ?string = null;
   @observable superlike_limit_reset: ?string = null;
+  @observable superlike_remaining: ?number = null;
   @observable _id: string;
   @observable full_name: string;
   @observable photos: Object;

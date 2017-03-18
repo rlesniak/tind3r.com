@@ -21,7 +21,7 @@ const enhance = compose(
       }, 1000);
     },
     onActionClick: props => (actionType: ActionsType) => {
-      props.person.callAction(actionType);
+      props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
     },
   }),
   pure,

@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import relationships from 'dexie-relationships';
-
+import moment from 'moment';
 import each from 'lodash/each';
 import map from 'lodash/map';
 

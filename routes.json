@@ -1,3 +1,4 @@
 {
-  "/recs/core": "/recs"
+  "/recs/core": "/recs",
+  "/like/:id": "/like"
 }

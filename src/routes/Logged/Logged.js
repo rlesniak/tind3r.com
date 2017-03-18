@@ -34,27 +34,32 @@ class Welcome extends Component {
     })
   }
 
+  renderWhenLogged() {
+    return (
+      this.isLogged ? 
+        <div className="logged">
+          <Switch>
+            <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
+            <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
+            <Route path="/matches" component={Matches} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+        :
+        <div className="not-logged">
+          <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
+          <button className="button blue" onClick={this.connect}>Refresh</button>
+        </div>
+    )
+  }
+
   render() {
     return (
       <Provider currentUser={currentUser}>
         <div>
           <NavBar />
           {this.isLogging && !this.isLogged && <div>Logowanie...</div>}
-          {!this.isLogging && this.isLogged ? 
-            <div className="logged">
-              <Switch>
-                <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
-                <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
-                <Route path="/matches" component={Matches} />
-                <Route component={NotFound} />
-              </Switch>
-            </div>
-            :
-            <div className="not-logged">
-              <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
-              <button className="button blue" onClick={this.connect}>Refresh</button>
-            </div>
-          }
+          {!this.isLogging && this.renderWhenLogged()}
         </div>
       </Provider>
     );

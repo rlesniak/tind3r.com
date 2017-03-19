@@ -6,8 +6,6 @@ import {
   Switch
 } from 'react-router-dom'
 
-import Layout from './Layout';
-import Counter from './Counter';
 import Root from './routes/Root';
 
 // If you use React Router, make this component

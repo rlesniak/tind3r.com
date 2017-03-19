@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
-import NavBar from 'Components/NavBar';
+import PersonCard from 'Components/PersonCard';
 
-export default class NavBarContainer extends Component {
+@inject('currentUser')
+@observer
+class PersonCardContainer extends Component {
   render() {
+    const { currentUser } = this.props;
+
     return (
-      <NavBar
-        newCount={2}
-        user={
-          { _id: 2, full_name: 'Rafal'}
-        }
+      <PersonCard
+        person={currentUser}
       />
     )
   }
 }
+
+export default PersonCardContainer;

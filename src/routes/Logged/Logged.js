@@ -24,7 +24,9 @@ class Welcome extends Component {
   componentDidMount() {
     meta().then(data => {
       recsStore.fetchCore();
-      currentUser.set(data.user);
+      console.log(data);
+      
+      currentUser.set(data);
 
       this.isLogged = true;
       this.isLogging = false;

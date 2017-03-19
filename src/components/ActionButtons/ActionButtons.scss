@@ -22,11 +22,25 @@
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     color: $red;
+    font-size: 20px;
   }
 
   &--large {
     .action-button {
       font-size: 30px;
     }
+
+    .action-buttons__likes-remaining {
+      font-size: 15px;
+    }
+  }
+
+  &__likes-remaining {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: $primary-color-light;
+    font-size: 8px;
+    top: 50%;
   }
 }

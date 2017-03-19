@@ -52,18 +52,22 @@ class Person {
           });
         break;
       case ACTION_TYPES.LIKE:
-        like(this._id).
-          then(data => {
-            if (data.match) {
-              matchCallback();
-            }
-          }).catch(resp => {
-            if (resp.error) {
+
+      let resp ={};
+        // like(this._id).
+          // then(data => {
+          //   if (data.match) {
+          //     matchCallback();
+          //   }
+          // }).catch(resp => {
+            // if (resp.error) {
+              resp.resetsAt = new Date().getTime() + 8000;
+
               errorCallback({ type: 'like', resetsAt: resp.resetsAt })
-            }
+            // }
 
             this.is_done = 0;
-          });
+          // });
         break;
       case ACTION_TYPES.SUPERLIKE:
         superlike(this._id).

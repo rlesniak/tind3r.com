@@ -3,7 +3,7 @@ import './PersonCard.scss';
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { compose, withHandlers, withState, pure } from 'recompose';
+import { compose, withHandlers, withState, pure, withProps } from 'recompose';
 import cx from 'classnames';
 
 import Gallery from 'Components/Gallery';
@@ -12,14 +12,7 @@ import ActionButtons from 'Components/ActionButtons';
 import type { PersonType, ActionsType } from 'types/person';
 
 const enhance = compose(
-  withState('counter', 'setCounter', 0),
   withHandlers({
-    startCount: props => () => {
-      console.log(props);
-      setInterval(() => {
-        props.setCounter(n => n + 1);
-      }, 1000);
-    },
     onActionClick: props => (actionType: ActionsType) => {
       props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
     },
@@ -37,13 +30,17 @@ const renderInstagramLink = (link, name, small) => (
 type PersonCardType = {
   person: PersonType,
   small?: bollean,
-  counter?: string,
-  startCount: () => void,
   onActionClick: (type: ActionsType) => void,
+  limitations: {
+    superlikeRemaining: number,
+    superlikeResetsAt: ?string,
+    likeResetsAt: ?string,
+  }
 };
 
 const PersonCard = ({
-  person, small, counter, startCount, onActionClick,
+  person, small, onActionClick,
+  limitations: { superlikeRemaining, superlikeResetsAt, likeResetsAt },
 }) => (
   <div className={cx('person-card', { 'person-card--large': !small })}>
     <div className="person-card__gallery">
@@ -58,7 +55,7 @@ const PersonCard = ({
         <Link to={`/user/${person._id}`}>{person.name}, {person.age}</Link>
       </div>
       <div className="person-card__seen-min">{person.seenMin}</div>
-      <div className="person-card__bio" onClick={startCount}>{person.bio || '&nbsp;'}</div>
+      <div className="person-card__bio">{person.bio}</div>
 
       {!small && <div className="person-card__school">
         <span>{person.school}</span>
@@ -68,7 +65,9 @@ const PersonCard = ({
         <div className="person-card__employ__actions">
           <ActionButtons
             liked={person.is_liked}
-            superLikeTimeout={counter}
+            likeResetsAt={likeResetsAt}
+            superLikeResetsAt={false}
+            superlikeRemaining={superlikeRemaining}
             onButtonClick={onActionClick}
             hideTimer={small}
             size={small ? 'small' : 'large'}

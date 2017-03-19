@@ -1,7 +1,9 @@
 import './Home.scss';
 
 import React, { Component } from 'react';
+import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
+import moment from 'moment';
 
 import PersonCard from 'Components/PersonCard';
 import LoadMoreCard from 'Components/LoadMoreCard';
@@ -9,9 +11,25 @@ import LoadMoreCard from 'Components/LoadMoreCard';
 @inject('currentUser')
 @observer
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { counter: 0 };
+  interval = null;
+
+  @observable likeCounter = null;
+
+  startCounter() {
+    const { currentUser } = this.props;
+
+    clearInterval(this.interval);
+
+    this.interval = setInterval(() => {
+      if (currentUser.likeResetSeconds === 0) {
+        clearInterval(this.interval);
+      }
+      this.likeCounter = currentUser.likeResetFormatted      
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   @autobind
@@ -22,9 +40,11 @@ class Home extends Component {
   @autobind
   handleError(reason) {
     const { currentUser } = this.props;
-
+    
     if (reason.type === 'like') {
       currentUser.like_limit_reset = reason.resetsAt;
+      this.likeCounter = currentUser.likeResetFormatted
+      this.startCounter();
     } else {
       currentUser.superlike_limit_reset = reason.resetsAt;
     }
@@ -49,7 +69,7 @@ class Home extends Component {
   }
 
   render() {
-    const { recsStore } = this.props;
+    const { recsStore, currentUser } = this.props;
 
     if (recsStore.is_fetching) {
       return <h1>Searching</h1>
@@ -72,6 +92,11 @@ class Home extends Component {
               onMatch={this.handleMatch}
               onError={this.handleError}
               onSuperlike={this.handleSuperlike}
+              limitations={{
+                superlikeRemaining: currentUser.superlike_remaining,
+                superlikeResetsAt: currentUser.superlikeResetDate,
+                likeResetsAt: this.likeCounter,
+              }}
             />
           ))}
           {

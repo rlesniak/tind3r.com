@@ -33,8 +33,9 @@ type PropsType = {
   handleSuperlike: () => void,
   onButtonClick: (type: ActionsType) => void,
   size: 'small' | 'large',
-  superLikeTimeout?: string,
-  likeTimeout?: string,
+  superLikeResetsAt?: string,
+  superlikeRemaining?: number,
+  likeResetsAt?: string,
   passed?: boolean,
   liked?: boolean,
   superliked?: boolean,
@@ -42,8 +43,8 @@ type PropsType = {
 }
 
 const ActionButtons = ({
-  handleLike, handlePass, handleSuperlike, activeActionType, superLikeTimeout, likeTimeout,
-  passed, liked, superliked, hideTimer, size = 'small',
+  handleLike, handlePass, handleSuperlike, activeActionType, superLikeResetsAt, likeResetsAt,
+  passed, liked, superliked, hideTimer, size = 'small', superlikeRemaining,
 }: PropsType) => (
   <div className={cx('action-buttons', `action-buttons--${size}`)}>
     {
@@ -64,12 +65,13 @@ const ActionButtons = ({
         <Button
           color="blue"
           active={superliked}
-          disabled={!!superLikeTimeout}
+          disabled={!!superLikeResetsAt}
           onClick={handleSuperlike}
         >
           <i className="fa fa-star" />
-          {!hideTimer && !!superLikeTimeout && !superliked &&
-            <span className="action-buttons__timer">{superLikeTimeout}</span>}
+          {!hideTimer && !!superLikeResetsAt && !superliked &&
+            <span className="action-buttons__timer">{superLikeResetsAt}</span>}
+          <span className="action-buttons__likes-remaining">{superlikeRemaining}</span>
         </Button>
       </div>
     }
@@ -79,12 +81,12 @@ const ActionButtons = ({
         <Button
           color="green"
           active={liked}
-          disabled={!!likeTimeout}
+          disabled={!!likeResetsAt}
           onClick={handleLike}
         >
           <i className="fa fa-heart" />
-          {!hideTimer && !!likeTimeout && !liked &&
-            <span className="action-buttons__timer">{likeTimeout}</span>}
+          {!hideTimer && !!likeResetsAt && !liked &&
+            <span className="action-buttons__timer">{likeResetsAt}</span>}
         </Button>
       </div>
     }

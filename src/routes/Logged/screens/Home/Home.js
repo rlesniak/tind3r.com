@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import moment from 'moment';
+import cx from 'classnames';
 
 import PersonCard from 'Components/PersonCard';
 import LoadMoreCard from 'Components/LoadMoreCard';
@@ -85,19 +86,21 @@ class Home extends Component {
         </div>
         <div className="home__persons-cards">
           {recsStore.allVisible.map((person, i) => (
-            <PersonCard
-              key={person._id}
-              person={person}
-              small={i !== 0}
-              onMatch={this.handleMatch}
-              onError={this.handleError}
-              onSuperlike={this.handleSuperlike}
-              limitations={{
-                superlikeRemaining: currentUser.superlike_remaining,
-                superlikeResetsAt: currentUser.superlikeResetDate,
-                likeResetsAt: this.likeCounter,
-              }}
-            />
+            <div key={person._id} className={cx({ 'home__persons-cards--main': i === 0 })}>
+              <PersonCard
+                person={person}
+                small={i !== 0}
+                onMatch={this.handleMatch}
+                onError={this.handleError}
+                onSuperlike={this.handleSuperlike}
+                allowHotkeys={i === 0}
+                limitations={{
+                  superlikeRemaining: currentUser.superlike_remaining,
+                  superlikeResetsAt: currentUser.superlikeResetDate,
+                  likeResetsAt: this.likeCounter,
+                }}
+              />
+            </div>
           ))}
           {
             recsStore.allVisible.length > 0 &&

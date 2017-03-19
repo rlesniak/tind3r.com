@@ -25,4 +25,14 @@
       cursor: pointer;
     }
   }
+
+  &__persons-cards > div {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &__persons-cards--main {
+    display: block !important;
+    margin-bottom: 25px;
+  }
 }

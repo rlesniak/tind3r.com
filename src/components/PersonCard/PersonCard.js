@@ -9,12 +9,31 @@ import cx from 'classnames';
 import Gallery from 'Components/Gallery';
 import ActionButtons from 'Components/ActionButtons';
 
+import withHotkeys from 'hoc/withHotkeys';
+import { ACTION_TYPES } from 'const';
+
 import type { PersonType, ActionsType } from 'types/person';
 
+const keyCodes = { d: 68, s: 83, a: 65 };
+
+const callAction = (props, actionType: ActionsType) =>
+  props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
+
 const enhance = compose(
+  withHotkeys({
+    [keyCodes.d]: props => {
+      callAction(props, ACTION_TYPES.LIKE);
+    },
+    [keyCodes.s]: props => {
+      callAction(props, ACTION_TYPES.SUPERLIKE);
+    },
+    [keyCodes.a]: props => {
+      callAction(props, ACTION_TYPES.PASS);
+    },
+  }),
   withHandlers({
     onActionClick: props => (actionType: ActionsType) => {
-      props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
+      callAction(props, actionType);
     },
   }),
   pure,
@@ -30,6 +49,7 @@ const renderInstagramLink = (link, name, small) => (
 type PersonCardType = {
   person: PersonType,
   small?: bollean,
+  allowHotkeys?: bollean,
   onActionClick: (type: ActionsType) => void,
   limitations: {
     superlikeRemaining: number,

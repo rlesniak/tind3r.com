@@ -59,8 +59,8 @@ const NavBar = ({ unreadCount, handleLogout, currentPerson = {} }: PropsType) =>
         <NavLink to={`/users/${currentPerson._id}`} activeClassName="active">
           <div className="avatar">
             {
-              currentPerson.is_fetched && currentPerson.photos &&
-              <img src={currentPerson.photos.url} alt="avatar" />
+              currentPerson.avatarUrl &&
+              <img src={currentPerson.avatarUrl} alt="avatar" />
             }
           </div>
           <div className="name">

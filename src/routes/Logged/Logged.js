@@ -6,6 +6,7 @@ import { observable } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 
 import NavBar from 'Containers/NavBar';
+import Loader from 'Components/Loader';
 
 import NotFound from '../NotFound';
 import Matches from '../Matches';
@@ -61,7 +62,7 @@ class Welcome extends Component {
       <Provider currentUser={currentUser}>
         <div>
           <NavBar />
-          {this.isLogging && !this.isLogged && <div>Logowanie...</div>}
+          {this.isLogging && !this.isLogged && <Loader />}
           {!this.isLogging && this.renderWhenLogged()}
         </div>
       </Provider>

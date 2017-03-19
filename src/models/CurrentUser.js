@@ -3,6 +3,7 @@
 import { observable, extendObservable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
+import get from 'lodash/get';
 
 import API from 'Utils/api';
 
@@ -51,6 +52,10 @@ class CurrentUser {
       this.is_fetched = false;
       this.is_error = true;
     })
+  }
+
+  @computed get avatarUrl(): string {
+    return get(this.photos, [0, 'url']);
   }
 
   @computed get likeResetDate(): ?Date {

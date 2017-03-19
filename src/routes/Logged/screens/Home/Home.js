@@ -8,6 +8,7 @@ import cx from 'classnames';
 
 import PersonCard from 'Components/PersonCard';
 import LoadMoreCard from 'Components/LoadMoreCard';
+import SearchingLoader from 'Components/SearchingLoader';
 
 @inject('currentUser')
 @observer
@@ -72,8 +73,27 @@ class Home extends Component {
   render() {
     const { recsStore, currentUser } = this.props;
 
-    if (recsStore.is_fetching) {
-      return <h1>Searching</h1>
+    if (recsStore.is_fetching || recsStore.areRecsExhaust) {
+      return (
+        <SearchingLoader
+          noAnimation={recsStore.areRecsExhaust}
+          photoUrl={currentUser.avatarUrl}
+        >
+          {
+            recsStore.is_fetching ? 'Finding people near you...' : (
+            <div>
+              {'There\'s no one new around you.'}<br />
+              (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br />
+              <button
+                onClick={this.refresh}
+                className="home__refresh-button"
+              >
+                <i className="fa fa-refresh" />
+              </button>
+            </div>
+          )}
+        </SearchingLoader>
+      )
     }
 
     return (

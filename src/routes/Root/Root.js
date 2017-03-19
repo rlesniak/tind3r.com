@@ -15,6 +15,8 @@ import Welcome from '../Welcome';
 import Logged from '../Logged';
 import NotFound from '../NotFound';
 
+import Loader from 'Components/Loader';
+
 import { checkIfInstalled } from '../../utils/runtime';
 
 class App extends Component {
@@ -54,7 +56,7 @@ class App extends Component {
       );
     }
 
-    return <h1>Spinner</h1>;
+    return <Loader />;
   }
 }
 

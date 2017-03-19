@@ -35,4 +35,12 @@
     display: block !important;
     margin-bottom: 25px;
   }
+
+  &__refresh-button {
+    border: none;
+    background: transparent;
+    margin-left: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
 }

@@ -5,7 +5,7 @@ const meta = {
     _id: 'id1',
     full_name: 'Rafal El',
     name: 'Rafal',
-    photos: getPhotos(),
+    photos: [getPhotos()],
   },
   rating: {
     likes_remaining: 100,

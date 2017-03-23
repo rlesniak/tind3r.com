@@ -14,7 +14,7 @@ export const checkIfInstalled = callback => {
   if (window.chrome && window.chrome.webstore) {
     chrome.runtime.sendMessage(EXT_ID, {
       type: 'CHECK_INSTALLED',
-    }, response => callback(response))
+    }, response => callback(!!response))
   } else {
     callback(false)
   }

@@ -14,7 +14,7 @@ import NavBar from 'Containers/NavBar';
 import Welcome from '../Welcome';
 import Logged from '../Logged';
 import NotFound from '../NotFound';
-
+import * as Database from 'utils/database.v2.js';
 import Loader from 'Components/Loader';
 
 import { checkIfInstalled } from '../../utils/runtime';
@@ -24,7 +24,13 @@ class App extends Component {
     isInstalled: null,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const db = await Database.get();
+
+    db.persons.$.subscribe(changeEvent => {
+      console.log(changeEvent);
+    });
+    console.log(db)
     checkIfInstalled(isInstalled => {
       this.setState({ isInstalled });
     });

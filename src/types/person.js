@@ -6,9 +6,14 @@ export type PersonType = {
   ping_time: string,
   schools: [],
   distance_mi: number,
-  instagram?: {
-    username: string,
-  }
+  instagram?: InstagramType,
+  connection_count: [],
+  common_friends: [],
+  bio: string,
+  name: string,
+  photos: [],
+  gender: number,
+  distance_mi: number,
 }
 
 export type SchoolType = {

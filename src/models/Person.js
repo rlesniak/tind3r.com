@@ -10,6 +10,7 @@ import { miToKm } from 'Utils';
 
 import { pass, like, superlike } from 'services/person-actions';
 import { ACTION_TYPES } from 'const';
+import * as Database from 'utils/database.v2'
 
 import type { SchoolType, InstagramType, ActionsType } from '../types/person';
 
@@ -36,7 +37,15 @@ class Person {
     }
   }
 
-  @action callAction(
+  createDBAction(type: string) {
+    Database.createAction({
+      person_id: this._id,
+      action_type: type,
+      date: moment().format(),
+    });
+  }
+
+  @action async callAction(
     type: ActionsType,
     superlikeCallback: (remaining: number) => void = noop,
     matchCallback: (data?: Object) => void = noop,
@@ -46,39 +55,43 @@ class Person {
 
     switch(type) {
       case ACTION_TYPES.PASS:
-        pass(this._id)
-          .catch(() => {
-            setTimeout(() => this.is_done = 0, 500);
-          });
+        try {
+          const data = await pass(this._id);
+          this.createDBAction('pass');
+        } catch (e) {};
         break;
       case ACTION_TYPES.LIKE:
-        like(this._id).
-          then(data => {
-            if (data.match) {
-              matchCallback();
-            }
-          }).catch(resp => {
-            if (resp.error) {
-              errorCallback({ type: 'like', resetsAt: resp.resetsAt })
-            }
+        try {
+          const { match } = await like(this._id)
+          if (match) {
+            matchCallback();
+          }
 
-            this.is_done = 0;
-          });
+          this.createDBAction('like');
+        } catch (e) {
+          if (e.error) {
+            errorCallback({ type: 'like', resetsAt: e.resetsAt })
+          }
+
+          this.is_done = 0;
+        }
         break;
       case ACTION_TYPES.SUPERLIKE:
-        superlike(this._id).
-          then(data => {
-            if (data.match) {
-              matchCallback();
-            }
-            superlikeCallback(data.super_likes.remaining)
-          }).catch(resp => {
-            if (resp.error) {
-              errorCallback({ type: 'superlike', resetsAt: resp.resetsAt })
-            }
+        try {
+          const { match, super_likes: { remaining } } = superlike(this._id);
+          if (match) {
+            matchCallback();
+          }
 
-            this.is_done = 0;
-          });
+          this.createDBAction('superlike');
+          superlikeCallback(remaining);
+        } catch (e) {
+          if (e.error) {
+            errorCallback({ type: 'superlike', resetsAt: e.resetsAt })
+          }
+
+          this.is_done = 0;
+        }
     }
   }
 

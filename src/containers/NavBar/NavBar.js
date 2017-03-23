@@ -5,7 +5,7 @@ import NavBar from 'Components/NavBar';
 
 @inject('currentUser')
 @observer
- class NavBarContainer extends Component {
+class NavBarContainer extends Component {
   render() {
     const { currentUser } = this.props;
 

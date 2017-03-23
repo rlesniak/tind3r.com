@@ -6,8 +6,6 @@ export async function pass(id: string): Object {
   try {
     const { data } = await API.get(`/pass/${id}`);
 
-    Database.createAction(id, 'pass');
-
     return Promise.resolve(data);
   } catch (e) {
     return Promise.reject(e);
@@ -24,8 +22,6 @@ export async function like(id: string): Object {
         return Promise.reject({ error: 'limit', resetsAt: data.rate_limited_until });
       }
     } else {
-      Database.createAction(id, 'like');
-
       if (data.match) {
         Database.createMatch(id, data.match)
       }
@@ -45,8 +41,6 @@ export async function superlike(id: string): Object {
       // ls.set({ superLikeExpiration: data.super_likes.resets_at })
       Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at })
     }
-
-    Database.createAction(id, 'superlike');
 
     if (data.match) {
       Database.createMatch(id, data.match);

@@ -1,3 +1,5 @@
+// @flow
+
 import './Home.scss';
 
 import React, { Component } from 'react';
@@ -13,7 +15,7 @@ import SearchingLoader from 'Components/SearchingLoader';
 @inject('currentUser')
 @observer
 class Home extends Component {
-  interval = null;
+  interval: number = 0;
 
   @observable likeCounter = null;
 
@@ -26,7 +28,7 @@ class Home extends Component {
       if (currentUser.likeResetSeconds === 0) {
         clearInterval(this.interval);
       }
-      this.likeCounter = currentUser.likeResetFormatted      
+      this.likeCounter = currentUser.likeResetFormatted
     }, 1000);
   }
 
@@ -34,15 +36,19 @@ class Home extends Component {
     clearInterval(this.interval);
   }
 
-  @autobind
-  handleMatch() {
-    alert('Match')
+  componentDidMount() {
+    this.startCounter();
   }
 
   @autobind
-  handleError(reason) {
+  handleMatch(match: Object) {
+    alert('Match');
+  }
+
+  @autobind
+  handleError(reason: Object) {
     const { currentUser } = this.props;
-    
+
     if (reason.type === 'like') {
       currentUser.like_limit_reset = reason.resetsAt;
       this.likeCounter = currentUser.likeResetFormatted
@@ -54,6 +60,8 @@ class Home extends Component {
 
   @autobind
   handleSuperlike(remaining: number) {
+    const { currentUser } = this.props;
+
     currentUser.superlike_remaining = remaining;
   }
 

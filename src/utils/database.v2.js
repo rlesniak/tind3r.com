@@ -7,8 +7,10 @@ import {
 
 import PersonScheme from 'schemes/person';
 import ActionScheme from 'schemes/action';
+import MatchScheme from 'schemes/match';
 
 import type { ActionType } from '../types/action';
+import type { MatchType } from '../types/match';
 
 RxDB.plugin(idb);
 
@@ -19,6 +21,10 @@ const collections = [{
 }, {
   name: 'actions',
   schema: ActionScheme,
+  sync: true
+}, {
+  name: 'matches',
+  schema: MatchScheme,
   sync: true
 }];
 
@@ -48,4 +54,10 @@ export async function createAction(json: ActionType): Promise<*> {
   const db = await get();
 
   return db.actions.insert(json);
+}
+
+export async function createOrUpdateMatch(json: MatchType): Promise<*> {
+  const db = await get();
+
+  return db.matches.upsert(json);
 }

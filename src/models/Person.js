@@ -45,6 +45,19 @@ class Person {
     });
   }
 
+  createDBMatch(match: Object) {
+    Database.createOrUpdateMatch({
+      id: match._id,
+      person_id: match.person._id,
+      date: match.created_date,
+      last_activity_date: match.last_activity_date,
+      is_boost_match: match.is_boost_match ? 1 : 0,
+      is_super_like: match.is_super_like ? 1 : 0,
+      participants: match.participants,
+      is_new: 1,
+    })
+  }
+
   @action async callAction(
     type: ActionsType,
     superlikeCallback: (remaining: number) => void = noop,
@@ -65,6 +78,7 @@ class Person {
           const { match } = await like(this._id)
           if (match) {
             matchCallback();
+            this.createDBMatch(match)
           }
 
           this.createDBAction('like');
@@ -81,6 +95,7 @@ class Person {
           const { match, super_likes: { remaining } } = superlike(this._id);
           if (match) {
             matchCallback();
+            this.createDBMatch(match)
           }
 
           this.createDBAction('superlike');

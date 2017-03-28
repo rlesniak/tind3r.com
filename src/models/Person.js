@@ -15,8 +15,8 @@ import * as Database from 'utils/database.v2'
 import type { SchoolType, InstagramType, ActionsType } from '../types/person';
 
 class Person {
+  id: string;
   store: any;
-  _id: string;
   birth_date: string;
   distance_mi: number;
   schools: Array<SchoolType>;
@@ -34,12 +34,13 @@ class Person {
 
     if (json) {
       extend(this, json);
+      this.id = json._id;
     }
   }
 
   createDBAction(type: string) {
     Database.createAction({
-      person_id: this._id,
+      person_id: this.id,
       action_type: type,
       date: moment().format(),
     });
@@ -69,13 +70,13 @@ class Person {
     switch(type) {
       case ACTION_TYPES.PASS:
         try {
-          const data = await pass(this._id);
+          const data = await pass(this.id);
           this.createDBAction('pass');
         } catch (e) {};
         break;
       case ACTION_TYPES.LIKE:
         try {
-          const { match } = await like(this._id)
+          const { match } = await like(this.id)
           if (match) {
             matchCallback();
             this.createDBMatch(match)
@@ -92,7 +93,7 @@ class Person {
         break;
       case ACTION_TYPES.SUPERLIKE:
         try {
-          const { match, super_likes: { remaining } } = superlike(this._id);
+          const { match, super_likes: { remaining } } = superlike(this.id);
           if (match) {
             matchCallback();
             this.createDBMatch(match)

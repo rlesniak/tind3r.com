@@ -14,6 +14,7 @@ export type PersonType = {
   photos: [],
   gender: number,
   distance_mi: number,
+  age: string,
 }
 
 export type SchoolType = {

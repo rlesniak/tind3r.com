@@ -70,6 +70,10 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: require.resolve('react-addons-perf'),
+        use: 'expose-loader?Perf',
       }
     ],
   },

@@ -1,3 +1,5 @@
+// @flow
+
 import './PersonCard.scss';
 
 import React from 'react';
@@ -48,9 +50,10 @@ const renderInstagramLink = (link, name, small) => (
 
 type PersonCardType = {
   person: PersonType,
-  small?: bollean,
-  allowHotkeys?: bollean,
+  small?: boolean,
+  allowHotkeys?: boolean,
   onActionClick: (type: ActionsType) => void,
+  onError: (reason: ActionsType) => void,
   limitations: {
     superlikeRemaining: number,
     superlikeResetsAt: ?string,
@@ -61,7 +64,7 @@ type PersonCardType = {
 const PersonCard = ({
   person, small, onActionClick,
   limitations: { superlikeRemaining, superlikeResetsAt, likeResetsAt },
-}) => (
+}: PersonCardType) => (
   <div className={cx('person-card', { 'person-card--large': !small })}>
     <div className="person-card__gallery">
       <Gallery
@@ -72,7 +75,7 @@ const PersonCard = ({
     </div>
     <div className="person-card__content">
       <div className="person-card__name">
-        <Link to={`/user/${person._id}`}>{person.name}, {person.age}</Link>
+        <Link to={`/user/${person.id}`}>{person.name}, {person.age}</Link>
       </div>
       <div className="person-card__seen-min">{person.seenMin}</div>
       <div className="person-card__bio">{person.bio}</div>

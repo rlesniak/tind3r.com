@@ -12,8 +12,9 @@ import PersonCard from 'Components/PersonCard';
 import LoadMoreCard from 'Components/LoadMoreCard';
 import SearchingLoader from 'Components/SearchingLoader';
 
-@inject('currentUser')
-@observer
+import counterService from 'services/counterService';
+
+@inject('currentUser') @observer
 class Home extends Component {
   interval: number = 0;
 
@@ -33,11 +34,32 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    counterService.stop();
+  }
+
+  componentDidMount() {
+    counterService.createSubscriber({
+      handler: this.handleLikeCounter,
+    });
   }
 
   componentDidMount() {
     this.startCounter();
+  }
+
+  @autobind
+  handleMatch(match: Object) {
+    alert('Match');
+  }
+
+  @autobind
+  handleLikeCounter() {
+    const { currentUser } = this.props;
+
+    if (currentUser.likeResetSeconds === 0) {
+      counterService.unsubscribe(this.handleLikeCounter);
+    }
+    this.likeCounter = currentUser.likeResetFormatted
   }
 
   @autobind
@@ -51,8 +73,11 @@ class Home extends Component {
 
     if (reason.type === 'like') {
       currentUser.like_limit_reset = reason.resetsAt;
-      this.likeCounter = currentUser.likeResetFormatted
-      this.startCounter();
+      this.likeCounter = currentUser.likeResetFormatted;
+
+      counterService.createSubscriber({
+        handler: this.handleLikeCounter,
+      });
     } else {
       currentUser.superlike_limit_reset = reason.resetsAt;
     }

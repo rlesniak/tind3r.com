@@ -1,0 +1,29 @@
+.match-row {
+  background: #fff;
+  height: 100%;
+  width: 100%;
+  display: table;
+
+  &__wrapper {
+    display: table-row;
+  }
+
+  &__avatar,
+  &__details {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 5px;
+  }
+
+  &__avatar {
+    width: 50px;
+  }
+
+  &__details {
+    margin-left: 60px;
+  }
+
+  &--active {
+    background: red;
+  }
+}

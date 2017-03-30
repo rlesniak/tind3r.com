@@ -42,6 +42,13 @@ const create = async function() {
   return db;
 };
 
+const findPerson = async function(id: string) {
+  const db = await get();
+  const person = await db.persons.findOne({ id: { $eq: id }}).exec();
+
+  return person;
+}
+
 export function get(): Promise<*> {
   if (!dbPromise) {
     dbPromise = create();
@@ -60,4 +67,18 @@ export async function createOrUpdateMatch(json: MatchType): Promise<*> {
   const db = await get();
 
   return db.matches.upsert(json);
+}
+
+export async function getMatches(): Promise<*> {
+  const db = await get();
+
+  const matches = await db.matches.find().exec();
+
+  const matchesWithPerson = await Promise.all(matches.map(async match => {
+    const person = await findPerson(match.id);
+
+    return { ...match, person };
+  }));
+
+  return matchesWithPerson;
 }

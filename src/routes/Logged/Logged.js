@@ -9,8 +9,8 @@ import NavBar from 'Containers/NavBar';
 import Loader from 'Components/Loader';
 
 import NotFound from '../NotFound';
-import Matches from '../Matches';
 import Home from './screens/Home';
+import Matches from './screens/Matches';
 
 import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
@@ -26,7 +26,7 @@ class Welcome extends Component {
     meta().then(data => {
       recsStore.fetchCore();
       console.log(data);
-      
+
       currentUser.set(data);
 
       this.isLogged = true;

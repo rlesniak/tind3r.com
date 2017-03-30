@@ -89,7 +89,7 @@ const PersonCard = ({
           <ActionButtons
             liked={person.is_liked}
             likeResetsAt={likeResetsAt}
-            superLikeResetsAt={false}
+            superLikeResetsAt={superlikeResetsAt}
             superlikeRemaining={superlikeRemaining}
             onButtonClick={onActionClick}
             hideTimer={small}

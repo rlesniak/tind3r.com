@@ -7,6 +7,11 @@ import get from 'lodash/get';
 
 import API from 'Utils/api';
 
+type ResetAtHelperType = {
+  formatted: ?string,
+  seconds: number,
+}
+
 async function meta() {
   try {
     const { data } = await API.get('/meta');
@@ -19,6 +24,15 @@ async function meta() {
 
 const formatTime = date => moment.utc(moment(date).diff(moment())).format('HH:mm:ss');
 const formatSeconds = date => moment(date).diff(moment(), 'seconds');
+const resetAtFormatted = (type: ?Date): string => (
+  type && resetAtSeconds(type) > 0 ? formatTime(type) : ''
+);
+const resetAtSeconds = (type: ?Date): number => type ? formatSeconds(type) : -1;
+
+const resetAtDateHelper = (data): ResetAtHelperType => ({
+  formatted: resetAtFormatted(data),
+  seconds: resetAtSeconds(data),
+});
 
 class CurrentUser {
   @observable is_fetched: boolean = false;
@@ -70,18 +84,12 @@ class CurrentUser {
     }
   }
 
-  @computed get likeResetFormatted(): ?string {
-    if (this.likeResetDate && this.likeResetSeconds > 0) {
-      return formatTime(this.likeResetDate);
-    }
+  @computed get likeReset(): ResetAtHelperType {
+    return resetAtDateHelper(this.likeResetDate);
   }
 
-  @computed get likeResetSeconds(): number {
-    if (this.likeResetDate) {
-      return formatSeconds(this.likeResetDate)
-    }
-
-    return -1;
+  @computed get superlikeReset(): ResetAtHelperType {
+    return resetAtDateHelper(this.superlikeResetDate);
   }
 }
 

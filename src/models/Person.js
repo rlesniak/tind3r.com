@@ -132,8 +132,8 @@ class Person {
   }
 
   @computed get instagramProfileLink(): string {
-    if (this.instagram && this.instagram.username) {
-      return `https://www.instagram.com/${this.instagram.username}/`;
+    if (this.instagramUsername) {
+      return `https://www.instagram.com/${this.instagramUsername}/`;
     }
 
     return '';

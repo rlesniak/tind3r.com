@@ -19,32 +19,15 @@ class Home extends Component {
   interval: number = 0;
 
   @observable likeCounter = null;
-
-  startCounter() {
-    const { currentUser } = this.props;
-
-    clearInterval(this.interval);
-
-    this.interval = setInterval(() => {
-      if (currentUser.likeResetSeconds === 0) {
-        clearInterval(this.interval);
-      }
-      this.likeCounter = currentUser.likeResetFormatted
-    }, 1000);
-  }
+  @observable superlikeCounter = null;
 
   componentWillUnmount() {
     counterService.stop();
   }
 
   componentDidMount() {
-    counterService.createSubscriber({
-      handler: this.handleLikeCounter,
-    });
-  }
-
-  componentDidMount() {
-    this.startCounter();
+    counterService.createSubscriber({ handler: this.handleLikeCounter });
+    counterService.createSubscriber({ handler: this.handleSuperlikeCounter });
   }
 
   @autobind
@@ -56,15 +39,22 @@ class Home extends Component {
   handleLikeCounter() {
     const { currentUser } = this.props;
 
-    if (currentUser.likeResetSeconds === 0) {
+    if (currentUser.likeReset.seconds === 0) {
       counterService.unsubscribe(this.handleLikeCounter);
     }
-    this.likeCounter = currentUser.likeResetFormatted
+
+    this.likeCounter = currentUser.likeReset.formatted;
   }
 
   @autobind
-  handleMatch(match: Object) {
-    alert('Match');
+  handleSuperlikeCounter() {
+    const { currentUser } = this.props;
+
+    if (currentUser.superlikeReset.seconds === 0) {
+      counterService.unsubscribe(this.handleSuperlikeCounter);
+    }
+
+    this.superlikeCounter = currentUser.superlikeReset.formatted;
   }
 
   @autobind
@@ -149,7 +139,7 @@ class Home extends Component {
                 allowHotkeys={i === 0}
                 limitations={{
                   superlikeRemaining: currentUser.superlike_remaining,
-                  superlikeResetsAt: currentUser.superlikeResetDate,
+                  superlikeResetsAt: this.superlikeCounter,
                   likeResetsAt: this.likeCounter,
                 }}
               />

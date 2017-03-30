@@ -41,7 +41,7 @@ module.exports = {
     }
   },
 
-  devtool: 'inline-eval-cheap-source-map',
+  devtool: 'cheap-source-map',
 
   module: {
     rules: [

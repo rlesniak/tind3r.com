@@ -22,6 +22,7 @@ const callAction = (props, actionType: ActionsType) =>
   props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
 
 const enhance = compose(
+  withState('isHovering', 'toggleHover', false),
   withHotkeys({
     [keyCodes.d]: props => {
       callAction(props, ACTION_TYPES.LIKE);
@@ -37,6 +38,8 @@ const enhance = compose(
     onActionClick: props => (actionType: ActionsType) => {
       callAction(props, actionType);
     },
+    onCardMouseEnter: ({ toggleHover }) => () => toggleHover(true),
+    onCardMouseLeave: ({ toggleHover }) => () => toggleHover(false),
   }),
   pure,
 );
@@ -52,6 +55,9 @@ type PersonCardType = {
   person: PersonType,
   small?: boolean,
   allowHotkeys?: boolean,
+  isHovering: boolean,
+  onCardMouseEnter: Function,
+  onCardMouseLeave: Function,
   onActionClick: (type: ActionsType) => void,
   onError: (reason: ActionsType) => void,
   limitations: {
@@ -62,54 +68,62 @@ type PersonCardType = {
 };
 
 const PersonCard = ({
-  person, small, onActionClick,
+  person, small, onActionClick, onCardMouseEnter, onCardMouseLeave, isHovering,
   limitations: { superlikeRemaining, superlikeResetsAt, likeResetsAt },
-}: PersonCardType) => (
-  <div className={cx('person-card', { 'person-card--large': !small })}>
-    <div className="person-card__gallery">
-      <Gallery
-        scrolling={!small}
-        images={person.photos}
-        width={small ? 220 : 400}
-      />
-    </div>
-    <div className="person-card__content">
-      <div className="person-card__name">
-        <Link to={`/user/${person.id}`}>{person.name}, {person.age}</Link>
-      </div>
-      <div className="person-card__seen-min">{person.seenMin}</div>
-      <div className="person-card__bio">{person.bio}</div>
+}: PersonCardType) => {
+  const shouldShowActionButtons = !small || (small && isHovering);
 
-      {!small && <div className="person-card__school">
-        <span>{person.school}</span>
-      </div>}
-      <div className="person-card__employ">
-        <span>{person.school}</span>
-        <div className="person-card__employ__actions">
-          <ActionButtons
-            liked={person.is_liked}
-            likeResetsAt={likeResetsAt}
-            superLikeResetsAt={superlikeResetsAt}
-            superlikeRemaining={superlikeRemaining}
-            onButtonClick={onActionClick}
-            hideTimer={small}
-            size={small ? 'small' : 'large'}
-          />
+  return (
+    <div
+      className={cx('person-card', { 'person-card--large': !small })}
+      onMouseEnter={onCardMouseEnter}
+      onMouseLeave={onCardMouseLeave}
+    >
+      <div className="person-card__gallery">
+        <Gallery
+          scrolling={!small}
+          images={person.photos}
+          width={small ? 220 : 400}
+        />
+      </div>
+      <div className="person-card__content">
+        <div className="person-card__name">
+          <Link to={`/user/${person.id}`}>{person.name}, {person.age}</Link>
+        </div>
+        <div className="person-card__seen-min">{person.seenMin}</div>
+        <div className="person-card__bio">{person.bio}</div>
+
+        {!small && <div className="person-card__school">
+          <span>{person.school}</span>
+        </div>}
+        <div className="person-card__employ">
+          <span>{person.school}</span>
+          {shouldShowActionButtons && <div className="person-card__employ__actions">
+            <ActionButtons
+              liked={person.is_liked}
+              likeResetsAt={likeResetsAt}
+              superLikeResetsAt={superlikeResetsAt}
+              superlikeRemaining={superlikeRemaining}
+              onButtonClick={onActionClick}
+              hideTimer={small}
+              size={small ? 'small' : 'large'}
+            />
+          </div>}
+        </div>
+
+        <div className="person-card__footer">
+          <div className="person-card__footer--distance">{person.distanceKm}</div>
+          <div className="person-card__footer--instagram">
+            {
+              person.instagramProfileLink ?
+              renderInstagramLink(person.instagramProfileLink, person.instagramUsername, small) :
+              <i className="fa fa-instagram" />
+            }
+          </div>
         </div>
       </div>
-
-      <div className="person-card__footer">
-        <div className="person-card__footer--distance">{person.distanceKm}</div>
-        <div className="person-card__footer--instagram">
-          {
-            person.instagramProfileLink ?
-            renderInstagramLink(person.instagramProfileLink, person.instagramUsername, small) :
-            <i className="fa fa-instagram" />
-          }
-        </div>
-      </div>
     </div>
-  </div>
-);
+  );
+}
 
 export default enhance(observer(PersonCard));

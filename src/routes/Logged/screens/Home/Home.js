@@ -16,8 +16,6 @@ import counterService from 'services/counterService';
 
 @inject('currentUser') @observer
 class Home extends Component {
-  interval: number = 0;
-
   @observable likeCounter = null;
   @observable superlikeCounter = null;
 

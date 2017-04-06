@@ -6,8 +6,9 @@ const MatchScheme = {
     id: {
       type: 'string',
     },
-    person_id: {
+    person: {
       type: 'string',
+      ref: 'persons',
     },
     date: {
       type: 'string',
@@ -27,6 +28,23 @@ const MatchScheme = {
     participants: {
       type: 'array',
     },
+    messages: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          sender_id: {
+            type: 'string',
+          },
+          body: {
+            type: 'string',
+          },
+          date: {
+            type: 'string',
+          }
+        }
+      }
+    }
   },
 };
 

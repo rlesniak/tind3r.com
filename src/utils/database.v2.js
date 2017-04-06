@@ -1,84 +1,75 @@
 // @flow
 
-import * as RxDB from 'rxdb';
-import {
-  default as idb
-} from 'pouchdb-adapter-idb';
+import ForerunnerDB from 'forerunnerdb';
 
-import PersonScheme from 'schemes/person';
-import ActionScheme from 'schemes/action';
-import MatchScheme from 'schemes/match';
+import { get } from './api';
 
-import type { ActionType } from '../types/action';
-import type { MatchType } from '../types/match';
+const fdb = new ForerunnerDB();
+let db;
 
-RxDB.plugin(idb);
+const personCollectionFunc = () => {
+  return new Promise((resolve, reject) => {
+    db.collection('person').load((err) => {
+      const personCollection = db.collection('person');
 
-const collections = [{
-  name: 'persons',
-  schema: PersonScheme,
-  sync: true
-}, {
-  name: 'actions',
-  schema: ActionScheme,
-  sync: true
-}, {
-  name: 'matches',
-  schema: MatchScheme,
-  sync: true
-}];
-
-let dbPromise = null;
-
-const create = async function() {
-  const db = await RxDB.create({
-    name: 'tind3r',
-    adapter: 'idb',
-    multiInstance: true
-  });
-
-  await Promise.all(collections.map(colData => db.collection(colData)));
-  window.db = db;
-  return db;
-};
-
-const findPerson = async function(id: string) {
-  const db = await get();
-  const person = await db.persons.findOne({ id: { $eq: id }}).exec();
-
-  return person;
+      if (!err) resolve(personCollection);
+      else reject();
+    });
+  })
 }
 
-export function get(): Promise<*> {
-  if (!dbPromise) {
-    dbPromise = create();
+const matchCollectionFunc = () => {
+  return new Promise((resolve, reject) => {
+    db.collection('match').load((err) => {
+      const matchCollection = db.collection('match');
+
+      if (!err) resolve(matchCollection);
+      else reject();
+    });
+  })
+}
+
+async function create() {
+  if (!db) {
+    db = fdb.db('tind3r');
   }
 
-  return dbPromise;
-};
+  window.db = db;
 
-export async function createAction(json: ActionType): Promise<*> {
-  const db = await get();
-
-  return db.actions.insert(json);
+  return db
 }
 
-export async function createOrUpdateMatch(json: MatchType): Promise<*> {
-  const db = await get();
+export async function matchCollection() {
+  create();
 
-  return db.matches.upsert(json);
+  const collection = await matchCollectionFunc();
+  const persons = await personCollection();
+
+  const matches = collection.find({}, {
+    $join: [{
+      person: {
+        _id: 'personId',
+        $as: 'person',
+        $require: false,
+        $multi: false,
+      }
+    }]
+  });
+
+  return matches;
 }
 
-export async function getMatches(): Promise<*> {
-  const db = await get();
+export async function personCollection() {
+  create();
 
-  const matches = await db.matches.find().exec();
-
-  const matchesWithPerson = await Promise.all(matches.map(async match => {
-    const person = await findPerson(match.id);
-
-    return { ...match, person };
-  }));
-
-  return matchesWithPerson;
+  const persons = await personCollectionFunc()
+  return persons
 }
+
+export async function fetchFromRemote() {
+  const { data } = await get('/updates');
+
+  return data;
+}
+
+export default create;

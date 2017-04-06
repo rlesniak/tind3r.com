@@ -8,33 +8,26 @@ import { observer } from 'mobx-react';
 
 import MatchRow from 'Components/matches/MatchRow';
 
-import MatchStore from 'stores/MatchStore';
+import matchStore from 'stores/MatchStore';
 
 import type { MatchStoreType } from 'stores/MatchStore';
 
 @observer
 class MatchList extends Component {
-  matchStore: MatchStoreType;
-
-  constructor(props: any) {
-    super(props);
-
-    this.matchStore = MatchStore;
-  }
-
   componentDidMount() {
-    this.matchStore.fetch();
+    matchStore.fetch();
+    console.log(matchStore)
   }
 
   render() {
     return (
       <div className="match-list">
         LIS
-        {this.matchStore.matches.map(match => (
-          <div key={match.id} className="match-list__match">
+        {matchStore.matches.map(match => (
+          <div key={match._id} className="match-list__match">
             <MatchRow
               name={match.person.name}
-              content="Testowa wiadomosc"
+              content={'match.lastMessage.body'}
               date="5 minutes ago"
               avatarUrl="http://placebeard.it/120.jpg"
             />

@@ -38,6 +38,7 @@ module.exports = {
       Components: path.resolve(__dirname, 'src/components/'),
       Containers: path.resolve(__dirname, 'src/containers/'),
       Utils: path.resolve(__dirname, 'src/utils/'),
+      forerunnerdb: path.resolve(__dirname, 'node_modules/forerunnerdb/js/builds/all.js')
     }
   },
 

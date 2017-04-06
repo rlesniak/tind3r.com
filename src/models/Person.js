@@ -34,29 +34,32 @@ class Person {
 
     if (json) {
       extend(this, json);
-      this.id = json._id;
     }
   }
 
+  getPerson(matchId) {
+    // Database.get().
+  }
+
   createDBAction(type: string) {
-    Database.createAction({
-      person_id: this.id,
-      action_type: type,
-      date: moment().format(),
-    });
+    // Database.createAction({
+    //   person_id: this.id,
+    //   action_type: type,
+    //   date: moment().format(),
+    // });
   }
 
   createDBMatch(match: Object) {
-    Database.createOrUpdateMatch({
-      id: match._id,
-      person_id: match.person._id,
-      date: match.created_date,
-      last_activity_date: match.last_activity_date,
-      is_boost_match: match.is_boost_match ? 1 : 0,
-      is_super_like: match.is_super_like ? 1 : 0,
-      participants: match.participants,
-      is_new: 1,
-    })
+    // Database.createOrUpdateMatch({
+    //   id: match._id,
+    //   person_id: match.person._id,
+    //   date: match.created_date,
+    //   last_activity_date: match.last_activity_date,
+    //   is_boost_match: match.is_boost_match ? 1 : 0,
+    //   is_super_like: match.is_super_like ? 1 : 0,
+    //   participants: match.participants,
+    //   is_new: 1,
+    // })
   }
 
   @action async callAction(

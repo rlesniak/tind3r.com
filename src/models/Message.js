@@ -7,7 +7,7 @@ import last from 'lodash/last';
 import get from 'lodash/get';
 
 import API from 'Utils/api';
-import Person from './Person';
+import * as Database from 'utils/database.v2';
 
 class Match {
   id: string;
@@ -17,14 +17,13 @@ class Match {
   @observable person: Object = {};
   @observable messages: [] = [];
 
-  @action async setMatch(match: Object) {
+  @action async setMatch(match: Object, interlocutor) {
     extend(this, match);
 
-    this.person = new Person(null, match.person);
+    this.person = interlocutor;
   }
 
-  @action create() {
-
+  @action fetch() {
   }
 
   @computed get lastMessage(): Object {

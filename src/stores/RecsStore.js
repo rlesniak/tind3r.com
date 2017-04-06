@@ -5,13 +5,12 @@ import each from 'lodash/each';
 import filter from 'lodash/filter';
 
 import { get } from 'Utils/api';
-import Database from 'Utils/database';
 import Person from 'models/Person';
 
 async function core() {
   try {
     const { data } = await get('/recs/core');
-    
+
     const results = map(data.results, r => r.user)
 
     return { results, message: data.message };
@@ -50,7 +49,7 @@ class RecsStore {
         each(resp.results, json => this.setPerson(json))
       }
 
-      this.is_fetching = false;    
+      this.is_fetching = false;
       this.is_loading_more = false;
     }));
   }

@@ -24,13 +24,7 @@ class App extends Component {
     isInstalled: null,
   }
 
-  async componentDidMount() {
-    const db = await Database.get();
-
-    db.persons.$.subscribe(changeEvent => {
-      console.log(changeEvent);
-    });
-    console.log(db)
+  componentDidMount() {
     checkIfInstalled(isInstalled => {
       this.setState({ isInstalled });
     });

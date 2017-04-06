@@ -1,6 +1,4 @@
 import API from 'Utils/api';
-import Database from 'Utils/database';
-
 
 export async function pass(id: string): Object {
   try {

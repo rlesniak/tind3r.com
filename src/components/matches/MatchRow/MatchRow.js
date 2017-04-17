@@ -4,6 +4,7 @@ import './MatchRow.scss';
 
 import React, { Component } from 'react';
 import cx from 'classnames';
+import moment from 'moment';
 
 import Avatar from 'Components/Avatar';
 
@@ -27,7 +28,7 @@ const MatchRow = ({ active, name, content, avatarUrl, date }: PropsTypes) => {
           <div className="match-row__message-content">
             {content}
           </div>
-          <div className="match-row__date">{date}</div>
+          <div className="match-row__date">{moment(date).fromNow()}</div>
         </div>
       </div>
     </div>

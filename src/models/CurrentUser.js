@@ -35,6 +35,8 @@ const resetAtDateHelper = (data): ResetAtHelperType => ({
 });
 
 class CurrentUser {
+  @observable is_authenticated = false;
+
   @observable is_fetched: boolean = false;
   @observable is_error: boolean = false;
   @observable like_limit_reset: ?number = null;
@@ -60,9 +62,13 @@ class CurrentUser {
     meta().then(data => {
       // ReactGA.set({ userId: data.user._id })
 
+      this.set(data);
+
       this.is_fetched = true;
+      this.is_authenticated = true;
     }).catch(e => {
       console.log(e);
+      this.is_authenticated = false;
       this.is_fetched = false;
       this.is_error = true;
     })

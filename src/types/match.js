@@ -1,8 +1,11 @@
 // @flow
 
+import type { PersonType } from '../types/person';
+
 export type MatchType = {
   _id: string,
   person_id: string,
+  person: ?PersonType,
   date: string,
   last_activity_date: string,
   is_new: 0 | 1,

@@ -3,8 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Perf from 'react-addons-perf'
 import App from './App';
+import { load } from './utils/database.v2';
 
 window.Perf = Perf;
+
+load().then(() => {
+  render(App);
+});
 
 const rootEl = document.getElementById('root');
 const render = Component =>
@@ -15,5 +20,4 @@ const render = Component =>
     rootEl
   );
 
-render(App);
 if (module.hot) module.hot.accept('./App', () => render(App));

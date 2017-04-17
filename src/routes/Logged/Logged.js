@@ -2,7 +2,7 @@ import './Logged.scss';
 
 import React, { Component } from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
-import { observable } from 'mobx';
+import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 
 import NavBar from 'Containers/NavBar';
@@ -14,32 +14,39 @@ import Matches from './screens/Matches';
 
 import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
-
-import { meta } from 'services/fetch-service';
+import matchStore from 'stores/MatchStore';
 
 @observer
 class Welcome extends Component {
-  @observable isLogged: boolean = false;
   @observable isLogging: boolean = true;
 
+  constructor(props) {
+    super(props);
+
+    this.loggedHandler = reaction(
+      () => currentUser._id,
+      id => this.onSuccesLogin()
+    );
+  }
+
   componentDidMount() {
-    meta().then(data => {
-      recsStore.fetchCore();
-      console.log(data);
+    currentUser.fetch();
+  }
 
-      currentUser.set(data);
+  componentWillUnmount() {
+    this.loggedHandler();
+  }
 
-      this.isLogged = true;
-      this.isLogging = false;
-    }).catch(err => {
-      this.isLogged = false;
-      this.isLogging = false;
-    })
+  onSuccesLogin() {
+    recsStore.fetchCore();
+    matchStore.getFromDb();
+
+    this.isLogging = false;
   }
 
   renderWhenLogged() {
     return (
-      this.isLogged ? (
+      currentUser.is_authenticated ? (
         <div className="logged">
           <Switch>
             <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
@@ -59,10 +66,10 @@ class Welcome extends Component {
 
   render() {
     return (
-      <Provider currentUser={currentUser}>
+      <Provider currentUser={currentUser} matchStore={matchStore}>
         <div>
           <NavBar />
-          {this.isLogging && !this.isLogged && <Loader />}
+          {this.isLogging && !currentUser.is_authenticated && <Loader />}
           {!this.isLogging && this.renderWhenLogged()}
         </div>
       </Provider>

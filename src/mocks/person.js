@@ -21,7 +21,7 @@ const getPhotos = () => ({
   url: getPhoto(320).url,
 });
 
-const person = () => ({
+const person = (id = casual.uuid) => ({
   connection_count: 0,
   common_likes: [],
   common_interests: [{
@@ -50,7 +50,7 @@ const person = () => ({
   teasers: [],
   gender: 1,
   birth_date_info: 'fuzzy birthdate active, not displaying real birth_date',
-  id: '58c579cfb4f6d70a53510d27',
+  id: id,
   distance_mi: casual.integer(2, 50),
   common_connections: [],
 });

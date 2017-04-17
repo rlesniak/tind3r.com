@@ -18,7 +18,7 @@ const updates = () => ({
     following: true,
     following_moments: true,
     id: '582f3d054b19f1e97981172a588144b714b76ffd120e284c',
-    person: person(),
+    person: person('588144b714b76ffd120e284c'),
   }, {
     _id: '582f3d054b19f1e97981172a58c7a4f5545accbf0f8474ae',
     closed: false,
@@ -36,7 +36,7 @@ const updates = () => ({
     following: true,
     following_moments: true,
     id: '582f3d054b19f1e97981172a58c7a4f5545accbf0f8474ae',
-    person: person(),
+    person: person('58c7a4f5545accbf0f8474ae'),
   }, {
     _id: '582f3d054b19f1e97981172a58af618f946dcd674f1c08e9',
     messages: [{

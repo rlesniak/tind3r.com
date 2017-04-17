@@ -9,15 +9,19 @@ import get from 'lodash/get';
 import API from 'Utils/api';
 import Person from './Person';
 
+import type { MatchType } from '../types/match';
+
 class Match {
-  id: string;
+  _id: string;
   store: Object;
 
+  @observable is_new: 0 | 1;
   @observable is_fetched: boolean = false;
   @observable person: Object = {};
   @observable messages: [] = [];
+  @observable lastMessage = {};
 
-  @action async setMatch(match: Object) {
+  @action setMatch(match: MatchType) {
     extend(this, match);
 
     this.person = new Person(null, match.person);
@@ -27,9 +31,6 @@ class Match {
 
   }
 
-  @computed get lastMessage(): Object {
-    return last(this.messages) || {}
-  }
 }
 
 export default Match;

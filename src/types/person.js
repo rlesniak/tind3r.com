@@ -1,7 +1,7 @@
 // @flow
 
 export type PersonType = {
-  id: string,
+  _id: string,
   birth_date: string,
   ping_time: string,
   schools: [],

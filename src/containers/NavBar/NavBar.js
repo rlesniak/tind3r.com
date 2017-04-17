@@ -3,15 +3,15 @@ import { inject, observer } from 'mobx-react';
 
 import NavBar from 'Components/NavBar';
 
-@inject('currentUser')
+@inject('currentUser', 'matchStore')
 @observer
 class NavBarContainer extends Component {
   render() {
-    const { currentUser } = this.props;
+    const { currentUser, matchStore } = this.props;
 
     return (
       <NavBar
-        unreadCount={3}
+        unreadCount={matchStore.unreadCount}
         currentPerson={currentUser}
       />
     )

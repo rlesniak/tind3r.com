@@ -2,7 +2,9 @@
 
 export type MessageType = {
   id: string,
-  sender_id: string,
+  to_id: string,
+  from_id: string,
+  match_id: string,
   body: string,
   date: Date,
 };

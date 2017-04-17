@@ -5,7 +5,9 @@ import map from 'lodash/map';
 
 import { get } from 'Utils/api';
 import Match from '../models/Match';
-import database, { matchCollection, fetchFromRemote } from 'utils/database.v2';
+import database, { matchCollection } from 'utils/database.v2';
+import FetchService from 'services/fetch-service';
+import DB from '../utils/database.v2';
 
 import type { MatchType } from '../types/match';
 
@@ -14,25 +16,57 @@ export type MatchStoreType = {
   fetch: () => void,
 }
 
-class MatchStore {
-  @observable matches = [];
+const saveCollectionToDb = data =>{
+  const collection = DB().collection('matches');
+  collection.insert(data);
+  collection.save();
+}
 
-  @action async fetch() {
-    fetchFromRemote()
-    const matches: Array<MatchType> = await matchCollection();
+class MatchStore {
+  @observable is_sync = false;
+  @observable items: Object[] = [];
+
+  constructor() {
+    DB().collection('matches').on('update', () => {
+      console.log('updated');
+    });
+  }
+
+  @action getFromDb() {
+    const matches = matchCollection();
 
     matches.forEach(action(data => {
-      const match = new Match;
-      match.setMatch(data);
-      this.matches.push(match);
+      this.create(data);
     }));
+
+    this.is_sync = true;
+
+    // this.fetch();
+  }
+
+  @action async fetch() {
+    try {
+      const { matches } = await FetchService.updates();
+
+      matches.forEach(action(data => {
+        this.create(data);
+      }));
+    } catch(err) { console.log(err) }
   }
 
   @action create(data: MatchType) {
     const match = new Match();
     match.setMatch(data)
 
-    this.matches.push(match);
+    this.items.push(match);
+  }
+
+  @computed get unreadCount(): number {
+    return this.matches.filter(match => match.is_new === 1).length;
+  }
+
+  @computed get matches(): MatchType[] {
+    return this.items.reverse();
   }
 }
 

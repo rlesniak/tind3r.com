@@ -11,10 +11,12 @@ import FetchService from 'services/fetch-service';
 import DB from '../utils/database.v2';
 
 import type { MatchType } from '../types/match';
+import type { MatchModelType } from '../models/Match';
 
 export type MatchStoreType = {
-  matches: Array<*>,
+  items: Array<*>,
   fetch: () => void,
+  matches: () => Array<MatchModelType>,
 }
 
 const saveCollectionToDb = data =>{
@@ -66,7 +68,7 @@ class MatchStore {
     return this.matches.filter(match => match.is_new).length;
   }
 
-  @computed get matches(): MatchType[] {
+  @computed get matches(): MatchModelType[] {
     return this.items.reverse();
   }
 }

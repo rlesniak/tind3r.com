@@ -6,29 +6,22 @@ import extend from 'lodash/extend';
 import last from 'lodash/last';
 import get from 'lodash/get';
 
-import API from 'Utils/api';
-import * as Database from 'utils/database.v2';
+import type { MessageType } from '../types/message';
 
-class Match {
+class Message {
   id: string;
   store: Object;
+  to_id: string;
+  from_id: string;
+  match_id: string;
+  body: string;
+  date: Date;
 
-  @observable is_fetched: boolean = false;
-  @observable person: Object = {};
-  @observable messages: [] = [];
+  constructor(store: Object, message: MessageType) {
+    this.store = store;
 
-  @action async setMatch(match: Object, interlocutor) {
-    extend(this, match);
-
-    this.person = interlocutor;
-  }
-
-  @action fetch() {
-  }
-
-  @computed get lastMessage(): Object {
-    return last(this.messages) || {}
+    extend(this, message);
   }
 }
 
-export default Match;
+export default Message;

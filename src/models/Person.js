@@ -12,7 +12,11 @@ import { pass, like, superlike } from 'services/person-actions';
 import { ACTION_TYPES } from 'const';
 import * as Database from 'utils/database.v2'
 
-import type { SchoolType, InstagramType, ActionsType } from '../types/person';
+import type { PersonType, SchoolType, InstagramType, ActionsType } from '../types/person';
+
+export type PersonModelType = PersonType & {
+  mainPhoto: () => string,
+}
 
 class Person {
   id: string;

@@ -11,6 +11,13 @@ import Person from './Person';
 import { removeMatch } from 'Utils/database.v2';
 
 import type { MatchType } from '../types/match';
+import type { PersonModelType } from './Person';
+
+export type MatchModelType = MatchType & {
+  remove: () => void,
+  person: PersonModelType,
+  lastMessage: Object,
+}
 
 class Match {
   _id: string;
@@ -18,7 +25,7 @@ class Match {
 
   @observable is_new: boolean = false;
   @observable is_fetched: boolean = false;
-  @observable person: Object = {};
+  @observable person: PersonModelType = {};
   @observable messages: [] = [];
   @observable lastMessage = {};
 

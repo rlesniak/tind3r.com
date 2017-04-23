@@ -2,9 +2,10 @@
 
 import './MatchRow.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import moment from 'moment';
+import { withHandlers } from 'recompose';
 
 import Avatar from 'Components/Avatar';
 
@@ -15,11 +16,24 @@ type PropsTypes = {
   avatarUrl: string,
   date: string,
   isNew: boolean,
+  onClick: (matchId: string) => void,
+  handleOnClick: () => void,
 }
 
-const MatchRow = ({ active, name, content, avatarUrl, date, isNew }: PropsTypes) => {
+const enhance = withHandlers({
+  handleOnClick: ({ _id, onClick }) => () => {
+    onClick(_id);
+  },
+})
+
+const MatchRow = ({
+  active, name, content, avatarUrl, date, isNew, handleOnClick,
+}: PropsTypes) => {
   return (
-    <div className={cx('match-row', { 'match-row--active': active })}>
+    <div
+      className={cx('match-row', { 'match-row--active': active })}
+      onClick={handleOnClick}
+    >
       <div className="match-row__wrapper">
         <div className="match-row__avatar">
           <Avatar url={avatarUrl} />
@@ -36,4 +50,4 @@ const MatchRow = ({ active, name, content, avatarUrl, date, isNew }: PropsTypes)
   )
 }
 
-export default MatchRow;
+export default enhance(MatchRow);

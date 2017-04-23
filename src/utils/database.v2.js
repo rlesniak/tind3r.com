@@ -5,6 +5,8 @@ import { first } from 'lodash';
 
 import { get } from './api';
 
+import type { MessageType } from '../types/message';
+
 const fdb = new ForerunnerDB();
 let db;
 
@@ -65,6 +67,26 @@ export function matchCollection() {
   });
 
   return matches;
+}
+
+export function getMessages(matchId: string): Array<MessageType> {
+  const messages = db.collection('messages').find({
+    match_id: matchId,
+  });
+
+  return messages;
+}
+
+export function getMatch(matchId: string): Object {
+  return db.collection('matches').find({
+    _id: matchId,
+  })[0];
+}
+
+export function getPerson(personId: string): Object {
+  return db.collection('persons').find({
+    _id: personId,
+  })[0];
 }
 
 export function removeMatch(_id: string) {

@@ -9,7 +9,7 @@ import get from 'lodash/get';
 import type { MessageType } from '../types/message';
 
 class Message {
-  id: string;
+  _id: string;
   store: Object;
   to_id: string;
   from_id: string;

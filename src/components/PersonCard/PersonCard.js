@@ -14,7 +14,9 @@ import ActionButtons from 'Components/ActionButtons';
 import withHotkeys from 'hoc/withHotkeys';
 import { ACTION_TYPES } from 'const';
 
-import type { PersonType, ActionsType } from 'types/person';
+import Person from 'models/Person';
+
+import type { ActionsType } from 'types/person';
 
 const keyCodes = { d: 68, s: 83, a: 65 };
 
@@ -52,7 +54,7 @@ const renderInstagramLink = (link, name, small) => (
 );
 
 type PersonCardType = {
-  person: PersonType,
+  person: Person,
   small?: boolean,
   allowHotkeys?: boolean,
   isHovering: boolean,

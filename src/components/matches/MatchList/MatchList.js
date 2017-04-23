@@ -9,19 +9,25 @@ import cx from 'classnames';
 
 import MatchRow from 'Components/matches/MatchRow';
 
-import matchStore from 'stores/MatchStore';
+import { MatchStore } from 'stores/MatchStore';
 
-import type { MatchStoreType } from 'stores/MatchStore';
+type PropsTypes = {
+  matchStore: MatchStore,
+  className: string,
+  handleMatchClick: (matchId: string) => void,
+};
 
 @inject('matchStore')
 @observer
 class MatchList extends Component {
+  props: PropsTypes;
+
   handleMatchClick = (matchId: string) => {
     this.props.handleMatchClick(matchId);
   };
 
   render() {
-    const { matchStore: MatchStoreType, className } = this.props;
+    const { matchStore, className } = this.props;
 
     return (
       <div className={cx('match-list', className)}>
@@ -36,7 +42,7 @@ class MatchList extends Component {
               avatarUrl={match.person.mainPhoto}
               isNew={match.is_new}
               name={match.person.name}
-              content={match.lastMessage.body}
+              content={match.last_message.body}
               date={match.last_activity_date}
               onClick={this.handleMatchClick}
             />

@@ -6,6 +6,8 @@ import { first } from 'lodash';
 import { get } from './api';
 
 import type { MessageType } from '../types/message';
+import type { MatchType } from '../types/match';
+import type { PersonType } from '../types/person';
 
 const fdb = new ForerunnerDB();
 let db;
@@ -41,8 +43,8 @@ function create() {
   return db
 }
 
-export function matchCollection() {
-  const matches: [] = db.collection('matches').find({}, {
+export function matchCollection(): Array<MatchType> {
+  const matches: Array<MatchType> = db.collection('matches').find({}, {
     $join: [{
       persons: {
         _id: 'person_id',
@@ -63,7 +65,7 @@ export function matchCollection() {
       },
     })[0];
 
-    match.lastMessage = lastMessage || {};
+    match.last_message = lastMessage || {};
   });
 
   return matches;
@@ -77,13 +79,13 @@ export function getMessages(matchId: string): Array<MessageType> {
   return messages;
 }
 
-export function getMatch(matchId: string): Object {
+export function getMatch(matchId: string): MatchType {
   return db.collection('matches').find({
     _id: matchId,
   })[0];
 }
 
-export function getPerson(personId: string): Object {
+export function getPerson(personId: string): PersonType {
   return db.collection('persons').find({
     _id: personId,
   })[0];

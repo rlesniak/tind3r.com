@@ -7,6 +7,8 @@ import get from 'lodash/get';
 
 import API from 'Utils/api';
 
+import type { UserInterface } from '../types/userInterface';
+
 type ResetAtHelperType = {
   formatted: ?string,
   seconds: number,
@@ -34,7 +36,10 @@ const resetAtDateHelper = (data): ResetAtHelperType => ({
   seconds: resetAtSeconds(data),
 });
 
-class CurrentUser {
+export class CurrentUser implements UserInterface {
+  name: string;
+  isCurrentUser: true = true;
+
   @observable is_authenticated = false;
 
   @observable is_fetched: boolean = false;
@@ -44,7 +49,7 @@ class CurrentUser {
   @observable superlike_remaining: ?number = null;
   @observable _id: string;
   @observable full_name: string;
-  @observable photos: Object;
+  @observable photos: ?[];
 
   @action set(json: Object) {
     if (json) {
@@ -96,6 +101,10 @@ class CurrentUser {
 
   @computed get superlikeReset(): ResetAtHelperType {
     return resetAtDateHelper(this.superlikeResetDate);
+  }
+
+  @computed get mainPhoto(): string {
+    return get(this.photos, [0, 'url']);
   }
 }
 

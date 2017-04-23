@@ -13,18 +13,19 @@ import { ACTION_TYPES } from 'const';
 import * as Database from 'utils/database.v2'
 
 import type { PersonType, SchoolType, InstagramType, ActionsType } from '../types/person';
+import type { UserInterface } from '../types/userInterface';
 
-export type PersonModelType = PersonType & {
-  mainPhoto: () => string,
-}
-
-class Person {
+class Person implements UserInterface {
+  _id: string;
   id: string;
   store: any;
   birth_date: string;
   distance_mi: number;
   schools: Array<SchoolType>;
   instagram: ?InstagramType;
+  photos: ?[];
+  name: string;
+  bio: string;
 
   @observable is_loading: boolean = false;
   @observable ping_time: Date;
@@ -33,16 +34,12 @@ class Person {
   @observable like_limit_reset: ?string = null;
   @observable superlike_limit_reset: ?string = null;
 
-  constructor(store: Object, json: Object) {
+  constructor(store: Object, json: ?Object) {
     this.store = store;
 
     if (json) {
       extend(this, json);
     }
-  }
-
-  getPerson(matchId) {
-    // Database.get().
   }
 
   createDBAction(type: string) {

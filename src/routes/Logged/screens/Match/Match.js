@@ -22,7 +22,7 @@ class Match extends Component {
     this.fetchMessages(params.id)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Object) {
     this.fetchMessages(nextProps.match.params.id)
   }
 

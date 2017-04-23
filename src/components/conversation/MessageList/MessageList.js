@@ -1,16 +1,34 @@
 // @flow
 
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import Message from '../Message';
+import MessageStore from 'stores/MessageStore';
+import Person from 'models/Person';
+import { CurrentUser } from 'models/CurrentUser';
 
-const MessageList = ({ messageStore }) => (
+type PropsTypes = {
+  messageStore: MessageStore,
+  currentUser: CurrentUser,
+};
+
+type GetAuthorType = Person | CurrentUser;
+
+const getAuthor = (fromId: string, interlocutor: Person, currentUser: CurrentUser): GetAuthorType => {
+  return fromId === currentUser._id ? currentUser : interlocutor;
+}
+
+const MessageList = ({ messageStore, currentUser }: PropsTypes) => (
   <div>
-    {messageStore.messages.map(m =>
-      <Message key={m._id} message={m} author={messageStore.interlocutor} />
+    {messageStore.messages.map(message =>
+      <Message
+        key={message._id}
+        message={message}
+        author={getAuthor(message.from_id, messageStore.interlocutor, currentUser)}
+      />
     )}
   </div>
 );
 
-export default observer(MessageList);
+export default inject('currentUser')(observer(MessageList));

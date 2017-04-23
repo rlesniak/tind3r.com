@@ -11,13 +11,6 @@ import FetchService from 'services/fetch-service';
 import DB from '../utils/database.v2';
 
 import type { MatchType } from '../types/match';
-import type { MatchModelType } from '../models/Match';
-
-export type MatchStoreType = {
-  items: Array<*>,
-  fetch: () => void,
-  matches: () => Array<MatchModelType>,
-}
 
 const saveCollectionToDb = data =>{
   const collection = DB().collection('matches');
@@ -25,9 +18,9 @@ const saveCollectionToDb = data =>{
   collection.save();
 }
 
-class MatchStore {
+export class MatchStore {
   @observable is_sync = false;
-  @observable items: Array<Object> = [];
+  @observable items: Array<Match> = [];
 
   constructor() {
     DB().collection('matches').on('update', () => {
@@ -53,12 +46,12 @@ class MatchStore {
     } catch(err) { console.log(err) }
   }
 
-  @action create(data: MatchType) {
+  @action create(data: MatchType): void {
     if (this.items.find(el => el._id === data._id)) {
       return
     }
 
-    const match = new Match(this);
+    const match: Match = new Match(this);
     match.setMatch(data)
 
     this.items.push(match);
@@ -68,7 +61,7 @@ class MatchStore {
     return this.matches.filter(match => match.is_new).length;
   }
 
-  @computed get matches(): MatchModelType[] {
+  @computed get matches(): Array<Match> {
     return this.items.reverse();
   }
 }

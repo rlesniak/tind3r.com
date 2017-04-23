@@ -6,12 +6,10 @@ import { getMessages, getPerson, getMatch } from '../utils/database.v2';
 import Message from '../models/Message';
 import Person from '../models/Person';
 
-import type { PersonModelType } from '../models/Person';
-
 class MessageStore {
   matchId: ?string;
 
-  @observable interlocutor: PersonModelType = {};
+  @observable interlocutor: Person | Object = {};
   @observable messages: Array<Message> = [];
 
   constructor(matchId: ?string) {

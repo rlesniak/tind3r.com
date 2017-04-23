@@ -11,23 +11,17 @@ import Person from './Person';
 import { removeMatch } from 'Utils/database.v2';
 
 import type { MatchType } from '../types/match';
-import type { PersonModelType } from './Person';
-
-export type MatchModelType = MatchType & {
-  remove: () => void,
-  person: PersonModelType,
-  lastMessage: Object,
-}
 
 class Match {
   _id: string;
   store: Object;
+  last_activity_date: string;
 
   @observable is_new: boolean = false;
   @observable is_fetched: boolean = false;
-  @observable person: PersonModelType = {};
+  @observable person: Object = {};
   @observable messages: [] = [];
-  @observable lastMessage = {};
+  @observable last_message: Object = {};
 
   constructor(store: Object) {
     this.store = store;
@@ -36,7 +30,7 @@ class Match {
   @action setMatch(match: MatchType) {
     extend(this, match);
 
-    this.person = new Person(null, match.person);
+    this.person = new Person({}, match.person);
   }
 
   @action create() {

@@ -23,7 +23,10 @@ class MatchList extends Component {
         {matchStore.is_sync ? 'Loaded' : 'Loading'}
         {matchStore.matches.map(match => (
           <div key={match._id} className="match-list__match">
+            <button onClick={() => match.remove()}>X</button>
             <MatchRow
+              avatarUrl={match.person.mainPhoto}
+              isNew={match.is_new}
               name={match.person.name}
               content={match.lastMessage.body}
               date={match.last_activity_date}

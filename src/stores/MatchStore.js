@@ -2,6 +2,7 @@
 
 import { observable, transaction, computed, reaction, action } from 'mobx';
 import map from 'lodash/map';
+import find from 'lodash/find';
 
 import { get } from 'Utils/api';
 import Match from '../models/Match';
@@ -24,7 +25,7 @@ const saveCollectionToDb = data =>{
 
 class MatchStore {
   @observable is_sync = false;
-  @observable items: Object[] = [];
+  @observable items: Array<Object> = [];
 
   constructor() {
     DB().collection('matches').on('update', () => {
@@ -40,29 +41,29 @@ class MatchStore {
     }));
 
     this.is_sync = true;
-
-    // this.fetch();
   }
 
   @action async fetch() {
     try {
       const { matches } = await FetchService.updates();
 
-      matches.forEach(action(data => {
-        this.create(data);
-      }));
+      setTimeout(() => this.getFromDb(), 0);
     } catch(err) { console.log(err) }
   }
 
   @action create(data: MatchType) {
-    const match = new Match();
+    if (this.items.find(el => el._id === data._id)) {
+      return
+    }
+
+    const match = new Match(this);
     match.setMatch(data)
 
     this.items.push(match);
   }
 
   @computed get unreadCount(): number {
-    return this.matches.filter(match => match.is_new === 1).length;
+    return this.matches.filter(match => match.is_new).length;
   }
 
   @computed get matches(): MatchType[] {

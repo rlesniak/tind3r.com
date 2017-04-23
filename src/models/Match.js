@@ -8,6 +8,7 @@ import get from 'lodash/get';
 
 import API from 'Utils/api';
 import Person from './Person';
+import { removeMatch } from 'Utils/database.v2';
 
 import type { MatchType } from '../types/match';
 
@@ -15,11 +16,15 @@ class Match {
   _id: string;
   store: Object;
 
-  @observable is_new: 0 | 1;
+  @observable is_new: boolean = false;
   @observable is_fetched: boolean = false;
   @observable person: Object = {};
   @observable messages: [] = [];
   @observable lastMessage = {};
+
+  constructor(store: Object) {
+    this.store = store;
+  }
 
   @action setMatch(match: MatchType) {
     extend(this, match);
@@ -31,6 +36,11 @@ class Match {
 
   }
 
+  @action remove() {
+    removeMatch(this._id);
+
+    this.store.items.remove(this);
+  }
 }
 
 export default Match;

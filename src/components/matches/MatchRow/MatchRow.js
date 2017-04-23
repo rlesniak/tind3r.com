@@ -14,9 +14,10 @@ type PropsTypes = {
   content: string,
   avatarUrl: string,
   date: string,
+  isNew: boolean,
 }
 
-const MatchRow = ({ active, name, content, avatarUrl, date }: PropsTypes) => {
+const MatchRow = ({ active, name, content, avatarUrl, date, isNew }: PropsTypes) => {
   return (
     <div className={cx('match-row', { 'match-row--active': active })}>
       <div className="match-row__wrapper">
@@ -24,7 +25,7 @@ const MatchRow = ({ active, name, content, avatarUrl, date }: PropsTypes) => {
           <Avatar url={avatarUrl} />
         </div>
         <div className="match-row__details">
-          <div className="match-row__person-details">{name}</div>
+          <div className="match-row__person-details">{name} {isNew}</div>
           <div className="match-row__message-content">
             {content}
           </div>

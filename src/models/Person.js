@@ -149,6 +149,10 @@ class Person {
   @computed get isLiked(): boolean {
     return this.is_liked;
   }
+
+  @computed get mainPhoto(): string {
+    return get(this.photos, [0, 'url']);
+  }
 }
 
 export default Person;

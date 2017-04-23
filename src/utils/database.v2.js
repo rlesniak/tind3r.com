@@ -67,4 +67,14 @@ export function matchCollection() {
   return matches;
 }
 
+export function removeMatch(_id: string) {
+  const removedMatch = db.collection('matches').remove({ _id });
+  db.collection('messages').remove({ match_id: _id });
+  db.collection('persons').remove({ _id: removedMatch.person_id });
+
+  db.collection('matches').save();
+  db.collection('messages').save();
+  db.collection('persons').save();
+}
+
 export default create;

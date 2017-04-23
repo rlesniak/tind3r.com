@@ -10,12 +10,12 @@ import type { MatchType } from '../types/match';
 import type { PersonType } from '../types/person';
 import type { MessageType } from '../types/message';
 
-const getMatche = (match): MatchType => ({
+const getMatch = (match, isNew): MatchType => ({
   _id: match.id,
   person_id: first(match.participants),
   date: match.created_date,
   last_activity_date: match.last_activity_date,
-  is_new: LS.data.lastActivity ? 1 : 0,
+  is_new: isNew,
   is_boost_match: match.is_boost_match,
   is_super_like: match.is_super_like,
 });
@@ -76,7 +76,7 @@ export default {
         // LS.set({ lastActivity: last_activity_date });
 
         each(matches, match => {
-          parsedMatches.push(getMatche(match));
+          parsedMatches.push(getMatch(match, !LS.data.lastActivity));
           parsedPersons.push(getPerson(match.person));
 
           processMessages(match);

@@ -1,0 +1,12 @@
+@import 'const';
+
+.message-controls {
+  &__item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 26px;
+    opacity: .6;
+    cursor: pointer;
+  }
+}

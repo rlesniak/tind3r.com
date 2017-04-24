@@ -3,18 +3,25 @@
 import './Match.scss';
 
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import MessageStore from 'stores/MessageStore';
 
+import { CurrentUser } from 'models/CurrentUser';
+
 import MessageList from 'Components/conversation/MessageList';
+import MessageInput from 'Components/conversation/MessageInput';
 
 type PropsTypes = {
-  handleMatchClick: (matchId: string) => void,
-};
+  currentUser: CurrentUser,
+  match: Object,
+}
 
+@inject('currentUser')
 @observer
 class Match extends Component {
+  props: PropsTypes;
+
   messageStore: MessageStore = new MessageStore(null);
 
   componentDidMount() {
@@ -30,6 +37,11 @@ class Match extends Component {
     this.messageStore.fetch(matchId);
   }
 
+  handleMessageSubmit = (text: string) => {
+    const { match: { params }, currentUser} = this.props;
+    this.messageStore.submit(text, params.id, currentUser._id);
+  }
+
   render() {
     return (
       <div className="match">
@@ -37,7 +49,9 @@ class Match extends Component {
           <MessageList messageStore={this.messageStore} />
         </div>
         <div className="match__new-message">
-          <textarea></textarea>
+          <MessageInput
+            onSubmit={this.handleMessageSubmit}
+          />
         </div>
       </div>
     );

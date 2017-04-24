@@ -92,6 +92,20 @@ export default {
         });
       });
     });
+  },
+
+  sendMessage(matchId: string, message: string, payload: ?Object) {
+    return new Promise((resolve, reject) => {
+      API.post(`/user/matches/${matchId}`, { message, ...payload }).then(({ data }) => {
+        const collection = DB().collection('messages');
+        const message = getMessage(data);
+
+        collection.insert(message);
+        collection.save();
+
+        resolve(message)
+      }).catch(resp => reject(resp))
+    })
   }
 }
 

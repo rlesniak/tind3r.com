@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { last } from 'lodash';
+import { last, uniqueId } from 'lodash';
 
 import Message from '../Message';
 import MessageStore from 'stores/MessageStore';
@@ -50,7 +50,7 @@ class MessageList extends Component {
       <div>
         {messageStore.messages.map(message =>
           <Message
-            key={message._id}
+            key={message._id || uniqueId()}
             ref={ref => { this.messagesRefs.push(ref) }}
             message={message}
             author={getAuthor(message.from_id, messageStore.interlocutor, currentUser)}

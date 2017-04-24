@@ -51,6 +51,7 @@ class MatchList extends Component {
 
     return (
       <div className={cx('match-list', className)}>
+        {matchStore.isLoading ? 'Loading' : null}
         <AutoSizer>
           {({ height, width }) => (
             <List

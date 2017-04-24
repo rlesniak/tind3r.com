@@ -20,6 +20,7 @@ const saveCollectionToDb = data =>{
 
 export class MatchStore {
   @observable is_sync = false;
+  @observable isLoading = false;
   @observable items: Array<Match> = [];
 
   constructor() {
@@ -39,11 +40,15 @@ export class MatchStore {
   }
 
   @action async fetch() {
+    this.isLoading = true;
+
     try {
       const { matches } = await FetchService.updates();
 
       setTimeout(() => this.getFromDb(), 0);
     } catch(err) { console.log(err) }
+
+    this.isLoading = false;
   }
 
   @action create(data: MatchType): void {

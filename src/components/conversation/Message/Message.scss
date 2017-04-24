@@ -61,4 +61,12 @@
       left: -18px;
     }
   }
+
+  &--sending {
+    opacity: .5;
+  }
+
+  &--error {
+    background: red;
+  }
 }

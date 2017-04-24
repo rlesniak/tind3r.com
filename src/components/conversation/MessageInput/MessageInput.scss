@@ -1,0 +1,31 @@
+@import 'const';
+
+.message-input {
+  height: 100%;
+  padding: 10px;
+  background: #ecd7d1;
+
+  &__input {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  textarea {
+    font-size: 14px;
+    resize: none;
+    padding: 4px;
+    height: 40px;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: #7f7f7d;
+    background: transparent;
+    padding-right: 74px;
+    font-family: $font-lato;
+  }
+
+  &__controls {
+    padding: 5px 0;
+  }
+}

@@ -35,6 +35,8 @@ class MessageComponent extends Component {
         ref={ref => { this.wrapperRef = ref}}
         className={cx('message', {
           'message__current': author.isCurrentUser,
+          'message--sending': message.isSending,
+          'message--error': message.isError,
         })}
       >
         <div className="message__avatar">

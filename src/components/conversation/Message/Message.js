@@ -1,8 +1,13 @@
 // @flow
 
+import './Message.scss';
+
 import React from 'react';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
+
+import Avatar from 'Components/Avatar';
 
 import Message from 'models/Message';
 import Person from 'models/Person';
@@ -19,7 +24,14 @@ const MessageComponent = ({ message, author }: PropsTypes) => (
       'message__current': author.isCurrentUser,
     })}
   >
-    {message.body} {author.name} {author.isCurrentUser ? 't' : 'n'}
+    <div className="message__avatar">
+      <Link to={`users/${message.from_id}`}>
+        <Avatar url={author.mainPhoto} />
+      </Link>
+    </div>
+    <div className="message__body">
+      {message.body}
+    </div>
   </div>
 );
 

@@ -16,6 +16,8 @@ import type { PersonType, SchoolType, InstagramType, ActionsType } from '../type
 import type { UserInterface } from '../types/userInterface';
 
 class Person implements UserInterface {
+  isCurrentUser: false = false;
+
   _id: string;
   id: string;
   store: any;

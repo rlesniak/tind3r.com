@@ -1,0 +1,64 @@
+@import 'const';
+
+.message {
+  padding: 10px;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  text-align: right;
+
+  &__body {
+    padding: 17px 14px;
+    display: inline-block;
+    border-radius: 10px;
+    max-width: calc(100% - 70px);
+    font-family: $font-lato;
+    font-size: 14px;
+    position: relative;
+    margin-left: 0;
+    margin-right: 10px;
+    text-align: right;
+    background: #dcc9bd;
+    color: inherit;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right:10px solid transparent;
+      top: 11px;
+      border-left: 10px solid #dcc9bd;
+      left: auto;
+      right: -18px;
+    }
+  }
+
+  &__avatar {
+    float: right;
+  }
+
+  &__current &__avatar {
+    float: left;
+  }
+
+  &__current {
+    text-align: left;
+  }
+
+  &__current &__body {
+    background: #5f90b0;
+    color: #fff;
+    margin-left: 10px;
+    text-align: left;
+
+    &:before {
+      border-right-color: #5f90b0;
+      border-left-color: transparent;
+      left: -18px;
+    }
+  }
+}

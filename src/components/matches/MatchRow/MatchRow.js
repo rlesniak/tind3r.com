@@ -9,7 +9,7 @@ import { withHandlers } from 'recompose';
 
 import Avatar from 'Components/Avatar';
 
-import Match from 'models/match';
+import Match from 'models/Match';
 
 type PropsTypes = {
   onClick: (matchId: string) => void,

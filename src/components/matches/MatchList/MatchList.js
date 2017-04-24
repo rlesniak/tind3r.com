@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
+import { List, AutoSizer } from 'react-virtualized';
 
 import MatchRow from 'Components/matches/MatchRow';
 
@@ -26,29 +27,43 @@ class MatchList extends Component {
     this.props.handleMatchClick(matchId);
   };
 
+  rowRenderer = ({ index, key, style }: Object) => {
+    const { matchStore: { matches } } = this.props;
+    const match = matches[index];
+
+    return (
+      <div
+        key={key}
+        style={style}
+        className="match-list__match"
+      >
+        {/*<button onClick={() => match.remove()}>X</button>*/}
+        <MatchRow
+          match={match}
+          onClick={this.handleMatchClick}
+        />
+      </div>
+    );
+  }
+
   render() {
     const { matchStore, className } = this.props;
 
     return (
       <div className={cx('match-list', className)}>
-        {matchStore.matches.map(match => (
-          <div
-            key={match._id}
-            className="match-list__match"
-          >
-            {/*<button onClick={() => match.remove()}>X</button>*/}
-            <MatchRow
-              match={match}
-              _id={match._id}
-              avatarUrl={match.person.mainPhoto}
-              isNew={match.is_new}
-              name={match.person.name}
-              content={match.last_message.body}
-              date={match.last_activity_date}
-              onClick={this.handleMatchClick}
+        <AutoSizer>
+          {({ height, width }) => (
+            <List
+              ref='List'
+              height={height}
+              overscanRowCount={10}
+              rowCount={matchStore.matches.length}
+              rowHeight={80}
+              rowRenderer={this.rowRenderer}
+              width={width}
             />
-          </div>
-        ))}
+          )}
+        </AutoSizer>
       </div>
     )
   }

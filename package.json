@@ -75,6 +75,7 @@
     "react-router-dom": "^4.1.1",
     "react-slick": "^0.14.11",
     "react-styleguidist": "^4.6.3",
+    "react-virtualized": "^9.7.3",
     "recompose": "^0.23.1",
     "sass-loader": "^6.0.3",
     "store": "^2.0.4",

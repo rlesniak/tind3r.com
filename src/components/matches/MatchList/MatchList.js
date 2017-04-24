@@ -36,8 +36,9 @@ class MatchList extends Component {
             key={match._id}
             className="match-list__match"
           >
-            <button onClick={() => match.remove()}>X</button>
+            {/*<button onClick={() => match.remove()}>X</button>*/}
             <MatchRow
+              match={match}
               _id={match._id}
               avatarUrl={match.person.mainPhoto}
               isNew={match.is_new}

@@ -16,6 +16,9 @@ class Match {
   _id: string;
   store: Object;
   last_activity_date: string;
+  is_boost_match: boolean;
+  is_super_like: boolean;
+  is_new: boolean;
 
   @observable is_new: boolean = false;
   @observable is_fetched: boolean = false;

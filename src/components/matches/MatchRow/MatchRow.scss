@@ -1,29 +1,76 @@
+@import 'const';
+
 .match-row {
   background: #fff;
   height: 100%;
   width: 100%;
-  display: table;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid #b1a599;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
 
-  &__wrapper {
-    display: table-row;
-  }
-
-  &__avatar,
   &__details {
-    display: table-cell;
-    vertical-align: middle;
     padding: 0 5px;
   }
 
   &__avatar {
     width: 50px;
+    float: left;
   }
 
   &__details {
-    margin-left: 60px;
+    margin-left: 65px;
   }
 
   &--active {
     background: red;
+  }
+
+  &--unread {
+    border-left-color: $blue;
+  }
+
+  &__person-details {
+    font-size: 17px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__message-content {
+    font-size: 12px;
+    font-family: $font-lato;
+    display: flex;
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      margin-right: 10px;
+    }
+  }
+
+  &__date {
+    font-size: 11px;
+  }
+
+  &__type-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 15px;
+
+    .fa-star {
+      color: $blue;
+    }
+
+    .fa-bolt {
+      color: $violet;
+    }
+
+    .fa-ban {
+      color: $red;
+    }
   }
 }

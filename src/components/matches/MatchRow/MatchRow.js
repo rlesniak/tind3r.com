@@ -9,41 +9,58 @@ import { withHandlers } from 'recompose';
 
 import Avatar from 'Components/Avatar';
 
+import Match from 'models/match';
+
 type PropsTypes = {
-  active: ?boolean,
-  name: string,
-  content: string,
-  avatarUrl: string,
-  date: string,
-  isNew: boolean,
   onClick: (matchId: string) => void,
   handleOnClick: () => void,
+  match: Match,
 }
 
 const enhance = withHandlers({
-  handleOnClick: ({ _id, onClick }) => () => {
+  handleOnClick: ({ match: { _id }, onClick }: PropsTypes) => () => {
     onClick(_id);
   },
-})
+});
 
-const MatchRow = ({
-  active, name, content, avatarUrl, date, isNew, handleOnClick,
-}: PropsTypes) => {
+const getMatchTypeIcon = (match: Match) => {
+  if (match.isBlocked) {
+    return <i className="fa fa-ban" />
+  }
+
+  if (match.is_super_like) {
+    return <i className="fa fa-star" />
+  }
+
+  if (match.is_boost_match) {
+    return <i className="fa fa-bolt" />
+  }
+
+  return null
+}
+
+const MatchRow = ({ handleOnClick, match }: PropsTypes) => {
   return (
     <div
-      className={cx('match-row', { 'match-row--active': active })}
+      className={cx('match-row', {
+        'match-row--active': false,
+        'match-row--unread': match.is_new,
+      })}
       onClick={handleOnClick}
     >
       <div className="match-row__wrapper">
+        <div className="match-row__type-icon">
+          {getMatchTypeIcon(match)}
+        </div>
         <div className="match-row__avatar">
-          <Avatar url={avatarUrl} />
+          <Avatar url={match.person.mainPhoto} />
         </div>
         <div className="match-row__details">
-          <div className="match-row__person-details">{name} {isNew}</div>
+          <div className="match-row__person-details">{match.person.name}</div>
           <div className="match-row__message-content">
-            {content}
+            <span>{match.last_message.body}</span>
+            <div className="match-row__date">{moment(match.last_activity_date).fromNow()}</div>
           </div>
-          <div className="match-row__date">{moment(date).fromNow()}</div>
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 // @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
+import { last } from 'lodash';
 
 import Message from '../Message';
 import MessageStore from 'stores/MessageStore';
@@ -19,16 +20,45 @@ const getAuthor = (fromId: string, interlocutor: Person, currentUser: CurrentUse
   return fromId === currentUser._id ? currentUser : interlocutor;
 }
 
-const MessageList = ({ messageStore, currentUser }: PropsTypes) => (
-  <div>
-    {messageStore.messages.map(message =>
-      <Message
-        key={message._id}
-        message={message}
-        author={getAuthor(message.from_id, messageStore.interlocutor, currentUser)}
-      />
-    )}
-  </div>
-);
+class MessageList extends Component {
+  props: PropsTypes;
+
+  messagesRefs: Array<*> = [];
+
+  componentDidMount() {
+    this.scrollIntoView()
+  }
+
+  componentDidUpdate() {
+    this.scrollIntoView()
+  }
+
+  scrollIntoView() {
+    const { messageStore, currentUser } = this.props;
+
+    const lastMessage = last(this.messagesRefs);
+
+    if (lastMessage) {
+      lastMessage.scrollIntoView()
+    }
+  }
+
+  render() {
+    const { messageStore, currentUser } = this.props;
+
+    return (
+      <div>
+        {messageStore.messages.map(message =>
+          <Message
+            key={message._id}
+            ref={ref => { this.messagesRefs.push(ref) }}
+            message={message}
+            author={getAuthor(message.from_id, messageStore.interlocutor, currentUser)}
+          />
+        )}
+      </div>
+    )
+  }
+}
 
 export default inject('currentUser')(observer(MessageList));

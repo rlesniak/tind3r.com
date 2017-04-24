@@ -33,7 +33,12 @@ class Match extends Component {
   render() {
     return (
       <div className="match">
-        <MessageList messageStore={this.messageStore} />
+        <div className="match__message-list">
+          <MessageList messageStore={this.messageStore} />
+        </div>
+        <div className="match__new-message">
+          <textarea></textarea>
+        </div>
       </div>
     );
   }

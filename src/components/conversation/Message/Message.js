@@ -2,7 +2,7 @@
 
 import './Message.scss';
 
-import React from 'react';
+import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
@@ -18,21 +18,36 @@ type PropsTypes = {
   author: Person | CurrentUser,
 }
 
-const MessageComponent = ({ message, author }: PropsTypes) => (
-  <div
-    className={cx('message', {
-      'message__current': author.isCurrentUser,
-    })}
-  >
-    <div className="message__avatar">
-      <Link to={`users/${message.from_id}`}>
-        <Avatar url={author.mainPhoto} />
-      </Link>
-    </div>
-    <div className="message__body">
-      {message.body}
-    </div>
-  </div>
-);
+class MessageComponent extends Component {
+  props: PropsTypes;
+
+  wrapperRef: HTMLElement;
+
+  scrollIntoView() {
+    this.wrapperRef.scrollIntoView();
+  }
+
+  render() {
+    const { message, author } = this.props;
+
+    return (
+      <div
+        ref={ref => { this.wrapperRef = ref}}
+        className={cx('message', {
+          'message__current': author.isCurrentUser,
+        })}
+      >
+        <div className="message__avatar">
+          <Link to={`users/${message.from_id}`}>
+            <Avatar url={author.mainPhoto} />
+          </Link>
+        </div>
+        <div className="message__body">
+          {message.body}
+        </div>
+      </div>
+    );
+  }
+}
 
 export default observer(MessageComponent);

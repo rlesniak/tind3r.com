@@ -87,7 +87,7 @@ export class MatchStore {
     ), 'desc');
   }
 
-  find(matchId: string): ?Match {
+  find(matchId: string): Match {
     return this.items.find(item => item._id === matchId);
   }
 }

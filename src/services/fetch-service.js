@@ -23,7 +23,7 @@ const getMatch = (match, isNew): MatchType => ({
 const getPerson = (person): PersonType => pick(person, [
   '_id', 'birth_date', 'ping_time', 'schools',
   'distance_mi', 'connection_count', 'common_friends',
-  'bio', 'name', 'photos', 'gender', 'distance_mi', 'age'
+  'bio', 'name', 'photos', 'gender', 'age'
 ]);
 
 const getMessage = (message): MessageType => ({

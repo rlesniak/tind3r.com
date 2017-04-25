@@ -133,8 +133,12 @@ class Person implements UserInterface {
     return get(this.schools, [0, 'name'], '');
   }
 
-  @computed get distanceKm(): string {
-    return `${miToKm(this.distance_mi)} KM`;
+  @computed get distanceKm(): ?string {
+    if (this.distance_mi) {
+      return `${miToKm(this.distance_mi)} KM`;
+    }
+
+    return null;
   }
 
   @computed get instagramProfileLink(): string {

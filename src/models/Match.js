@@ -23,12 +23,12 @@ class Match {
   is_boost_match: boolean;
   is_super_like: boolean;
   is_new: boolean;
-  @observable last_msg_from_db: MessageType;
 
+  @observable last_msg_from_db: MessageType;
   @observable messageStore: ?MessageStore;
   @observable is_new: boolean = false;
   @observable is_fetched: boolean = false;
-  @observable person: Object = {};
+  @observable person: Person | Object = {};
   @observable messages: [] = [];
 
   constructor(store: Object) {

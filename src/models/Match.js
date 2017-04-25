@@ -9,7 +9,7 @@ import get from 'lodash/get';
 import API from 'Utils/api';
 import Person from './Person';
 import Message from './Message';
-import { removeMatch } from 'Utils/database.v2';
+import { removeMatch, updateMatch } from 'Utils/database.v2';
 
 import MessageStore from '../stores/MessageStore';
 
@@ -23,7 +23,7 @@ class Match {
   is_boost_match: boolean;
   is_super_like: boolean;
   is_new: boolean;
-  last_msg_from_db: MessageType;
+  @observable last_msg_from_db: MessageType;
 
   @observable messageStore: ?MessageStore;
   @observable is_new: boolean = false;
@@ -41,6 +41,10 @@ class Match {
     this.person = new Person({}, match.person);
   }
 
+  @action updateMatch(match: MatchType) {
+    extend(this, match);
+  }
+
   @action create() {
 
   }
@@ -53,6 +57,18 @@ class Match {
 
   @action setMessageStore(store: MessageStore) {
     this.messageStore = store;
+  }
+
+  @action setAsRead() {
+    updateMatch(this._id, { is_new: false });
+  }
+
+  @action insertNewMessage(data: MessageType) {
+    if (this.messageStore) {
+      this.messageStore.create(data);
+    } else {
+      this.last_msg_from_db = data;
+    }
   }
 
   @computed get lastMessage(): Message {

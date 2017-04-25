@@ -4,7 +4,7 @@ import { each, first, pick } from 'lodash';
 
 import API from 'Utils/api';
 import LS from 'Utils/localStorage';
-import DB from 'Utils/database.v2';
+import DB, { updateMatch } from 'Utils/database.v2';
 
 import type { MatchType } from '../types/match';
 import type { PersonType } from '../types/person';
@@ -45,7 +45,7 @@ const processMessages = (match) => {
   collection.save();
 
   if (match.is_new_message) {
-    DB().collection('matches').updateById(match.id, { is_new: 1 });
+    updateMatch(match._id, { is_new: true });
   }
 }
 
@@ -73,12 +73,13 @@ export default {
         const parsedPersons: PersonType[] = [];
         const parsedMessages: MessageType[] = [];
 
-        // LS.set({ lastActivity: last_activity_date });
+        LS.set({ lastActivity: last_activity_date });
 
         each(matches, match => {
-          parsedMatches.push(getMatch(match, !LS.data.lastActivity));
-          parsedPersons.push(getPerson(match.person));
-
+          if (!match.is_new_message) {
+            parsedMatches.push(getMatch(match, !LS.data.lastActivity));
+            parsedPersons.push(getPerson(match.person));
+          }
           processMessages(match);
         });
 

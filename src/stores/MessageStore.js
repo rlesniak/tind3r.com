@@ -5,7 +5,7 @@ import moment from 'moment';
 import last from 'lodash/last';
 import uniqueId from 'lodash/uniqueId';
 
-import { getMessages, getPerson, getMatch } from '../utils/database.v2';
+import { getMessages, getPerson, getMatch, removeMessage } from '../utils/database.v2';
 import Message from '../models/Message';
 import Person from '../models/Person';
 
@@ -51,6 +51,12 @@ class MessageStore {
     message.save();
 
     this.messages.push(message);
+  }
+
+  // FOR DEBUG
+  removeMessage = (message) => {
+    this.messages.remove(message);
+    removeMessage(message._id);
   }
 
   @computed get lastMessage(): ?Message {

@@ -53,7 +53,7 @@ class MatchList extends Component {
         style={style}
         className="match-list__match"
       >
-        {/*<button onClick={() => match.remove()}>X</button>*/}
+        {<button onClick={() => match.remove()}>X</button>}
         <MatchRow
           match={match}
           onClick={this.handleMatchClick}

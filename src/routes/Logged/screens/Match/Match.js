@@ -9,6 +9,7 @@ import MessageStore from 'stores/MessageStore';
 import { MatchStore } from 'stores/MatchStore';
 
 import { CurrentUser } from 'models/CurrentUser';
+import Match from 'models/Match';
 
 import MessageList from 'Components/conversation/MessageList';
 import MessageInput from 'Components/conversation/MessageInput';
@@ -21,8 +22,9 @@ type PropsTypes = {
 
 @inject('currentUser')
 @observer
-class Match extends Component {
+class MatchComponent extends Component {
   props: PropsTypes;
+  match: ?Match;
 
   messageStore: MessageStore = new MessageStore(null);
 
@@ -36,13 +38,20 @@ class Match extends Component {
   }
 
   fetchMessages(matchId: string) {
-    const match = this.props.matchStore.find(matchId);
+    this.match = this.props.matchStore.find(matchId);
 
-    if (match) {
-      match.setMessageStore(this.messageStore);
+    if (this.match) {
+      this.match.setMessageStore(this.messageStore);
+      this.setAsRead();
     }
 
     this.messageStore.fetch(matchId);
+  }
+
+  setAsRead = () => {
+    if (this.match && this.match.is_new) {
+      this.match.setAsRead();
+    }
   }
 
   handleMessageSubmit = (text: string) => {
@@ -58,6 +67,7 @@ class Match extends Component {
         </div>
         <div className="match__new-message">
           <MessageInput
+            onFocus={this.setAsRead}
             onSubmit={this.handleMessageSubmit}
           />
         </div>
@@ -66,4 +76,4 @@ class Match extends Component {
   }
 }
 
-export default Match;
+export default MatchComponent;

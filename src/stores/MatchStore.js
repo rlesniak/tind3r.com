@@ -25,8 +25,21 @@ export class MatchStore {
   @observable items: Array<Match> = [];
 
   constructor() {
-    DB().collection('matches').on('update', () => {
-      console.log('updated');
+    DB().collection('matches').on('update', data => {
+      const [item]: MatchType = data;
+      const match = this.find(item._id);
+
+      if (match) match.updateMatch(item);
+    });
+
+    DB().collection('messages').on('insert', data => {
+      const [item]: MatchType = data;
+
+      if (item) {
+        const match = this.find(item.match_id);
+        console.log(data)
+        if (match) match.insertNewMessage(item);
+      }
     });
   }
 
@@ -46,10 +59,11 @@ export class MatchStore {
     try {
       const { matches } = await FetchService.updates();
 
-      setTimeout(() => this.getFromDb(), 0);
+      setTimeout(() => {
+        this.getFromDb();
+        this.isLoading = false;
+      }, 100);
     } catch(err) { console.log(err) }
-
-    this.isLoading = false;
   }
 
   @action create(data: MatchType): void {

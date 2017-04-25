@@ -91,6 +91,17 @@ export function getPerson(personId: string): PersonType {
   })[0];
 }
 
+export function updateMatch(matchId: string, payload: Object) {
+  console.log('update', matchId, payload)
+  db.collection('matches').updateById(matchId, payload);
+  db.collection('matches').save();
+}
+
+export function removeMessage(_id: string) {
+  db.collection('messages').remove({ _id: _id });
+  db.collection('messages').save();
+}
+
 export function removeMatch(_id: string) {
   const removedMatch = db.collection('matches').remove({ _id });
   db.collection('messages').remove({ match_id: _id });

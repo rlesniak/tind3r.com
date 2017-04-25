@@ -11,6 +11,7 @@ import MessageControls from '../MessageControls';
 
 type PropsTypes = {
   onSubmit: (text: string) => void,
+  onFocus?: () => void,
 }
 
 @observer
@@ -39,6 +40,12 @@ class MessageInput extends Component {
     }
   }
 
+  handleFocus = () => {
+    if (this.props.onFocus) {
+      this.props.onFocus();
+    }
+  }
+
   render() {
     return (
       <div
@@ -49,6 +56,7 @@ class MessageInput extends Component {
             autoFocus
             type="text"
             ref={ref => { this.inputRef = ref }}
+            onFocus={this.handleFocus}
             onChange={this.handleMessageChange}
             onKeyPress={this.handleKeyPress}
             value={this.text}

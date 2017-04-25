@@ -31,9 +31,9 @@ class Message {
   @action async save() {
     this.isSending = true;
     try {
-      const data = await FetchService.sendMessage(this.match_id, this.body);
+      // const data = await FetchService.sendMessage(this.match_id, this.body);
 
-      extend(this, data);
+      // extend(this, data);
     } catch(err) {
       this.isError = true;
     }

@@ -28,7 +28,7 @@ class MessageComponent extends Component {
   }
 
   render() {
-    const { message, author } = this.props;
+    const { message, author, onRemove } = this.props;
 
     return (
       <div
@@ -46,6 +46,7 @@ class MessageComponent extends Component {
         </div>
         <div className="message__body">
           {message.body}
+          <button onClick={() => onRemove(message)}>X</button>
         </div>
       </div>
     );

@@ -11,5 +11,5 @@ export type MatchType = {
   is_new: boolean,
   is_boost_match: 0 | 1,
   is_super_like: 0 | 1,
-  last_message?: { body: string },
+  last_msg_from_db?: Object,
 };

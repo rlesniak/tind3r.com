@@ -1,7 +1,9 @@
 // @flow
 
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import moment from 'moment';
+import last from 'lodash/last';
+import uniqueId from 'lodash/uniqueId';
 
 import { getMessages, getPerson, getMatch } from '../utils/database.v2';
 import Message from '../models/Message';
@@ -38,16 +40,21 @@ class MessageStore {
 
   @action submit(body: string, matchId: string, fromId: string) {
     const data = {
+      _id: uniqueId,
       body,
       match_id: matchId,
       from_id: fromId,
-      date: moment().toString(),
+      date: moment().format(),
     }
 
     const message: Message = new Message(this, data);
     message.save();
 
     this.messages.push(message);
+  }
+
+  @computed get lastMessage(): ?Message {
+    return last(this.messages);
   }
 }
 

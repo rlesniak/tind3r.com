@@ -56,7 +56,7 @@ export function matchCollection(): Array<MatchType> {
   });
 
   matches.forEach(match => {
-    const lastMessage = db.collection('messages').find({
+    const lastMessage: MessageType = db.collection('messages').find({
       match_id: match._id,
     }, {
       $limit: 1,
@@ -65,7 +65,7 @@ export function matchCollection(): Array<MatchType> {
       },
     })[0];
 
-    match.last_message = lastMessage || {};
+    match.last_msg_from_db = lastMessage || {};
   });
 
   return matches;

@@ -11,9 +11,9 @@ import FetchService from 'services/fetch-service';
 import type { MessageType } from '../types/message';
 
 class Message {
-  @observable _id: ?string;
+  @observable _id: string;
   @observable body: string;
-  @observable date: Date;
+  @observable date: string;
   @observable isSending: boolean = false;
   @observable isError: boolean = false;
 
@@ -39,6 +39,10 @@ class Message {
     }
 
     this.isSending = false;
+  }
+
+  @computed get sendDate(): moment {
+    return moment(this.date);
   }
 }
 

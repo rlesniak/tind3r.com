@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
 import MessageStore from 'stores/MessageStore';
+import { MatchStore } from 'stores/MatchStore';
 
 import { CurrentUser } from 'models/CurrentUser';
 
@@ -15,6 +16,7 @@ import MessageInput from 'Components/conversation/MessageInput';
 type PropsTypes = {
   currentUser: CurrentUser,
   match: Object,
+  matchStore: MatchStore,
 }
 
 @inject('currentUser')
@@ -34,6 +36,12 @@ class Match extends Component {
   }
 
   fetchMessages(matchId: string) {
+    const match = this.props.matchStore.find(matchId);
+
+    if (match) {
+      match.setMessageStore(this.messageStore);
+    }
+
     this.messageStore.fetch(matchId);
   }
 

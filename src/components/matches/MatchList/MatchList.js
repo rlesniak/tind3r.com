@@ -3,8 +3,8 @@
 import './MatchList.scss';
 
 import React, { Component } from 'react';
-import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react';
+import { observable, reaction } from 'mobx';
+import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { List, AutoSizer } from 'react-virtualized';
 
@@ -18,10 +18,26 @@ type PropsTypes = {
   handleMatchClick: (matchId: string) => void,
 };
 
-@inject('matchStore')
 @observer
 class MatchList extends Component {
   props: PropsTypes;
+  listRef: ?any;
+  lastMessageReactionDispose: () => void;
+
+  componentDidMount() {
+    this.lastMessageReactionDispose = reaction(
+      () => this.props.matchStore.items.map(store => store.lastMessage),
+      () => {
+        if (this.listRef) {
+          this.listRef.forceUpdateGrid()
+        }
+      }
+    )
+  }
+
+  componentWillUnmount() {
+    this.lastMessageReactionDispose()
+  }
 
   handleMatchClick = (matchId: string) => {
     this.props.handleMatchClick(matchId);
@@ -55,7 +71,7 @@ class MatchList extends Component {
         <AutoSizer>
           {({ height, width }) => (
             <List
-              ref='List'
+              ref={ref => this.listRef = ref}
               height={height}
               overscanRowCount={10}
               rowCount={matchStore.matches.length}

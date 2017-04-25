@@ -3,8 +3,9 @@
 import { observable, transaction, computed, reaction, action } from 'mobx';
 import map from 'lodash/map';
 import find from 'lodash/find';
+import orderBy from 'lodash/orderBy';
 
-import { get } from 'Utils/api';
+import { get } from 'utils/api';
 import Match from '../models/Match';
 import database, { matchCollection } from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
@@ -67,7 +68,13 @@ export class MatchStore {
   }
 
   @computed get matches(): Array<Match> {
-    return this.items.reverse();
+    return orderBy(this.items, match => (
+      match.lastActivity.format('X')
+    ), 'desc');
+  }
+
+  find(matchId: string): ?Match {
+    return this.items.find(item => item._id === matchId);
   }
 }
 

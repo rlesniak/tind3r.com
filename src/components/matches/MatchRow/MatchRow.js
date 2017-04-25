@@ -6,6 +6,7 @@ import React from 'react';
 import cx from 'classnames';
 import moment from 'moment';
 import { withHandlers } from 'recompose';
+import { observer } from 'mobx-react';
 
 import Avatar from 'Components/Avatar';
 
@@ -58,8 +59,8 @@ const MatchRow = ({ handleOnClick, match }: PropsTypes) => {
         <div className="match-row__details">
           <div className="match-row__person-details">{match.person.name}</div>
           <div className="match-row__message-content">
-            <span>{match.last_message.body}</span>
-            <div className="match-row__date">{moment(match.last_activity_date).fromNow()}</div>
+            <span>{match.lastMessage.body}</span>
+            <div className="match-row__date">{moment(match.lastActivity).fromNow()}</div>
           </div>
         </div>
       </div>
@@ -67,4 +68,4 @@ const MatchRow = ({ handleOnClick, match }: PropsTypes) => {
   )
 }
 
-export default enhance(MatchRow);
+export default enhance(observer(MatchRow));

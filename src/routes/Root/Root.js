@@ -9,8 +9,6 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import NavBar from 'Containers/NavBar';
-
 import Welcome from '../Welcome';
 import Logged from '../Logged';
 import NotFound from '../NotFound';

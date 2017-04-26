@@ -5,7 +5,7 @@ import { Route, Link, Switch } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 
-import NavBar from 'Containers/NavBar';
+import NavBar from 'Components/NavBar';
 import Loader from 'Components/Loader';
 
 import NotFound from '../NotFound';
@@ -18,14 +18,22 @@ import matchStore from 'stores/MatchStore';
 
 @observer
 class Welcome extends Component {
+  loggedHandler: () => void;
+
   @observable isLogging: boolean = true;
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.loggedHandler = reaction(
-      () => currentUser._id,
-      id => this.onSuccesLogin()
+      () => ({ id: currentUser._id, isAuthenticated: currentUser.is_authenticated }),
+      ({ isAuthenticated }) => {
+        if (isAuthenticated) {
+          this.onSuccesLogin()
+        } else {
+          this.onErrorLogin()
+        }
+      }
     );
   }
 
@@ -37,11 +45,14 @@ class Welcome extends Component {
     this.loggedHandler();
   }
 
+  onErrorLogin() {
+    console.log('error')
+  }
+
   onSuccesLogin() {
     recsStore.fetchCore();
+    // matchStore.fetch();
     matchStore.getFromDb();
-
-    this.isLogging = false;
   }
 
   renderWhenLogged() {
@@ -68,9 +79,12 @@ class Welcome extends Component {
     return (
       <Provider currentUser={currentUser} matchStore={matchStore}>
         <div>
-          <NavBar />
-          {this.isLogging && !currentUser.is_authenticated && <Loader />}
-          {!this.isLogging && this.renderWhenLogged()}
+          <NavBar
+            unreadCount={matchStore.unreadCount}
+            currentPerson={currentUser}
+          />
+          {currentUser.is_fetching && !currentUser.is_authenticated && <Loader />}
+          {!currentUser.is_fetching && this.renderWhenLogged()}
         </div>
       </Provider>
     );

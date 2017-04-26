@@ -2,43 +2,18 @@
 
 import { each, first, pick } from 'lodash';
 
-import API from 'Utils/api';
-import LS from 'Utils/localStorage';
-import DB, { updateMatch } from 'Utils/database.v2';
+import API from 'utils/api';
+import LS from 'utils/localStorage';
+import { parseMatch, parsePerson, parseMessage } from 'parsers/matchParser';
+import DB, { updateMatch } from 'utils/database.v2';
 
 import type { MatchType } from '../types/match';
 import type { PersonType } from '../types/person';
 import type { MessageType } from '../types/message';
 
-const getMatch = (match, isNew): MatchType => ({
-  _id: match.id,
-  person_id: first(match.participants),
-  date: match.created_date,
-  last_activity_date: match.last_activity_date,
-  is_new: isNew,
-  is_boost_match: match.is_boost_match,
-  is_super_like: match.is_super_like,
-});
-
-const getPerson = (person): PersonType => pick(person, [
-  '_id', 'birth_date', 'ping_time', 'schools',
-  'distance_mi', 'connection_count', 'common_friends',
-  'bio', 'name', 'photos', 'gender', 'age'
-]);
-
-const getMessage = (message): MessageType => ({
-  _id: message._id,
-  id: message._id,
-  to_id: message.to,
-  from_id: message.from,
-  match_id: message.match_id,
-  body: message.message,
-  date: message.sent_date,
-});
-
 const processMessages = (match) => {
   const messages = [];
-  each(match.messages, message => messages.push(getMessage(message)));
+  each(match.messages, message => messages.push(parseMessage(message)));
 
   const collection = DB().collection('messages');
   collection.insert(messages);
@@ -77,8 +52,8 @@ export default {
 
         each(matches, match => {
           if (!match.is_new_message) {
-            parsedMatches.push(getMatch(match, !LS.data.lastActivity));
-            parsedPersons.push(getPerson(match.person));
+            parsedMatches.push(parseMatch(match, !LS.data.lastActivity));
+            parsedPersons.push(parsePerson(match.person));
           }
           processMessages(match);
         });
@@ -99,7 +74,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.post(`/user/matches/${matchId}`, { message, ...payload }).then(({ data }) => {
         const collection = DB().collection('messages');
-        const message = getMessage(data);
+        const message = parseMessage(data);
 
         collection.insert(message);
         collection.save();

@@ -10,7 +10,7 @@ import { miToKm } from 'Utils';
 
 import { pass, like, superlike } from 'services/person-actions';
 import { ACTION_TYPES } from 'const';
-import * as Database from 'utils/database.v2'
+import { createAction, createMatch } from 'utils/database.v2'
 
 import type { PersonType, SchoolType, InstagramType, ActionsType } from '../types/person';
 import type { UserInterface } from '../types/userInterface';
@@ -19,7 +19,6 @@ class Person implements UserInterface {
   isCurrentUser: false = false;
 
   _id: string;
-  id: string;
   store: any;
   birth_date: string;
   distance_mi: number;
@@ -45,24 +44,15 @@ class Person implements UserInterface {
   }
 
   createDBAction(type: string) {
-    // Database.createAction({
-    //   person_id: this.id,
-    //   action_type: type,
-    //   date: moment().format(),
-    // });
+    createAction({
+      person_id: this._id,
+      action_type: type,
+      date: moment().format(),
+    });
   }
 
   createDBMatch(match: Object) {
-    // Database.createOrUpdateMatch({
-    //   id: match._id,
-    //   person_id: match.person._id,
-    //   date: match.created_date,
-    //   last_activity_date: match.last_activity_date,
-    //   is_boost_match: match.is_boost_match ? 1 : 0,
-    //   is_super_like: match.is_super_like ? 1 : 0,
-    //   participants: match.participants,
-    //   is_new: 1,
-    // })
+    createMatch(match);
   }
 
   @action async callAction(
@@ -76,13 +66,13 @@ class Person implements UserInterface {
     switch(type) {
       case ACTION_TYPES.PASS:
         try {
-          const data = await pass(this.id);
+          const data = await pass(this._id);
           this.createDBAction('pass');
         } catch (e) {};
         break;
       case ACTION_TYPES.LIKE:
         try {
-          const { match } = await like(this.id)
+          const { match } = await like(this._id)
           if (match) {
             matchCallback();
             this.createDBMatch(match)
@@ -99,7 +89,7 @@ class Person implements UserInterface {
         break;
       case ACTION_TYPES.SUPERLIKE:
         try {
-          const { match, super_likes: { remaining } } = superlike(this.id);
+          const { match, super_likes: { remaining } } = superlike(this._id);
           if (match) {
             matchCallback();
             this.createDBMatch(match)

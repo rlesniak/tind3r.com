@@ -85,16 +85,22 @@ class Home extends Component {
     recsStore.fetchCore(true);
   }
 
+  handleRefresh = () => {
+    const { recsStore } = this.props;
+
+    recsStore.fetchCore();
+  }
+
   renderNooneNew() {
     return (
       <h2>There is no one new</h2>
     )
   }
 
-  render() {
+  renderBody() {
     const { recsStore, currentUser } = this.props;
 
-    if (recsStore.is_fetching || recsStore.areRecsExhaust) {
+    if (recsStore.is_fetching || recsStore.areRecsExhaust || (recsStore.is_fetching && recsStore.allVisible.length === 0)) {
       return (
         <SearchingLoader
           noAnimation={recsStore.areRecsExhaust}
@@ -106,7 +112,7 @@ class Home extends Component {
               {'There\'s no one new around you.'}<br />
               (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br />
               <button
-                onClick={this.refresh}
+                onClick={this.handleRefresh}
                 className="home__refresh-button"
               >
                 <i className="fa fa-refresh" />
@@ -118,41 +124,49 @@ class Home extends Component {
     }
 
     return (
-      <div className="home">
-        <div className="home__settings">
-          <div className="home__settings__wrapper">Wrapper</div>
-          <div className="home__settings__trigger">
-            <i className="fa fa-cog" onClick={this.showSettings} />
-          </div>
-        </div>
-        <div className="home__persons-cards">
-          {recsStore.allVisible.map((person, i) => (
-            <div key={person._id} className={cx({ 'home__persons-cards--main': i === 0 })}>
-              <PersonCard
-                person={person}
-                small={i !== 0}
-                onMatch={this.handleMatch}
-                onError={this.handleError}
-                onSuperlike={this.handleSuperlike}
-                allowHotkeys={i === 0}
-                limitations={{
-                  superlikeRemaining: currentUser.superlike_remaining,
-                  superlikeResetsAt: this.superlikeCounter,
-                  likeResetsAt: this.likeCounter,
-                }}
-              />
-            </div>
-          ))}
-          {
-            recsStore.allVisible.length > 0 &&
-            <LoadMoreCard
-              onClick={this.handleLoadMoreClick}
-              loading={recsStore.is_loading_more}
+      <div className="home__persons-cards">
+        {recsStore.allVisible.map((person, i) => (
+          <div key={person._id} className={cx({ 'home__persons-cards--main': i === 0 })}>
+            <PersonCard
+              person={person}
+              small={i !== 0}
+              onMatch={this.handleMatch}
+              onError={this.handleError}
+              onSuperlike={this.handleSuperlike}
+              allowHotkeys={i === 0}
+              limitations={{
+                superlikeRemaining: currentUser.superlike_remaining,
+                superlikeResetsAt: this.superlikeCounter,
+                likeResetsAt: this.likeCounter,
+              }}
             />
-          }
+          </div>
+        ))}
+        {
+          recsStore.allVisible.length > 0 &&
+          <LoadMoreCard
+            onClick={this.handleLoadMoreClick}
+            loading={recsStore.is_loading_more}
+          />
+        }
 
-          {recsStore.areRecsExhaust && this.renderNooneNew()}
-        </div>
+        {recsStore.areRecsExhaust && this.renderNooneNew()}
+      </div>
+    );
+  }
+
+  render() {
+    const { recsStore } = this.props;
+
+    return (
+      <div className="home">
+        {recsStore.areRecsExhaust && <div className="home__settings">
+            <div className="home__settings__wrapper">Wrapper</div>
+            <div className="home__settings__trigger">
+              <i className="fa fa-cog" onClick={this.showSettings} />
+            </div>
+          </div>}
+        {this.renderBody()}
       </div>
     );
   }

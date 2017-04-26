@@ -5,6 +5,8 @@ import { first } from 'lodash';
 
 import { get } from './api';
 
+import { parseMatch, parsePerson } from '../utils/parsers';
+
 import type { MessageType } from '../types/message';
 import type { MatchType } from '../types/match';
 import type { PersonType } from '../types/person';
@@ -21,7 +23,7 @@ export function load() {
   window.db = db;
 
   return new Promise((resolve, reject) => {
-    const checkIfLoaded = () => loaded === 3 ? resolve() : null;
+    const checkIfLoaded = () => loaded === 4 ? resolve() : null;
     const loadedCallback = name => {
       loaded++;
       checkIfLoaded();
@@ -30,6 +32,7 @@ export function load() {
     db.collection('matches').load(loadedCallback);
     db.collection('persons').load(loadedCallback);
     db.collection('messages').load(loadedCallback);
+    db.collection('actions').load(loadedCallback);
   })
 }
 
@@ -89,6 +92,31 @@ export function getPerson(personId: string): PersonType {
   return db.collection('persons').find({
     _id: personId,
   })[0];
+}
+
+export function createAction(payload: { person_id: string, action_type: string, date: string }) {
+  db.collection('actions').insert(payload);
+  db.collection('actions').save();
+}
+
+export function createMatch(match: Object) {
+  const parsedMatch: MatchType = parseMatch(match, true);
+  const parsedPerson: PersonType = parseMatch(match.person);
+
+  createMatches([parsedMatch]);
+  createPersons([parsedPerson]);
+}
+
+export function createPersons(persons: Array<PersonType>) {
+  const collection = db.collection('persons');
+  collection.insert(persons);
+  collection.save();
+}
+
+export function createMatches(data: Array<MatchType>) {
+  const collection = db.collection('matches');
+  collection.insert(data);
+  collection.save();
 }
 
 export function updateMatch(matchId: string, payload: Object) {

@@ -45,52 +45,56 @@ type PropsType = {
 const ActionButtons = ({
   handleLike, handlePass, handleSuperlike, activeActionType, superLikeResetsAt, likeResetsAt,
   passed, liked, superliked, hideTimer, size = 'small', superlikeRemaining,
-}: PropsType) => (
-  <div className={cx('action-buttons', `action-buttons--${size}`)}>
-    {
-      !superliked && !liked &&
-      <div className="action-buttons__button">
-        <Button
-          color="red"
-          active={passed}
-          onClick={handlePass}
-        >
-          <i className="fa fa-thumbs-o-down" />
-        </Button>
-      </div>
-    }
-    {
-      !passed && !liked &&
-      <div className="action-buttons__button">
-        <Button
-          color="blue"
-          active={superliked}
-          disabled={!!superLikeResetsAt}
-          onClick={handleSuperlike}
-        >
-          <i className="fa fa-star" />
-          {!hideTimer && !!superLikeResetsAt && !superliked &&
-            <span className="action-buttons__timer">{superLikeResetsAt}</span>}
-          <span className="action-buttons__likes-remaining">{superlikeRemaining}</span>
-        </Button>
-      </div>
-    }
-    {
-      !passed && !superliked &&
-      <div className="action-buttons__button">
-        <Button
-          color="green"
-          active={liked}
-          disabled={!!likeResetsAt}
-          onClick={handleLike}
-        >
-          <i className="fa fa-heart" />
-          {!hideTimer && !!likeResetsAt && !liked &&
-            <span className="action-buttons__timer">{likeResetsAt}</span>}
-        </Button>
-      </div>
-    }
-  </div>
-);
+}: PropsType) => {
+  const isSuperlikeDisabled = !!superLikeResetsAt && superlikeRemaining === 0;
+
+  return (
+    <div className={cx('action-buttons', `action-buttons--${size}`)}>
+      {
+        !superliked && !liked &&
+        <div className="action-buttons__button">
+          <Button
+            color="red"
+            active={passed}
+            onClick={handlePass}
+          >
+            <i className="fa fa-thumbs-o-down" />
+          </Button>
+        </div>
+      }
+      {
+        !passed && !liked &&
+        <div className="action-buttons__button">
+          <Button
+            color="blue"
+            active={superliked}
+            disabled={isSuperlikeDisabled}
+            onClick={handleSuperlike}
+          >
+            <i className="fa fa-star" />
+            {!hideTimer && isSuperlikeDisabled && !superliked &&
+              <span className="action-buttons__timer">{superLikeResetsAt}</span>}
+            <span className="action-buttons__likes-remaining">{superlikeRemaining}</span>
+          </Button>
+        </div>
+      }
+      {
+        !passed && !superliked &&
+        <div className="action-buttons__button">
+          <Button
+            color="green"
+            active={liked}
+            disabled={!!likeResetsAt}
+            onClick={handleLike}
+          >
+            <i className="fa fa-heart" />
+            {!hideTimer && !!likeResetsAt && !liked &&
+              <span className="action-buttons__timer">{likeResetsAt}</span>}
+          </Button>
+        </div>
+      }
+    </div>
+  );
+}
 
 export default enhance(ActionButtons);

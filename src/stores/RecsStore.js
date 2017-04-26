@@ -4,20 +4,8 @@ import find from 'lodash/find';
 import each from 'lodash/each';
 import filter from 'lodash/filter';
 
-import { get } from 'Utils/api';
+import { get } from 'utils/api';
 import Person from 'models/Person';
-
-async function core() {
-  try {
-    const { data } = await get('/recs/core');
-
-    const results = map(data.results, r => r.user)
-
-    return { results, message: data.message };
-  } catch(e) {
-    return e;
-  }
-}
 
 class RecsStore {
   loadMoreHandler = null;
@@ -25,6 +13,7 @@ class RecsStore {
   @observable persons = [];
   @observable is_fetching: boolean = false;
   @observable is_loading_more: boolean = false;
+  @observable isError: boolean = false;
 
   constructor() {
     this.loadMoreHandler = reaction(
@@ -37,21 +26,27 @@ class RecsStore {
     )
   }
 
-  @action fetchCore(asLoadMore = false) {
+  @action async fetchCore(asLoadMore: boolean = false) {
     if (asLoadMore) {
       this.is_loading_more = true;
     } else {
       this.is_fetching = true;
     }
 
-    core().then(action(resp => {
-      if (resp.results.length > 0) {
-        each(resp.results, json => this.setPerson(json))
-      }
+    try {
+      const { data } = await get('/recs/core');
 
-      this.is_fetching = false;
-      this.is_loading_more = false;
-    }));
+      const results = map(data.results, r => r.user)
+
+      if (results.length > 0) {
+        each(results, json => this.setPerson(json))
+      }
+    } catch(e) {
+      this.isError = true;
+    }
+
+    this.is_fetching = false;
+    this.is_loading_more = false;
   }
 
   @action setPerson(json) {

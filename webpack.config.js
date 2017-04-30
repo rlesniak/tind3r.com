@@ -73,6 +73,13 @@ module.exports = {
         ]
       },
       {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+        ]
+      },
+      {
         test: require.resolve('react-addons-perf'),
         use: 'expose-loader?Perf',
       }

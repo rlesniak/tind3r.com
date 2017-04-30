@@ -6,7 +6,14 @@
     vertical-align: middle;
     margin-right: 10px;
     font-size: 26px;
-    opacity: .6;
     cursor: pointer;
+
+    i {
+      opacity: .6;
+    }
+  }
+
+  &__emots {
+    position: relative;
   }
 }

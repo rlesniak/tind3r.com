@@ -1,20 +1,67 @@
 // @flow
 
 import './MessageControls.scss';
+import 'emoji-mart/css/emoji-mart.css';
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 import cx from 'classnames';
+import { Picker } from 'emoji-mart';
+
 
 type PropsTypes = {
+  onEmojiSelect: (emoji: string) => void,
 }
-
+@observer
 class MessageControls extends Component {
+  pickerRef: ?HTMLElement;
+
+  @observable isEmojiOpened: boolean = false;
+
+  onMouseDown = (e: any) => {
+    const picker = ReactDOM.findDOMNode(this.pickerRef);
+
+    if (picker && !picker.contains(e.target)) {
+      this.closeEmoji()
+    }
+  }
+
+  openEmoji() {
+    document.addEventListener('mousedown', this.onMouseDown)
+    this.isEmojiOpened = true;
+  }
+
+  closeEmoji() {
+    document.removeEventListener('mousedown', this.onMouseDown)
+    this.isEmojiOpened = false;
+  }
+
+  toggleEmoji = () => {
+    this.isEmojiOpened ? this.closeEmoji() : this.openEmoji();
+  }
+
+  emojiSelected = (emoji: Object) => {
+    this.props.onEmojiSelect(emoji.native);
+  }
 
   render() {
     return (
       <div className={cx('message-controls')}>
-        <div className="message-controls__item">
+        <div className="message-controls__item" onClick={this.toggleEmoji}>
+          {this.isEmojiOpened && <div className="message-controls__emots">
+            <Picker
+              emojiSize={24}
+              perLine={9}
+              skin={1}
+              set="google"
+              title="Pick your Emoji!"
+              style={{ position: 'absolute', bottom: '4px' }}
+              onClick={this.emojiSelected}
+              ref={ref => { this.pickerRef = ref }}
+            />
+          </div>}
           <i className="fa fa-smile-o" />
         </div>
         <div className="message-controls__item">

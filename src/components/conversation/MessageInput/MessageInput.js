@@ -46,6 +46,10 @@ class MessageInput extends Component {
     }
   }
 
+  handleEmojiSelect = (emoji: string) => {
+    this.text += emoji;
+  }
+
   render() {
     return (
       <div
@@ -64,7 +68,9 @@ class MessageInput extends Component {
           />
         </div>
         <div className="message-input__controls">
-          <MessageControls />
+          <MessageControls
+            onEmojiSelect={this.handleEmojiSelect}
+          />
         </div>
       </div>
     );

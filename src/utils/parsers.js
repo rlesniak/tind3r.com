@@ -10,6 +10,7 @@ export const parseMatch = (match: Object, isNew: boolean): MatchType => ({
   date: match.created_date,
   last_activity_date: match.last_activity_date,
   is_new: isNew,
+  is_blocked: false,
   is_boost_match: match.is_boost_match,
   is_super_like: match.is_super_like,
 });

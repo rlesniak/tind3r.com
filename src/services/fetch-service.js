@@ -103,6 +103,16 @@ export default {
         resolve(message)
       }).catch(resp => reject(resp))
     })
+  },
+
+  block(matchId: string) {
+    return new Promise((resolve, reject) => {
+      API.del(`/user/matches/${matchId}`).then(() => {
+        resolve();
+      }).catch(() => {
+        reject();
+      });
+    });
   }
 }
 

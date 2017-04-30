@@ -25,7 +25,7 @@ const enhance = withHandlers({
 });
 
 const getMatchTypeIcon = (match: Match) => {
-  if (match.isBlocked) {
+  if (match.is_blocked) {
     return <i className="fa fa-ban" />
   }
 
@@ -46,6 +46,7 @@ const MatchRow = ({ handleOnClick, match }: PropsTypes) => {
       className={cx('match-row', {
         'match-row--active': false,
         'match-row--unread': match.is_new,
+        'match-row--blocked': match.is_blocked,
       })}
       onClick={handleOnClick}
     >

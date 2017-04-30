@@ -10,6 +10,7 @@ import API from 'Utils/api';
 import Person from './Person';
 import Message from './Message';
 import { removeMatch, updateMatch } from 'Utils/database.v2';
+import FetchService from 'services/fetch-service';
 
 import MessageStore from '../stores/MessageStore';
 
@@ -24,6 +25,7 @@ class Match {
   is_super_like: boolean;
   is_new: boolean;
 
+  @observable is_blocked: boolean = false;
   @observable last_msg_from_db: MessageType;
   @observable messageStore: ?MessageStore;
   @observable is_new: boolean = false;
@@ -53,6 +55,18 @@ class Match {
     removeMatch(this._id);
 
     this.store.items.remove(this);
+  }
+
+  @action async unmatch() {
+    this.is_blocked = true;
+
+    try {
+      const blocked = await FetchService.block(this._id);
+
+      updateMatch(this._id, { is_blocked: 1 })
+    } catch(err) {
+      this.is_blocked = false;
+    }
   }
 
   @action setMessageStore(store: MessageStore) {

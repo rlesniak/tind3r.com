@@ -63,10 +63,18 @@ class MatchComponent extends Component {
     this.messageStore.submit(text, params.id, currentUser._id);
   }
 
+  handleUnmatch = () => {
+    if (this.match && confirm('Are you sure?')) {
+      this.match.unmatch();
+    }
+  }
+
   renderPerson() {
-    if (this.match) {
+    const match = this.match;
+
+    if (match) {
       const getWidth = this.personWrapperRef.getBoundingClientRect().width;
-      const { person } = this.match;
+      const { person, is_blocked } = match;
 
       return (
         <div>
@@ -79,6 +87,11 @@ class MatchComponent extends Component {
             <div className="match__person-bio">
               {person.bio}
             </div>
+            {!is_blocked && <div className="match__person-unmatch">
+              <a onClick={this.handleUnmatch}>
+                Unmatch
+              </a>
+            </div>}
           </div>
         </div>
       );
@@ -88,18 +101,21 @@ class MatchComponent extends Component {
   }
 
   render() {
+    const match = this.match;
+    const isBlocked = match && match.is_blocked;
+
     return (
       <div className="match">
         <div className="match__messages">
           <div className="match__message-list">
             <MessageList messageStore={this.messageStore} />
           </div>
-          <div className="match__new-message">
+          {!isBlocked && <div className="match__new-message">
             <MessageInput
               onFocus={this.setAsRead}
               onSubmit={this.handleMessageSubmit}
             />
-          </div>
+          </div>}
         </div>
         <div className="match__person" ref={ref => this.personWrapperRef = ref}>
           {this.renderPerson()}

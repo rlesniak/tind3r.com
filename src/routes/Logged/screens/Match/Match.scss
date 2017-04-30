@@ -16,15 +16,16 @@
 
   &__messages {
     height: 100%;
-    width: 80%;
+    width: 75%;
     float: left;
   }
 
   &__person {
-    margin-left: 81%;
+    margin-left: 76%;
     height: 100%;
     font-family: $font-lato;
     overflow-y: scroll;
+    padding-bottom: 20px;
   }
 
   &__person-details {
@@ -39,5 +40,21 @@
     margin-top: 20px;
     font-size: 13px;
     line-height: 16px;
+  }
+
+  &__person-unmatch {
+    margin-top: 50px;
+    text-align: center;
+
+    a {
+      padding: 2px 10px;
+      border: 1px solid $red;
+      text-decoration: none;
+      margin: 20px 0;
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 6px;
+      color: $red;
+    }
   }
 }

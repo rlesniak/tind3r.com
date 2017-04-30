@@ -24,16 +24,36 @@ const processMessages = (match) => {
   }
 }
 
-const savePersonsToDb = persons => {
+const savePersonsToDb = (
+  persons,
+  success: () => void,
+  error: () => void,
+) => {
   const collection = DB().collection('persons');
   collection.insert(persons);
-  collection.save();
+  collection.save(err => {
+    if (err) {
+      error();
+    } else {
+      success();
+    }
+  });
 }
 
-const saveMatchesToDb = data =>{
+const saveMatchesToDb = (
+  data,
+  success: () => void,
+  error: () => void,
+) =>{
   const collection = DB().collection('matches');
   collection.insert(data);
-  collection.save();
+  collection.save(err => {
+    if (err) {
+      error();
+    } else {
+      success();
+    }
+  });
 }
 
 export default {
@@ -58,14 +78,15 @@ export default {
           processMessages(match);
         });
 
-        saveMatchesToDb(parsedMatches);
-        savePersonsToDb(parsedPersons);
-
-        resolve({
-          matches: parsedMatches,
-          persons: parsedPersons,
-          messages: parsedMessages,
-        });
+        saveMatchesToDb(parsedMatches, () => {
+          savePersonsToDb(parsedPersons, () => {
+            resolve({
+              matches: parsedMatches,
+              persons: parsedPersons,
+              messages: parsedMessages,
+            });
+          }, () => reject());
+        }, () => reject());
       });
     });
   },

@@ -14,6 +14,7 @@ import Logged from '../Logged';
 import NotFound from '../NotFound';
 import * as Database from 'utils/database.v2.js';
 import Loader from 'Components/Loader';
+import NavBar from 'Components/NavBar';
 
 import { checkIfInstalled } from '../../utils/runtime';
 
@@ -34,12 +35,10 @@ class App extends Component {
     if (isInstalled) {
       return (
         <Router>
-          <div>
-            <Switch>
-              <Route path="/welcome" component={Welcome} />
-              <Route path="/" component={Logged} />
-            </Switch>
-          </div>
+          <Switch>
+            <Route path="/welcome" component={Welcome} />
+            <Route path="/" component={Logged} />
+          </Switch>
         </Router>
       );
     } else if (isInstalled === false) {

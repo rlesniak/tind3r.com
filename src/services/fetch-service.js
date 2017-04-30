@@ -4,7 +4,7 @@ import { each, first, pick } from 'lodash';
 
 import API from 'utils/api';
 import LS from 'utils/localStorage';
-import { parseMatch, parsePerson, parseMessage } from 'parsers/matchParser';
+import { parseMatch, parsePerson, parseMessage } from 'utils/parsers';
 import DB, { updateMatch } from 'utils/database.v2';
 
 import type { MatchType } from '../types/match';

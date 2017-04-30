@@ -53,6 +53,8 @@ class Welcome extends Component {
     recsStore.fetchCore();
     // matchStore.fetch();
     matchStore.getFromDb();
+
+    window.ms = matchStore;
   }
 
   renderWhenLogged() {

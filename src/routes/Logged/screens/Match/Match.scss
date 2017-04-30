@@ -3,6 +3,7 @@
 .match {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 
   &__message-list {
     height: calc(100% - 120px);
@@ -23,6 +24,7 @@
     margin-left: 81%;
     height: 100%;
     font-family: $font-lato;
+    overflow-y: scroll;
   }
 
   &__person-details {

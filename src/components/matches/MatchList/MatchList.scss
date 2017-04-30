@@ -1,7 +1,30 @@
+@import 'const';
+
 .match-list {
   height: 100%;
+  position: relative;
 
   &__match {
     height: 80px;
+  }
+
+  &__loading-indicator {
+    position: absolute;
+    top: -20px;
+    height: 20px;
+    width: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: $blue;
+    z-index: 1;
+    border-radius: 0 0 3px 3px;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    transition: all .2s ease;
+
+    &.active {
+      top: 0;
+    }
   }
 }

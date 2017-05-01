@@ -14,3 +14,5 @@ export type MatchType = {
   is_super_like: 0 | 1,
   last_msg_from_db?: Object,
 };
+
+export type FiltersType = 'all' | 'new' | 'unread' | 'unanswered' | 'blocked';

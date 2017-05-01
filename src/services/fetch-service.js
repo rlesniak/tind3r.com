@@ -68,15 +68,15 @@ export default {
         const parsedPersons: PersonType[] = [];
         const parsedMessages: MessageType[] = [];
 
-        LS.set({ lastActivity: last_activity_date });
-
         each(matches, match => {
           if (!match.is_new_message) {
-            parsedMatches.push(parseMatch(match, !LS.data.lastActivity));
+            parsedMatches.push(parseMatch(match, !!LS.data.lastActivity));
             parsedPersons.push(parsePerson(match.person));
           }
           processMessages(match);
         });
+
+        LS.set({ lastActivity: last_activity_date });
 
         saveMatchesToDb(parsedMatches, () => {
           savePersonsToDb(parsedPersons, () => {

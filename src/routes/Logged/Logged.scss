@@ -1,5 +1,48 @@
+@import 'const';
+
 .logged {
-  padding: 0 20px 20px;
+  padding: 0;
+
+  &__nav-bar {
+    float: left;
+    width: 100px;
+    height: 100vh;
+    background: $dark;
+
+    span {
+      display: none;
+    }
+
+    li {
+      text-align: center;
+      font-size: 48px;
+      padding-left: 10px;
+
+      a {
+        display: block;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        padding: 7px;
+      }
+
+      a.active {
+        background: $dark-lighten;
+        position: relative;
+        z-index: 1;
+        border-radius: 5px 0 0 5px;
+        box-shadow: $nav-bar-shadow;
+      }
+
+      .fa {
+        color: #fff;
+      }
+    }
+  }
+
+  &__content {
+    margin-left: 100px;
+    height: 100%;
+  }
 }
 
 .not-logged {

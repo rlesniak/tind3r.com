@@ -21,11 +21,13 @@
   }
 
   &__person {
-    margin-left: 76%;
+    margin-left: 75%;
     height: 100%;
     font-family: $font-lato;
     overflow-y: scroll;
     padding-bottom: 20px;
+    background: #fbfcfd;
+    padding: 10px;
   }
 
   &__person-details {

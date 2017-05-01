@@ -81,8 +81,8 @@ class Welcome extends Component {
   render() {
     return (
       <Provider currentUser={currentUser} matchStore={matchStore}>
-        <div>
-          <div className="nav-bar">
+        <div className="logged">
+          <div className="logged__nav-bar">
             <ul>
               <li>
                 <div className="logo">
@@ -92,34 +92,35 @@ class Welcome extends Component {
               <li>
                 <NavLink to="/home" activeClassName="active">
                   <i className="fa fa-home" />
-                  Home
+                  <span>Home</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/matches" activeClassName="active">
                   <div className="badge">
                     <i className="fa fa-heart" />
-                    Matches
-                    {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
+                    <span>Matches
+                      {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
+                    </span>
                   </div>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/history" activeClassName="active">
                   <i className="fa fa-history" />
-                  History
+                  <span>History</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/profile-edit" activeClassName="active">
                   <i className="fa fa-cog" />
-                  Profile edit
+                  <span>Profile edit</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/discussion" activeClassName="active">
                   <i className="fa fa-comments-o" />
-                  Discussion
+                  <span>Discussion</span>
                 </NavLink>
               </li>
               <li className="profile">
@@ -131,7 +132,7 @@ class Welcome extends Component {
                     }
                   </div>
                   <div className="name">
-                    {currentUser.full_name}
+                    {/*currentUser.full_name*/}
                   </div>
                 </NavLink>
                 <div className="submenu" onClick={this.handleLogout}>
@@ -140,8 +141,10 @@ class Welcome extends Component {
               </li>
             </ul>
           </div>
-          {currentUser.is_fetching && !currentUser.is_authenticated && <Loader />}
-          {!currentUser.is_fetching && this.renderWhenLogged()}
+          <div className="logged__content">
+            {currentUser.is_fetching && !currentUser.is_authenticated && <Loader />}
+            {!currentUser.is_fetching && this.renderWhenLogged()}
+          </div>
         </div>
       </Provider>
     );

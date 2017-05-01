@@ -1,14 +1,26 @@
 @import 'const';
 
 .match-row {
-  background: #fff;
   height: 100%;
   width: 100%;
   border-left: 3px solid transparent;
-  border-bottom: 1px solid #b1a599;
-  padding: 10px;
   position: relative;
   cursor: pointer;
+  color: #fff;
+
+  &::after {
+    display: block;
+    width: 50px;
+    height: 1px;
+    content: '';
+    background: #393e44;
+    margin-left: 10px;
+  }
+
+  &__wrapper {
+    overflow: hidden;
+    padding: 10px;
+  }
 
   &__details {
     padding: 0 5px;
@@ -61,8 +73,8 @@
 
   &__type-icon {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 3px;
+    left: 3px;
     font-size: 15px;
 
     .fa-star {

@@ -1,11 +1,10 @@
 @import 'const';
-@import 'globals';
 
 .person-card {
   width: 220px;
   display: inline-block;
   vertical-align: top;
-  margin: 0 5px 5px;
+  margin: 3px;
   box-shadow: rgba(90, 78, 68, 0.48) 0 0 13px 0px;
 
   &__gallery {
@@ -49,7 +48,7 @@
     text-overflow: ellipsis;
     height: 30px;
     white-space: nowrap;
-    background: $primary-color-light;
+    background: #fcfcfc;
     border-bottom: 1px solid #fff;
 
     > span {
@@ -72,7 +71,7 @@
     justify-content: space-between;
     height: 45px;
     font-size: 13px;
-    background: $primary-color-light;
+    background: #fcfcfc;
 
     &--distance,
     &--instagram {
@@ -120,6 +119,7 @@
     width: 100%;
     display: flex;
     height: 400px;
+    margin: 0;
 
     .person-card {
       &__gallery {

@@ -18,7 +18,7 @@
     margin-left: 0;
     margin-right: 10px;
     text-align: right;
-    background: #dcc9bd;
+    background: #fff;
     color: inherit;
 
     &:before {
@@ -31,7 +31,7 @@
       border-bottom: 10px solid transparent;
       border-right:10px solid transparent;
       top: 11px;
-      border-left: 10px solid #dcc9bd;
+      border-left: 10px solid #fff;
       left: auto;
       right: -18px;
     }
@@ -50,13 +50,13 @@
   }
 
   &__current &__body {
-    background: #5f90b0;
+    background: $accent;
     color: #fff;
     margin-left: 10px;
     text-align: left;
 
     &:before {
-      border-right-color: #5f90b0;
+      border-right-color: $accent;
       border-left-color: transparent;
       left: -18px;
     }

@@ -11,6 +11,7 @@ import cx from 'classnames';
 import PersonCard from 'Components/PersonCard';
 import LoadMoreCard from 'Components/LoadMoreCard';
 import SearchingLoader from 'Components/SearchingLoader';
+import SideMenu from 'Components/SideMenu';
 
 import counterService from 'services/counterService';
 
@@ -160,13 +161,23 @@ class Home extends Component {
 
     return (
       <div className="home">
-        {recsStore.areRecsExhaust && <div className="home__settings">
-            <div className="home__settings__wrapper">Wrapper</div>
-            <div className="home__settings__trigger">
-              <i className="fa fa-cog" onClick={this.showSettings} />
-            </div>
-          </div>}
-        {this.renderBody()}
+        <SideMenu>
+          <SideMenu.Item>
+            <label>Distance</label>
+            <span>asd</span>
+          </SideMenu.Item>
+        </SideMenu>
+        <SideMenu.Right>
+          <div className="home__content">
+            {recsStore.areRecsExhaust && <div className="home__settings">
+                <div className="home__settings__wrapper">Wrapper</div>
+                <div className="home__settings__trigger">
+                  <i className="fa fa-cog" onClick={this.showSettings} />
+                </div>
+              </div>}
+            {this.renderBody()}
+          </div>
+        </SideMenu.Right>
       </div>
     );
   }

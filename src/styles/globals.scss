@@ -6,8 +6,12 @@
   box-sizing: border-box;
 }
 
+body, html, #root {
+  min-height: 100vh;
+}
+
 body {
-  background: $primary-color;
+  background: $gray;
   font-family: $font-poppins;
   font-size: 14px;
   color: $font-color;

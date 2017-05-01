@@ -1,25 +1,22 @@
+@import 'const';
+
+$width: 300px;
+
 .matches {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-content: stretch;
-  align-items: flex-start;
   background: #fff;
   height:  calc(100vh - 60px - 61px);
-  margin-top: 20px;
 
   &__list {
-    width: 25%;
-    order: 0;
-    flex: 0 1 auto;
-    align-self: auto;
     height: 100%;
     overflow: auto;
+    width: $width;
+    float: left;
   }
 
   &__conversation {
-    width: 75%;
+    width: calc(100% - $width);
     height: 100%;
+    margin-left: $width;
+    background: $gray;
   }
 }

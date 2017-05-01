@@ -1,7 +1,7 @@
 @import 'const';
 
 .message {
-  padding: 10px;
+  padding: 5px 10px;
   overflow: hidden;
   width: 100%;
   position: relative;
@@ -10,14 +10,14 @@
   &__body {
     padding: 17px 14px;
     display: inline-block;
-    border-radius: 10px;
+    border-radius: 4px;
     max-width: calc(100% - 70px);
     font-family: $font-lato;
     font-size: 14px;
     position: relative;
     margin-left: 0;
     margin-right: 10px;
-    text-align: right;
+    text-align: left;
     background: #fff;
     color: inherit;
 
@@ -62,11 +62,36 @@
     }
   }
 
+  &__current {
+    &--grouped {
+      padding-left: 50px;
+    }
+  }
+
+  &__date {
+    font-size: 11px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
   &--sending {
     opacity: .5;
   }
 
   &--error {
     background: red;
+  }
+
+  &--grouped {
+    padding: 2px 0;
+    padding-right: 50px;
+
+    .message__body:before {
+      display: none;
+    }
+  }
+
+  &:not(.message--grouped) + .message--grouped {
+    margin-top: 0;
   }
 }

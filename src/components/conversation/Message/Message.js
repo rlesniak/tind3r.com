@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import Avatar from 'Components/Avatar';
 
@@ -16,6 +17,8 @@ import { CurrentUser } from 'models/CurrentUser';
 type PropsTypes = {
   message: Message,
   author: Person | CurrentUser,
+  group: boolean,
+  onRemove: () => void,
 }
 
 class MessageComponent extends Component {
@@ -28,7 +31,7 @@ class MessageComponent extends Component {
   }
 
   render() {
-    const { message, author, onRemove } = this.props;
+    const { message, author, onRemove, group } = this.props;
 
     return (
       <div
@@ -37,13 +40,15 @@ class MessageComponent extends Component {
           'message__current': author.isCurrentUser,
           'message--sending': message.isSending,
           'message--error': message.isError,
+          'message--grouped': group,
         })}
       >
-        <div className="message__avatar">
+        {!group && <div className="message__avatar">
           <Link to={`users/${message.from_id}`}>
-            <Avatar url={author.mainPhoto} />
+            <Avatar width={40} height={40} url={author.mainPhoto} />
           </Link>
-        </div>
+          <div className="message__date">{moment(message.date).format('HH:mm')}</div>
+        </div>}
         <div className="message__body">
           {message.body}
           {/*<button onClick={() => onRemove(message)}>X</button>*/}

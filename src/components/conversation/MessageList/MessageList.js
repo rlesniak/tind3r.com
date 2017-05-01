@@ -62,9 +62,8 @@ class MessageList extends Component {
             />
           );
 
-          const next = messageStore.messages[i + 1];
-
-          if (next) {
+          if (i < messageStore.messages.length - 1) {
+            const next = messageStore.messages[i + 1];
             const firstTime = message.sendDate;
             const nextTime = next.sendDate;
             const dur = moment.duration(nextTime.diff(firstTime));

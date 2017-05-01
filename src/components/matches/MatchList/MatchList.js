@@ -32,6 +32,7 @@ class MatchList extends Component {
       }),
       () => {
         if (this.listRef) {
+          this.listRef.forceUpdateGrid();
           this.forceUpdate();
         }
       }

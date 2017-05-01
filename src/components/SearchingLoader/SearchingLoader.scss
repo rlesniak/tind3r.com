@@ -1,4 +1,4 @@
-$fill: #00b7c6;
+@import 'const';
 
 .searching-loader {
 
@@ -17,7 +17,7 @@ $fill: #00b7c6;
   }
 
   &__dot {
-    border: 5px solid $fill;
+    border: 5px solid $blue;
     background: transparent;
     border-radius: 50%;
     height: 200px;
@@ -35,7 +35,7 @@ $fill: #00b7c6;
   &__pulse {
     width: 50px;
     height: 50px;
-    border: 3px solid $fill;
+    border: 3px solid $blue;
     border-radius: 50%;
     z-index: 10;
     position: absolute;

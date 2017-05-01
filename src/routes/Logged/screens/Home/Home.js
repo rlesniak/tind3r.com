@@ -169,12 +169,6 @@ class Home extends Component {
         </SideMenu>
         <SideMenu.Right>
           <div className="home__content">
-            {recsStore.areRecsExhaust && <div className="home__settings">
-                <div className="home__settings__wrapper">Wrapper</div>
-                <div className="home__settings__trigger">
-                  <i className="fa fa-cog" onClick={this.showSettings} />
-                </div>
-              </div>}
             {this.renderBody()}
           </div>
         </SideMenu.Right>

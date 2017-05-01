@@ -1,8 +1,9 @@
 @import 'const';
 
 .match-list {
-  height: 100%;
+  height: calc(100% - 78px);
   position: relative;
+  overflow: hidden;
 
   &__match {
     height: 80px;

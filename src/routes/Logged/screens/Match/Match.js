@@ -107,15 +107,25 @@ class MatchComponent extends Component {
     return (
       <div className="match">
         <div className="match__messages">
-          <div className="match__message-list">
-            <MessageList messageStore={this.messageStore} />
+          <div className="match__options">
+            <div className="match__option">
+              <i className="fa fa-star" />
+            </div>
+            <div className="match__option">
+              <i className="fa fa-ban" />
+            </div>
           </div>
-          {!isBlocked && <div className="match__new-message">
-            <MessageInput
-              onFocus={this.setAsRead}
-              onSubmit={this.handleMessageSubmit}
-            />
-          </div>}
+          <div className="match__content">
+            <div className="match__message-list">
+              <MessageList messageStore={this.messageStore} />
+            </div>
+            {!isBlocked && <div className="match__new-message">
+              <MessageInput
+                onFocus={this.setAsRead}
+                onSubmit={this.handleMessageSubmit}
+              />
+            </div>}
+          </div>
         </div>
         <div className="match__person" ref={ref => this.personWrapperRef = ref}>
           {this.renderPerson()}

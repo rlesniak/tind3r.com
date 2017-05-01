@@ -10,6 +10,7 @@ import { observer, inject } from 'mobx-react';
 import Match from '../Match';
 
 import MatchList from 'Components/matches/MatchList';
+import MatchFilters from 'Components/matches/MatchFilters';
 import { MatchStore } from 'stores/MatchStore';
 import SideMenu from 'Components/SideMenu';
 
@@ -32,7 +33,7 @@ const Matches = ({ handleMatchClick, matchStore }: PropsTypes) => {
   return (
     <div className="matches">
       <SideMenu title="Matches">
-        <SideMenu.Item active>
+        <SideMenu.Item active rightText={12} onClick={() => console.log('asd')}>
           <span>All matches</span>
         </SideMenu.Item>
         <SideMenu.Item>
@@ -40,8 +41,13 @@ const Matches = ({ handleMatchClick, matchStore }: PropsTypes) => {
         </SideMenu.Item>
       </SideMenu>
       <SideMenu.Right>
-        <div className="matches__list">
-          <MatchList handleMatchClick={handleMatchClick} matchStore={matchStore} />
+        <div className="matches__wrapper">
+          <div className="matches__filters">
+            <MatchFilters matchStore={matchStore} />
+          </div>
+          <div className="matches__list">
+            <MatchList handleMatchClick={handleMatchClick} matchStore={matchStore} />
+          </div>
         </div>
         <div className="matches__conversation">
           <Route path="/matches/:id" component={props => <Match matchStore={matchStore} {...props} />} />

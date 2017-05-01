@@ -24,6 +24,8 @@ export class MatchStore {
   @observable isLoading = false;
   @observable items: Array<Match> = [];
 
+  @observable filter = '';
+
   constructor() {
     DB().collection('matches').on('update', data => {
       const [item]: MatchType = data;
@@ -82,9 +84,15 @@ export class MatchStore {
   }
 
   @computed get matches(): Array<Match> {
-    return orderBy(this.items, match => (
+    return orderBy(this.getFiltered, match => (
       match.lastActivity.format('X')
     ), 'desc');
+  }
+
+  @computed get getFiltered(): Array<Match> {
+    return this.items.filter(m => {
+      return m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1
+    })
   }
 
   find(matchId: string): Match {

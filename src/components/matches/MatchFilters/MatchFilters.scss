@@ -1,0 +1,17 @@
+@import 'const';
+
+.match-filters {
+  padding: 20px;
+  border-bottom: 1px solid $border-dark;
+
+  &__input {
+    width: 100%;
+    padding: 10px 15px;
+    background: #363d45;
+    color: $gray;
+    border: none;
+    font-size: 14px;
+    border-radius: 5px;
+    outline: none;
+  }
+}

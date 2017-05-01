@@ -15,10 +15,17 @@ export const Right = (props: PropsType) => (
 )
 
 export const Item = (props: PropsType) => (
-  <div className={cx('side-menu__item', {
-    'side-menu__item--active': props.active,
-  })}>
+  <div
+    className={cx('side-menu__item', {
+      'side-menu__item--active': props.active,
+    })}
+    onClick={props.onClick}
+  >
     {props.children}
+
+    <div className="side-menu__right-text">
+      {props.rightText}
+    </div>
   </div>
 );
 
@@ -26,7 +33,7 @@ const enhance = compose(
   withState('toggled', 'toggle', false)
 )
 
-export default enhance(({ children, title, toggle, toggled }: PropsType) => {
+export default enhance(({ children, title, toggle, toggled, rightText }: PropsType) => {
   return (
     <div className={cx('side-menu', { 'side-menu--hidden': toggled })}>
       <h1 className="side-menu__title">

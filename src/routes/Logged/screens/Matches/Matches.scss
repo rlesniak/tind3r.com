@@ -6,15 +6,24 @@ $width: 300px;
   background: #fff;
   height:  calc(100vh - 60px - 61px);
 
-  &__list {
+  &__wrapper {
     height: 100%;
-    overflow: auto;
     width: $width;
     float: left;
+    overflow: hidden;
+  }
+
+  &__filters {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__list {
+    height: 100%;
   }
 
   &__conversation {
-    width: calc(100% - $width);
+    width: calc(100% - #{$width});
     height: 100%;
     margin-left: $width;
     background: $gray;

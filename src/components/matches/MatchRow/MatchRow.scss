@@ -1,9 +1,7 @@
 @import 'const';
 
 .match-row {
-  height: 100%;
   width: 100%;
-  border-left: 3px solid transparent;
   position: relative;
   cursor: pointer;
   color: #fff;
@@ -20,6 +18,8 @@
   &__wrapper {
     overflow: hidden;
     padding: 10px;
+    margin-bottom: 5px;
+    border-left: 3px solid transparent;
   }
 
   &__details {
@@ -36,10 +36,10 @@
   }
 
   &--active {
-    background: red;
+    background: #393e44;
   }
 
-  &--unread {
+  &--unread .match-row__wrapper {
     border-left-color: $blue;
   }
 
@@ -57,6 +57,7 @@
     font-size: 12px;
     font-family: $font-lato;
     display: flex;
+    color: $gray;
 
     span {
       white-space: nowrap;

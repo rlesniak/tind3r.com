@@ -44,6 +44,7 @@
     font-size: 15px;
     padding: 0 10px;
     border-radius: 5px;
+    position: relative;
 
     label {
       display: block;
@@ -80,5 +81,13 @@
     color: #fff;
     cursor: pointer;
     font-size: 16px;
+  }
+
+  &__right-text {
+    position: absolute;
+    top: 0;
+    right: 7px;
+    font-size: 12px;
+    display: inline-block;
   }
 }

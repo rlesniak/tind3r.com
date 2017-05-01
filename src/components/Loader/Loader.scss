@@ -1,9 +1,9 @@
-$fill: #00b7c6;
+@import 'const';
 
 .loader,
 .loader:before,
 .loader:after {
-  background: $fill;
+  background: $blue;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
@@ -11,7 +11,7 @@ $fill: #00b7c6;
 }
 
 .loader {
-  color: $fill;
+  color: $blue;
   text-indent: -9999em;
   margin: 88px auto;
   position: relative;

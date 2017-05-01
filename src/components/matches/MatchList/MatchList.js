@@ -26,10 +26,13 @@ class MatchList extends Component {
 
   componentDidMount() {
     this.lastMessageReactionDispose = reaction(
-      () => this.props.matchStore.items.map(store => store.lastMessage),
+      () => ({
+        items: this.props.matchStore.items.map(store => store.lastMessage),
+        filter: this.props.matchStore.matches.length,
+      }),
       () => {
         if (this.listRef) {
-          this.listRef.forceUpdateGrid()
+          this.forceUpdate();
         }
       }
     )
@@ -77,7 +80,7 @@ class MatchList extends Component {
               height={height}
               overscanRowCount={10}
               rowCount={matchStore.matches.length}
-              rowHeight={80}
+              rowHeight={76}
               rowRenderer={this.rowRenderer}
               width={width}
             />

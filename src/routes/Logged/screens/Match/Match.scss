@@ -7,7 +7,6 @@
 
   &__message-list {
     height: calc(100% - 120px);
-    overflow: auto;
   }
 
   &__new-message {
@@ -20,14 +19,16 @@
     float: left;
   }
 
+  &__person-wrapper {
+    padding: 10px;
+  }
+
   &__person {
     margin-left: 75%;
     height: 100%;
     font-family: $font-lato;
-    overflow-y: scroll;
     padding-bottom: 20px;
     background: #fbfcfd;
-    padding: 10px;
   }
 
   &__person-details {
@@ -84,6 +85,10 @@
 
     + .match__option {
       border-left: 0;
+    }
+
+    &--active {
+      color: $accent;
     }
   }
 }

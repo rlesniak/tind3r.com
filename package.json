@@ -71,6 +71,7 @@
     "node-sass": "^4.5.0",
     "pouchdb-adapter-idb": "^6.1.2",
     "react": "^15.5.4",
+    "react-custom-scrollbars": "^4.1.1",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

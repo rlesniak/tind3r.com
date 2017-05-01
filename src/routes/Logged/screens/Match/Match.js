@@ -5,6 +5,8 @@ import './Match.scss';
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable } from 'mobx';
+import { Scrollbars } from 'react-custom-scrollbars';
+import cx from 'classnames';
 
 import MessageStore from 'stores/MessageStore';
 import { MatchStore } from 'stores/MatchStore';
@@ -77,7 +79,7 @@ class MatchComponent extends Component {
       const { person, is_blocked } = match;
 
       return (
-        <div>
+        <div className="match__person-wrapper">
           <Gallery width={getWidth - 20} images={person.photos} />
           <div className="match__person-details">
             <h1>{person.name}, {person.age}</h1>
@@ -87,11 +89,6 @@ class MatchComponent extends Component {
             <div className="match__person-bio">
               {person.bio}
             </div>
-            {!is_blocked && <div className="match__person-unmatch">
-              <a onClick={this.handleUnmatch}>
-                Unmatch
-              </a>
-            </div>}
           </div>
         </div>
       );
@@ -111,13 +108,25 @@ class MatchComponent extends Component {
             <div className="match__option">
               <i className="fa fa-star" />
             </div>
-            <div className="match__option">
+            {!isBlocked && <div
+              className={cx('match__option')}
+              onClick={this.handleUnmatch}
+            >
               <i className="fa fa-ban" />
-            </div>
+            </div>}
+
+            {isBlocked &&<div
+              className={cx('match__option', 'match__option--active')}
+              onClick={this.handleRemove}
+            >
+              <i className="fa fa-trash" />
+            </div>}
           </div>
           <div className="match__content">
             <div className="match__message-list">
-              <MessageList messageStore={this.messageStore} />
+              <Scrollbars>
+                <MessageList messageStore={this.messageStore} />
+              </Scrollbars>
             </div>
             {!isBlocked && <div className="match__new-message">
               <MessageInput
@@ -128,7 +137,9 @@ class MatchComponent extends Component {
           </div>
         </div>
         <div className="match__person" ref={ref => this.personWrapperRef = ref}>
-          {this.renderPerson()}
+          <Scrollbars>
+            {this.renderPerson()}
+          </Scrollbars>
         </div>
       </div>
     );

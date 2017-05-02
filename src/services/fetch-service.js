@@ -1,6 +1,6 @@
 // @flow
 
-import { each, first, pick } from 'lodash';
+import { each } from 'lodash';
 
 import API from 'utils/api';
 import LS from 'utils/localStorage';
@@ -95,12 +95,12 @@ export default {
     return new Promise((resolve, reject) => {
       API.post(`/user/matches/${matchId}`, { message, ...payload }).then(({ data }) => {
         const collection = DB().collection('messages');
-        const message = parseMessage(data);
+        const parsedMessage = parseMessage(data);
 
-        collection.insert(message);
+        collection.insert(parsedMessage);
         collection.save();
 
-        resolve(message);
+        resolve(parsedMessage);
       }).catch(resp => reject(resp));
     });
   },

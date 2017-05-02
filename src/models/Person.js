@@ -1,6 +1,6 @@
 // @flow
 
-import { observable, extendObservable, action, computed } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
 import get from 'lodash/get';
@@ -11,7 +11,7 @@ import { ACTION_TYPES } from 'const';
 import { pass, like, superlike } from 'services/person-actions';
 import { createAction, createMatch } from 'utils/database.v2';
 
-import type { PersonType, SchoolType, InstagramType, ActionsType } from 'types/person';
+import type { SchoolType, InstagramType, ActionsType } from 'types/person';
 import type { UserInterface } from 'types/userInterface';
 
 class Person implements UserInterface {

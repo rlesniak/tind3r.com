@@ -58,7 +58,7 @@ class Match {
     this.is_blocked = true;
 
     try {
-      const blocked = await FetchService.block(this._id);
+      const blocked = await FetchService.block(this._id); // eslint-disable-line
 
       updateMatch(this._id, { is_blocked: 1 });
     } catch (err) {

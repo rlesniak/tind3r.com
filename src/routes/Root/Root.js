@@ -4,19 +4,16 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch,
-  Redirect,
 } from 'react-router-dom';
+
+import Loader from 'components/Loader';
+import { checkIfInstalled } from 'utils/runtime';
 
 import Welcome from '../Welcome';
 import Logged from '../Logged';
 import NotFound from '../NotFound';
-import * as Database from 'utils/database.v2.js';
-import Loader from 'components/Loader';
-import NavBar from 'components/NavBar';
 
-import { checkIfInstalled } from '../../utils/runtime';
 
 class App extends Component {
   state = {

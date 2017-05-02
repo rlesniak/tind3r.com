@@ -1,12 +1,8 @@
 // @flow
 
-import { observable, extendObservable, action, computed } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
-import last from 'lodash/last';
-import get from 'lodash/get';
-
-import FetchService from 'services/fetch-service';
 
 import type { MessageType } from 'types/message';
 

@@ -3,7 +3,7 @@ import './NotFound.scss';
 import React from 'react';
 import {
   Link,
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 const NotFound = () => (
   <div className="not-found">

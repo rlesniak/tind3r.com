@@ -11,30 +11,31 @@ import cx from 'classnames';
 import { Picker } from 'emoji-mart';
 
 
-type PropsTypes = {
+type PropsType = {
   onEmojiSelect: (emoji: string) => void,
 }
 @observer
 class MessageControls extends Component {
+  props: PropsType;
   pickerRef: ?HTMLElement;
 
   @observable isEmojiOpened: boolean = false;
 
   onMouseDown = (e: any) => {
-    const picker = ReactDOM.findDOMNode(this.pickerRef);
+    const picker = ReactDOM.findDOMNode(this.pickerRef); // eslint-disable-line
 
     if (picker && !picker.contains(e.target)) {
-      this.closeEmoji()
+      this.closeEmoji();
     }
   }
 
   openEmoji() {
-    document.addEventListener('mousedown', this.onMouseDown)
+    document.addEventListener('mousedown', this.onMouseDown);
     this.isEmojiOpened = true;
   }
 
   closeEmoji() {
-    document.removeEventListener('mousedown', this.onMouseDown)
+    document.removeEventListener('mousedown', this.onMouseDown);
     this.isEmojiOpened = false;
   }
 
@@ -59,7 +60,7 @@ class MessageControls extends Component {
               title="Pick your Emoji!"
               style={{ position: 'absolute', bottom: '4px' }}
               onClick={this.emojiSelected}
-              ref={ref => { this.pickerRef = ref }}
+              ref={ref => { this.pickerRef = ref; }}
             />
           </div>}
           <i className="fa fa-smile-o" />

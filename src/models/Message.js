@@ -34,7 +34,7 @@ class Message {
       // const data = await FetchService.sendMessage(this.match_id, this.body);
 
       // extend(this, data);
-    } catch(err) {
+    } catch (err) {
       this.isError = true;
     }
 

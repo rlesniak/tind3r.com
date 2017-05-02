@@ -41,10 +41,10 @@ const MatchScheme = {
           },
           date: {
             type: 'string',
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   },
 };
 

@@ -12,9 +12,15 @@ export const Right = (props: PropsType) => (
   <div className="side-menu__right">
     {props.children}
   </div>
-)
+);
 
-export const Item = (props: PropsType) => (
+type ItemPropsType = PropsType | {
+  active: boolean,
+  onClick: () => void,
+  rightText: string,
+};
+
+export const Item = (props: ItemPropsType) => (
   <div
     className={cx('side-menu__item', {
       'side-menu__item--active': props.active,
@@ -30,27 +36,33 @@ export const Item = (props: PropsType) => (
 );
 
 const enhance = compose(
-  withState('toggled', 'toggle', false)
-)
+  withState('toggled', 'toggle', false),
+);
 
-export default enhance(({ children, title, toggle, toggled, rightText }: PropsType) => {
-  return (
-    <div className={cx('side-menu', { 'side-menu--hidden': toggled })}>
-      <h1 className="side-menu__title">
-        <div
-          className="side-menu__title-toogle"
-          onClick={() => toggle(state => !state)}
-        >
-          <i className={cx('fa', {
+type SideMenuPropsType = PropsType | {
+  title: string,
+  toggle: boolean,
+  toggled: (state: boolean) => void,
+};
+
+export default enhance(({ children, title, toggle, toggled }: SideMenuPropsType) => (
+  <div className={cx('side-menu', { 'side-menu--hidden': toggled })}>
+    <h1 className="side-menu__title">
+      <div
+        className="side-menu__title-toogle"
+        onClick={() => toggle(state => !state)}
+      >
+        <i
+          className={cx('fa', {
             'fa-chevron-left': !toggled,
             'fa-chevron-right': toggled,
-          })} />
-        </div>
-        <span>{title}</span>
-      </h1>
-      <div className="side-menu__items">
-        {children}
+          })}
+        />
       </div>
+      <span>{title}</span>
+    </h1>
+    <div className="side-menu__items">
+      {children}
     </div>
-  )
-});
+  </div>
+  ));

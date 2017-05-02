@@ -1,21 +1,21 @@
-import store from 'store'
+import store from 'store';
 
 const ls = {
   get data() {
-    return store.get('app') || {}
+    return store.get('app') || {};
   },
 
   get(key) {
-    return this.data[key]
+    return this.data[key];
   },
 
   set(newData) {
-    store.set('app', { ...this.data, ...newData })
+    store.set('app', { ...this.data, ...newData });
   },
 
   clear() {
-    store.clear()
+    store.clear();
   },
-}
+};
 
-export default ls
+export default ls;

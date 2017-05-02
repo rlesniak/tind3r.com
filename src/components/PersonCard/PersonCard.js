@@ -5,7 +5,7 @@ import './PersonCard.scss';
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { compose, withHandlers, withState, pure, withProps } from 'recompose';
+import { compose, withHandlers, withState, pure } from 'recompose';
 import cx from 'classnames';
 
 import Gallery from 'components/Gallery';
@@ -56,7 +56,6 @@ const renderInstagramLink = (link, name, small) => (
 type PersonCardType = {
   person: Person,
   small?: boolean,
-  allowHotkeys?: boolean,
   isHovering: boolean,
   onCardMouseEnter: Function,
   onCardMouseLeave: Function,
@@ -126,6 +125,6 @@ const PersonCard = ({
       </div>
     </div>
   );
-}
+};
 
 export default enhance(observer(PersonCard));

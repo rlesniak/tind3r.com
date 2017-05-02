@@ -1,4 +1,6 @@
-import { each, first, pick } from 'lodash';
+// @flow
+
+import { first, pick } from 'lodash';
 
 import type { MatchType } from 'types/match';
 import type { PersonType } from 'types/person';
@@ -18,7 +20,7 @@ export const parseMatch = (match: Object, isNew: boolean): MatchType => ({
 export const parsePerson = (person: Object): PersonType => pick(person, [
   '_id', 'birth_date', 'ping_time', 'schools',
   'distance_mi', 'connection_count', 'common_friends',
-  'bio', 'name', 'photos', 'gender', 'age'
+  'bio', 'name', 'photos', 'gender', 'age',
 ]);
 
 export const parseMessage = (message: Object): MessageType => ({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hoistStatics, wrapDisplayName } from 'recompose';
 
-export default function withHotkeys (handlers, useCapture = false) {
+export default function withHotkeys(handlers, useCapture = false) {
   return hoistStatics(BaseComponent =>
     class WithHotkeys extends Component {
       displayName = wrapDisplayName(BaseComponent, 'withHotkeys');
@@ -10,11 +10,11 @@ export default function withHotkeys (handlers, useCapture = false) {
         this.updateEventListener(props);
       }
 
-      componentDidMount () {
+      componentDidMount() {
         this.updateEventListener(this.props);
       }
 
-      componentWillUnmount () {
+      componentWillUnmount() {
         window.removeEventListener('keydown', this.handleKeyDown, useCapture);
       }
 
@@ -44,9 +44,9 @@ export default function withHotkeys (handlers, useCapture = false) {
         Reflect.apply(handlerWithProps, this, [event]);
       };
 
-      render () {
+      render() {
         return <BaseComponent {...this.props} />;
       }
-    }
+    },
   );
 }

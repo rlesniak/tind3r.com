@@ -7,8 +7,8 @@ module.exports = function () {
   const data = {
     recs: { results: [] },
     updates: updates(),
-    meta: meta,
-    like: like,
+    meta,
+    like,
   };
 
 

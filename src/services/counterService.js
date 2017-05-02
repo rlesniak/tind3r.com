@@ -32,13 +32,13 @@ const counter = (): CounterType => {
         });
       }, 1000);
     }
-  }
+  };
 
   const stop = () => {
     clearInterval(interval);
     subscribers = [];
     interval = 0;
-  }
+  };
 
   const unsubscribe = (handler: HandlerType) => {
     subscribers = subscribers.filter(sub => sub.handler !== handler);
@@ -46,11 +46,9 @@ const counter = (): CounterType => {
     if (subscribers.length === 0) {
       stop();
     }
-  }
+  };
 
-  const isSubscriberExist = (handler: HandlerType): boolean => {
-    return !!subscribers.find(sub => sub.handler === handler);
-  }
+  const isSubscriberExist = (handler: HandlerType): boolean => !!subscribers.find(sub => sub.handler === handler);
 
   return {
     createSubscriber,

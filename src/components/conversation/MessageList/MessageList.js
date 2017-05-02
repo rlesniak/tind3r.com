@@ -10,37 +10,35 @@ import MessageStore from 'stores/MessageStore';
 import Person from 'models/Person';
 import { CurrentUser } from 'models/CurrentUser';
 
-type PropsTypes = {
+type PropsType = {
   messageStore: MessageStore,
   currentUser: CurrentUser,
 };
 
 type GetAuthorType = Person | CurrentUser;
 
-const getAuthor = (fromId: string, interlocutor: Person, currentUser: CurrentUser): GetAuthorType => {
-  return fromId === currentUser._id ? currentUser : interlocutor;
-}
+const getAuthor = (fromId: string, interlocutor: Person, currentUser: CurrentUser): GetAuthorType => (
+  fromId === currentUser._id ? currentUser : interlocutor
+);
 
 class MessageList extends Component {
-  props: PropsTypes;
+  props: PropsType;
 
   messagesRefs: Array<*> = [];
 
   componentDidMount() {
-    this.scrollIntoView()
+    this.scrollIntoView();
   }
 
   componentDidUpdate() {
-    this.scrollIntoView()
+    this.scrollIntoView();
   }
 
   scrollIntoView() {
-    const { messageStore, currentUser } = this.props;
-
     const lastMessage = last(this.messagesRefs);
 
     if (lastMessage) {
-      lastMessage.scrollIntoView()
+      lastMessage.scrollIntoView();
     }
   }
 
@@ -55,7 +53,7 @@ class MessageList extends Component {
             <Message
               group={gorupMessage}
               key={message._id || uniqueId()}
-              ref={ref => { this.messagesRefs.push(ref) }}
+              ref={ref => { this.messagesRefs.push(ref); }}
               message={message}
               onRemove={messageStore.removeMessage}
               author={getAuthor(message.from_id, messageStore.interlocutor, currentUser)}
@@ -75,10 +73,10 @@ class MessageList extends Component {
           }
 
           return component;
-        }
+        },
         )}
       </div>
-    )
+    );
   }
 }
 

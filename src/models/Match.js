@@ -1,12 +1,9 @@
 // @flow
 
-import { observable, extendObservable, action, computed } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
-import last from 'lodash/last';
-import get from 'lodash/get';
 
-import API from 'utils/api';
 import { removeMatch, updateMatch } from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
 import MessageStore from 'stores/MessageStore';
@@ -63,8 +60,8 @@ class Match {
     try {
       const blocked = await FetchService.block(this._id);
 
-      updateMatch(this._id, { is_blocked: 1 })
-    } catch(err) {
+      updateMatch(this._id, { is_blocked: 1 });
+    } catch (err) {
       this.is_blocked = false;
     }
   }
@@ -98,7 +95,7 @@ class Match {
   }
 
   @computed get lastActivity(): moment {
-    let date = this.last_activity_date
+    let date = this.last_activity_date;
 
     if (this.lastMessage.date) {
       date = this.lastMessage.date;

@@ -34,12 +34,12 @@ class MatchComponent extends Component {
   @observable match: ?Match;
 
   componentDidMount() {
-    const { match: { params }} = this.props;
-    this.fetchMessages(params.id)
+    const { match: { params } } = this.props;
+    this.fetchMessages(params.id);
   }
 
   componentWillReceiveProps(nextProps: Object) {
-    this.fetchMessages(nextProps.match.params.id)
+    this.fetchMessages(nextProps.match.params.id);
   }
 
   fetchMessages(matchId: string) {
@@ -61,7 +61,7 @@ class MatchComponent extends Component {
   }
 
   handleMessageSubmit = (text: string) => {
-    const { match: { params }, currentUser} = this.props;
+    const { match: { params }, currentUser } = this.props;
     this.messageStore.submit(text, params.id, currentUser._id);
   }
 
@@ -115,7 +115,7 @@ class MatchComponent extends Component {
               <i className="fa fa-ban" />
             </div>}
 
-            {isBlocked &&<div
+            {isBlocked && <div
               className={cx('match__option', 'match__option--active')}
               onClick={this.handleRemove}
             >

@@ -9,7 +9,7 @@ import noop from 'lodash/noop';
 import { miToKm } from 'utils';
 import { ACTION_TYPES } from 'const';
 import { pass, like, superlike } from 'services/person-actions';
-import { createAction, createMatch } from 'utils/database.v2'
+import { createAction, createMatch } from 'utils/database.v2';
 
 import type { PersonType, SchoolType, InstagramType, ActionsType } from 'types/person';
 import type { UserInterface } from 'types/userInterface';
@@ -62,25 +62,25 @@ class Person implements UserInterface {
   ) {
     this.is_done = 1;
 
-    switch(type) {
+    switch (type) {
       case ACTION_TYPES.PASS:
         try {
           const data = await pass(this._id);
           this.createDBAction('pass');
-        } catch (e) {};
+        } catch (e) {}
         break;
       case ACTION_TYPES.LIKE:
         try {
-          const { match } = await like(this._id)
+          const { match } = await like(this._id);
           if (match) {
             matchCallback();
-            this.createDBMatch(match)
+            this.createDBMatch(match);
           }
 
           this.createDBAction('like');
         } catch (e) {
           if (e.error) {
-            errorCallback({ type: 'like', resetsAt: e.resetsAt })
+            errorCallback({ type: 'like', resetsAt: e.resetsAt });
           }
 
           this.is_done = 0;
@@ -91,14 +91,14 @@ class Person implements UserInterface {
           const { match, super_likes: { remaining } } = superlike(this._id);
           if (match) {
             matchCallback();
-            this.createDBMatch(match)
+            this.createDBMatch(match);
           }
 
           this.createDBAction('superlike');
           superlikeCallback(remaining);
         } catch (e) {
           if (e.error) {
-            errorCallback({ type: 'superlike', resetsAt: e.resetsAt })
+            errorCallback({ type: 'superlike', resetsAt: e.resetsAt });
           }
 
           this.is_done = 0;

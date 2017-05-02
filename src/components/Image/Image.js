@@ -5,7 +5,7 @@ const enhance = compose(
   withState('isFailed', 'setError', false),
   withHandlers({
     onError: ({ setError }) => () => {
-      setError(true)
+      setError(true);
     },
   }),
 );
@@ -19,12 +19,12 @@ const Image = ({ isFailed, onError, style, src, ...props }) => {
       >
         Image broken :(
       </div>
-    )
+    );
   }
 
   return (
     <img src={src} onError={onError} style={style} />
-  )
+  );
 };
 
 export default enhance(Image);

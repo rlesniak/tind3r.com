@@ -1,5 +1,10 @@
 // @flow
 
+export type InstagramType = {
+  username: string,
+  id: string,
+}
+
 export type PersonType = {
   _id: string,
   birth_date: string,
@@ -19,11 +24,6 @@ export type PersonType = {
 
 export type SchoolType = {
   name: string,
-  id: string,
-}
-
-export type InstagramType = {
-  username: string,
   id: string,
 }
 

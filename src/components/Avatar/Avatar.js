@@ -2,7 +2,7 @@
 
 import './Avatar.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 
 type PropsTypes = {
   url: string,
@@ -12,14 +12,14 @@ type PropsTypes = {
 
 const Avatar = ({ url, width, height }: PropsTypes) => {
   const style = {
-    width, height
+    width, height,
   };
 
   return (
     <div className="avatar" style={width && height && style}>
       <img src={url} className="avatar__image" />
     </div>
-  )
-}
+  );
+};
 
 export default Avatar;

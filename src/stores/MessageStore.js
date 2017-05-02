@@ -45,7 +45,7 @@ class MessageStore {
       match_id: matchId,
       from_id: fromId,
       date: moment().format(),
-    }
+    };
 
     const message: Message = new Message(this, data);
     message.save();
@@ -54,7 +54,7 @@ class MessageStore {
   }
 
   // FOR DEBUG
-  removeMessage = (message) => {
+  removeMessage = message => {
     this.messages.remove(message);
     removeMessage(message._id);
   }

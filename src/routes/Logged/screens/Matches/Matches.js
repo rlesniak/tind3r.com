@@ -22,7 +22,7 @@ type PropsTypes = {
 const enhance = compose(
   inject('matchStore'),
   withHandlers({
-    handleMatchClick: ({ history, ...rest}) => matchId => {
+    handleMatchClick: ({ history, ...rest }) => matchId => {
       history.push(`/matches/${matchId}`);
     },
     handleAllMatches: ({ matchStore }) => () => {
@@ -41,67 +41,65 @@ const enhance = compose(
       matchStore.visibilityFilter = FILTER_TYPES.BLOCKED;
     },
   }),
-  observer
+  observer,
 );
 
 const Matches = ({
   handleMatchClick, matchStore, handleAllMatches, handleNewMatches, handleUnreadMatches,
-  handleUnansweredMatches, handleBlockedMatches
-}: PropsTypes) => {
-  return (
-    <div className="matches">
-      <SideMenu title="Matches">
-        <SideMenu.Item
-          active={matchStore.visibilityFilter === FILTER_TYPES.ALL}
-          rightText={matchStore.size.all}
-          onClick={handleAllMatches}
-        >
-          <span>All matches</span>
-        </SideMenu.Item>
-        <SideMenu.Item
-          active={matchStore.visibilityFilter === FILTER_TYPES.NEW}
-          rightText={matchStore.size.new}
-          onClick={handleNewMatches}
-        >
-          <span>New</span>
-        </SideMenu.Item>
-        <SideMenu.Item
-          active={matchStore.visibilityFilter === FILTER_TYPES.UNREAD}
-          rightText={matchStore.size.unread}
-          onClick={handleUnreadMatches}
-        >
-          <span>Unread</span>
-        </SideMenu.Item>
-        <SideMenu.Item
-          active={matchStore.visibilityFilter === FILTER_TYPES.UNANSWERED}
-          rightText={matchStore.size.unaswered}
-          onClick={handleUnansweredMatches}
-        >
-          <span>Unanswered</span>
-        </SideMenu.Item>
-        <SideMenu.Item
-          active={matchStore.visibilityFilter === FILTER_TYPES.BLOCKED}
-          rightText={matchStore.size.blocked}
-          onClick={handleBlockedMatches}
-        >
-          <span>Blocked</span>
-        </SideMenu.Item>
-      </SideMenu>
-      <SideMenu.Right>
-        <div className="matches__wrapper">
-          <div className="matches__filters">
-            <MatchFilters matchStore={matchStore} />
-          </div>
-          <div className="matches__list">
-            <MatchList handleMatchClick={handleMatchClick} matchStore={matchStore} />
-          </div>
+  handleUnansweredMatches, handleBlockedMatches,
+}: PropsTypes) => (
+  <div className="matches">
+    <SideMenu title="Matches">
+      <SideMenu.Item
+        active={matchStore.visibilityFilter === FILTER_TYPES.ALL}
+        rightText={matchStore.size.all}
+        onClick={handleAllMatches}
+      >
+        <span>All matches</span>
+      </SideMenu.Item>
+      <SideMenu.Item
+        active={matchStore.visibilityFilter === FILTER_TYPES.NEW}
+        rightText={matchStore.size.new}
+        onClick={handleNewMatches}
+      >
+        <span>New</span>
+      </SideMenu.Item>
+      <SideMenu.Item
+        active={matchStore.visibilityFilter === FILTER_TYPES.UNREAD}
+        rightText={matchStore.size.unread}
+        onClick={handleUnreadMatches}
+      >
+        <span>Unread</span>
+      </SideMenu.Item>
+      <SideMenu.Item
+        active={matchStore.visibilityFilter === FILTER_TYPES.UNANSWERED}
+        rightText={matchStore.size.unaswered}
+        onClick={handleUnansweredMatches}
+      >
+        <span>Unanswered</span>
+      </SideMenu.Item>
+      <SideMenu.Item
+        active={matchStore.visibilityFilter === FILTER_TYPES.BLOCKED}
+        rightText={matchStore.size.blocked}
+        onClick={handleBlockedMatches}
+      >
+        <span>Blocked</span>
+      </SideMenu.Item>
+    </SideMenu>
+    <SideMenu.Right>
+      <div className="matches__wrapper">
+        <div className="matches__filters">
+          <MatchFilters matchStore={matchStore} />
         </div>
-        <div className="matches__conversation">
-          <Route path="/matches/:id" component={props => <Match matchStore={matchStore} {...props} />} />
+        <div className="matches__list">
+          <MatchList handleMatchClick={handleMatchClick} matchStore={matchStore} />
         </div>
-      </SideMenu.Right>
-    </div>
-  )
-}
+      </div>
+      <div className="matches__conversation">
+        <Route path="/matches/:id" component={props => <Match matchStore={matchStore} {...props} />} />
+      </div>
+    </SideMenu.Right>
+  </div>
+  );
 
 export default enhance(Matches);

@@ -50,7 +50,7 @@ const person = (id = casual.uuid) => ({
   teasers: [],
   gender: 1,
   birth_date_info: 'fuzzy birthdate active, not displaying real birth_date',
-  id: id,
+  id,
   distance_mi: casual.integer(2, 50),
   common_connections: [],
 });

@@ -23,19 +23,19 @@ const Database = {
   },
 
   createAction(personId: string, type: string) {
-    dexieDb.users.update(personId, { done: 1 })
-    dexieDb.actions.add({ _id: personId, type: type, date: moment() })
+    dexieDb.users.update(personId, { done: 1 });
+    dexieDb.actions.add({ _id: personId, type, date: moment() });
   },
 
   createMatch(personId, payload) {
     dexieDb.matches.put({
       ...payload,
       person: { _id: personId },
-    })
+    });
   },
 
   addUsers(users) {
-    each(users, user => dexieDb.users.add({ ...user, done: 0 }))
+    each(users, user => dexieDb.users.add({ ...user, done: 0 }));
   },
 };
 

@@ -1,19 +1,20 @@
+// @flow
+
 import './LoadMoreCard.scss';
 
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import noop from 'lodash/noop';
 
 type LoadMoreCardType = {
-  loading?: bollean,
+  loading?: boolean,
   onClick: () => void,
 };
 
 const LoadMoreCard = ({
-  loading, onClick
-}) => (
+  loading, onClick,
+}: LoadMoreCardType) => (
   <div
     className={cx('load-more-card', { 'load-more-card--loading': loading })}
     onClick={loading ? noop : onClick}

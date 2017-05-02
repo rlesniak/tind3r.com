@@ -1,7 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
-var env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 
 module.exports = {
   entry: [
@@ -18,7 +18,7 @@ module.exports = {
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
 
-    './src/index.js'
+    './src/index.js',
     // the entry point of our app
   ],
 
@@ -28,15 +28,17 @@ module.exports = {
 
     path: path.resolve(__dirname, 'dist'),
 
-    publicPath: '/static/'
+    publicPath: '/static/',
     // necessary for HMR to know where to load the hot update chunks
   },
 
   resolve: {
+    extensions: ['.js'],
     modules: [path.resolve(__dirname, 'src/'), 'node_modules'],
     alias: {
+      components: path.resolve(__dirname, 'src/components'),
       forerunnerdb: path.resolve(__dirname, 'node_modules/forerunnerdb/js/builds/all.js')
-    }
+    },
   },
 
   devtool: 'cheap-source-map',
@@ -46,45 +48,45 @@ module.exports = {
       {
         test: /\.jsx?$/,
         use: ['babel-loader'],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader' // creates style nodes from JS strings
+            loader: 'style-loader', // creates style nodes from JS strings
           },
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           },
           {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              includePaths: [path.resolve(__dirname, 'src', 'styles')]
-            }
-          }
-        ]
+              includePaths: [path.resolve(__dirname, 'src', 'styles')],
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
-            loader: 'css-loader'
-          }
-        ]
+            loader: 'css-loader',
+          },
+        ],
       },
       {
         test: require.resolve('react-addons-perf'),
-        use: 'expose-loader?Perf'
-      }
-    ]
+        use: 'expose-loader?Perf',
+      },
+    ],
   },
 
   plugins: [
@@ -97,11 +99,11 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     // do not emit compiled assets that include errors
     new webpack.ProvidePlugin({
-      autobind: 'autobind-decorator'
+      autobind: 'autobind-decorator',
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(env)
+        NODE_ENV: JSON.stringify(env),
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -109,8 +111,8 @@ module.exports = {
       minChunks: function(module) {
         // this assumes your vendor imports exist in the node_modules directory
         return module.context && module.context.indexOf('node_modules') !== -1;
-      }
-    })
+      },
+    }),
   ],
 
   devServer: {
@@ -120,7 +122,7 @@ module.exports = {
     historyApiFallback: true,
     // respond to 404s with index.html
 
-    hot: true
+    hot: true,
     // enable HMR on the server
-  }
+  },
 };

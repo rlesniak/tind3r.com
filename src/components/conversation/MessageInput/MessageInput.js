@@ -9,7 +9,7 @@ import cx from 'classnames';
 
 import MessageControls from '../MessageControls';
 
-type PropsTypes = {
+type PropsType = {
   onSubmit: (text: string) => void,
   onFocus?: () => void,
 }
@@ -18,12 +18,12 @@ type PropsTypes = {
 class MessageInput extends Component {
   @observable text = '';
 
-  props: PropsTypes;
+  props: PropsType;
   inputRef: ?HTMLElement;
 
   componentDidUpdate() {
     if (this.inputRef) {
-      this.inputRef.focus()
+      this.inputRef.focus();
     }
   }
 
@@ -59,7 +59,7 @@ class MessageInput extends Component {
           <textarea
             autoFocus
             type="text"
-            ref={ref => { this.inputRef = ref }}
+            ref={ref => { this.inputRef = ref; }}
             onFocus={this.handleFocus}
             onChange={this.handleMessageChange}
             onKeyPress={this.handleKeyPress}

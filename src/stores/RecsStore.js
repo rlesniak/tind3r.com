@@ -1,4 +1,4 @@
-import { observable, transaction, computed, reaction, action } from 'mobx';
+import { observable, computed, reaction, action } from 'mobx';
 import map from 'lodash/map';
 import find from 'lodash/find';
 import each from 'lodash/each';
@@ -20,10 +20,10 @@ class RecsStore {
       () => this.allVisible.length,
       length => {
         if (length <= 3 && !this.is_fetching && !this.is_loading_more) {
-          this.fetchCore(true)
+          this.fetchCore(true);
         }
       },
-    )
+    );
   }
 
   @action async fetchCore(asLoadMore: boolean = false) {
@@ -36,12 +36,12 @@ class RecsStore {
     try {
       const { data } = await get('/recs/core');
 
-      const results = map(data.results, r => r.user)
+      const results = map(data.results, r => r.user);
 
       if (results.length > 0) {
-        each(results, json => this.setPerson(json))
+        each(results, json => this.setPerson(json));
       }
-    } catch(e) {
+    } catch (e) {
       this.isError = true;
     }
 
@@ -51,11 +51,11 @@ class RecsStore {
 
   @action setPerson(json) {
     if (find(this.persons, { _id: json._id })) {
-      return
+      return;
     }
 
-    const person = new Person(this, json)
-    this.persons.push(person)
+    const person = new Person(this, json);
+    this.persons.push(person);
   }
 
   @computed get allVisible(): Array {

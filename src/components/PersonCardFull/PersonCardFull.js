@@ -16,16 +16,16 @@ const enhance = compose(
   withState('counter', 'setCounter', 0),
   withHandlers({
     startCount: props => () => {
-      console.log(props)
+      console.log(props);
       setInterval(() => {
-        props.setCounter(n => n + 1)
-      }, 1000)
+        props.setCounter(n => n + 1);
+      }, 1000);
     },
-    onActionClick: props => (actionType) => {
-      props.person.callAction(actionType)
-    }
-  })
-)
+    onActionClick: props => actionType => {
+      props.person.callAction(actionType);
+    },
+  }),
+);
 
 const renderInstagramLink = (link, name, small) => (
   <a href={link} target="_blank" title={name}>

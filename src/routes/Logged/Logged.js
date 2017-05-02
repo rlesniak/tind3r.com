@@ -29,11 +29,11 @@ class Welcome extends Component {
       () => ({ id: currentUser._id, isAuthenticated: currentUser.is_authenticated }),
       ({ isAuthenticated }) => {
         if (isAuthenticated) {
-          this.onSuccesLogin()
+          this.onSuccesLogin();
         } else {
-          this.onErrorLogin()
+          this.onErrorLogin();
         }
-      }
+      },
     );
   }
 
@@ -46,7 +46,7 @@ class Welcome extends Component {
   }
 
   onErrorLogin() {
-    console.log('error')
+    console.log('error');
   }
 
   onSuccesLogin() {
@@ -75,7 +75,7 @@ class Welcome extends Component {
           <button className="button blue" onClick={this.connect}>Refresh</button>
         </div>
       )
-    )
+    );
   }
 
   render() {
@@ -132,7 +132,7 @@ class Welcome extends Component {
                     }
                   </div>
                   <div className="name">
-                    {/*currentUser.full_name*/}
+                    {/* currentUser.full_name*/}
                   </div>
                 </NavLink>
                 <div className="submenu" onClick={this.handleLogout}>

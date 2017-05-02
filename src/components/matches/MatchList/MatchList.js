@@ -3,7 +3,7 @@
 import './MatchList.scss';
 
 import React, { Component } from 'react';
-import { observable, reaction } from 'mobx';
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { List, AutoSizer } from 'react-virtualized';
@@ -12,7 +12,7 @@ import MatchRow from 'components/matches/MatchRow';
 
 import { MatchStore } from 'stores/MatchStore';
 
-type PropsTypes = {
+type PropsType = {
   matchStore: MatchStore,
   className: string,
   handleMatchClick: (matchId: string) => void,
@@ -20,7 +20,7 @@ type PropsTypes = {
 
 @observer
 class MatchList extends Component {
-  props: PropsTypes;
+  props: PropsType;
   listRef: ?any;
   lastMessageReactionDispose: () => void;
 
@@ -35,12 +35,12 @@ class MatchList extends Component {
           this.listRef.forceUpdateGrid();
           this.forceUpdate();
         }
-      }
-    )
+      },
+    );
   }
 
   componentWillUnmount() {
-    this.lastMessageReactionDispose()
+    this.lastMessageReactionDispose();
   }
 
   handleMatchClick = (matchId: string) => {
@@ -57,7 +57,7 @@ class MatchList extends Component {
         style={style}
         className="match-list__match"
       >
-        {/*<button onClick={() => match.remove()}>X</button>*/}
+        {/* <button onClick={() => match.remove()}>X</button>*/}
         <MatchRow
           match={match}
           onClick={this.handleMatchClick}
@@ -77,7 +77,7 @@ class MatchList extends Component {
         <AutoSizer>
           {({ height, width }) => (
             <List
-              ref={ref => this.listRef = ref}
+              ref={ref => { this.listRef = ref; }}
               height={height}
               overscanRowCount={10}
               rowCount={matchStore.matches.length}
@@ -88,7 +88,7 @@ class MatchList extends Component {
           )}
         </AutoSizer>
       </div>
-    )
+    );
   }
 }
 

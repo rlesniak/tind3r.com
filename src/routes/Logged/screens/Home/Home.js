@@ -95,7 +95,7 @@ class Home extends Component {
   renderNooneNew() {
     return (
       <h2>There is no one new</h2>
-    )
+    );
   }
 
   renderBody() {
@@ -109,19 +109,19 @@ class Home extends Component {
         >
           {
             recsStore.is_fetching ? 'Finding people near you...' : (
-            <div>
-              {'There\'s no one new around you.'}<br />
+              <div>
+                {'There\'s no one new around you.'}<br />
               (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br />
-              <button
-                onClick={this.handleRefresh}
-                className="home__refresh-button"
-              >
-                <i className="fa fa-refresh" />
-              </button>
-            </div>
+                <button
+                  onClick={this.handleRefresh}
+                  className="home__refresh-button"
+                >
+                  <i className="fa fa-refresh" />
+                </button>
+              </div>
           )}
         </SearchingLoader>
-      )
+      );
     }
 
     return (

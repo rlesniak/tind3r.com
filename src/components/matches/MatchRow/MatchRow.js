@@ -12,61 +12,59 @@ import Avatar from 'components/Avatar';
 
 import Match from 'models/Match';
 
-type PropsTypes = {
+type PropsType = {
   onClick: (matchId: string) => void,
   handleOnClick: () => void,
   match: Match,
 }
 
 const enhance = withHandlers({
-  handleOnClick: ({ match: { _id }, onClick }: PropsTypes) => () => {
+  handleOnClick: ({ match: { _id }, onClick }: PropsType) => () => {
     onClick(_id);
   },
 });
 
 const getMatchTypeIcon = (match: Match) => {
   if (match.is_blocked) {
-    return <i className="fa fa-ban" />
+    return <i className="fa fa-ban" />;
   }
 
   if (match.is_super_like) {
-    return <i className="fa fa-star" />
+    return <i className="fa fa-star" />;
   }
 
   if (match.is_boost_match) {
-    return <i className="fa fa-bolt" />
+    return <i className="fa fa-bolt" />;
   }
 
-  return null
-}
+  return null;
+};
 
-const MatchRow = ({ handleOnClick, match }: PropsTypes) => {
-  return (
-    <div
-      className={cx('match-row', {
-        'match-row--active': false,
-        'match-row--unread': match.is_new,
-        'match-row--blocked': match.is_blocked,
-      })}
-      onClick={handleOnClick}
-    >
-      <div className="match-row__wrapper">
-        <div className="match-row__type-icon">
-          {getMatchTypeIcon(match)}
-        </div>
-        <div className="match-row__avatar">
-          <Avatar url={match.person.mainPhoto} />
-        </div>
-        <div className="match-row__details">
-          <div className="match-row__person-details">{match.person.name}</div>
-          <div className="match-row__message-content">
-            <span>{match.lastMessage.body}</span>
-            <div className="match-row__date">{moment(match.lastActivity).fromNow()}</div>
-          </div>
+const MatchRow = ({ handleOnClick, match }: PropsType) => (
+  <div
+    className={cx('match-row', {
+      'match-row--active': false,
+      'match-row--unread': match.is_new,
+      'match-row--blocked': match.is_blocked,
+    })}
+    onClick={handleOnClick}
+  >
+    <div className="match-row__wrapper">
+      <div className="match-row__type-icon">
+        {getMatchTypeIcon(match)}
+      </div>
+      <div className="match-row__avatar">
+        <Avatar url={match.person.mainPhoto} />
+      </div>
+      <div className="match-row__details">
+        <div className="match-row__person-details">{match.person.name}</div>
+        <div className="match-row__message-content">
+          <span>{match.lastMessage.body}</span>
+          <div className="match-row__date">{moment(match.lastActivity).fromNow()}</div>
         </div>
       </div>
     </div>
-  )
-}
+  </div>
+  );
 
 export default enhance(observer(MatchRow));

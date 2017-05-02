@@ -1,6 +1,6 @@
 import './Gallery.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import { pure } from 'recompose';
 import uniqueId from 'lodash/uniqueId';

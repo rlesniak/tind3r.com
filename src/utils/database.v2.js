@@ -1,9 +1,6 @@
 // @flow
 
 import ForerunnerDB from 'forerunnerdb';
-import { first } from 'lodash';
-
-import { get } from './api';
 
 import { parseMatch, parsePerson } from 'utils/parsers';
 
@@ -14,26 +11,24 @@ import type { PersonType } from 'types/person';
 const fdb = new ForerunnerDB();
 let db;
 
-let matches;
-
 export function load() {
   let loaded = 0;
   db = fdb.db('tind3r');
 
   window.db = db;
 
-  return new Promise((resolve, reject) => {
-    const checkIfLoaded = () => loaded === 4 ? resolve() : null;
-    const loadedCallback = name => {
-      loaded++;
+  return new Promise((resolve) => {
+    const checkIfLoaded = () => (loaded === 4 ? resolve() : null);
+    const loadedCallback = () => {
+      loaded += 1;
       checkIfLoaded();
-    }
+    };
 
     db.collection('matches').load(loadedCallback);
     db.collection('persons').load(loadedCallback);
     db.collection('messages').load(loadedCallback);
     db.collection('actions').load(loadedCallback);
-  })
+  });
 }
 
 function create() {
@@ -43,7 +38,7 @@ function create() {
 
   window.db = db;
 
-  return db
+  return db;
 }
 
 export function matchCollection(): Array<MatchType> {
@@ -54,8 +49,8 @@ export function matchCollection(): Array<MatchType> {
         $as: 'person',
         $require: false,
         $multi: false,
-      }
-    }]
+      },
+    }],
   });
 
   matches.forEach(match => {
@@ -68,7 +63,7 @@ export function matchCollection(): Array<MatchType> {
       },
     })[0];
 
-    match.last_msg_from_db = lastMessage || {};
+    match.last_msg_from_db = lastMessage || {}; // eslint-disable-line
   });
 
   return matches;
@@ -99,13 +94,6 @@ export function createAction(payload: { person_id: string, action_type: string, 
   db.collection('actions').save();
 }
 
-export function createMatch(match: Object) {
-  const parsedMatch: MatchType = parseMatch(match, true);
-  const parsedPerson: PersonType = parseMatch(match.person);
-
-  createMatches([parsedMatch]);
-  createPersons([parsedPerson]);
-}
 
 export function createPersons(persons: Array<PersonType>) {
   const collection = db.collection('persons');
@@ -119,14 +107,22 @@ export function createMatches(data: Array<MatchType>) {
   collection.save();
 }
 
+export function createMatch(match: Object) {
+  const parsedMatch: MatchType = parseMatch(match, true);
+  const parsedPerson: PersonType = parsePerson(match.person);
+
+  createMatches([parsedMatch]);
+  createPersons([parsedPerson]);
+}
+
 export function updateMatch(matchId: string, payload: Object) {
-  console.log('update', matchId, payload)
+  console.log('update', matchId, payload);
   db.collection('matches').updateById(matchId, payload);
   db.collection('matches').save();
 }
 
 export function removeMessage(_id: string) {
-  db.collection('messages').remove({ _id: _id });
+  db.collection('messages').remove({ _id });
   db.collection('messages').save();
 }
 

@@ -35,9 +35,9 @@ class MessageComponent extends Component {
 
     return (
       <div
-        ref={ref => { this.wrapperRef = ref}}
+        ref={ref => { this.wrapperRef = ref; }}
         className={cx('message', {
-          'message__current': author.isCurrentUser,
+          message__current: author.isCurrentUser,
           'message--sending': message.isSending,
           'message--error': message.isError,
           'message--grouped': group,
@@ -51,7 +51,7 @@ class MessageComponent extends Component {
         </div>}
         <div className="message__body">
           {message.body}
-          {/*<button onClick={() => onRemove(message)}>X</button>*/}
+          {/* <button onClick={() => onRemove(message)}>X</button>*/}
         </div>
       </div>
     );

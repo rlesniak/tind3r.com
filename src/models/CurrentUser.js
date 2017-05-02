@@ -1,6 +1,6 @@
 // @flow
 
-import { observable, extendObservable, action, computed } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
 import get from 'lodash/get';
@@ -23,13 +23,12 @@ async function meta() {
     return Promise.reject();
   }
 }
-
-const formatTime = date => moment.utc(moment(date).diff(moment())).format('HH:mm:ss');
 const formatSeconds = date => moment(date).diff(moment(), 'seconds');
+const resetAtSeconds = (type: ?Date): number => (type ? formatSeconds(type) : -1);
+const formatTime = date => moment.utc(moment(date).diff(moment())).format('HH:mm:ss');
 const resetAtFormatted = (type: ?Date): string => (
   type && resetAtSeconds(type) > 0 ? formatTime(type) : ''
 );
-const resetAtSeconds = (type: ?Date): number => type ? formatSeconds(type) : -1;
 
 const resetAtDateHelper = (data): ResetAtHelperType => ({
   formatted: resetAtFormatted(data),
@@ -41,7 +40,6 @@ export class CurrentUser implements UserInterface {
   isCurrentUser: true = true;
 
   @observable is_authenticated = false;
-
   @observable is_fetching: boolean = false;
   @observable is_error: boolean = false;
   @observable like_limit_reset: ?number = null;
@@ -55,9 +53,9 @@ export class CurrentUser implements UserInterface {
     if (json) {
       const { rating, user } = json;
 
-      this.like_limit_reset = rating.rate_limited_until
-      this.superlike_limit_reset = rating.super_likes.resets_at
-      this.superlike_remaining = rating.super_likes.remaining
+      this.like_limit_reset = rating.rate_limited_until;
+      this.superlike_limit_reset = rating.super_likes.resets_at;
+      this.superlike_remaining = rating.super_likes.remaining;
 
       extend(this, user);
     }
@@ -76,7 +74,7 @@ export class CurrentUser implements UserInterface {
       this.is_authenticated = false;
       this.is_fetching = false;
       this.is_error = true;
-    })
+    });
   }
 
   @computed get avatarUrl(): string {
@@ -87,12 +85,14 @@ export class CurrentUser implements UserInterface {
     if (this.like_limit_reset) {
       return moment(this.like_limit_reset).format();
     }
+    return null;
   }
 
   @computed get superlikeResetDate(): ?Date {
     if (this.superlike_limit_reset) {
       return moment(this.superlike_limit_reset).format();
     }
+    return null;
   }
 
   @computed get likeReset(): ResetAtHelperType {

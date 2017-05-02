@@ -11,7 +11,7 @@ import type { MatchType } from 'types/match';
 import type { PersonType } from 'types/person';
 import type { MessageType } from 'types/message';
 
-const processMessages = (match) => {
+const processMessages = match => {
   const messages = [];
   each(match.messages, message => messages.push(parseMessage(message)));
 
@@ -22,7 +22,7 @@ const processMessages = (match) => {
   if (match.is_new_message) {
     updateMatch(match._id, { is_new: true });
   }
-}
+};
 
 const savePersonsToDb = (
   persons,
@@ -38,13 +38,13 @@ const savePersonsToDb = (
       success();
     }
   });
-}
+};
 
 const saveMatchesToDb = (
   data,
   success: () => void,
   error: () => void,
-) =>{
+) => {
   const collection = DB().collection('matches');
   collection.insert(data);
   collection.save(err => {
@@ -54,11 +54,11 @@ const saveMatchesToDb = (
       success();
     }
   });
-}
+};
 
 export default {
   updates() {
-    const lastActivityDate = LS.data.lastActivity
+    const lastActivityDate = LS.data.lastActivity;
 
     return new Promise((resolve, reject) => {
       API.post('/updates', { last_activity_date: lastActivityDate }).then(({ data }) => {
@@ -100,9 +100,9 @@ export default {
         collection.insert(message);
         collection.save();
 
-        resolve(message)
-      }).catch(resp => reject(resp))
-    })
+        resolve(message);
+      }).catch(resp => reject(resp));
+    });
   },
 
   block(matchId: string) {
@@ -113,8 +113,8 @@ export default {
         reject();
       });
     });
-  }
-}
+  },
+};
 
 export async function meta() {
   try {
@@ -125,6 +125,4 @@ export async function meta() {
     return Promise.reject();
   }
 }
-
-
 

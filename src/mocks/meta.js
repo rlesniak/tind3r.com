@@ -15,6 +15,6 @@ const meta = {
       resets_at: null,
     },
   },
-}
+};
 
 module.exports = meta;

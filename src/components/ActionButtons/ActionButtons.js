@@ -1,27 +1,27 @@
 // @flow
 
-import './ActionButtons.scss';
-
 import React from 'react';
 import { compose, withHandlers, withState, pure } from 'recompose';
 import cx from 'classnames';
 
+import { ACTION_TYPES } from 'const';
 import Button from '../actions/Button';
-import { ACTION_TYPES } from '../../const';
 
 import type { ActionsType } from 'types/person';
+
+import './ActionButtons.scss';
 
 const enhance = compose(
   withState('activeActionType', 'setActionType', props => props.activeActionType),
   withHandlers({
-    handleLike: (props) => (e) => {
-      props.onButtonClick(ACTION_TYPES.LIKE)
+    handleLike: props => () => {
+      props.onButtonClick(ACTION_TYPES.LIKE);
     },
-    handleSuperlike: (props) => () => {
-      props.onButtonClick(ACTION_TYPES.SUPERLIKE)
+    handleSuperlike: props => () => {
+      props.onButtonClick(ACTION_TYPES.SUPERLIKE);
     },
-    handlePass: (props) => () => {
-      props.onButtonClick(ACTION_TYPES.PASS)
+    handlePass: props => () => {
+      props.onButtonClick(ACTION_TYPES.PASS);
     },
   }),
   pure,
@@ -31,7 +31,6 @@ type PropsType = {
   handleLike: () => void,
   handlePass: () => void,
   handleSuperlike: () => void,
-  onButtonClick: (type: ActionsType) => void,
   size: 'small' | 'large',
   superLikeResetsAt?: string,
   superlikeRemaining?: number,
@@ -43,7 +42,7 @@ type PropsType = {
 }
 
 const ActionButtons = ({
-  handleLike, handlePass, handleSuperlike, activeActionType, superLikeResetsAt, likeResetsAt,
+  handleLike, handlePass, handleSuperlike, superLikeResetsAt, likeResetsAt,
   passed, liked, superliked, hideTimer, size = 'small', superlikeRemaining,
 }: PropsType) => {
   const isSuperlikeDisabled = !!superLikeResetsAt && superlikeRemaining === 0;
@@ -95,6 +94,6 @@ const ActionButtons = ({
       }
     </div>
   );
-}
+};
 
 export default enhance(ActionButtons);

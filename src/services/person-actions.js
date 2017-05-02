@@ -35,7 +35,7 @@ export async function superlike(id: string): Object {
 
     if (!data.limit_exceeded) {
       // ls.set({ superLikeExpiration: data.super_likes.resets_at })
-      Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at })
+      Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at });
     }
 
     return Promise.resolve(data);

@@ -6,16 +6,16 @@ import extend from 'lodash/extend';
 import last from 'lodash/last';
 import get from 'lodash/get';
 
-import API from 'Utils/api';
+import API from 'utils/api';
+import { removeMatch, updateMatch } from 'utils/database.v2';
+import FetchService from 'services/fetch-service';
+import MessageStore from 'stores/MessageStore';
+
 import Person from './Person';
 import Message from './Message';
-import { removeMatch, updateMatch } from 'Utils/database.v2';
-import FetchService from 'services/fetch-service';
 
-import MessageStore from '../stores/MessageStore';
-
-import type { MatchType } from '../types/match';
-import type { MessageType } from '../types/message';
+import type { MatchType } from 'types/match';
+import type { MessageType } from 'types/message';
 
 class Match {
   _id: string;

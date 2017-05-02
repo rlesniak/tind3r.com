@@ -5,9 +5,9 @@ import moment from 'moment';
 import extend from 'lodash/extend';
 import get from 'lodash/get';
 
-import API from 'Utils/api';
+import API from 'utils/api';
 
-import type { UserInterface } from '../types/userInterface';
+import type { UserInterface } from 'types/userInterface';
 
 type ResetAtHelperType = {
   formatted: ?string,

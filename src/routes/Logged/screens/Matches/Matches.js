@@ -9,10 +9,10 @@ import { observer, inject } from 'mobx-react';
 
 import Match from '../Match';
 
-import MatchList from 'Components/matches/MatchList';
-import MatchFilters from 'Components/matches/MatchFilters';
+import MatchList from 'components/matches/MatchList';
+import MatchFilters from 'components/matches/MatchFilters';
 import { MatchStore, FILTER_TYPES } from 'stores/MatchStore';
-import SideMenu from 'Components/SideMenu';
+import SideMenu from 'components/SideMenu';
 
 type PropsTypes = {
   handleMatchClick: (matchId: string) => void,

@@ -8,7 +8,7 @@ import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import Avatar from 'Components/Avatar';
+import Avatar from 'components/Avatar';
 
 import Message from 'models/Message';
 import Person from 'models/Person';

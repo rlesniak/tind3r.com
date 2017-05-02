@@ -5,9 +5,9 @@ import moment from 'moment';
 import last from 'lodash/last';
 import uniqueId from 'lodash/uniqueId';
 
-import { getMessages, getPerson, getMatch, removeMessage } from '../utils/database.v2';
-import Message from '../models/Message';
-import Person from '../models/Person';
+import Message from 'models/Message';
+import Person from 'models/Person';
+import { getMessages, getPerson, getMatch, removeMessage } from 'utils/database.v2';
 
 import type { MessageType } from 'types/Message';
 

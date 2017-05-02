@@ -1,6 +1,6 @@
 // @flow
 
-import type { PersonType } from '../types/person';
+import type { PersonType } from 'types/person';
 
 export type MatchType = {
   _id: string,

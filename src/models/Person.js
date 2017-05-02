@@ -6,14 +6,13 @@ import extend from 'lodash/extend';
 import get from 'lodash/get';
 import noop from 'lodash/noop';
 
-import { miToKm } from 'Utils';
-
-import { pass, like, superlike } from 'services/person-actions';
+import { miToKm } from 'utils';
 import { ACTION_TYPES } from 'const';
+import { pass, like, superlike } from 'services/person-actions';
 import { createAction, createMatch } from 'utils/database.v2'
 
-import type { PersonType, SchoolType, InstagramType, ActionsType } from '../types/person';
-import type { UserInterface } from '../types/userInterface';
+import type { PersonType, SchoolType, InstagramType, ActionsType } from 'types/person';
+import type { UserInterface } from 'types/userInterface';
 
 class Person implements UserInterface {
   isCurrentUser: false = false;

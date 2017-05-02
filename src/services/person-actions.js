@@ -1,4 +1,6 @@
-import API from 'Utils/api';
+// @flow
+
+import API from 'utils/api';
 
 export async function pass(id: string): Object {
   try {

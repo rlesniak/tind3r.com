@@ -18,7 +18,7 @@ module.exports = {
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
 
-    './src/index.js',
+    './src/index.js'
     // the entry point of our app
   ],
 
@@ -29,15 +29,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
 
     publicPath: '/static/'
-      // necessary for HMR to know where to load the hot update chunks
+    // necessary for HMR to know where to load the hot update chunks
   },
 
   resolve: {
     modules: [path.resolve(__dirname, 'src/'), 'node_modules'],
     alias: {
-      Components: path.resolve(__dirname, 'src/components/'),
-      Containers: path.resolve(__dirname, 'src/containers/'),
-      Utils: path.resolve(__dirname, 'src/utils/'),
       forerunnerdb: path.resolve(__dirname, 'node_modules/forerunnerdb/js/builds/all.js')
     }
   },
@@ -48,26 +45,26 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: [
-          'babel-loader',
-        ],
-        exclude: /node_modules/,
+        use: ['babel-loader'],
+        exclude: /node_modules/
       },
       {
         test: /\.scss$/,
         use: [
           {
-            loader: "style-loader" // creates style nodes from JS strings
-          }, {
-            loader: "css-loader",
+            loader: 'style-loader' // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader',
             options: {
               sourceMap: true
             }
-          }, {
-            loader: "sass-loader",
+          },
+          {
+            loader: 'sass-loader',
             options: {
               sourceMap: true,
-              includePaths: [ path.resolve(__dirname, 'src', 'styles') ]
+              includePaths: [path.resolve(__dirname, 'src', 'styles')]
             }
           }
         ]
@@ -75,15 +72,19 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
         ]
       },
       {
         test: require.resolve('react-addons-perf'),
-        use: 'expose-loader?Perf',
+        use: 'expose-loader?Perf'
       }
-    ],
+    ]
   },
 
   plugins: [
@@ -96,7 +97,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     // do not emit compiled assets that include errors
     new webpack.ProvidePlugin({
-      autobind: 'autobind-decorator',
+      autobind: 'autobind-decorator'
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -105,7 +106,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function (module) {
+      minChunks: function(module) {
         // this assumes your vendor imports exist in the node_modules directory
         return module.context && module.context.indexOf('node_modules') !== -1;
       }
@@ -119,7 +120,7 @@ module.exports = {
     historyApiFallback: true,
     // respond to 404s with index.html
 
-    hot: true,
+    hot: true
     // enable HMR on the server
-  },
+  }
 };

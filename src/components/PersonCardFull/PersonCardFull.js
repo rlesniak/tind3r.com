@@ -9,8 +9,8 @@ import map from 'lodash/map';
 import filter from 'lodash/filter';
 import uniqueId from 'lodash/uniqueId';
 
-import Gallery from 'Components/Gallery';
-import ActionButtons from 'Components/ActionButtons';
+import Gallery from 'components/Gallery';
+import ActionButtons from 'components/ActionButtons';
 
 const enhance = compose(
   withState('counter', 'setCounter', 0),

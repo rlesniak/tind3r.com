@@ -4,12 +4,12 @@ import { each, first, pick } from 'lodash';
 
 import API from 'utils/api';
 import LS from 'utils/localStorage';
-import { parseMatch, parsePerson, parseMessage } from 'utils/parsers';
 import DB, { updateMatch } from 'utils/database.v2';
+import { parseMatch, parsePerson, parseMessage } from 'utils/parsers';
 
-import type { MatchType } from '../types/match';
-import type { PersonType } from '../types/person';
-import type { MessageType } from '../types/message';
+import type { MatchType } from 'types/match';
+import type { PersonType } from 'types/person';
+import type { MessageType } from 'types/message';
 
 const processMessages = (match) => {
   const messages = [];

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { EXT_ID } from '../const';
+import { EXT_ID } from 'const';
 
 const chromeRuntime = (type, url, params) => {
   if (1) {

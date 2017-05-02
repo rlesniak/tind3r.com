@@ -13,8 +13,8 @@ import Welcome from '../Welcome';
 import Logged from '../Logged';
 import NotFound from '../NotFound';
 import * as Database from 'utils/database.v2.js';
-import Loader from 'Components/Loader';
-import NavBar from 'Components/NavBar';
+import Loader from 'components/Loader';
+import NavBar from 'components/NavBar';
 
 import { checkIfInstalled } from '../../utils/runtime';
 

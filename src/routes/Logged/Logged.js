@@ -5,8 +5,8 @@ import { Route, Link, Switch, NavLink } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 
-import NavBar from 'Components/NavBar';
-import Loader from 'Components/Loader';
+import NavBar from 'components/NavBar';
+import Loader from 'components/Loader';
 
 import NotFound from '../NotFound';
 import Home from './screens/Home';

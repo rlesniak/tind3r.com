@@ -8,7 +8,7 @@ import get from 'lodash/get';
 
 import FetchService from 'services/fetch-service';
 
-import type { MessageType } from '../types/message';
+import type { MessageType } from 'types/message';
 
 class Message {
   @observable _id: string;

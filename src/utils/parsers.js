@@ -1,8 +1,8 @@
 import { each, first, pick } from 'lodash';
 
-import type { MatchType } from '../types/match';
-import type { PersonType } from '../types/person';
-import type { MessageType } from '../types/message';
+import type { MatchType } from 'types/match';
+import type { PersonType } from 'types/person';
+import type { MessageType } from 'types/message';
 
 export const parseMatch = (match: Object, isNew: boolean): MatchType => ({
   _id: match.id,

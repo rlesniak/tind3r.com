@@ -7,12 +7,12 @@ import includes from 'lodash/includes';
 import orderBy from 'lodash/orderBy';
 
 import { get } from 'utils/api';
-import Match from '../models/Match';
-import database, { matchCollection } from 'utils/database.v2';
+import Match from 'models/Match';
+import DB from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
-import DB from '../utils/database.v2';
+import database, { matchCollection } from 'utils/database.v2';
 
-import type { MatchType, FiltersType } from '../types/match';
+import type { MatchType, FiltersType } from 'types/match';
 
 const saveCollectionToDb = data =>{
   const collection = DB().collection('matches');

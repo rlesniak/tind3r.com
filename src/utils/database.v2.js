@@ -5,11 +5,11 @@ import { first } from 'lodash';
 
 import { get } from './api';
 
-import { parseMatch, parsePerson } from '../utils/parsers';
+import { parseMatch, parsePerson } from 'utils/parsers';
 
-import type { MessageType } from '../types/message';
-import type { MatchType } from '../types/match';
-import type { PersonType } from '../types/person';
+import type { MessageType } from 'types/message';
+import type { MatchType } from 'types/match';
+import type { PersonType } from 'types/person';
 
 const fdb = new ForerunnerDB();
 let db;

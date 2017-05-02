@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 import { compose, withHandlers, withState, pure, withProps } from 'recompose';
 import cx from 'classnames';
 
-import Gallery from 'Components/Gallery';
-import ActionButtons from 'Components/ActionButtons';
+import Gallery from 'components/Gallery';
+import ActionButtons from 'components/ActionButtons';
 
 import withHotkeys from 'hoc/withHotkeys';
 import { ACTION_TYPES } from 'const';

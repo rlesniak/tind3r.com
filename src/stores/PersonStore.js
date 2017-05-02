@@ -1,7 +1,7 @@
 import { observable, transaction, computed, reaction, action } from 'mobx';
 import map from 'lodash/map';
 
-import { get } from 'Utils/api';
+import { get } from 'utils/api';
 
 class PersonStore {
   @observable persons = [];

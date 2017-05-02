@@ -7,7 +7,7 @@ import uniqueId from 'lodash/uniqueId';
 import map from 'lodash/map';
 import cx from 'classnames';
 
-import Image from 'Components/Image';
+import Image from 'components/Image';
 
 const sliderOptions = {
   dots: true,

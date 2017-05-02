@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { List, AutoSizer } from 'react-virtualized';
 
-import MatchRow from 'Components/matches/MatchRow';
+import MatchRow from 'components/matches/MatchRow';
 
 import { MatchStore } from 'stores/MatchStore';
 

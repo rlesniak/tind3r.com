@@ -8,10 +8,10 @@ import { observer, inject } from 'mobx-react';
 import moment from 'moment';
 import cx from 'classnames';
 
-import PersonCard from 'Components/PersonCard';
-import LoadMoreCard from 'Components/LoadMoreCard';
-import SearchingLoader from 'Components/SearchingLoader';
-import SideMenu from 'Components/SideMenu';
+import PersonCard from 'components/PersonCard';
+import LoadMoreCard from 'components/LoadMoreCard';
+import SearchingLoader from 'components/SearchingLoader';
+import SideMenu from 'components/SideMenu';
 
 import counterService from 'services/counterService';
 

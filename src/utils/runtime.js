@@ -1,4 +1,4 @@
-import { EXT_ID } from '../const'
+import { EXT_ID } from 'const'
 
 export const getFacebookToken = () => {
   chrome.runtime.sendMessage(EXT_ID, { type: 'FACEBOOK_TOKEN' })

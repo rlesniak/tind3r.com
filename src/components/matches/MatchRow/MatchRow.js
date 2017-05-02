@@ -8,7 +8,7 @@ import moment from 'moment';
 import { withHandlers } from 'recompose';
 import { observer } from 'mobx-react';
 
-import Avatar from 'Components/Avatar';
+import Avatar from 'components/Avatar';
 
 import Match from 'models/Match';
 

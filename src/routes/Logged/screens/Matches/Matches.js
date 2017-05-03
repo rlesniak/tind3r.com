@@ -3,7 +3,7 @@
 import './Matches.scss';
 
 import React, { Component } from 'react';
-import { withHandlers, compose } from 'recompose';
+import { withState, withHandlers, compose } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
@@ -21,9 +21,11 @@ type PropsTypes = {
 
 const enhance = compose(
   inject('matchStore'),
+  withState('activeId', 'setActiveId', props => props.location.pathname.split('/matches/')[1]),
   withHandlers({
-    handleMatchClick: ({ history, ...rest }) => matchId => {
+    handleMatchClick: ({ history, setActiveId }) => matchId => {
       history.push(`/matches/${matchId}`);
+      setActiveId(matchId);
     },
     handleAllMatches: ({ matchStore }) => () => {
       matchStore.visibilityFilter = FILTER_TYPES.ALL;
@@ -46,7 +48,7 @@ const enhance = compose(
 
 const Matches = ({
   handleMatchClick, matchStore, handleAllMatches, handleNewMatches, handleUnreadMatches,
-  handleUnansweredMatches, handleBlockedMatches,
+  handleUnansweredMatches, handleBlockedMatches, activeId,
 }: PropsTypes) => (
   <div className="matches">
     <SideMenu title="Matches">
@@ -92,7 +94,7 @@ const Matches = ({
           <MatchFilters matchStore={matchStore} />
         </div>
         <div className="matches__list">
-          <MatchList handleMatchClick={handleMatchClick} matchStore={matchStore} />
+          <MatchList handleMatchClick={handleMatchClick} matchStore={matchStore} activeId={activeId} />
         </div>
       </div>
       <div className="matches__conversation">

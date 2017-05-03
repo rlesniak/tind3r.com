@@ -7,6 +7,7 @@ import { reaction, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { List, AutoSizer } from 'react-virtualized';
+import { includes } from 'lodash';
 
 import MatchRow from 'components/matches/MatchRow';
 
@@ -16,6 +17,7 @@ type PropsType = {
   matchStore: MatchStore,
   className: string,
   handleMatchClick: (matchId: string) => void,
+  activeId: string,
 };
 
 @observer
@@ -64,6 +66,7 @@ class MatchList extends Component {
         <MatchRow
           match={match}
           onClick={this.handleMatchClick}
+          active={includes(match._id, this.props.activeId)}
         />
       </div>
     );

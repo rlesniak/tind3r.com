@@ -16,7 +16,8 @@ type PropsType = {
   onClick: (matchId: string) => void,
   handleOnClick: () => void,
   match: Match,
-}
+  active: boolean,
+};
 
 const enhance = withHandlers({
   handleOnClick: ({ match: { _id }, onClick }: PropsType) => () => {
@@ -40,10 +41,10 @@ const getMatchTypeIcon = (match: Match) => {
   return null;
 };
 
-const MatchRow = ({ handleOnClick, match }: PropsType) => (
+const MatchRow = ({ handleOnClick, match, active }: PropsType) => (
   <div
     className={cx('match-row', {
-      'match-row--active': false,
+      'match-row--active': active,
       'match-row--unread': match.is_new,
       'match-row--blocked': match.is_blocked,
     })}

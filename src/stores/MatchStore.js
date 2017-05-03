@@ -16,6 +16,7 @@ export const FILTER_TYPES: { [string]: FiltersType } = {
   UNREAD: 'unread',
   UNANSWERED: 'unanswered',
   BLOCKED: 'blocked',
+  SUPERLIKE: 'superlike',
 };
 
 export class MatchStore {
@@ -98,25 +99,29 @@ export class MatchStore {
   }
 
   @computed get getFiltered(): Array<Match> {
-    let data = this.items.filter(m => m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1);
+    let data = this.items;
 
     switch (this.visibilityFilter) {
       case FILTER_TYPES.UNREAD: data = this.filterUnread; break;
       case FILTER_TYPES.NEW: data = this.filterNew; break;
       case FILTER_TYPES.UNANSWERED: data = this.filterUnanswered; break;
       case FILTER_TYPES.BLOCKED: data = this.filterBlocked; break;
+      case FILTER_TYPES.SUPERLIKE: data = this.filterSuperlike; break;
     }
+
+    data = data.filter(m => m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1);
 
     return data;
   }
 
-  @computed get size(): { all: number, new: number, unread: number, unaswered: number } {
+  @computed get size(): { all: number, new: number, unread: number, unaswered: number, superlike: number } {
     return {
       all: this.items.length,
       new: this.filterNew.length,
       unread: this.filterUnread.length,
       unaswered: this.filterUnanswered.length,
       blocked: this.filterBlocked.length,
+      superlike: this.filterSuperlike.length,
     };
   }
 
@@ -136,6 +141,20 @@ export class MatchStore {
 
   @computed get filterBlocked() {
     return this.items.filter(m => m.is_blocked);
+  }
+
+  @computed get filterSuperlike() {
+    return this.filterTypes(FILTER_TYPES.SUPERLIKE);
+  }
+
+  filterTypes(type: string) {
+    return this.items.filter(m => {
+      switch (type) {
+        case FILTER_TYPES.SUPERLIKE: return m.is_super_like;
+      }
+
+      return false;
+    });
   }
 
   find(matchId: string): ?Match {

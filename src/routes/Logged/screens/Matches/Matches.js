@@ -17,6 +17,8 @@ import SideMenu from 'components/SideMenu';
 type PropsTypes = {
   handleMatchClick: (matchId: string) => void,
   matchStore: MatchStore,
+  activeId: string,
+  props: any,
 };
 
 const enhance = compose(
@@ -42,51 +44,37 @@ const enhance = compose(
     handleBlockedMatches: ({ matchStore }) => () => {
       matchStore.visibilityFilter = FILTER_TYPES.BLOCKED;
     },
+    handleSuperlikes: ({ matchStore }) => () => {
+      matchStore.visibilityFilter = FILTER_TYPES.SUPERLIKE;
+    },
   }),
   observer,
 );
 
+const filterTypesMap = [
+  { text: 'All', type: FILTER_TYPES.ALL, size: 'all', handle: 'handleAllMatches' },
+  { text: 'New', type: FILTER_TYPES.NEW, size: 'new', handle: 'handleNewMatches' },
+  { text: 'Unread', type: FILTER_TYPES.UNREAD, size: 'unread', handle: 'handleUnreadMatches' },
+  { text: 'Unanswered', type: FILTER_TYPES.UNANSWERED, size: 'unaswered', handle: 'handleUnansweredMatches' },
+  { text: 'Superliked', type: FILTER_TYPES.SUPERLIKE, size: 'superlike', handle: 'handleSuperlikes' },
+  { text: 'Blocked', type: FILTER_TYPES.BLOCKED, size: 'blocked', handle: 'handleBlockedMatches' },
+];
+
 const Matches = ({
-  handleMatchClick, matchStore, handleAllMatches, handleNewMatches, handleUnreadMatches,
-  handleUnansweredMatches, handleBlockedMatches, activeId,
+  handleMatchClick, matchStore, activeId, ...props,
 }: PropsTypes) => (
   <div className="matches">
     <SideMenu title="Matches">
-      <SideMenu.Item
-        active={matchStore.visibilityFilter === FILTER_TYPES.ALL}
-        rightText={matchStore.size.all}
-        onClick={handleAllMatches}
-      >
-        <span>All matches</span>
-      </SideMenu.Item>
-      <SideMenu.Item
-        active={matchStore.visibilityFilter === FILTER_TYPES.NEW}
-        rightText={matchStore.size.new}
-        onClick={handleNewMatches}
-      >
-        <span>New</span>
-      </SideMenu.Item>
-      <SideMenu.Item
-        active={matchStore.visibilityFilter === FILTER_TYPES.UNREAD}
-        rightText={matchStore.size.unread}
-        onClick={handleUnreadMatches}
-      >
-        <span>Unread</span>
-      </SideMenu.Item>
-      <SideMenu.Item
-        active={matchStore.visibilityFilter === FILTER_TYPES.UNANSWERED}
-        rightText={matchStore.size.unaswered}
-        onClick={handleUnansweredMatches}
-      >
-        <span>Unanswered</span>
-      </SideMenu.Item>
-      <SideMenu.Item
-        active={matchStore.visibilityFilter === FILTER_TYPES.BLOCKED}
-        rightText={matchStore.size.blocked}
-        onClick={handleBlockedMatches}
-      >
-        <span>Blocked</span>
-      </SideMenu.Item>
+      {filterTypesMap.map(filter => (
+        <SideMenu.Item
+          key={filter.text}
+          active={matchStore.visibilityFilter === filter.type}
+          rightText={matchStore.size[filter.size]}
+          onClick={props[filter.handle]}
+        >
+          <span>{filter.text}</span>
+        </SideMenu.Item>
+      ))}
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">

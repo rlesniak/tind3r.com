@@ -17,7 +17,7 @@ export function load() {
 
   window.db = db;
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const checkIfLoaded = () => (loaded === 4 ? resolve() : null);
     const loadedCallback = () => {
       loaded += 1;

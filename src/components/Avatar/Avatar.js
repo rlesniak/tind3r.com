@@ -4,13 +4,13 @@ import './Avatar.scss';
 
 import React from 'react';
 
-type PropsTypes = {
+type PropsType = {
   url: string,
   width?: number,
   height?: number,
 };
 
-const Avatar = ({ url, width, height }: PropsTypes) => {
+const Avatar = ({ url, width, height }: PropsType) => {
   const style = {
     width, height,
   };

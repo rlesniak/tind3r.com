@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import { Route, Link, Switch, NavLink } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
+import ReactTooltip from 'react-tooltip';
 
-import NavBar from 'components/NavBar';
 import Loader from 'components/Loader';
+import Avatar from 'components/Avatar';
 
 import NotFound from '../NotFound';
 import Home from './screens/Home';
@@ -53,6 +54,7 @@ class Welcome extends Component {
     recsStore.fetchCore();
     // matchStore.fetch();
     matchStore.getFromDb();
+    matchStore.setCurrentUserId(currentUser._id);
 
     window.ms = matchStore;
   }
@@ -61,7 +63,6 @@ class Welcome extends Component {
     return (
       currentUser.is_authenticated ? (
         <div className="logged">
-
           <Switch>
             <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
             <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
@@ -82,6 +83,7 @@ class Welcome extends Component {
     return (
       <Provider currentUser={currentUser} matchStore={matchStore}>
         <div className="logged">
+          <ReactTooltip place="top" effect="solid" />
           <div className="logged__nav-bar">
             <ul>
               <li>
@@ -123,20 +125,25 @@ class Welcome extends Component {
                   <span>Discussion</span>
                 </NavLink>
               </li>
+              <li className="separator" />
               <li className="profile">
                 <NavLink to={`/users/${currentUser._id}`} activeClassName="active">
-                  <div className="avatar">
-                    {
-                      currentUser.avatarUrl &&
-                      <img src={currentUser.avatarUrl} alt="avatar" />
-                    }
-                  </div>
+                  {currentUser.avatarUrl && <Avatar url={currentUser.avatarUrl} />}
                   <div className="name">
-                    {/* currentUser.full_name*/}
+                    {currentUser.name}
                   </div>
                 </NavLink>
                 <div className="submenu" onClick={this.handleLogout}>
                   <span>Logout</span>
+                </div>
+              </li>
+              <li>
+                <div
+                  className="logout"
+                  onClick={this.handleLogout}
+                  data-tip="Logout"
+                >
+                  <i className="fa fa-sign-out" />
                 </div>
               </li>
             </ul>

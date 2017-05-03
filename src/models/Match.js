@@ -83,15 +83,11 @@ class Match {
   }
 
   @computed get lastMessage(): Message {
-    let message: Message;
-
     if (this.messageStore && this.messageStore.lastMessage) {
-      message = this.messageStore.lastMessage;
-    } else {
-      message = new Message(this, this.last_msg_from_db);
+      return this.messageStore.lastMessage;
     }
 
-    return message;
+    return new Message(this, this.last_msg_from_db);
   }
 
   @computed get lastActivity(): moment {

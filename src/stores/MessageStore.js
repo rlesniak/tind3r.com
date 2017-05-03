@@ -34,13 +34,12 @@ class MessageStore {
 
   @action create(data: MessageType) {
     const message: Message = new Message(this, data);
-
     this.messages.push(message);
   }
 
   @action submit(body: string, matchId: string, fromId: string) {
     const data = {
-      _id: uniqueId,
+      _id: uniqueId(),
       body,
       match_id: matchId,
       from_id: fromId,

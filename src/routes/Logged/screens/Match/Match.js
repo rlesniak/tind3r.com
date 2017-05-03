@@ -7,6 +7,7 @@ import { observer, inject } from 'mobx-react';
 import { observable } from 'mobx';
 import { Scrollbars } from 'react-custom-scrollbars';
 import cx from 'classnames';
+import { pure } from 'recompose';
 
 import MessageStore from 'stores/MessageStore';
 import { MatchStore } from 'stores/MatchStore';
@@ -24,7 +25,7 @@ type PropsTypes = {
   matchStore: MatchStore,
 }
 
-@inject('currentUser')
+@inject('currentUser', 'matchStore')
 @observer
 class MatchComponent extends Component {
   props: PropsTypes;
@@ -39,19 +40,22 @@ class MatchComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps: Object) {
-    this.fetchMessages(nextProps.match.params.id);
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.fetchMessages(nextProps.match.params.id);
+    }
   }
 
   fetchMessages(matchId: string) {
     this.match = this.props.matchStore.find(matchId);
+
+    this.messageStore = new MessageStore(null);
+    this.messageStore.fetch(matchId);
 
     if (this.match) {
       this.match.setMessageStore(this.messageStore);
 
       this.setAsRead();
     }
-
-    this.messageStore.fetch(matchId);
   }
 
   setAsRead = () => {

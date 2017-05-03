@@ -3,7 +3,7 @@
 import './MatchList.scss';
 
 import React, { Component } from 'react';
-import { reaction } from 'mobx';
+import { reaction, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { List, AutoSizer } from 'react-virtualized';
@@ -47,9 +47,12 @@ class MatchList extends Component {
     this.props.handleMatchClick(matchId);
   };
 
+  @computed get matches(): Array<Object> {
+    return this.props.matchStore.matches;
+  }
+
   rowRenderer = ({ index, key, style }: Object) => {
-    const { matchStore: { matches } } = this.props;
-    const match = matches[index];
+    const match = this.matches[index];
 
     return (
       <div
@@ -80,7 +83,7 @@ class MatchList extends Component {
               ref={ref => { this.listRef = ref; }}
               height={height}
               overscanRowCount={10}
-              rowCount={matchStore.matches.length}
+              rowCount={this.matches.length}
               rowHeight={76}
               rowRenderer={this.rowRenderer}
               width={width}

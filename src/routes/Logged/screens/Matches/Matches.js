@@ -96,7 +96,7 @@ const Matches = ({
         </div>
       </div>
       <div className="matches__conversation">
-        <Route path="/matches/:id" component={props => <Match matchStore={matchStore} {...props} />} />
+        <Route path="/matches/:id" component={Match} />
       </div>
     </SideMenu.Right>
   </div>

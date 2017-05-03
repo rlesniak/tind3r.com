@@ -15,7 +15,7 @@
 
     li {
       text-align: center;
-      font-size: 40px;
+      font-size: 25px;
       padding-left: 10px;
 
       a {
@@ -36,6 +36,27 @@
       .fa {
         color: #fff;
       }
+    }
+
+    .separator {
+      height: 2px;
+      background: red;
+      padding: 0;
+    }
+
+    .logout {
+      cursor: pointer;
+    }
+  }
+
+  .profile {
+    .avatar {
+      display: inline-block;
+    }
+
+    .name {
+      font-size: 14px;
+      color: #fff;
     }
   }
 

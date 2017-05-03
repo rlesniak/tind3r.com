@@ -17,24 +17,9 @@ export const FILTER_TYPES: { [string]: FiltersType } = {
   BLOCKED: 'blocked',
 };
 
-
-const filterNew = (data: Array<Match>) => (
-  data.filter(m => m.is_new && !m.lastMessage.body)
-);
-
-const filterUnread = (data: Array<Match>) => (
-  data.filter(m => m.is_new && m.lastMessage.body)
-);
-
-const filterUnanswered = (data: Array<Match>) => (
-  data.filter(m => m.is_new && !m.lastMessage.body)
-);
-
-const filterBlocked = (data: Array<Match>) => (
-  data.filter(m => m.is_blocked)
-);
-
 export class MatchStore {
+  current_user_id: string;
+
   @observable is_sync = false;
   @observable isLoading = false;
   @observable items: Array<Match> = [];
@@ -60,6 +45,10 @@ export class MatchStore {
         if (match) match.insertNewMessage(item);
       }
     });
+  }
+
+  setCurrentUserId(id: string) {
+    this.current_user_id = id;
   }
 
   @action getFromDb() {
@@ -114,10 +103,10 @@ export class MatchStore {
     let data = this.items.filter(m => m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1);
 
     switch (this.visibilityFilter) {
-      case FILTER_TYPES.UNREAD: data = filterUnread(data); break;
-      case FILTER_TYPES.NEW: data = filterNew(data); break;
-      case FILTER_TYPES.UNANSWERED: data = filterUnanswered(data); break;
-      case FILTER_TYPES.BLOCKED: data = filterBlocked(data); break;
+      case FILTER_TYPES.UNREAD: data = this.filterUnread; break;
+      case FILTER_TYPES.NEW: data = this.filterNew; break;
+      case FILTER_TYPES.UNANSWERED: data = this.filterUnanswered; break;
+      case FILTER_TYPES.BLOCKED: data = this.filterBlocked; break;
     }
 
     return data;
@@ -126,11 +115,29 @@ export class MatchStore {
   @computed get size(): { all: number, new: number, unread: number, unaswered: number } {
     return {
       all: this.items.length,
-      new: filterNew(this.items).length,
-      unread: filterUnread(this.items).length,
-      unaswered: filterUnanswered(this.items).length,
-      blocked: filterBlocked(this.items).length,
+      new: this.filterNew.length,
+      unread: this.filterUnread.length,
+      unaswered: this.filterUnanswered.length,
+      blocked: this.filterBlocked.length,
     };
+  }
+
+  @computed get filterNew() {
+    return this.items.filter(m => m.is_new && !m.lastMessage.body);
+  }
+
+  @computed get filterUnread() {
+    return this.items.filter(m => m.is_new && m.lastMessage.body);
+  }
+
+  @computed get filterUnanswered() {
+    return this.items.filter(m => (
+      m.lastMessage && m.lastMessage.body && m.lastMessage.from_id === this.current_user_id
+    ));
+  }
+
+  @computed get filterBlocked() {
+    return this.items.filter(m => m.is_blocked);
   }
 
   find(matchId: string): ?Match {

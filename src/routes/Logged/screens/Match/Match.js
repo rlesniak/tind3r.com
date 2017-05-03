@@ -80,7 +80,7 @@ class MatchComponent extends Component {
 
     if (match) {
       const getWidth = this.personWrapperRef.getBoundingClientRect().width;
-      const { person, is_blocked } = match;
+      const { person } = match;
 
       return (
         <div className="match__person-wrapper">

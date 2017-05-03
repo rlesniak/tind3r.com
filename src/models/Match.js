@@ -23,7 +23,7 @@ class Match {
   is_new: boolean;
 
   @observable is_blocked: boolean = false;
-  @observable last_msg_from_db: MessageType;
+  @observable last_msg_from_db: Message;
   @observable messageStore: ?MessageStore;
   @observable is_new: boolean = false;
   @observable is_fetched: boolean = false;
@@ -78,7 +78,7 @@ class Match {
     if (this.messageStore) {
       this.messageStore.create(data);
     } else {
-      this.last_msg_from_db = data;
+      this.last_msg_from_db = new Message(this, data);
     }
   }
 
@@ -87,7 +87,7 @@ class Match {
       return this.messageStore.lastMessage;
     }
 
-    return new Message(this, this.last_msg_from_db);
+    return this.last_msg_from_db;
   }
 
   @computed get lastActivity(): moment {

@@ -14,7 +14,7 @@ import Message from 'models/Message';
 import Person from 'models/Person';
 import { CurrentUser } from 'models/CurrentUser';
 
-type PropsTypes = {
+type PropsType = {
   message: Message,
   author: Person | CurrentUser,
   group: boolean,
@@ -22,7 +22,7 @@ type PropsTypes = {
 }
 
 class MessageComponent extends Component {
-  props: PropsTypes;
+  props: PropsType;
 
   wrapperRef: HTMLElement;
 
@@ -51,7 +51,7 @@ class MessageComponent extends Component {
         </div>}
         <div className="message__body">
           {message.body}
-          {/* <button onClick={() => onRemove(message)}>X</button>*/}
+          { <button onClick={() => onRemove(message)}>X</button>}
         </div>
       </div>
     );

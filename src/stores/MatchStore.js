@@ -2,6 +2,7 @@
 
 import { observable, computed, action } from 'mobx';
 import orderBy from 'lodash/orderBy';
+import each from 'lodash/each';
 
 import Match from 'models/Match';
 import DB, { matchCollection } from 'utils/database.v2';
@@ -37,13 +38,10 @@ export class MatchStore {
     });
 
     DB().collection('messages').on('insert', data => {
-      const [item]: MatchType = data;
-
-      if (item) {
-        const match = this.find(item.match_id);
-        // console.log(data)
-        if (match) match.insertNewMessage(item);
-      }
+      each(data, message => {
+        const match = this.find(message.match_id);
+        if (match) match.insertNewMessage(message);
+      });
     });
   }
 

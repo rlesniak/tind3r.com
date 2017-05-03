@@ -89,7 +89,16 @@ const PersonCard = ({
       </div>
       <div className="person-card__content">
         <div className="person-card__name">
-          <Link to={`/user/${person.id}`}>{person.name}, {person.age}</Link>
+          <Link to={{
+            pathname: `/user/${person._id}`,
+            state: {
+              modal: true,
+              person: person.toJSON,
+            },
+          }}
+          >
+            {person.name}, {person.age}
+          </Link>
         </div>
         <div className="person-card__seen-min">{person.seenMin}</div>
         <div className="person-card__bio">{person.bio}</div>

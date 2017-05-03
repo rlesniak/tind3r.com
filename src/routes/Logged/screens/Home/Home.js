@@ -25,8 +25,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    counterService.createSubscriber({ handler: this.handleLikeCounter });
-    counterService.createSubscriber({ handler: this.handleSuperlikeCounter });
+    const { currentUser } = this.props;
+
+    if (currentUser.likeReset.seconds > 0) {
+      counterService.createSubscriber({ handler: this.handleLikeCounter });
+    }
+
+    if (currentUser.superlikeReset.seconds > 0 && currentUser.superlike_remaining === 0) {
+      counterService.createSubscriber({ handler: this.handleSuperlikeCounter });
+    }
   }
 
   @autobind

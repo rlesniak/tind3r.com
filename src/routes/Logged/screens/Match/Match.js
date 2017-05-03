@@ -5,6 +5,7 @@ import './Match.scss';
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable } from 'mobx';
+import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import cx from 'classnames';
 import { pure } from 'recompose';
@@ -86,7 +87,16 @@ class MatchComponent extends Component {
         <div className="match__person-wrapper">
           <Gallery width={getWidth - 20} images={person.photos} />
           <div className="match__person-details">
-            <h1>{person.name}, {person.age}</h1>
+            <Link to={{
+              pathname: `/user/${person._id}`,
+              state: {
+                modal: true,
+                person: person.toJSON,
+              },
+            }}
+            >
+              <h1>{person.name}, {person.age}</h1>
+            </Link>
             {person.distanceKm && <div className="match__person-distance">
               {person.distanceKm}
             </div>}

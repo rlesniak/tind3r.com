@@ -1,13 +1,14 @@
 import './Logged.scss';
 
 import React, { Component } from 'react';
-import { Route, Link, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
 
 import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
+import PersonModal from 'components/PersonModal';
 
 import NotFound from '../NotFound';
 import Home from './screens/Home';
@@ -20,11 +21,14 @@ import matchStore from 'stores/MatchStore';
 @observer
 class Welcome extends Component {
   loggedHandler: () => void;
+  previousLocation: Object;
 
   @observable isLogging: boolean = true;
+  @observable isModalVisible: boolean = false;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.previousLocation = props.location;
 
     this.loggedHandler = reaction(
       () => ({ id: currentUser._id, isAuthenticated: currentUser.is_authenticated }),
@@ -40,6 +44,17 @@ class Welcome extends Component {
 
   componentDidMount() {
     currentUser.fetch();
+  }
+
+  componentWillUpdate(nextProps) {
+    const { location } = this.props
+    // set previousLocation if props.location is not modal
+    if (
+      nextProps.history.action !== 'POP' &&
+      (!location.state || !location.state.modal)
+    ) {
+      this.previousLocation = this.props.location;
+    }
   }
 
   componentWillUnmount() {
@@ -60,15 +75,25 @@ class Welcome extends Component {
   }
 
   renderWhenLogged() {
+    const { location } = this.props;
+    const isModal = !!(
+      location.state &&
+      location.state.modal &&
+      this.previousLocation !== location // not initial render
+    );
+
     return (
       currentUser.is_authenticated ? (
         <div className="logged">
-          <Switch>
+          <Switch location={isModal ? this.previousLocation : location}>
             <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
             <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
             <Route path="/matches" component={Matches} />
+            <Route path="/user/:id" component={(props) => <h1>{props.match.params.id}</h1>} />
             <Route component={NotFound} />
           </Switch>
+
+          {isModal ? <Route path="/user/:id" component={PersonModal} /> : null}
         </div>
       ) : (
         <div className="not-logged">

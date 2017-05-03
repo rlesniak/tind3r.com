@@ -30,6 +30,7 @@ class Person implements UserInterface {
   @observable is_loading: boolean = false;
   @observable ping_time: Date;
   @observable is_liked: boolean = false;
+  @observable is_super_like: boolean = false;
   @observable is_done: number = 0;
   @observable like_limit_reset: ?string = null;
   @observable superlike_limit_reset: ?string = null;
@@ -148,6 +149,20 @@ class Person implements UserInterface {
 
   @computed get mainPhoto(): string {
     return get(this.photos, [0, 'url']);
+  }
+
+  @computed get toJSON() {
+    return {
+      _id: this._id,
+      name: this.name,
+      birth_date: this.birth_date,
+      photos: this.photos,
+      bio: this.bio,
+      distance_mi: this.distance_mi,
+      schools: this.schools,
+      is_liked: this.is_liked,
+      is_super_like: this.is_super_like,
+    };
   }
 }
 

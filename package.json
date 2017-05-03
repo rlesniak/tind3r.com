@@ -86,6 +86,7 @@
     "react-tooltip": "^3.3.0",
     "react-virtualized": "^9.7.3",
     "recompose": "^0.23.1",
+    "rodal": "^1.5.0",
     "sass-loader": "^6.0.3",
     "store": "^2.0.4",
     "style-loader": "^0.16.1"

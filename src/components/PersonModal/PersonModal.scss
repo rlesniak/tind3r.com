@@ -1,0 +1,14 @@
+.person-modal {
+  &__name {
+    font-size: 30px;
+  }
+
+  &__left {
+    width: 60%;
+    float: left;
+  }
+
+  &__gallery {
+    margin-left: 60%;
+  }
+}

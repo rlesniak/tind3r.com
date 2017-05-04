@@ -79,6 +79,7 @@
     "react": "^15.5.4",
     "react-custom-scrollbars": "^4.1.1",
     "react-dom": "^15.5.4",
+    "react-notification-system": "^0.2.14",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-slick": "^0.14.11",

@@ -5,9 +5,9 @@ import './Home.scss';
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
-import moment from 'moment';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import NotificationSystem from 'react-notification-system';
 
 import PersonCard from 'components/PersonCard';
 import LoadMoreCard from 'components/LoadMoreCard';
@@ -18,8 +18,16 @@ import ShortcutIcon from 'components/ShortcutIcon';
 import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
 
+const NOTIF_LEVELS_MAP = {
+  like: 'success',
+  pass: 'error',
+  super: 'info',
+};
+
 @inject('currentUser') @observer
 class Home extends Component {
+  notificationSystem: ?any;
+
   @observable likeCounter = null;
   @observable superlikeCounter = null;
 
@@ -95,21 +103,21 @@ class Home extends Component {
 
   @autobind
   handleLoadMoreClick() {
-    const { recsStore } = this.props;
-
     recsStore.fetchCore(true);
   }
 
   handleRefresh = () => {
-    const { recsStore } = this.props;
-
     recsStore.fetchCore();
   }
 
-  renderNooneNew() {
-    return (
-      <h2>There is no one new</h2>
-    );
+  handleAction = (payload: Object) => {
+    if (this.notificationSystem) {
+      this.notificationSystem.addNotification({
+        message: `${payload.type} - ${payload.name}`,
+        level: NOTIF_LEVELS_MAP[payload.type],
+        position: 'bl',
+      });
+    }
   }
 
   renderBody() {
@@ -148,6 +156,7 @@ class Home extends Component {
               onMatch={this.handleMatch}
               onError={this.handleError}
               onSuperlike={this.handleSuperlike}
+              handleAction={this.handleAction}
               allowHotkeys={i === 0}
               limitations={{
                 superlikeRemaining: currentUser.superlike_remaining,
@@ -165,7 +174,7 @@ class Home extends Component {
           />
         }
 
-        {recsStore.areRecsExhaust && this.renderNooneNew()}
+        {recsStore.areRecsExhaust && <h2>There is no one new</h2>}
       </div>
     );
   }
@@ -175,6 +184,7 @@ class Home extends Component {
 
     return (
       <div className="home">
+        <NotificationSystem ref={ref => { this.notificationSystem = ref; }} />
         <SideMenu>
           <SideMenu.Item className="home__sidebar-item home__sidebar-cuts">
             <label>Keyboard shortcuts</label>

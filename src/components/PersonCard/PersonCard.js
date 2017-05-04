@@ -21,8 +21,14 @@ import type { ActionsType } from 'types/person';
 
 const keyCodes = { d: 68, s: 83, a: 65 };
 
-const callAction = (props, actionType: ActionsType) =>
+const callAction = (props, actionType: ActionsType) => {
+  props.handleAction({
+    type: actionType,
+    name: props.person.name,
+    _id: props.person._id,
+  });
   props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
+};
 
 const enhance = compose(
   withState('isHovering', 'toggleHover', false),
@@ -58,6 +64,7 @@ type PersonCardType = {
   person: Person,
   small?: boolean,
   isHovering: boolean,
+  handleAction: (payload: Object) => void,
   onCardMouseEnter: Function,
   onCardMouseLeave: Function,
   onActionClick: (type: ActionsType) => void,

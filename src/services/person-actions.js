@@ -33,7 +33,7 @@ export async function superlike(id: string): Object {
   try {
     const { data } = await API.post(`/like/${id}/super`);
 
-    if (!data.limit_exceeded) {
+    if (!data.limit_exceeded && data.remaining === 0) {
       // ls.set({ superLikeExpiration: data.super_likes.resets_at })
       Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at });
     }

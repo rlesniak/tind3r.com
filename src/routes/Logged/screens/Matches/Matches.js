@@ -71,6 +71,7 @@ const Matches = ({
           active={matchStore.visibilityFilter === filter.type}
           rightText={matchStore.size[filter.size]}
           onClick={props[filter.handle]}
+          className="matches__sidebar-item"
         >
           <span>{filter.text}</span>
         </SideMenu.Item>

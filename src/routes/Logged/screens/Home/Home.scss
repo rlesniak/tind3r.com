@@ -54,4 +54,16 @@
     font-size: 20px;
     cursor: pointer;
   }
+
+  &__sidebar-item {
+    line-height: 21px;
+  }
+
+  &__sidebar-cuts {
+    text-align: center;
+    label {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+  }
 }

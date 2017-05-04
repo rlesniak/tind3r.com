@@ -176,15 +176,21 @@ class Home extends Component {
     return (
       <div className="home">
         <SideMenu>
-          <SideMenu.Item>
-            <label>Distance</label>
-            <span>asd</span>
-          </SideMenu.Item>
-          <SideMenu.Item>
+          <SideMenu.Item className="home__sidebar-item home__sidebar-cuts">
             <label>Keyboard shortcuts</label>
             <ShortcutIcon text="a" tooltipText="Pass" />
             <ShortcutIcon text="s" tooltipText="Superlike" />
             <ShortcutIcon text="d" tooltipText="Like" />
+          </SideMenu.Item>
+          <SideMenu.Separator />
+          <SideMenu.Item className="home__sidebar-item">
+            <label>Distance</label>
+            <span>asd</span>
+          </SideMenu.Item>
+          <SideMenu.Separator />
+          <SideMenu.Item className="home__sidebar-item">
+            <label>Autolike</label>
+            <span>(soon)</span>
           </SideMenu.Item>
         </SideMenu>
         <SideMenu.Right>

@@ -40,7 +40,6 @@
 
   &__item {
     color: #8f9397;
-    line-height: 34px;
     font-size: 15px;
     padding: 0 10px;
     border-radius: 5px;
@@ -48,7 +47,7 @@
 
     label {
       display: block;
-      color: #878c8f;
+      color: #fff;
     }
 
     &--active {
@@ -85,5 +84,12 @@
     right: 7px;
     font-size: 12px;
     display: inline-block;
+  }
+
+  &__separator {
+    height: 1px;
+    width: 70%;
+    margin: 10px auto;
+    background: #5b6069;
   }
 }

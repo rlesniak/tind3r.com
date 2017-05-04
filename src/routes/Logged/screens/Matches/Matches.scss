@@ -28,4 +28,8 @@ $width: 300px;
     margin-left: $width;
     background: $gray;
   }
+
+  &__sidebar-item {
+    line-height: 34px;
+  }
 }

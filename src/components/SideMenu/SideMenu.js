@@ -6,7 +6,12 @@ import { compose, withState } from 'recompose';
 
 type PropsType = {
   children: any,
+  className: ?any,
 };
+
+export const Separator = () => (
+  <div className="side-menu__separator" />
+);
 
 export const Right = (props: PropsType) => (
   <div className="side-menu__right">
@@ -22,7 +27,7 @@ type ItemPropsType = PropsType | {
 
 export const Item = (props: ItemPropsType) => (
   <div
-    className={cx('side-menu__item', {
+    className={cx('side-menu__item', props.className, {
       'side-menu__item--active': props.active,
     })}
     onClick={props.onClick}

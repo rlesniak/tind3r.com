@@ -75,8 +75,8 @@ class Welcome extends Component {
   }
 
   onSuccesLogin() {
-    // matchStore.fetch();
     matchStore.getFromDb();
+    matchStore.initUpdater();
     matchStore.setCurrentUserId(currentUser._id);
 
     window.ms = matchStore;
@@ -127,35 +127,29 @@ class Welcome extends Component {
               <li>
                 <NavLink to="/home" activeClassName="active">
                   <i className="fa fa-home" />
-                  <span>Home</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/matches" activeClassName="active">
                   <div className="badge">
                     <i className="fa fa-heart" />
-                    <span>Matches
-                      {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
-                    </span>
+                    {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
                   </div>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/history" activeClassName="active">
                   <i className="fa fa-history" />
-                  <span>History</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/profile-edit" activeClassName="active">
                   <i className="fa fa-cog" />
-                  <span>Profile edit</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/discussion" activeClassName="active">
                   <i className="fa fa-comments-o" />
-                  <span>Discussion</span>
                 </NavLink>
               </li>
               <li className="separator" />

@@ -1,9 +1,10 @@
 // @flow
 
-type HandlerType = () => void;
+type HandlerType = () => any;
 
 type SubscriberType = {
   handler: HandlerType,
+  isBusyHandler?: () => boolean,
 }
 
 type CounterType = {
@@ -17,20 +18,24 @@ const counter = (): CounterType => {
   let subscribers: Array<SubscriberType> = [];
   let interval: number;
 
-  const createSubscriber = (subscriber: SubscriberType) => {
-    if (!isSubscriberExist(subscriber.handler)) {
-      subscribers.push(subscriber);
-      start();
-    }
-  };
-
   const start = () => {
     if (!interval) {
       interval = setInterval(() => {
         subscribers.forEach(sub => {
-          sub.handler(interval);
+          if ((sub.isBusyHandler && !sub.isBusyHandler()) || !this.isBusyHandler) {
+            sub.handler();
+          }
         });
       }, 1000);
+    }
+  };
+
+  const isSubscriberExist = (handler: HandlerType): boolean => !!subscribers.find(sub => sub.handler === handler);
+
+  const createSubscriber = (subscriber: SubscriberType) => {
+    if (!isSubscriberExist(subscriber.handler)) {
+      subscribers.push(subscriber);
+      start();
     }
   };
 
@@ -47,8 +52,6 @@ const counter = (): CounterType => {
       stop();
     }
   };
-
-  const isSubscriberExist = (handler: HandlerType): boolean => !!subscribers.find(sub => sub.handler === handler);
 
   return {
     createSubscriber,

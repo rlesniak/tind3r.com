@@ -45,7 +45,7 @@ const MatchRow = ({ handleOnClick, match, active }: PropsType) => (
   <div
     className={cx('match-row', {
       'match-row--active': active,
-      'match-row--unread': match.is_new,
+      'match-row--unread': match.isUnread,
       'match-row--blocked': match.is_blocked,
     })}
     onClick={handleOnClick}

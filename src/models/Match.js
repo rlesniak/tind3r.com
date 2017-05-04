@@ -99,6 +99,10 @@ class Match {
 
     return moment(date);
   }
+
+  @computed get isUnread(): boolean {
+    return this.is_new && this.lastMessage.from_id !== this.store.current_user_id;
+  }
 }
 
 export default Match;

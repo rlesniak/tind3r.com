@@ -24,7 +24,8 @@ class Home extends Component {
   @observable superlikeCounter = null;
 
   componentWillUnmount() {
-    counterService.stop();
+    counterService.unsubscribe(this.handleLikeCounter);
+    counterService.unsubscribe(this.handleSuperlikeCounter);
   }
 
   componentDidMount() {

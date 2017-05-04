@@ -7,6 +7,7 @@ import each from 'lodash/each';
 import Match from 'models/Match';
 import DB, { matchCollection } from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
+import counterService from 'services/counterService';
 
 import type { MatchType, FiltersType } from 'types/match';
 
@@ -46,8 +47,19 @@ export class MatchStore {
     });
   }
 
+  initUpdater() {
+    counterService.createSubscriber({
+      handler: this.fetch.bind(this),
+      isBusyHandler: this.checkIsLoading.bind(this),
+    });
+  }
+
   setCurrentUserId(id: string) {
     this.current_user_id = id;
+  }
+
+  checkIsLoading(): boolean {
+    return this.isLoading;
   }
 
   @action getFromDb() {
@@ -64,10 +76,12 @@ export class MatchStore {
     this.isLoading = true;
 
     try {
-      const { matches } = await FetchService.updates(); // eslint-disable-line
+      const { matches, messages } = await FetchService.updates(); // eslint-disable-line
 
       setTimeout(() => {
-        this.getFromDb();
+        if (matches.length || messages.length) {
+          this.getFromDb();
+        }
         this.isLoading = false;
       }, 100);
     } catch (err) { console.log(err); }
@@ -89,7 +103,7 @@ export class MatchStore {
   }
 
   @computed get unreadCount(): number {
-    return this.matches.filter(match => match.is_new).length;
+    return this.matches.filter(match => match.isUnread).length;
   }
 
   @computed get matches(): Array<Match> {
@@ -126,11 +140,11 @@ export class MatchStore {
   }
 
   @computed get filterNew() {
-    return this.items.filter(m => m.is_new && !m.lastMessage.body);
+    return this.items.filter(m => m.isUnread && !m.lastMessage.body);
   }
 
   @computed get filterUnread() {
-    return this.items.filter(m => m.is_new && m.lastMessage.body);
+    return this.items.filter(m => m.isUnread && m.lastMessage.body);
   }
 
   @computed get filterUnanswered() {

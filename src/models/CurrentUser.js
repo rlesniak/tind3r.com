@@ -39,7 +39,7 @@ export class CurrentUser implements UserInterface {
   name: string;
   isCurrentUser: true = true;
 
-  @observable is_authenticated = false;
+  @observable is_authenticated = undefined;
   @observable is_fetching: boolean = false;
   @observable is_error: boolean = false;
   @observable like_limit_reset: ?number = null;

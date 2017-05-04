@@ -1,3 +1,5 @@
+// @flow
+
 import './Logged.scss';
 
 import React, { Component } from 'react';
@@ -13,29 +15,36 @@ import PersonModal from 'components/PersonModal';
 import NotFound from '../NotFound';
 import Home from './screens/Home';
 import Matches from './screens/Matches';
+import Person from './screens/Person';
 
 import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
 import matchStore from 'stores/MatchStore';
 
+type PropsType = {
+  location: Object,
+  history: Object,
+};
+
 @observer
 class Welcome extends Component {
+  props: PropsType;
+
   loggedHandler: () => void;
   previousLocation: Object;
 
-  @observable isLogging: boolean = true;
   @observable isModalVisible: boolean = false;
 
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
     this.previousLocation = props.location;
 
     this.loggedHandler = reaction(
       () => ({ id: currentUser._id, isAuthenticated: currentUser.is_authenticated }),
       ({ isAuthenticated }) => {
-        if (isAuthenticated) {
+        if (isAuthenticated === true) {
           this.onSuccesLogin();
-        } else {
+        } else if (isAuthenticated === false) {
           this.onErrorLogin();
         }
       },
@@ -46,8 +55,8 @@ class Welcome extends Component {
     currentUser.fetch();
   }
 
-  componentWillUpdate(nextProps) {
-    const { location } = this.props
+  componentWillUpdate(nextProps: PropsType) {
+    const { location } = this.props;
     // set previousLocation if props.location is not modal
     if (
       nextProps.history.action !== 'POP' &&
@@ -66,7 +75,6 @@ class Welcome extends Component {
   }
 
   onSuccesLogin() {
-    recsStore.fetchCore();
     // matchStore.fetch();
     matchStore.getFromDb();
     matchStore.setCurrentUserId(currentUser._id);
@@ -89,7 +97,7 @@ class Welcome extends Component {
             <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
             <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
             <Route path="/matches" component={Matches} />
-            <Route path="/user/:id" component={(props) => <h1>{props.match.params.id}</h1>} />
+            <Route path="/user/:id" component={Person} />
             <Route component={NotFound} />
           </Switch>
 
@@ -108,7 +116,7 @@ class Welcome extends Component {
     return (
       <Provider currentUser={currentUser} matchStore={matchStore}>
         <div className="logged">
-          <ReactTooltip place="top" effect="solid" />
+          <ReactTooltip id="main" place="top" effect="solid" />
           <div className="logged__nav-bar">
             <ul>
               <li>
@@ -158,15 +166,13 @@ class Welcome extends Component {
                     {currentUser.name}
                   </div>
                 </NavLink>
-                <div className="submenu" onClick={this.handleLogout}>
-                  <span>Logout</span>
-                </div>
               </li>
               <li>
                 <div
                   className="logout"
                   onClick={this.handleLogout}
                   data-tip="Logout"
+                  data-for="main"
                 >
                   <i className="fa fa-sign-out" />
                 </div>

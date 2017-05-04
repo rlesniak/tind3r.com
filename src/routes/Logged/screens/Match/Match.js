@@ -8,7 +8,7 @@ import { observable } from 'mobx';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import cx from 'classnames';
-import { pure } from 'recompose';
+import ReactTooltip from 'react-tooltip';
 
 import MessageStore from 'stores/MessageStore';
 import { MatchStore } from 'stores/MatchStore';
@@ -38,6 +38,7 @@ class MatchComponent extends Component {
   componentDidMount() {
     const { match: { params } } = this.props;
     this.fetchMessages(params.id);
+    ReactTooltip.rebuild();
   }
 
   componentWillReceiveProps(nextProps: Object) {
@@ -125,6 +126,8 @@ class MatchComponent extends Component {
             {!isBlocked && <div
               className={cx('match__option')}
               onClick={this.handleUnmatch}
+              data-tip="Unmatch"
+              data-for="main"
             >
               <i className="fa fa-ban" />
             </div>}
@@ -132,6 +135,8 @@ class MatchComponent extends Component {
             {isBlocked && <div
               className={cx('match__option', 'match__option--active')}
               onClick={this.handleRemove}
+              data-tip="Remove"
+              data-for="main"
             >
               <i className="fa fa-trash" />
             </div>}

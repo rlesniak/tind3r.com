@@ -121,6 +121,11 @@ export function updateMatch(matchId: string, payload: Object) {
   db.collection('matches').save();
 }
 
+export function updatePerson(personId: string, payload: Object) {
+  db.collection('persons').updateById(personId, parsePerson(payload));
+  db.collection('persons').save();
+}
+
 export function removeMessage(_id: string) {
   db.collection('messages').remove({ _id });
   db.collection('messages').save();

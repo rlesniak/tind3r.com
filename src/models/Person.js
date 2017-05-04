@@ -7,9 +7,10 @@ import get from 'lodash/get';
 import noop from 'lodash/noop';
 
 import { miToKm } from 'utils';
+import API from 'utils/api';
 import { ACTION_TYPES } from 'const';
 import { pass, like, superlike } from 'services/person-actions';
-import { createAction, createMatch } from 'utils/database.v2';
+import { createAction, createMatch, updatePerson } from 'utils/database.v2';
 
 import type { SchoolType, InstagramType, ActionsType } from 'types/person';
 import type { UserInterface } from 'types/userInterface';
@@ -20,13 +21,13 @@ class Person implements UserInterface {
   _id: string;
   store: any;
   birth_date: string;
-  distance_mi: number;
   schools: Array<SchoolType>;
   instagram: ?InstagramType;
   photos: ?[];
   name: string;
   bio: string;
 
+  @observable distance_mi: number;
   @observable is_loading: boolean = false;
   @observable ping_time: Date;
   @observable is_liked: boolean = false;
@@ -53,6 +54,20 @@ class Person implements UserInterface {
 
   createDBMatch(match: Object) {
     createMatch(match);
+  }
+
+  @action async fetch() {
+    this.is_loading = true;
+
+    try {
+      const { data } = await API.get(`/user/${this._id}`);
+
+      extend(this, data.results);
+      updatePerson(this._id, data.results);
+    } catch (e) {
+    }
+
+    this.is_loading = false;
   }
 
   @action async callAction(

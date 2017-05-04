@@ -7,13 +7,16 @@ import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import moment from 'moment';
 import cx from 'classnames';
+import ReactTooltip from 'react-tooltip';
 
 import PersonCard from 'components/PersonCard';
 import LoadMoreCard from 'components/LoadMoreCard';
 import SearchingLoader from 'components/SearchingLoader';
 import SideMenu from 'components/SideMenu';
+import ShortcutIcon from 'components/ShortcutIcon';
 
 import counterService from 'services/counterService';
+import recsStore from 'stores/RecsStore';
 
 @inject('currentUser') @observer
 class Home extends Component {
@@ -34,6 +37,9 @@ class Home extends Component {
     if (currentUser.superlikeReset.seconds > 0 && currentUser.superlike_remaining === 0) {
       counterService.createSubscriber({ handler: this.handleSuperlikeCounter });
     }
+    recsStore.fetchCore();
+
+    ReactTooltip.rebuild();
   }
 
   @autobind
@@ -172,6 +178,12 @@ class Home extends Component {
           <SideMenu.Item>
             <label>Distance</label>
             <span>asd</span>
+          </SideMenu.Item>
+          <SideMenu.Item>
+            <label>Keyboard shortcuts</label>
+            <ShortcutIcon text="a" tooltipText="Pass" />
+            <ShortcutIcon text="s" tooltipText="Superlike" />
+            <ShortcutIcon text="d" tooltipText="Like" />
           </SideMenu.Item>
         </SideMenu>
         <SideMenu.Right>

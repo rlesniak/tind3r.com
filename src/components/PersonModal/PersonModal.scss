@@ -4,11 +4,28 @@
   }
 
   &__left {
-    width: 60%;
+    width: 250px;
+    height: 100%;
     float: left;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+  }
+
+  &__bio {
+    height: 100%;
+    margin-top: 20px;
   }
 
   &__gallery {
-    margin-left: 60%;
+    margin-left: 250px;
+  }
+
+  &__info {
+    flex: 1 1 auto;
+  }
+
+  &__buttons {
+    flex: 0 1 auto;
   }
 }

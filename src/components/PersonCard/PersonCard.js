@@ -10,6 +10,7 @@ import cx from 'classnames';
 
 import Gallery from 'components/Gallery';
 import ActionButtons from 'components/ActionButtons';
+import Bio from 'components/Bio';
 
 import withHotkeys from 'hoc/withHotkeys';
 import { ACTION_TYPES } from 'const';
@@ -101,7 +102,9 @@ const PersonCard = ({
           </Link>
         </div>
         <div className="person-card__seen-min">{person.seenMin}</div>
-        <div className="person-card__bio">{person.bio}</div>
+        <div className="person-card__bio">
+          <Bio text={person.bio} />
+        </div>
 
         {!small && <div className="person-card__school">
           <span>{person.school}</span>

@@ -27,6 +27,10 @@ class RecsStore {
   }
 
   @action async fetchCore(asLoadMore: boolean = false) {
+    if (this.allVisible.length > 3) {
+      return;
+    }
+
     if (asLoadMore) {
       this.is_loading_more = true;
     } else {

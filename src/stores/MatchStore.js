@@ -48,9 +48,10 @@ export class MatchStore {
   }
 
   initUpdater() {
-    counterService.createSubscriber({
+    counterService.subscribe({
       handler: this.fetch.bind(this),
       isBusyHandler: this.checkIsLoading.bind(this),
+      delay: 2000,
     });
   }
 

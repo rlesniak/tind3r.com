@@ -1,62 +1,87 @@
 // @flow
 
+import forEach from 'lodash/forEach';
+
 type HandlerType = () => any;
 
 type SubscriberType = {
   handler: HandlerType,
   isBusyHandler?: () => boolean,
+  delay?: number,
+}
+
+type IntervalsType = {
+  subscribers: Array<SubscriberType>,
+  intervalId: number,
 }
 
 type CounterType = {
-  createSubscriber: (handler: SubscriberType) => void,
+  subscribe: (subscriber: SubscriberType) => void,
   unsubscribe: (handler: HandlerType) => void,
-  start: () => void,
   stop: () => void,
 };
 
-const counter = (): CounterType => {
-  let subscribers: Array<SubscriberType> = [];
-  let interval: number;
+const DEFAULT_DELAY = 1000;
 
-  const start = () => {
-    if (!interval) {
-      interval = setInterval(() => {
-        subscribers.forEach(sub => {
-          if ((sub.isBusyHandler && !sub.isBusyHandler()) || !this.isBusyHandler) {
-            sub.handler();
+const counter = (): CounterType => {
+  let intervals: { [key: number]: IntervalsType } = {};
+
+  const isIntervalExist = (delay: number): boolean => (
+    intervals[delay] && intervals[delay].intervalId !== 0
+  );
+
+  const start = (delay: number) => {
+    if (!isIntervalExist(delay)) {
+      intervals[delay].intervalId = setInterval(() => {
+        intervals[delay].subscribers.forEach(sub => {
+          if ((sub.isBusyHandler && !sub.isBusyHandler()) || !sub.isBusyHandler) {
+            sub.handler(delay);
           }
         });
-      }, 1000);
+      }, delay);
     }
   };
 
-  const isSubscriberExist = (handler: HandlerType): boolean => !!subscribers.find(sub => sub.handler === handler);
+  const createInterval = (subscriber: SubscriberType) => {
+    const delay = subscriber.delay || DEFAULT_DELAY;
 
-  const createSubscriber = (subscriber: SubscriberType) => {
-    if (!isSubscriberExist(subscriber.handler)) {
-      subscribers.push(subscriber);
-      start();
+    if (!intervals[delay]) {
+      intervals[delay] = { subscribers: [], intervalId: 0 };
     }
+  };
+
+  const removeInterval = (key: number) => {
+    clearInterval(intervals[key].intervalId);
+    delete intervals[key];
   };
 
   const stop = () => {
-    clearInterval(interval);
-    subscribers = [];
-    interval = 0;
+    forEach(intervals, key => removeInterval(key));
+
+    intervals = {};
+  };
+
+  const subscribe = (subscriber: SubscriberType) => {
+    const delay = subscriber.delay || DEFAULT_DELAY;
+    createInterval(subscriber);
+
+    intervals[delay].subscribers.push(subscriber);
+    start(delay);
   };
 
   const unsubscribe = (handler: HandlerType) => {
-    subscribers = subscribers.filter(sub => sub.handler !== handler);
+    forEach(intervals, key => {
+      intervals[key].subscribers = intervals[key].subscribers.filter(sub => sub.handler !== handler);
 
-    if (subscribers.length === 0) {
-      stop();
-    }
+      if (intervals[key].subscribers.length === 0) {
+        removeInterval(key);
+      }
+    });
   };
 
   return {
-    createSubscriber,
+    subscribe,
     unsubscribe,
-    start,
     stop,
   };
 };

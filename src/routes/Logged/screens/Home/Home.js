@@ -40,11 +40,11 @@ class Home extends Component {
     const { currentUser } = this.props;
 
     if (currentUser.likeReset.seconds > 0) {
-      counterService.createSubscriber({ handler: this.handleLikeCounter });
+      counterService.subscribe({ handler: this.handleLikeCounter });
     }
 
     if (currentUser.superlikeReset.seconds > 0 && currentUser.superlike_remaining === 0) {
-      counterService.createSubscriber({ handler: this.handleSuperlikeCounter });
+      counterService.subscribe({ handler: this.handleSuperlikeCounter });
     }
     recsStore.fetchCore();
 
@@ -86,7 +86,7 @@ class Home extends Component {
       currentUser.like_limit_reset = reason.resetsAt;
       this.likeCounter = currentUser.likeResetFormatted;
 
-      counterService.createSubscriber({
+      counterService.subscribe({
         handler: this.handleLikeCounter,
       });
     } else {

@@ -16,6 +16,7 @@ import NotFound from '../NotFound';
 import Home from './screens/Home';
 import Matches from './screens/Matches';
 import Person from './screens/Person';
+import History from './screens/History';
 
 import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
@@ -97,6 +98,7 @@ class Welcome extends Component {
             <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
             <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
             <Route path="/matches" component={Matches} />
+            <Route path="/history" component={History} />
             <Route path="/user/:id" component={Person} />
             <Route component={NotFound} />
           </Switch>

@@ -1,0 +1,46 @@
+@import 'const';
+
+.history {
+  &__content {
+    background: #fff;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .avatar {
+    display: inline-block;
+  }
+
+  &__sidemenu-item {
+    line-height: 34px;
+    cursor: pointer;
+  }
+
+  &__person {
+    display: inline-block;
+    width: 67px;
+    overflow: hidden;
+    text-align: center;
+
+    &--super {
+      color: $accent;
+    }
+
+    &--like {
+      color: $green;
+    }
+
+    &--pass {
+      color: $red;
+    }
+  }
+
+  &__person-name {
+    font-weight: bold;
+  }
+
+  &__person-date {
+    font-size: 11px;
+    color: $font-color;
+  }
+}

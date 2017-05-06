@@ -7,6 +7,7 @@ import { parseMatch, parsePerson } from 'utils/parsers';
 import type { MessageType } from 'types/message';
 import type { MatchType } from 'types/match';
 import type { PersonType } from 'types/person';
+import type { ActionType } from 'types/action';
 
 const fdb = new ForerunnerDB();
 let db;
@@ -89,11 +90,14 @@ export function getPerson(personId: string): PersonType {
   })[0];
 }
 
-export function createAction(payload: { person_id: string, action_type: string, date: string }) {
+export function createAction(payload: ActionType) {
   db.collection('actions').insert(payload);
   db.collection('actions').save();
 }
 
+export function getActions(): Array<ActionType> {
+  return db.collection('actions').find();
+}
 
 export function createPersons(persons: Array<PersonType>) {
   const collection = db.collection('persons');

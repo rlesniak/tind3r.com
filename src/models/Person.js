@@ -48,6 +48,8 @@ class Person implements UserInterface {
     createAction({
       person_id: this._id,
       action_type: type,
+      name: this.name,
+      photo: this.mainPhoto,
       date: moment().format(),
     });
   }

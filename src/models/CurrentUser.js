@@ -3,9 +3,12 @@
 import { observable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
+import pick from 'lodash/pick';
 import get from 'lodash/get';
 
+import { miToKm, kmToMi } from 'utils';
 import API from 'utils/api';
+import FetchSevice from 'services/fetch-service';
 
 import type { UserInterface } from 'types/userInterface';
 
@@ -13,6 +16,11 @@ type ResetAtHelperType = {
   formatted: ?string,
   seconds: number,
 }
+
+const PROFILE_FIELDS = [
+  'discoverable', 'gender_filter', 'age_filter_min', 'age_filter_max',
+  'distance_filter', 'squads_discoverable',
+];
 
 async function meta() {
   try {
@@ -35,6 +43,10 @@ const resetAtDateHelper = (data): ResetAtHelperType => ({
   seconds: resetAtSeconds(data),
 });
 
+export const MAX_DISTANCE = 160;
+export const MAX_AGE = 50;
+export const MIN_AGE = 18;
+
 export class CurrentUser implements UserInterface {
   name: string;
   isCurrentUser: true = true;
@@ -48,16 +60,21 @@ export class CurrentUser implements UserInterface {
   @observable _id: string;
   @observable full_name: string;
   @observable photos: ?[];
+  @observable distance_filter: number;
+  @observable age_filter_min: number;
+  @observable age_filter_max: number;
 
   @action set(json: Object) {
-    if (json) {
-      const { rating, user } = json;
+    const { rating, user } = json;
 
+    if (user) {
+      extend(this, user);
+    }
+
+    if (rating) {
       this.like_limit_reset = rating.rate_limited_until;
       this.superlike_limit_reset = rating.super_likes.resets_at;
       this.superlike_remaining = rating.super_likes.remaining;
-
-      extend(this, user);
     }
   }
 
@@ -75,6 +92,18 @@ export class CurrentUser implements UserInterface {
       this.is_fetching = false;
       this.is_error = true;
     });
+  }
+
+  @action async updateProfile(payload: Object) {
+    const distance = payload.distance_filter || this.profileSettings.distance_filter;
+
+    const { data } = await FetchSevice.updateProfile({
+      ...this.profileSettings,
+      ...payload,
+      distance_filter: kmToMi(distance),
+    });
+
+    this.set(data);
   }
 
   @computed get avatarUrl(): string {
@@ -105,6 +134,14 @@ export class CurrentUser implements UserInterface {
 
   @computed get mainPhoto(): string {
     return get(this.photos, [0, 'url']);
+  }
+
+  @computed get profileSettings(): Object {
+    return pick(this, PROFILE_FIELDS);
+  }
+
+  @computed get distanceKm(): number {
+    return miToKm(this.distance_filter);
   }
 }
 

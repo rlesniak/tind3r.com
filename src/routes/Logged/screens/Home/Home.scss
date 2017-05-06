@@ -59,6 +59,15 @@
     line-height: 21px;
   }
 
+  &__sidebar-item-distance {
+    margin-bottom: 30px;
+    padding: 0 20px !important;
+  }
+
+  &__sidebar-item-distance label {
+    margin-bottom: 15px;
+  }
+
   &__sidebar-cuts {
     text-align: center;
     label {

@@ -1,6 +1,7 @@
 // @flow
 
 import './Home.scss';
+import 'react-input-range/src/scss/index.scss';
 
 import React, { Component } from 'react';
 import { observable } from 'mobx';
@@ -8,6 +9,7 @@ import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import NotificationSystem from 'react-notification-system';
+import InputRange from 'react-input-range';
 
 import PersonCard from 'components/PersonCard';
 import LoadMoreCard from 'components/LoadMoreCard';
@@ -18,6 +20,9 @@ import ActionNotification from 'components/ActionNotification';
 
 import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
+import {
+  CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE
+} from 'models/CurrentUser';
 
 const NOTIF_LEVELS_MAP = {
   like: 'success',
@@ -25,12 +30,22 @@ const NOTIF_LEVELS_MAP = {
   superlike: 'info',
 };
 
+type PropsType = {
+  currentUser: CurrentUser,
+};
+
 @inject('currentUser') @observer
 class Home extends Component {
+  props: PropsType;
   notificationSystem: ?any;
 
   @observable likeCounter = null;
   @observable superlikeCounter = null;
+  @observable distance = this.props.currentUser.distanceKm;
+  @observable ageRange = {
+    min: this.props.currentUser.age_filter_min,
+    max: this.props.currentUser.age_filter_max,
+  };
 
   componentWillUnmount() {
     counterService.unsubscribe(this.handleLikeCounter);
@@ -121,6 +136,23 @@ class Home extends Component {
     }
   }
 
+  handleDistanceChange = (distance: number) => {
+    this.props.currentUser.updateProfile({
+      distance_filter: distance,
+    })
+  };
+
+  handleAgeChange = ({ min, max }: { min: number, max: number }) => {
+    this.ageRange = {
+      min, max,
+    };
+
+    this.props.currentUser.updateProfile({
+      age_filter_min: min,
+      age_filter_max: max,
+    });
+  }
+
   renderBody() {
     const { recsStore, currentUser } = this.props;
 
@@ -181,8 +213,6 @@ class Home extends Component {
   }
 
   render() {
-    const { recsStore } = this.props;
-
     return (
       <div className="home">
         <NotificationSystem ref={ref => { this.notificationSystem = ref; }} />
@@ -194,9 +224,25 @@ class Home extends Component {
             <ShortcutIcon text="d" tooltipText="Like" />
           </SideMenu.Item>
           <SideMenu.Separator />
-          <SideMenu.Item className="home__sidebar-item">
+          <SideMenu.Item className="home__sidebar-item home__sidebar-item-distance">
             <label>Distance</label>
-            <span>asd</span>
+            <InputRange
+              formatLabel={value => `${value} km`}
+              maxValue={MAX_DISTANCE}
+              value={this.distance}
+              onChange={value => this.distance = value}
+              onChangeComplete={this.handleDistanceChange}
+            />
+          </SideMenu.Item>
+          <SideMenu.Item className="home__sidebar-item home__sidebar-item-distance">
+            <label>Age</label>
+            <InputRange
+              minValue={MIN_AGE}
+              maxValue={MAX_AGE}
+              value={this.ageRange}
+              onChange={value => this.ageRange = value}
+              onChangeComplete={this.handleAgeChange}
+            />
           </SideMenu.Item>
           <SideMenu.Separator />
           <SideMenu.Item className="home__sidebar-item">

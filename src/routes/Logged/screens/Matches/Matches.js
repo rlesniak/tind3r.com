@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { withState, withHandlers, compose } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
+import cx from 'classnames';
 
 import Match from '../Match';
 
@@ -76,6 +77,14 @@ const Matches = ({
           <span>{filter.text}</span>
         </SideMenu.Item>
       ))}
+      <SideMenu.Separator />
+      <SideMenu.Item>
+        <div className={cx('matches__item-action', {
+          'matches__item-action--disabled': matchStore.unreadCount === 0,
+        })}>
+          <i className="fa fa-check-circle-o" /> Mark all as read
+        </div>
+      </SideMenu.Item>
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">

@@ -31,5 +31,20 @@ $width: 300px;
 
   &__sidebar-item {
     line-height: 34px;
+    cursor: pointer;
+  }
+
+  &__item-action {
+    cursor: pointer;
+
+    &--disabled {
+      color: inherit !important;
+      cursor: default;
+      opacity: .5;
+    }
+
+    &:hover {
+      color: #fff;
+    }
   }
 }

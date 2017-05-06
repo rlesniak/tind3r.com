@@ -104,7 +104,7 @@ class Person implements UserInterface {
         break;
       case ACTION_TYPES.SUPERLIKE:
         try {
-          const { match, super_likes: { remaining } } = superlike(this._id);
+          const { match, super_likes: { remaining } } = await superlike(this._id);
           if (match) {
             matchCallback();
             this.createDBMatch(match);

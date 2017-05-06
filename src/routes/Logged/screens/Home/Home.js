@@ -21,7 +21,7 @@ import recsStore from 'stores/RecsStore';
 const NOTIF_LEVELS_MAP = {
   like: 'success',
   pass: 'error',
-  super: 'info',
+  superlike: 'info',
 };
 
 @inject('currentUser') @observer
@@ -97,6 +97,8 @@ class Home extends Component {
   @autobind
   handleSuperlike(remaining: number) {
     const { currentUser } = this.props;
+
+    console.log(remaining)
 
     currentUser.superlike_remaining = remaining;
   }

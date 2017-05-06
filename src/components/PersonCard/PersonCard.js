@@ -27,6 +27,7 @@ const callAction = (props, actionType: ActionsType) => {
     name: props.person.name,
     _id: props.person._id,
   });
+
   props.person.callAction(actionType, props.onSuperlike, props.onMatch, props.onError);
 };
 
@@ -117,7 +118,7 @@ const PersonCard = ({
           <span>{person.school}</span>
         </div>}
         <div className="person-card__employ">
-          <span>{person.school}</span>
+          {!shouldShowActionButtons && <span>{person.school}</span>}
           {shouldShowActionButtons && <div className="person-card__employ__actions">
             <ActionButtons
               liked={person.is_liked}

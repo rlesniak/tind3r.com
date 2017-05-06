@@ -70,7 +70,7 @@ const counter = (): CounterType => {
   };
 
   const unsubscribe = (handler: HandlerType) => {
-    forEach(intervals, key => {
+    forEach(intervals, (val, key) => {
       intervals[key].subscribers = intervals[key].subscribers.filter(sub => sub.handler !== handler);
 
       if (intervals[key].subscribers.length === 0) {

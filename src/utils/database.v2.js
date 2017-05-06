@@ -99,6 +99,10 @@ export function getActions(): Array<ActionType> {
   return db.collection('actions').find();
 }
 
+export function removeAction(personId: string) {
+  db.collection('actions').remove({ person_id: personId });
+}
+
 export function createPersons(persons: Array<PersonType>) {
   const collection = db.collection('persons');
   collection.insert(persons);

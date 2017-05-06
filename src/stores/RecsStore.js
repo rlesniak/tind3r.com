@@ -5,6 +5,7 @@ import each from 'lodash/each';
 import filter from 'lodash/filter';
 
 import { get } from 'utils/api';
+import { removeAction } from 'utils/database.v2';
 import Person from 'models/Person';
 
 class RecsStore {
@@ -67,6 +68,7 @@ class RecsStore {
 
     if (person) {
       person.is_done = 0;
+      removeAction(_id);
     }
   }
 

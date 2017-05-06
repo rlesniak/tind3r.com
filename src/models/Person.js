@@ -21,7 +21,7 @@ class Person implements UserInterface {
   _id: string;
   store: any;
   birth_date: string;
-  schools: Array<SchoolType>;
+  schools: ?Array<SchoolType>;
   instagram: ?InstagramType;
   photos: ?[];
   name: string;

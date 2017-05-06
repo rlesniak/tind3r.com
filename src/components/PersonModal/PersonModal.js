@@ -4,6 +4,8 @@ import 'rodal/lib/rodal.css';
 import React, { Component } from 'react';
 import Rodal from 'rodal';
 import { observable } from 'mobx';
+import get from 'lodash/get';
+import uniqueId from 'lodash/uniqueId';
 import { observer } from 'mobx-react';
 
 import Gallery from 'components/Gallery';
@@ -47,9 +49,52 @@ class PersonModal extends Component {
     history.goBack();
   }
 
+  renderSchools() {
+    if (this.person.schools && this.person.schools.length) {
+      return (
+        <ul>
+          {this.person.schools.map(p => (
+            <li key={p.id}>{p.name}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    return null;
+  }
+
+  renderJobs() {
+    if (this.person.jobs && this.person.jobs.length) {
+      return (
+        <ul>
+          {this.person.jobs.map(j => (
+            <li key={uniqueId()}>{get(j, 'company.name', null)}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    return null;
+  }
+
+  renderConnections() {
+    if (this.person.common_connections && this.person.common_connections.length) {
+      return (
+        <ul className="person-modal__connections">
+          {this.person.common_connections.map(c => (
+            <li key={c.id}>{c.name}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    return null;
+  }
+
   render() {
     const { person } = this;
     const width = 500;
+    console.log(this.person);
 
     return (
       <div className="person-modal">
@@ -63,9 +108,14 @@ class PersonModal extends Component {
             <div className="person-modal__info">
               <div className="person-modal__name">{person.name}, {person.age}</div>
               <div className="person-modal__distance">{person.distanceKm}</div>
+              <div className="person-modal__lists">
+                {this.renderSchools()}
+                {this.renderJobs()}
+              </div>
               <div className="person-modal__bio">
                 <Bio text={person.bio} />
               </div>
+              {this.renderConnections()}
             </div>
             <div className="person-modal__buttons">
               <ActionButtons

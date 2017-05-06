@@ -1,3 +1,5 @@
+@import 'const';
+
 .person-modal {
   &__name {
     font-size: 30px;
@@ -23,9 +25,45 @@
 
   &__info {
     flex: 1 1 auto;
+    overflow: auto;
   }
 
   &__buttons {
     flex: 0 1 auto;
+  }
+
+  &__lists {
+    margin: 10px 0;
+
+    ul {
+      margin-bottom: 10px;
+      border-bottom: 1px solid $gray;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+    }
+
+    li {
+      margin: 4px 0;
+
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  &__connections {
+    margin-top: 40px;
+    li {
+      display: inline-block;
+      padding: 4px 11px;
+      border: 1px solid $blue;
+      color: $blue;
+      border-radius: 10px;
+      font-size: 11px;
+      margin-right: 3px;
+      margin-bottom: 3px;
+    }
   }
 }

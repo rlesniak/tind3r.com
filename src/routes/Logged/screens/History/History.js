@@ -8,8 +8,8 @@ import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import orderBy from 'lodash/orderBy';
 
-import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
 import SideMenu from 'components/SideMenu';
 
@@ -42,7 +42,9 @@ class Actions extends Component {
   }
 
   filterAll(): Array<ActionType> {
-    return this.actions.filter(action => action.name);
+    return orderBy(this.actions.filter(action => action.name), action => (
+      moment(action.date).format('X')
+    ), 'desc');
   }
 
   filterType(type: string) {

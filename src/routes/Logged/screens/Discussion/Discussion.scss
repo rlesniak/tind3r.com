@@ -1,0 +1,8 @@
+@import 'const';
+
+.discussion {
+  padding: 10px;
+  height: 100vh;
+  overflow: auto;
+  font-family: $font-lato;
+}

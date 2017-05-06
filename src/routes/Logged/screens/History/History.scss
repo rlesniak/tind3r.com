@@ -2,7 +2,7 @@
 
 .history {
   &__content {
-    background: #fff;
+    background: $gray;
     height: 100%;
     padding: 20px;
   }
@@ -18,7 +18,8 @@
 
   &__person {
     display: inline-block;
-    width: 67px;
+    width: 86px;
+    margin: 10px;
     overflow: hidden;
     text-align: center;
 

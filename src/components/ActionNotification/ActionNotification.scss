@@ -1,0 +1,14 @@
+.action-notification{
+  a {
+    color: #000;
+  }
+
+  &__revert {
+    background: transparent;
+    border: none;
+    float: right;
+    margin-top: -4px;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+}

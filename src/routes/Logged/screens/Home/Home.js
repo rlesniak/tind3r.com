@@ -14,6 +14,7 @@ import LoadMoreCard from 'components/LoadMoreCard';
 import SearchingLoader from 'components/SearchingLoader';
 import SideMenu from 'components/SideMenu';
 import ShortcutIcon from 'components/ShortcutIcon';
+import ActionNotification from 'components/ActionNotification';
 
 import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
@@ -98,8 +99,6 @@ class Home extends Component {
   handleSuperlike(remaining: number) {
     const { currentUser } = this.props;
 
-    console.log(remaining)
-
     currentUser.superlike_remaining = remaining;
   }
 
@@ -115,9 +114,9 @@ class Home extends Component {
   handleAction = (payload: Object) => {
     if (this.notificationSystem) {
       this.notificationSystem.addNotification({
-        message: `${payload.type} - ${payload.name}`,
         level: NOTIF_LEVELS_MAP[payload.type],
         position: 'bl',
+        children: <ActionNotification payload={payload} />
       });
     }
   }

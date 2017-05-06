@@ -10,7 +10,7 @@ import Person from 'models/Person';
 class RecsStore {
   loadMoreHandler = null;
 
-  @observable persons = [];
+  @observable persons: Array<Person> = [];
   @observable is_fetching: boolean = false;
   @observable is_loading_more: boolean = false;
   @observable isError: boolean = false;
@@ -62,7 +62,15 @@ class RecsStore {
     this.persons.push(person);
   }
 
-  @computed get allVisible(): Array {
+  @action revert(_id: string) {
+    const person = this.persons.find(p => p._id === _id);
+
+    if (person) {
+      person.is_done = 0;
+    }
+  }
+
+  @computed get allVisible(): Array<Person> {
     return filter(this.persons, p => p.is_done === 0);
   }
 

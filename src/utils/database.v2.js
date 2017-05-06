@@ -84,6 +84,12 @@ export function getMatch(matchId: string): MatchType {
   })[0];
 }
 
+export function getMatchByPerson(personId: string): MatchType {
+  return db.collection('matches').find({
+    person_id: personId,
+  })[0];
+}
+
 export function getPerson(personId: string): PersonType {
   return db.collection('persons').find({
     _id: personId,

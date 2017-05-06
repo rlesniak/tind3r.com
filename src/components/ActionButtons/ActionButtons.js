@@ -15,9 +15,13 @@ const enhance = compose(
   withState('activeActionType', 'setActionType', props => props.activeActionType),
   withHandlers({
     handleLike: props => () => {
+      if (props.liked) return;
+
       props.onButtonClick(ACTION_TYPES.LIKE);
     },
     handleSuperlike: props => () => {
+      if (props.superliked) return;
+
       props.onButtonClick(ACTION_TYPES.SUPERLIKE);
     },
     handlePass: props => () => {

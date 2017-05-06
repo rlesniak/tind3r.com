@@ -7,7 +7,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
 import Loader from 'components/Loader';
-import Gallery from 'components/Gallery';
+import PersonView from 'components/PersonView';
 
 import Person from 'models/Person';
 
@@ -34,13 +34,7 @@ class PersonComponent extends Component {
 
     return (
       <div className="person">
-        {this.person.name}
-        {this.person.distanceKm}
-        <Gallery
-          scrolling={false}
-          images={this.person.photos}
-          width={200}
-        />
+        <PersonView personId={this.props.match.params.id} />
       </div>
     );
   }

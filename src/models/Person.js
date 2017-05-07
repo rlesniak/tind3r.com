@@ -49,7 +49,7 @@ class Person implements UserInterface {
       person_id: this._id,
       action_type: type,
       name: this.name,
-      photo: this.mainPhoto,
+      photo: get(this.photos, [0, 'processedFiles', 2, 'url']),
       date: moment().format(),
     });
   }

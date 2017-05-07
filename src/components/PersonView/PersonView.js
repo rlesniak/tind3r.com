@@ -11,7 +11,7 @@ import Gallery from 'components/Gallery';
 import ActionButtons from 'components/ActionButtons';
 import Bio from 'components/Bio';
 import Person from 'models/Person';
-import { getMatchByPerson } from 'utils/database.v2';
+import { getMatchByPerson, getActions } from 'utils/database.v2';
 
 import recsStore from 'stores/RecsStore';
 
@@ -29,22 +29,19 @@ type PropsType = {
 class PersonView extends Component {
   props: PropsType;
 
-  person: Person = this.getPerson();
   match: MatchType;
+  person: Person;
 
   constructor(props) {
     super(props);
-    this.match = getMatchByPerson(props.personId);
+    const json = this.props.person || { _id: this.props.personId };
+
+    this.match = getMatchByPerson(json._id);
+    this.person= new Person({}, json)
   }
 
   componentDidMount() {
     this.person.fetch();
-  }
-
-  getPerson() {
-    const json = this.props.person || { _id: this.props.personId };
-
-    return new Person({}, json);
   }
 
   handleActionClick = (type: ActionsType) => {
@@ -102,8 +99,31 @@ class PersonView extends Component {
     return null;
   }
 
+  checkIsSuperliked() {
+    if (this.match) {
+      return this.match.is_super_like;
+    } else {
+      const action = getActions(this.person._id)[0];
+      return action && action.action_type === 'superlike';
+    }
+  }
+
   checkIsLiked() {
-    return this.match && !this.match.is_super_like;
+    if (this.match) {
+      return !this.match.is_super_like;
+    } else {
+      const action = getActions(this.person._id)[0];
+      return action && action.action_type === 'like';
+    }
+  }
+
+  checkIsPassed() {
+    if (!this.checkIsLiked()) {
+      const action = getActions(this.person._id)[0];
+      return action && action.action_type === 'pass';
+    }
+
+    return false;
   }
 
   render() {
@@ -131,8 +151,9 @@ class PersonView extends Component {
           </div>
           <div className="person-view__buttons">
             <ActionButtons
+              passed={this.checkIsPassed()}
               liked={this.checkIsLiked()}
-              superliked={!this.checkIsLiked()}
+              superliked={this.checkIsSuperliked()}
               onButtonClick={this.handleActionClick}
               hideTimer={false}
               size={'large'}

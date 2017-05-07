@@ -101,8 +101,14 @@ export function createAction(payload: ActionType) {
   db.collection('actions').save();
 }
 
-export function getActions(): Array<ActionType> {
-  return db.collection('actions').find();
+export function getActions(personId?: string): Array<ActionType> {
+  let query = {};
+
+  if (personId) {
+    query = { person_id: personId };
+  }
+
+  return db.collection('actions').find(query);
 }
 
 export function removeAction(personId: string) {

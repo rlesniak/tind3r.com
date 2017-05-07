@@ -130,10 +130,6 @@ class PersonView extends Component {
     const { person } = this;
     const width = 500;
 
-    if (person.is_loading) {
-      return null;
-    }
-
     return (
       <div className="person-view">
         <div className="person-view__left">

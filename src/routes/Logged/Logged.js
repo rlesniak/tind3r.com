@@ -3,7 +3,7 @@
 import './Logged.scss';
 
 import React, { Component } from 'react';
-import { Route, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
@@ -96,8 +96,8 @@ class Welcome extends Component {
       currentUser.is_authenticated ? (
         <div className="logged">
           <Switch location={isModal ? this.previousLocation : location}>
-            <Route exact path="/" render={() => <Home recsStore={recsStore} />} />
-            <Route exact path="/home" render={() => <Home recsStore={recsStore} />} />
+            <Route exact path="/" component={Home} />
+            <Route path="/home" component={Home} />
             <Route path="/matches" component={Matches} />
             <Route path="/history" component={History} />
             <Route path="/discussion" component={Discussion} />
@@ -158,7 +158,7 @@ class Welcome extends Component {
               </li>
               <li className="separator" />
               <li className="profile">
-                <NavLink to={`/users/${currentUser._id}`} activeClassName="active">
+                <NavLink to={`/user/${currentUser._id}`} activeClassName="active">
                   {currentUser.avatarUrl && <Avatar url={currentUser.avatarUrl} />}
                   <div className="name">
                     {currentUser.name}

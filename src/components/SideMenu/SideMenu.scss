@@ -54,6 +54,20 @@
       background: #343d45;
       color: #fff;
     }
+
+    &--action {
+      cursor: pointer;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    &--disabled {
+      cursor: default;
+      opacity: .5;
+      color: #8f9397 !important;
+    }
   }
 
   &__items {

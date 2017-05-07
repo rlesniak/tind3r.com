@@ -13,7 +13,7 @@ import orderBy from 'lodash/orderBy';
 import Avatar from 'components/Avatar';
 import SideMenu from 'components/SideMenu';
 
-import { getActions } from 'utils/database.v2';
+import { getActions, removeActions } from 'utils/database.v2';
 
 import type { ActionType } from 'types/action';
 
@@ -55,6 +55,12 @@ class Actions extends Component {
     this.filter = type;
   }
 
+  handleClear = () => {
+    removeActions();
+    this.actions = [];
+    this.forceUpdate();
+  }
+
   getFiltered() {
     switch(this.filter) {
       case 'like': return this.filterType('like')
@@ -81,6 +87,10 @@ class Actions extends Component {
               <span>{filter.text}</span>
             </SideMenu.Item>
           ))}
+          <SideMenu.Separator />
+          <SideMenu.Item asAction onClick={this.handleClear}>
+            <i className="fa fa-trash" /> Clear
+          </SideMenu.Item>
         </SideMenu>
         <SideMenu.Right>
           <div className="history__content">

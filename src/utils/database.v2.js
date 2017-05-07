@@ -111,8 +111,14 @@ export function getActions(personId?: string): Array<ActionType> {
   return db.collection('actions').find(query);
 }
 
+export function removeActions() {
+  db.collection('actions').remove();
+  db.collection('actions').save();
+}
+
 export function removeAction(personId: string) {
   db.collection('actions').remove({ person_id: personId });
+  db.collection('actions').save();
 }
 
 export function createPersons(persons: Array<PersonType>) {

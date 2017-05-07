@@ -11,10 +11,11 @@ import Image from 'components/Image';
 
 const sliderOptions = {
   dots: true,
-  infinite: false,
+  infinite: true,
   speed: 500,
   currentSlide: 0,
   slide: 0,
+  lazyLoad: true,
 };
 
 type PropsType = {

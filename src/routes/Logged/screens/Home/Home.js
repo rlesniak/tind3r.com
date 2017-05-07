@@ -165,7 +165,7 @@ class Home extends Component {
   }
 
   renderBody() {
-    const { recsStore, currentUser } = this.props;
+    const { currentUser } = this.props;
 
     if (recsStore.is_fetching || recsStore.areRecsExhaust || (recsStore.is_fetching && recsStore.allVisible.length === 0)) {
       return (

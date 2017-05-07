@@ -19,16 +19,20 @@ export const Right = (props: PropsType) => (
   </div>
 );
 
-type ItemPropsType = PropsType | {
+type ItemPropsType = PropsType & {
   active: boolean,
   onClick: () => void,
   rightText: string,
+  asAction?: boolean,
+  disabled?: boolean,
 };
 
 export const Item = (props: ItemPropsType) => (
   <div
     className={cx('side-menu__item', props.className, {
       'side-menu__item--active': props.active,
+      'side-menu__item--action': props.asAction,
+      'side-menu__item--disabled': props.disabled,
     })}
     onClick={props.onClick}
   >

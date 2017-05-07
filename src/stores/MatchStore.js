@@ -99,6 +99,10 @@ export class MatchStore {
     this.items.push(match);
   }
 
+  @action remove(match: Match) {
+    this.items.remove(match);
+  }
+
   @action setFilter(value: string) {
     this.filter = value;
   }

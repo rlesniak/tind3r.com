@@ -15,6 +15,7 @@ import { MatchStore } from 'stores/MatchStore';
 
 import { CurrentUser } from 'models/CurrentUser';
 import Match from 'models/Match';
+import { removeMatch } from 'utils/database.v2';
 
 import MessageList from 'components/conversation/MessageList';
 import MessageInput from 'components/conversation/MessageInput';
@@ -23,6 +24,7 @@ import Gallery from 'components/Gallery';
 type PropsTypes = {
   currentUser: CurrentUser,
   match: Object,
+  history: Object,
   matchStore: MatchStore,
 }
 
@@ -74,6 +76,17 @@ class MatchComponent extends Component {
   handleUnmatch = () => {
     if (this.match && confirm('Are you sure?')) {
       this.match.unmatch();
+    }
+  }
+
+  handleRemove = () => {
+    if (this.match) {
+      const { history, matchStore } = this.props;
+
+      removeMatch(this.match._id);
+
+      matchStore.remove(this.match);
+      history.replace('/matches');
     }
   }
 

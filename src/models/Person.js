@@ -49,7 +49,7 @@ class Person implements UserInterface {
       person_id: this._id,
       action_type: type,
       name: this.name,
-      photo: get(this.photos, [0, 'processedFiles', 2, 'url']),
+      photo: this.mainPhotoSmall,
       date: moment().format(),
     });
   }
@@ -75,7 +75,7 @@ class Person implements UserInterface {
   @action async callAction(
     type: ActionsType,
     superlikeCallback: (remaining: number) => void = noop,
-    matchCallback: (data?: Object) => void = noop,
+    matchCallback: (person: this) => void = noop,
     errorCallback: (reason: Object) => void = noop,
   ) {
     this.is_done = 1;
@@ -91,7 +91,7 @@ class Person implements UserInterface {
         try {
           const { match } = await like(this._id);
           if (match) {
-            matchCallback();
+            matchCallback(this);
             this.createDBMatch(match);
           }
 
@@ -108,7 +108,7 @@ class Person implements UserInterface {
         try {
           const { match, super_likes: { remaining } } = await superlike(this._id);
           if (match) {
-            matchCallback();
+            matchCallback(this);
             this.createDBMatch(match);
           }
 
@@ -166,6 +166,10 @@ class Person implements UserInterface {
 
   @computed get mainPhoto(): string {
     return get(this.photos, [0, 'url']);
+  }
+
+  @computed get mainPhotoSmall(): string {
+    return get(this.photos, [0, 'processedFiles', 2, 'url']);
   }
 
   @computed get toJSON() {

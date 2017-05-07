@@ -75,4 +75,15 @@
       margin-bottom: 10px;
     }
   }
+
+  .notifications-tc {
+    width: 70% !important;
+    margin: 0 auto !important;
+    transform: translateX(-50%);
+
+    .notification {
+      border-top: none !important;
+      height: auto !important;
+    }
+  }
 }

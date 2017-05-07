@@ -17,9 +17,12 @@ import SearchingLoader from 'components/SearchingLoader';
 import SideMenu from 'components/SideMenu';
 import ShortcutIcon from 'components/ShortcutIcon';
 import ActionNotification from 'components/ActionNotification';
+import MatchNotification from 'components/MatchNotification';
 
 import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
+import Person from 'models/Person';
+
 import {
   CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE
 } from 'models/CurrentUser';
@@ -68,8 +71,15 @@ class Home extends Component {
   }
 
   @autobind
-  handleMatch(match: Object) {
-    alert('Match');
+  handleMatch(person: Person) {
+    if (this.notificationSystem) {
+      this.notificationSystem.addNotification({
+        level: 'success',
+        position: 'tc',
+        autoDismiss: 2,
+        children: <MatchNotification person={person} />
+      });
+    }
   }
 
   @autobind
@@ -131,6 +141,7 @@ class Home extends Component {
       this.notificationSystem.addNotification({
         level: NOTIF_LEVELS_MAP[payload.type],
         position: 'bl',
+        autoDismiss: 3,
         children: <ActionNotification payload={payload} />
       });
     }

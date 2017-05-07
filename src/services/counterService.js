@@ -30,14 +30,20 @@ const counter = (): CounterType => {
     intervals[delay] && intervals[delay].intervalId !== 0
   );
 
+  const runSubscribers = (delay: number) => {
+    intervals[delay].subscribers.forEach(sub => {
+      if ((sub.isBusyHandler && !sub.isBusyHandler()) || !sub.isBusyHandler) {
+        sub.handler(delay);
+      }
+    });
+  }
+
   const start = (delay: number) => {
     if (!isIntervalExist(delay)) {
+      runSubscribers(delay);
+
       intervals[delay].intervalId = setInterval(() => {
-        intervals[delay].subscribers.forEach(sub => {
-          if ((sub.isBusyHandler && !sub.isBusyHandler()) || !sub.isBusyHandler) {
-            sub.handler(delay);
-          }
-        });
+        runSubscribers(delay);
       }, delay);
     }
   };

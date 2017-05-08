@@ -1,22 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const env = process.env.NODE_ENV || 'development';
 
 module.exports = {
   entry: [
     'babel-polyfill',
-
     'react-hot-loader/patch',
-    // activate HMR for React
-
-    'webpack-dev-server/client?http://localhost:3000',
-    // bundle the client for webpack-dev-server
-    // and connect to the provided endpoint
-
-    'webpack/hot/only-dev-server',
-    // bundle the client for hot reloading
-    // only- means to only hot reload for successful updates
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
 
     './src/index.js',
     // the entry point of our app
@@ -37,7 +29,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src/'), 'node_modules'],
     alias: {
       components: path.resolve(__dirname, 'src/components'),
-      forerunnerdb: path.resolve(__dirname, 'node_modules/forerunnerdb/js/builds/all.js')
+      forerunnerdb: path.resolve(__dirname, 'node_modules/forerunnerdb/js/builds/all.js'),
     },
   },
 
@@ -104,14 +96,16 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(env),
-      }
+      },
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function(module) {
-        // this assumes your vendor imports exist in the node_modules directory
-        return module.context && module.context.indexOf('node_modules') !== -1;
-      },
+      minChunks: module => module.context && module.context.indexOf('node_modules') !== -1,
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      inject: 'body',
+      filename: 'index.html',
     }),
   ],
 

@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tind3r - Unofficial Tinder client</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Unofficial Tinder client for Web. Its free! Better experience than on phone.">
+    <meta name="keywords" content="tinder, gotinder, dating app, swipe, superlike" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+  </head>
+  <body>
+    <div id='root'>
+    </div>
+    <% if (env.develop) { %>
+      <script src="/static/vendor.js"></script>
+      <script src="/static/main.js"></script>
+    <% } else { %>
+      <script src="https://cdn.ravenjs.com/3.9.1/raven.min.js" crossorigin="anonymous"></script>
+      <script>
+        Raven.config('https://e45202b021c04414a0857c3682f610c5@sentry.io/126011').install()
+      </script>
+
+      <% for(var i=0; i<env.assets.length; i++) {%>
+        <script src="<%= env.assets[i] %>"></script>
+      <% } %>
+    <% } %>
+  </body>
+</html>

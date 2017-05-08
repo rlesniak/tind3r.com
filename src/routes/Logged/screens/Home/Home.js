@@ -70,8 +70,7 @@ class Home extends Component {
     ReactTooltip.rebuild();
   }
 
-  @autobind
-  handleMatch(person: Person) {
+  handleMatch = (person: Person) => {
     if (this.notificationSystem) {
       this.notificationSystem.addNotification({
         level: 'success',
@@ -82,8 +81,7 @@ class Home extends Component {
     }
   }
 
-  @autobind
-  handleLikeCounter() {
+  handleLikeCounter = () => {
     const { currentUser } = this.props;
 
     if (currentUser.likeReset.seconds === 0) {
@@ -93,8 +91,7 @@ class Home extends Component {
     this.likeCounter = currentUser.likeReset.formatted;
   }
 
-  @autobind
-  handleSuperlikeCounter() {
+  handleSuperlikeCounter = () => {
     const { currentUser } = this.props;
 
     if (currentUser.superlikeReset.seconds === 0) {
@@ -104,8 +101,7 @@ class Home extends Component {
     this.superlikeCounter = currentUser.superlikeReset.formatted;
   }
 
-  @autobind
-  handleError(reason: Object) {
+  handleError = (reason: Object) => {
     const { currentUser } = this.props;
 
     if (reason.type === 'like') {
@@ -120,15 +116,13 @@ class Home extends Component {
     }
   }
 
-  @autobind
-  handleSuperlike(remaining: number) {
+  handleSuperlike = (remaining: number) => {
     const { currentUser } = this.props;
 
     currentUser.superlike_remaining = remaining;
   }
 
-  @autobind
-  handleLoadMoreClick() {
+  handleLoadMoreClick = () => {
     recsStore.fetchCore(true);
   }
 

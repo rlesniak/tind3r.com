@@ -167,4 +167,16 @@ export function removeMatch(_id: string) {
   db.collection('persons').save();
 }
 
+export function purge() {
+  db.collection('matches').remove();
+  db.collection('messages').remove();
+  db.collection('persons').remove();
+
+  db.collection('matches').save();
+  db.collection('messages').save();
+  db.collection('persons').save();
+
+  removeActions();
+}
+
 export default create;

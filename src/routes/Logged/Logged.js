@@ -23,9 +23,15 @@ import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
 import matchStore from 'stores/MatchStore';
 
+import { purge } from 'utils/database.v2';
+import LS from 'utils/localStorage';
+import { purge as runtimePurge } from 'utils/runtime';
+
+import type { RouterHistory, Location } from 'react-router-dom';
+
 type PropsType = {
-  location: Object,
-  history: Object,
+  location: Location,
+  history: RouterHistory,
 };
 
 @observer
@@ -82,6 +88,14 @@ class Welcome extends Component {
     matchStore.setCurrentUserId(currentUser._id);
 
     window.ms = matchStore;
+  }
+
+  handleLogout = () => {
+    purge();
+    runtimePurge();
+    LS.clear();
+
+    this.props.history.replace('/welcome');
   }
 
   renderWhenLogged() {

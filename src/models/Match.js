@@ -13,6 +13,7 @@ import Message from './Message';
 
 import type { MatchType } from 'types/match';
 import type { MessageType } from 'types/message';
+import type moment$Moment from 'moment';
 
 class Match {
   _id: string;
@@ -90,7 +91,7 @@ class Match {
     return this.last_msg_from_db;
   }
 
-  @computed get lastActivity(): moment {
+  @computed get lastActivity(): moment$Moment {
     let date = this.last_activity_date;
 
     if (this.lastMessage.date) {

@@ -14,7 +14,7 @@ const ls = {
   },
 
   clear() {
-    store.clear();
+    store.clearAll();
   },
 };
 

@@ -18,7 +18,6 @@ export async function like(id: string): Object {
 
     if (data.likes_remaining === 0) {
       if (data.rate_limited_until) {
-        // ls.set({ likeExpiration: data.rate_limited_until })
         return Promise.reject({ error: 'limit', resetsAt: data.rate_limited_until });
       }
     }
@@ -33,9 +32,8 @@ export async function superlike(id: string): Object {
   try {
     const { data } = await API.post(`/like/${id}/super`);
 
-    if (!data.limit_exceeded && data.remaining === 0) {
-      // ls.set({ superLikeExpiration: data.super_likes.resets_at })
-      Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at });
+    if (!data.limit_exceeded || data.super_likes.remaining === 0) {
+      return Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at });
     }
 
     return Promise.resolve(data);

@@ -11,10 +11,12 @@ import Gallery from 'components/Gallery';
 import Loader from 'components/Loader';
 import ActionButtons from 'components/ActionButtons';
 import Bio from 'components/Bio';
-import Person from 'models/Person';
-import { getMatchByPerson, getActions } from 'utils/database.v2';
 
+import Person from 'models/Person';
+import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
+
+import { getMatchByPerson, getActions } from 'utils/database.v2';
 
 import type { ActionsType } from 'types/person';
 import type { MatchType } from 'types/match';
@@ -151,14 +153,14 @@ class PersonView extends Component {
             {this.renderConnections()}
           </div>
           <div className="person-view__buttons">
-            <ActionButtons
+            {person._id !== currentUser._id && <ActionButtons
               passed={this.checkIsPassed()}
               liked={this.checkIsLiked()}
               superliked={this.checkIsSuperliked()}
               onButtonClick={this.handleActionClick}
               hideTimer={false}
               size={'large'}
-            />
+            />}
           </div>
         </div>
         <div className="person-view__gallery" style={{ width: `${width}px` }}>

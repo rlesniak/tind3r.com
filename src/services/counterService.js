@@ -1,6 +1,7 @@
 // @flow
 
 import forEach from 'lodash/forEach';
+import isFunction from 'lodash/isFunction';
 
 type HandlerType = () => any;
 
@@ -8,6 +9,7 @@ type SubscriberType = {
   handler: HandlerType,
   isBusyHandler?: () => boolean,
   delay?: number,
+  id?: string,
 }
 
 type IntervalsType = {
@@ -17,7 +19,7 @@ type IntervalsType = {
 
 type CounterType = {
   subscribe: (subscriber: SubscriberType) => void,
-  unsubscribe: (handler: HandlerType) => void,
+  unsubscribe: (handler: HandlerType | string) => void,
   stop: () => void,
 };
 
@@ -75,9 +77,15 @@ const counter = (): CounterType => {
     start(delay);
   };
 
-  const unsubscribe = (handler: HandlerType) => {
+  const unsubscribe = (handler: HandlerType | string) => {
     forEach(intervals, (val, key) => {
-      intervals[key].subscribers = intervals[key].subscribers.filter(sub => sub.handler !== handler);
+      intervals[key].subscribers = intervals[key].subscribers.filter(sub => {
+        if (!isFunction(handler)) {
+          return sub.id !== handler;
+        } else {
+          return sub.handler !== handler;
+        }
+      });
 
       if (intervals[key].subscribers.length === 0) {
         removeInterval(key);

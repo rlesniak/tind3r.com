@@ -47,12 +47,17 @@ export class MatchStore {
     });
   }
 
-  initUpdater() {
+  initUpdater(errorCallback: () => void) {
     counterService.subscribe({
-      handler: this.fetch.bind(this),
+      handler: this.fetch.bind(this, errorCallback),
+      id: 'updater',
       isBusyHandler: this.checkIsLoading.bind(this),
       delay: 2000,
     });
+  }
+
+  destroyUpdater() {
+    counterService.unsubscribe('updater');
   }
 
   setCurrentUserId(id: string) {
@@ -73,7 +78,7 @@ export class MatchStore {
     this.is_sync = true;
   }
 
-  @action async fetch() {
+  @action async fetch(errorCallback: () => void) {
     this.isLoading = true;
 
     try {
@@ -83,9 +88,12 @@ export class MatchStore {
         if (matches.length || messages.length) {
           this.getFromDb();
         }
-        this.isLoading = false;
       }, 100);
-    } catch (err) { console.log(err); }
+    } catch (err) {
+      errorCallback();
+    }
+
+    this.isLoading = false;
   }
 
   @action create(data: MatchType): void {

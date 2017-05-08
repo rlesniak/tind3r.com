@@ -25,7 +25,7 @@ import matchStore from 'stores/MatchStore';
 
 import { purge } from 'utils/database.v2';
 import LS from 'utils/localStorage';
-import { purge as runtimePurge } from 'utils/runtime';
+import { purge as runtimePurge, getFacebookToken} from 'utils/runtime';
 
 import type { RouterHistory, Location } from 'react-router-dom';
 
@@ -33,6 +33,8 @@ type PropsType = {
   location: Location,
   history: RouterHistory,
 };
+
+const onFocus = () => currentUser.fetch();
 
 @observer
 class Welcome extends Component {
@@ -76,16 +78,24 @@ class Welcome extends Component {
 
   componentWillUnmount() {
     this.loggedHandler();
+
+    window.onfocus = n => n;
   }
 
   onErrorLogin() {
-    console.log('error');
+    window.onfocus = onFocus;
   }
 
   onSuccesLogin() {
     matchStore.getFromDb();
-    matchStore.initUpdater();
+    matchStore.initUpdater(() => {
+      currentUser.is_authenticated = false;
+      matchStore.destroyUpdater();
+    });
+
     matchStore.setCurrentUserId(currentUser._id);
+
+    window.onfocus = n => n;
 
     window.ms = matchStore;
   }
@@ -96,6 +106,10 @@ class Welcome extends Component {
     LS.clear();
 
     this.props.history.replace('/welcome');
+  }
+
+  handleConnect = () => {
+    getFacebookToken();
   }
 
   renderWhenLogged() {
@@ -124,7 +138,7 @@ class Welcome extends Component {
       ) : (
         <div className="not-logged">
           <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
-          <button className="button blue" onClick={this.connect}>Refresh</button>
+          <button className="button blue" onClick={this.handleConnect}>Refresh</button>
         </div>
       )
     );

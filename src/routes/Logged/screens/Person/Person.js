@@ -13,6 +13,7 @@ import Person from 'models/Person';
 
 type PropsType = {
   match: Object,
+  history: Object,
 }
 
 @observer
@@ -23,11 +24,12 @@ class PersonComponent extends Component {
   });
 
   componentDidMount() {
-    this.person.fetch();
+    this.person.fetch(() => {
+      this.props.history.replace('/not-found');
+    });
   }
 
   render() {
-
     if (this.person.is_loading) {
       return <Loader />;
     }

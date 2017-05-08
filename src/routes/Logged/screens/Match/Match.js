@@ -50,7 +50,13 @@ class MatchComponent extends Component {
   }
 
   fetchMessages(matchId: string) {
-    this.match = this.props.matchStore.find(matchId);
+    const { history, matchStore } = this.props;
+    this.match = matchStore.find(matchId);
+
+    if (!this.match) {
+      history.replace('/not-found');
+      return;
+    }
 
     this.messageStore = new MessageStore(null);
     this.messageStore.fetch(matchId);

@@ -7,7 +7,10 @@ import {
 
 const NotFound = () => (
   <div className="not-found">
-    Not Found
+    <span>
+      <div className="not-found__icon"><i className="fa fa-medkit" /></div>
+      Not Found
+    </span>
   </div>
 );
 

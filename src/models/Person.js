@@ -58,7 +58,7 @@ class Person implements UserInterface {
     createMatch(match);
   }
 
-  @action async fetch() {
+  @action async fetch(errorCallback?: () => void) {
     this.is_loading = true;
 
     try {
@@ -67,6 +67,7 @@ class Person implements UserInterface {
       extend(this, data.results);
       updatePerson(this._id, data.results);
     } catch (e) {
+      if(errorCallback) errorCallback();
     }
 
     this.is_loading = false;

@@ -22,8 +22,13 @@
         Raven.config('https://e45202b021c04414a0857c3682f610c5@sentry.io/126011').install()
       </script>
 
-      <% for(var i=0; i<env.assets.length; i++) {%>
-        <script src="<%= env.assets[i] %>"></script>
+      <% if (variant === 'OLD') { %>
+
+      <% } else { %>
+
+        <% for(var i=0; i<env.assets.length; i++) {%>
+          <script src="<%= env.assets[i] %>"></script>
+        <% } %>
       <% } %>
     <% } %>
   </body>

@@ -7,6 +7,8 @@ const fs = require('fs');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const expressLayouts = require('express-ejs-layouts');
+const cookieParser = require('cookie-parser');
+const ab = require('express-ab');
 
 const config = require('./webpack.config.dev.js');
 
@@ -23,6 +25,10 @@ Object.assign(env, {
   assets: JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/webpack-assets.json'))),
   develop: isDeveloping,
 });
+
+app.use(cookieParser());
+
+const myPageTest = ab.test('new-version');
 
 app.use('/static', express.static('dist'));
 
@@ -49,9 +55,17 @@ if (isDeveloping) {
     });
   });
 } else {
-  app.get('*', (req, res) => {
+  app.get('*', myPageTest(null, 0.8), (req, res) => {
     res.render('index', {
       env: env,
+      variant: 'OLD',
+    });
+  });
+
+  app.get('*', myPageTest(null, 0.2), (req, res) => {
+    res.render('index', {
+      env: env,
+      variant: 'NEW',
     });
   });
 }

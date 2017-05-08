@@ -1,3 +1,7 @@
+// @flow
+
+import './Image.scss';
+
 import React from 'react';
 import { compose, withHandlers, withState } from 'recompose';
 
@@ -11,6 +15,12 @@ const enhance = compose(
 );
 
 const Image = ({ isFailed, onError, style, src, ...props }) => {
+  const styles = {
+    width: style.width,
+    height: style.width,
+    lineHeight: `${style.width}px`,
+  };
+
   if (isFailed) {
     return (
       <div

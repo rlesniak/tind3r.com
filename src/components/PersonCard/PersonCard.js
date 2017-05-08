@@ -109,7 +109,6 @@ const PersonCard = ({
             {person.name}, {person.age}
           </Link>
         </div>
-        <div className="person-card__seen-min">{person.seenMin}</div>
         <div className="person-card__bio">
           <Bio text={person.bio} />
         </div>

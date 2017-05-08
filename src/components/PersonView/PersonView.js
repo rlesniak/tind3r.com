@@ -8,6 +8,7 @@ import uniqueId from 'lodash/uniqueId';
 import { observer } from 'mobx-react';
 
 import Gallery from 'components/Gallery';
+import Loader from 'components/Loader';
 import ActionButtons from 'components/ActionButtons';
 import Bio from 'components/Bio';
 import Person from 'models/Person';
@@ -129,6 +130,10 @@ class PersonView extends Component {
   render() {
     const { person } = this;
     const width = 500;
+
+    if (!person.distanceKm) {
+      return <Loader />;
+    }
 
     return (
       <div className="person-view">

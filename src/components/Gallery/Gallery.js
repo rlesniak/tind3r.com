@@ -60,7 +60,7 @@ class Gallery extends Component {
         {!scrolling && images.length && <div className="gallery__slider">
           <Slider {...sliderOptions}>
             {map(images, image => (
-              <div key={uniqueId()}><Image src={image.url} style={{ width }} /></div>
+              <div key={image.id}><Image src={image.url} style={{ width }} /></div>
             ))}
           </Slider>
         </div>}

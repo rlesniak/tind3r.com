@@ -5,6 +5,7 @@ import moment from 'moment';
 import extend from 'lodash/extend';
 import pick from 'lodash/pick';
 import get from 'lodash/get';
+import find from 'lodash/find';
 
 import { miToKm, kmToMi } from 'utils';
 import API from 'utils/api';
@@ -51,6 +52,7 @@ export class CurrentUser implements UserInterface {
   name: string;
   isCurrentUser: true = true;
 
+  @observable isProcessing: boolean = false;
   @observable is_authenticated: ?boolean = undefined;
   @observable is_fetching: boolean = false;
   @observable is_error: boolean = false;
@@ -59,16 +61,22 @@ export class CurrentUser implements UserInterface {
   @observable superlike_remaining: ?number = null;
   @observable _id: string;
   @observable full_name: string;
+  @observable bio: string;
   @observable photos: ?[];
   @observable distance_filter: number;
   @observable age_filter_min: number;
   @observable age_filter_max: number;
+  @observable plusAccount: boolean;
 
   @action set(json: Object) {
-    const { rating, user } = json;
+    const { rating, user, purchases } = json;
 
     if (user) {
       extend(this, user);
+    }
+
+    if (purchases) {
+      this.plusAccount = !!find(purchases, p => p.product_type === 'plus');
     }
 
     if (rating) {
@@ -97,6 +105,8 @@ export class CurrentUser implements UserInterface {
   @action async updateProfile(payload: Object) {
     const distance = payload.distance_filter || this.profileSettings.distance_filter;
 
+    this.isProcessing = true;
+
     const { data } = await FetchSevice.updateProfile({
       ...this.profileSettings,
       ...payload,
@@ -104,6 +114,7 @@ export class CurrentUser implements UserInterface {
     });
 
     this.set(data);
+    this.isProcessing = false;
   }
 
   @computed get avatarUrl(): string {

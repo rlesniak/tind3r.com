@@ -18,6 +18,7 @@ import Matches from './screens/Matches';
 import Person from './screens/Person';
 import History from './screens/History';
 import Discussion from './screens/Discussion';
+import Settings from './screens/Settings';
 
 import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
@@ -129,6 +130,7 @@ class Welcome extends Component {
             <Route path="/matches" component={Matches} />
             <Route path="/history" component={History} />
             <Route path="/discussion" component={Discussion} />
+            <Route path="/settings" component={Settings} />
             <Route path="/user/:id" component={Person} />
             <Route component={NotFound} />
           </Switch>
@@ -175,7 +177,7 @@ class Welcome extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/profile-edit" activeClassName="active">
+                <NavLink to="/settings" activeClassName="active">
                   <i className="fa fa-cog" />
                 </NavLink>
               </li>
@@ -191,6 +193,7 @@ class Welcome extends Component {
                   <div className="name">
                     {currentUser.name}
                   </div>
+                  {currentUser.plusAccount && <div className="profile__plus">Plus!</div>}
                 </NavLink>
               </li>
               <li>

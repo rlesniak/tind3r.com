@@ -22,6 +22,21 @@ a {
   color: $font-color;
 }
 
+textarea {
+  width: 100%;
+  border: 1px solid lighten($blue, 20);
+  background: #fff;
+  outline: none;
+  border-radius: 5px;
+  resize: vertical;
+  padding: 5px;
+  font-size: 16px;
+
+  &:focus {
+    border-color: $blue;
+  }
+}
+
 .slick-slider {
   .slick-next,
   .slick-prev {

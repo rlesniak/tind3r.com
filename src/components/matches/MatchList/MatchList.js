@@ -77,7 +77,7 @@ class MatchList extends Component {
 
     return (
       <div className={cx('match-list', className)}>
-        <div className={cx('match-list__loading-indicator', { active: matchStore.isLoading })}>
+        <div className={cx('match-list__loading-indicator', { active: false })}>
           Loading...
         </div>
         <AutoSizer>

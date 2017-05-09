@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "lint": "eslint src",
-    //"prebuild": "rimraf dist",
+    "prebuild": "",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.prod.js",
     "server": "NODE_ENV=production PORT=3000 node server.js",
     "styleguide-server": "styleguidist server",

@@ -88,6 +88,8 @@ const PersonCard = ({
       className={cx('person-card', { 'person-card--large': !small })}
       onMouseEnter={onCardMouseEnter}
       onMouseLeave={onCardMouseLeave}
+      onMouseOver={onCardMouseEnter}
+      onMouseMove={onCardMouseEnter}
     >
       <div className="person-card__gallery">
         <Gallery

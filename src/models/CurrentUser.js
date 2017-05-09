@@ -95,7 +95,6 @@ export class CurrentUser implements UserInterface {
       this.is_fetching = false;
       this.is_authenticated = true;
     }).catch(e => {
-      console.log(e);
       this.is_authenticated = false;
       this.is_fetching = false;
       this.is_error = true;

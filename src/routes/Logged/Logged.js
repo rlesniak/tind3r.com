@@ -148,8 +148,7 @@ class Welcome extends Component {
         </div>
       ) : (
         <div className="not-logged">
-          <h1>Your Tinder session has expired. <br />Refresh it here:</h1>
-          <Login onClick={this.handleConnect} />
+          <Login onClick={this.handleConnect}>Your Tinder session has expired.</Login>
         </div>
       )
     );

@@ -18,10 +18,7 @@
       <script src="/static/vendor.js"></script>
       <script src="/static/main.js"></script>
     <% } else { %>
-      <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js" crossorigin="anonymous"></script>
-      <script>
-        Raven.config('https://e5ac88b061e44bb898b09a396cc4225f@sentry.io/166319').install()
-      </script>
+      <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js"></script>
 
       <% if (variant === 'OLD') { %>
         <script>
@@ -30,8 +27,11 @@
 
         <script src="/static/v1/vendor.dll.js"></script>
         <script src="/static/v1/bundle.a11512e6e43d9ed72ed3.min.js"></script>
-
       <% } else { %>
+        <script>
+          Raven.config('https://e5ac88b061e44bb898b09a396cc4225f@sentry.io/166319').install()
+        </script>
+
         <script type="text/javascript">
           window.smartlook||(function(d) {
           var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];

@@ -26,7 +26,7 @@ import matchStore from 'stores/MatchStore';
 
 import { purge } from 'utils/database.v2';
 import LS from 'utils/localStorage';
-import { purge as runtimePurge, getFacebookToken} from 'utils/runtime';
+import { purge as runtimePurge, getFacebookToken } from 'utils/runtime';
 
 import type { RouterHistory, Location } from 'react-router-dom';
 

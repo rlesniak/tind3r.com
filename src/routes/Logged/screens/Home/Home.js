@@ -24,7 +24,7 @@ import recsStore from 'stores/RecsStore';
 import Person from 'models/Person';
 
 import {
-  CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE
+  CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE,
 } from 'models/CurrentUser';
 
 const NOTIF_LEVELS_MAP = {

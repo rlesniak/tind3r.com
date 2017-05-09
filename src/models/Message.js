@@ -4,6 +4,8 @@ import { observable, action, computed } from 'mobx';
 import moment from 'moment';
 import extend from 'lodash/extend';
 
+import FetchService from 'services/fetch-service';
+
 import type { MessageType } from 'types/message';
 
 class Message {
@@ -27,9 +29,9 @@ class Message {
   @action async save() {
     this.isSending = true;
     try {
-      // const data = await FetchService.sendMessage(this.match_id, this.body);
+      const data = await FetchService.sendMessage(this.match_id, this.body);
 
-      // extend(this, data);
+      extend(this, data);
     } catch (err) {
       this.isError = true;
     }

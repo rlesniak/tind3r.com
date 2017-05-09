@@ -38,12 +38,12 @@ const counter = (): CounterType => {
         sub.handler(delay);
       }
     });
-  }
+  };
 
   const start = (delay: number) => {
-    if (!isIntervalExist(delay)) {
-      runSubscribers(delay);
+    runSubscribers(delay);
 
+    if (!isIntervalExist(delay)) {
       intervals[delay].intervalId = setInterval(() => {
         runSubscribers(delay);
       }, delay);
@@ -82,9 +82,9 @@ const counter = (): CounterType => {
       intervals[key].subscribers = intervals[key].subscribers.filter(sub => {
         if (!isFunction(handler)) {
           return sub.id !== handler;
-        } else {
-          return sub.handler !== handler;
         }
+
+        return sub.handler !== handler;
       });
 
       if (intervals[key].subscribers.length === 0) {

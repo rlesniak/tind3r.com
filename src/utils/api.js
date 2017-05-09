@@ -4,7 +4,7 @@ import { EXT_ID } from 'const';
 const chromeRuntime = (type, url, params) => {
   if (1) {
     return new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage(EXT_ID, { type, url, params }, response => {
+      chrome.runtime.sendMessage(EXT_ID(), { type, url, params }, response => {
         if (!response) {
           reject();
           return;

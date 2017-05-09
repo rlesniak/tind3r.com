@@ -103,6 +103,12 @@ class Welcome extends Component {
 
     ReactGA.set({ userId: currentUser._id });
 
+    if (process.env.NODE_ENV === 'production') {
+      Bugsnag.user = {
+        id: currentUser._id,
+      };
+    }
+
     matchStore.setCurrentUserId(currentUser._id);
 
     window.onfocus = n => n;

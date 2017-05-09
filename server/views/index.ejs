@@ -14,13 +14,12 @@
     <div id='root'>
     </div>
     <% if (env.develop) { %>
-      <script>window.__insp = window.__insp || [];</script>
       <script src="/static/vendor.js"></script>
       <script src="/static/main.js"></script>
     <% } else { %>
-      <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js"></script>
 
       <% if (variant === 'OLD') { %>
+        <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js"></script>
         <script>
           Raven.config('https://e45202b021c04414a0857c3682f610c5@sentry.io/126011').install()
         </script>
@@ -28,9 +27,7 @@
         <script src="/static/v1/vendor.dll.js"></script>
         <script src="/static/v1/bundle.a11512e6e43d9ed72ed3.min.js"></script>
       <% } else { %>
-        <script>
-          Raven.config('https://e5ac88b061e44bb898b09a396cc4225f@sentry.io/166319').install()
-        </script>
+        <script src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-3.min.js" data-apikey="1b165597e658f22e79923a8d458d5122"></script>
 
         <script type="text/javascript">
           window.smartlook||(function(d) {

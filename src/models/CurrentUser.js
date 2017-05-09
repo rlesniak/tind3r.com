@@ -29,7 +29,10 @@ async function meta() {
 
     return Promise.resolve(data);
   } catch (e) {
-    return Promise.reject();
+    if (process.env.NODE_ENV === 'production') {
+      Bugsnag.notifyException(e, 'meta()');
+    }
+    return Promise.reject(e);
   }
 }
 const formatSeconds = date => moment(date).diff(moment(), 'seconds');
@@ -106,13 +109,20 @@ export class CurrentUser implements UserInterface {
 
     this.isProcessing = true;
 
-    const { data } = await FetchSevice.updateProfile({
-      ...this.profileSettings,
-      ...payload,
-      distance_filter: kmToMi(distance),
-    });
+    try {
+      const { data } = await FetchSevice.updateProfile({
+        ...this.profileSettings,
+        ...payload,
+        distance_filter: kmToMi(distance),
+      });
 
-    this.set(data);
+      this.set(data);
+    } catch (e) {
+      if (process.env.NODE_ENV === 'production') {
+        Bugsnag.notifyException(e, 'updateProfile()');
+      }
+    }
+
     this.isProcessing = false;
   }
 

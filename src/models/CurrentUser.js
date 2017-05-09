@@ -29,7 +29,7 @@ async function meta() {
 
     return Promise.resolve(data);
   } catch (e) {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
       Bugsnag.notifyException(e, 'meta()');
     }
     return Promise.reject(e);
@@ -118,7 +118,7 @@ export class CurrentUser implements UserInterface {
 
       this.set(data);
     } catch (e) {
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
         Bugsnag.notifyException(e, 'updateProfile()');
       }
     }

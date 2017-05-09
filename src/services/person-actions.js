@@ -24,7 +24,7 @@ export async function like(id: string): Object {
 
     return Promise.resolve(data);
   } catch (e) {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
       Bugsnag.notifyException(e, 'like()');
     }
     return Promise.reject(e);
@@ -41,7 +41,7 @@ export async function superlike(id: string): Object {
 
     return Promise.resolve(data);
   } catch (e) {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
       Bugsnag.notifyException(e, 'superlike()');
     }
     return Promise.reject(e);

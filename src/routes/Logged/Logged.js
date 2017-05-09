@@ -103,7 +103,7 @@ class Welcome extends Component {
 
     ReactGA.set({ userId: currentUser._id });
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
       Bugsnag.user = {
         id: currentUser._id,
       };

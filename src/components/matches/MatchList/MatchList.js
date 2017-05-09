@@ -10,6 +10,7 @@ import { List, AutoSizer } from 'react-virtualized';
 import { includes } from 'lodash';
 
 import MatchRow from 'components/matches/MatchRow';
+import LS from 'utils/localStorage';
 
 import { MatchStore } from 'stores/MatchStore';
 
@@ -77,7 +78,9 @@ class MatchList extends Component {
 
     return (
       <div className={cx('match-list', className)}>
-        <div className={cx('match-list__loading-indicator', { active: false })}>
+        <div className={cx('match-list__loading-indicator', {
+          active: matchStore.isLoading && !LS.data.lastActivity
+        })}>
           Loading...
         </div>
         <AutoSizer>

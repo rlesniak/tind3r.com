@@ -31,6 +31,7 @@ app.use(cookieParser());
 const myPageTest = ab.test('new-version');
 
 app.use('/static', express.static('dist'));
+app.use('/assets', express.static('assets'));
 
 if (isDeveloping) {
   const compiler = webpack(config);

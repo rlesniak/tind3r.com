@@ -12,6 +12,7 @@ import ReactGA from 'react-ga';
 import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
 import PersonModal from 'components/PersonModal';
+import Login from 'components/Login';
 
 import NotFound from '../NotFound';
 import Home from './screens/Home';
@@ -147,8 +148,8 @@ class Welcome extends Component {
         </div>
       ) : (
         <div className="not-logged">
-          <h1>Your Tinder session has expired or first visit. <br />Refresh it here:</h1>
-          <button className="button blue" onClick={this.handleConnect}>Refresh</button>
+          <h1>Your Tinder session has expired. <br />Refresh it here:</h1>
+          <Login onClick={this.handleConnect} />
         </div>
       )
     );

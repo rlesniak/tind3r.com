@@ -8,7 +8,10 @@ import {
 } from 'react-router-dom';
 
 import Loader from 'components/Loader';
-import { checkIfInstalled } from 'utils/runtime';
+import Login from 'components/Login';
+
+import { checkIfInstalled, getTokenDate, getFacebookToken } from 'utils/runtime';
+import LS from 'utils/localStorage';
 
 import Welcome from '../Welcome';
 import Logged from '../Logged';
@@ -18,6 +21,7 @@ import NotFound from '../NotFound';
 class App extends Component {
   state = {
     isInstalled: null,
+    isFirstLogin: !LS.data.lastActivity,
   }
 
   componentDidMount() {
@@ -26,10 +30,33 @@ class App extends Component {
     });
   }
 
+  checkLogged = () => {
+    getTokenDate(date => {
+      if (date) {
+        window.onfocus = n => n;
+        this.setState({ isFirstLogin: false });
+      }
+    });
+  }
+
+  handleConnect = () => {
+    getFacebookToken();
+
+    window.onfocus = this.checkLogged;
+  }
+
   render() {
-    const { isInstalled } = this.state;
+    const { isInstalled, isFirstLogin } = this.state;
 
     if (isInstalled) {
+      if (isFirstLogin) {
+        return (
+          <div>
+            <Login onClick={this.handleConnect} />
+          </div>
+        );
+      }
+
       return (
         <Router>
           <Switch>

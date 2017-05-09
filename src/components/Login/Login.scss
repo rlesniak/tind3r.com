@@ -1,0 +1,40 @@
+@import 'const';
+
+.login {
+  width: 100%;
+  text-align: center;
+
+  &__wrapper {
+    display: inline-block;
+  }
+
+  &__facebook {
+    background-color: #0079ce;
+    border: none;
+    border-radius: 0px 3px 3px 0px;
+    -moz-border-radius: 0px 3px 3px 0px;
+    -webkit-border-radius: 0px 3px 3px 0px;
+    color: #f4f4f4;
+    cursor: pointer;
+    height: 50px;
+    text-transform: uppercase;
+    width: 250px;
+    font-size: 14px;
+    outline: none;
+  }
+
+  &__facebook--before {
+    background-color: #0064ab;
+    border-radius: 3px 0px 0px 3px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    -webkit-border-radius: 3px 0px 0px 3px;
+    color: #f4f4f4;
+    display: block;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+    font-size: 20px;
+  }
+}

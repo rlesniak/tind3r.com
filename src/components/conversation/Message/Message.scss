@@ -74,6 +74,14 @@
     margin-top: 5px;
   }
 
+  &__gif {
+    height: 70px;
+
+    img {
+      max-height: 100%;
+    }
+  }
+
   &--sending {
     opacity: .5;
   }

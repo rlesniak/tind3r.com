@@ -30,6 +30,16 @@ class MessageComponent extends Component {
     this.wrapperRef.scrollIntoView();
   }
 
+  renderMessageContent() {
+    const { message } = this.props
+
+    if (message.body.indexOf('giphy.com') > -1) {
+      return <div className="message__gif"><img src={message.body} alt="gif" /></div>
+    }
+
+    return message.body;
+  }
+
   render() {
     const { message, author, onRemove, group } = this.props;
 
@@ -50,7 +60,7 @@ class MessageComponent extends Component {
           <div className="message__date">{moment(message.date).format('HH:mm')}</div>
         </div>}
         <div className="message__body">
-          {message.body}
+          {this.renderMessageContent()}
           {/*<button onClick={() => onRemove(message)}>X</button>*/}
         </div>
       </div>

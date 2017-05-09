@@ -1,8 +1,10 @@
 import store from 'store';
 
+const APP_NAME = 'app.v2';
+
 const ls = {
   get data() {
-    return store.get('app') || {};
+    return store.get(APP_NAME) || {};
   },
 
   get(key) {
@@ -10,7 +12,7 @@ const ls = {
   },
 
   set(newData) {
-    store.set('app', { ...this.data, ...newData });
+    store.set(APP_NAME, { ...this.data, ...newData });
   },
 
   clear() {

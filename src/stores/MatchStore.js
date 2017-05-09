@@ -136,7 +136,16 @@ export class MatchStore {
       case FILTER_TYPES.SUPERLIKE: data = this.filterSuperlike; break;
     }
 
-    data = data.filter(m => m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1);
+    data = data.filter(m => {
+      if (!m.person.name) {
+        if (window.Bugsnag) {
+          Bugsnag.notifyException(m.person, 'meta()');
+        }
+
+        return true;
+      }
+      return m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1
+    });
 
     return data;
   }

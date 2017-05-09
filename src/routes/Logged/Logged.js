@@ -3,10 +3,11 @@
 import './Logged.scss';
 
 import React, { Component } from 'react';
-import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
+import ReactGA from 'react-ga';
 
 import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
@@ -64,6 +65,11 @@ class Welcome extends Component {
 
   componentDidMount() {
     currentUser.fetch();
+
+    this.props.history.listen(location => {
+      ReactGA.set({ page: location.pathname });
+      ReactGA.pageview(location.pathname);
+    });
   }
 
   componentWillUpdate(nextProps: PropsType) {
@@ -93,6 +99,8 @@ class Welcome extends Component {
       currentUser.is_authenticated = false;
       matchStore.destroyUpdater();
     });
+
+    ReactGA.set({ userId: currentUser._id });
 
     matchStore.setCurrentUserId(currentUser._id);
 

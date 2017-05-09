@@ -55,19 +55,32 @@ if (isDeveloping) {
     });
   });
 } else {
-  app.get('*', myPageTest(null, 0.8), (req, res) => {
-    res.render('index', {
-      env: env,
-      variant: 'OLD',
-    });
-  });
+  const oldPercent = process.env.OLD || 1;
 
-  app.get('*', myPageTest(null, 0.2), (req, res) => {
-    res.render('index', {
-      env: env,
-      variant: 'NEW',
+  if (oldPercent === 1) {
+    app.get('*', (req, res) => {
+      res.render('index', {
+        env: env,
+        variant: 'OLD',
+      });
     });
-  });
+  } else {
+    app.get('*', myPageTest(null, oldPercent), (req, res) => {
+      res.render('index', {
+        env: env,
+        variant: 'OLD',
+      });
+    });
+
+    const newPercent = process.env.NEW || 0;
+
+    app.get('*', myPageTest(null, newPercent), (req, res) => {
+      res.render('index', {
+        env: env,
+        variant: 'NEW',
+      });
+    });
+  }
 }
 
 app.listen(port, '0.0.0.0', (err) => {

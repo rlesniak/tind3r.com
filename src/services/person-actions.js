@@ -39,7 +39,7 @@ export async function superlike(id: string): Object {
   try {
     const { data } = await API.post(`/like/${id}/super`);
 
-    if (!data.limit_exceeded || data.super_likes.remaining === 0) {
+    if (data.limit_exceeded || data.super_likes.remaining === 0) {
       if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
         Bugsnag.notify('superlike run of', 'Run of superlike', {
           limit_exceeded: data.limit_exceeded,

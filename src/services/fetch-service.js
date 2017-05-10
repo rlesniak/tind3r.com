@@ -24,6 +24,9 @@ const processMessages = match => {
   }
 };
 
+const MAX_TRY = 5;
+let personsTryCount = 0;
+
 const savePersonsToDb = (
   persons,
   success: () => void,
@@ -33,13 +36,21 @@ const savePersonsToDb = (
   collection.insert(persons);
   collection.save(err => {
     if (err) {
-      error(err);
+      if (personsTryCount > MAX_TRY) {
+        personsTryCount = 0;
+        error(err);
+      } else {
+        personsTryCount += 1;
+        savePersonsToDb(persons, success, error);
+      }
     } else {
+      personsTryCount = 0;
       success();
     }
   });
 };
 
+let matchesTryCount = 0;
 const saveMatchesToDb = (
   data,
   success: () => void,
@@ -49,8 +60,15 @@ const saveMatchesToDb = (
   collection.insert(data);
   collection.save(err => {
     if (err) {
-      error(err);
+      if (matchesTryCount > MAX_TRY) {
+        error(err);
+        matchesTryCount = 0;
+      } else {
+        matchesTryCount += 1;
+        saveMatchesToDb(data, success, error);
+      }
     } else {
+      matchesTryCount = 0;
       success();
     }
   });
@@ -76,10 +94,6 @@ export default {
           processMessages(match);
         });
 
-        if (window.Bugsnag && !LS.data.lastActivity) {
-          Bugsnag.notify('Number of matches', parsedMatches.length, {}, 'info');
-        }
-
         LS.set({ lastActivity: last_activity_date });
 
         saveMatchesToDb(parsedMatches, () => {
@@ -89,8 +103,8 @@ export default {
               persons: parsedPersons,
               messages: parsedMessages,
             });
-          }, (err) => reject({ type: 'persons-db', data: err }));
-        }, (err) => reject({ type: 'matches-db', data: err }));
+          }, err => reject({ type: 'persons-db', data: err }));
+        }, err => reject({ type: 'matches-db', data: err, size: parsedMatches.length }));
       }).catch(reject);
     });
   },

@@ -41,7 +41,10 @@ export async function superlike(id: string): Object {
 
     if (!data.limit_exceeded || data.super_likes.remaining === 0) {
       if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
-        Bugsnag.notify('superlike run of', 'Run of superlike', data, 'info');
+        Bugsnag.notify('superlike run of', 'Run of superlike', {
+          limit_exceeded: data.limit_exceeded,
+          super_likes: data.super_likes,
+        }, 'info');
       }
       return Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at });
     }

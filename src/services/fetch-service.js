@@ -33,7 +33,7 @@ const savePersonsToDb = (
   collection.insert(persons);
   collection.save(err => {
     if (err) {
-      error();
+      error(err);
     } else {
       success();
     }
@@ -49,7 +49,7 @@ const saveMatchesToDb = (
   collection.insert(data);
   collection.save(err => {
     if (err) {
-      error();
+      error(err);
     } else {
       success();
     }
@@ -76,6 +76,10 @@ export default {
           processMessages(match);
         });
 
+        if (window.Bugsnag && !LS.data.lastActivity) {
+          Bugsnag.notify('Number of matches', parsedMatches.length, {}, 'info');
+        }
+
         LS.set({ lastActivity: last_activity_date });
 
         saveMatchesToDb(parsedMatches, () => {
@@ -85,8 +89,8 @@ export default {
               persons: parsedPersons,
               messages: parsedMessages,
             });
-          }, () => reject());
-        }, () => reject());
+          }, (err) => reject({ type: 'persons-db', data: err }));
+        }, (err) => reject({ type: 'matches-db', data: err }));
       }).catch(reject);
     });
   },

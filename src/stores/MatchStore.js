@@ -90,7 +90,13 @@ export class MatchStore {
         }
       }, 100);
     } catch (err) {
-      errorCallback();
+      if (err.type) {
+        if (window.Bugsnag) {
+          Bugsnag.notifyException(new Error('dbError'), 'like()', { type: err.type, data: err.data });
+        }
+      } else {
+        errorCallback();
+      }
     }
 
     this.isLoading = false;

@@ -74,13 +74,19 @@ const saveMatchesToDb = (
   });
 };
 
+const createBlocks = (blocks: Array<string>) => {
+  each(blocks, matchId => {
+    updateMatch(matchId, { is_blocked: true });
+  });
+};
+
 export default {
   updates() {
     const lastActivityDate = LS.data.lastActivity;
 
     return new Promise((resolve, reject) => {
       API.post('/updates', { last_activity_date: lastActivityDate }).then(({ data }) => {
-        const { matches, last_activity_date } = data;
+        const { matches, last_activity_date, blocks } = data;
 
         const parsedMatches: MatchType[] = [];
         const parsedPersons: PersonType[] = [];
@@ -95,6 +101,8 @@ export default {
         });
 
         LS.set({ lastActivity: last_activity_date });
+
+        createBlocks(blocks);
 
         saveMatchesToDb(parsedMatches, () => {
           savePersonsToDb(parsedPersons, () => {

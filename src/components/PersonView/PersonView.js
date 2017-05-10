@@ -40,7 +40,7 @@ class PersonView extends Component {
     const json = this.props.person || { _id: this.props.personId };
 
     this.match = getMatchByPerson(json._id);
-    this.person= new Person({}, json)
+    this.person = new Person({}, json);
   }
 
   componentDidMount() {

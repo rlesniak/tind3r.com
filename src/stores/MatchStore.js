@@ -92,7 +92,7 @@ export class MatchStore {
     } catch (err) {
       if (err.type) {
         if (window.Bugsnag) {
-          Bugsnag.notifyException(new Error('dbError'), 'fetch()', { type: err.type, data: err.data });
+          Bugsnag.notifyException(new Error('dbError'), 'fetch()', { type: err.type, data: err.data, size: err.size });
         }
       } else {
         errorCallback();

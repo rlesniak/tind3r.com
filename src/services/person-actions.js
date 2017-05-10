@@ -17,6 +17,10 @@ export async function like(id: string): Object {
     const { data } = await API.get(`/like/${id}`);
 
     if (data.likes_remaining === 0) {
+      if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
+        Bugsnag.notify('like run of', 'Run of like', data, 'info');
+      }
+
       if (data.rate_limited_until) {
         return Promise.reject({ error: 'limit', resetsAt: data.rate_limited_until });
       }
@@ -36,6 +40,9 @@ export async function superlike(id: string): Object {
     const { data } = await API.post(`/like/${id}/super`);
 
     if (!data.limit_exceeded || data.super_likes.remaining === 0) {
+      if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
+        Bugsnag.notify('superlike run of', 'Run of superlike', data, 'info');
+      }
       return Promise.reject({ error: 'limit', resetsAt: data.super_likes.resets_at });
     }
 

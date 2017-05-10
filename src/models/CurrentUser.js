@@ -30,7 +30,7 @@ async function meta() {
     return Promise.resolve(data);
   } catch (e) {
     if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
-      Bugsnag.notifyException(e, 'meta()');
+      Bugsnag.notifyException(e, 'meta()', {}, 'info');
     }
     return Promise.reject(e);
   }

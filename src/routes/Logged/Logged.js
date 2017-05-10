@@ -39,6 +39,11 @@ type PropsType = {
 
 const onFocus = () => currentUser.fetch();
 
+const reportLocation = (location: Object) => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
+};
+
 @observer
 class Welcome extends Component {
   props: PropsType;
@@ -67,10 +72,9 @@ class Welcome extends Component {
   componentDidMount() {
     currentUser.fetch();
 
-    this.props.history.listen(location => {
-      ReactGA.set({ page: location.pathname });
-      ReactGA.pageview(location.pathname);
-    });
+    reportLocation(this.props.history.location);
+
+    this.props.history.listen(reportLocation);
   }
 
   componentWillUpdate(nextProps: PropsType) {

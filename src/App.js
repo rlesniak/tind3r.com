@@ -9,7 +9,7 @@ ReactGA.initialize(gaCode, {
   debug: false,
 });
 
-ReactGA.set({ appVersion: '2.0' });
+ReactGA.set({ dimension1: '2.0' });
 
 export default class App extends Component {
   render() {

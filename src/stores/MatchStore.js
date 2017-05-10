@@ -139,7 +139,7 @@ export class MatchStore {
     data = data.filter(m => {
       if (!m.person.name) {
         if (window.Bugsnag) {
-          Bugsnag.notifyException(m.person, 'meta()');
+          Bugsnag.notifyException(new Error('!m.person.name'), m.person);
         }
 
         return true;

@@ -2,6 +2,7 @@ const person = require('../mocks/person').person;
 const updates = require('../mocks/updates');
 const meta = require('../mocks/meta');
 const like = require('../mocks/like');
+const superlike = require('../mocks/superlike');
 
 module.exports = function () {
   const data = {
@@ -9,6 +10,7 @@ module.exports = function () {
     updates: updates(),
     meta,
     like,
+    superlike
   };
 
 

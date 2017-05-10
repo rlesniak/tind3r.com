@@ -1,4 +1,5 @@
 {
   "/recs/core": "/recs",
-  "/like/:id": "/like"
+  "/like/:id": "/like",
+  "/like/:id/super": "/superlike"
 }

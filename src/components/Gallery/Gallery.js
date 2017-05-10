@@ -1,6 +1,6 @@
 import './Gallery.scss';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Slider from 'react-slick';
 import { pure } from 'recompose';
 import uniqueId from 'lodash/uniqueId';
@@ -25,7 +25,7 @@ type PropsType = {
   images: Array<Object>,
 };
 
-class Gallery extends Component {
+class Gallery extends PureComponent {
   props: PropsType;
   timeout: number = 0;
 

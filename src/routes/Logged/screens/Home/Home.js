@@ -112,7 +112,12 @@ class Home extends Component {
         handler: this.handleLikeCounter,
       });
     } else {
+      currentUser.superlike_remaining = 0;
       currentUser.superlike_limit_reset = reason.resetsAt;
+
+      counterService.subscribe({
+        handler: this.handleSuperlikeCounter,
+      });
     }
   }
 

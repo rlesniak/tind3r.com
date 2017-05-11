@@ -238,6 +238,7 @@ class Home extends Component {
             <label>Distance</label>
             <InputRange
               formatLabel={value => `${value} km`}
+              minValue={2}
               maxValue={MAX_DISTANCE}
               value={this.distance}
               onChange={value => this.distance = value}

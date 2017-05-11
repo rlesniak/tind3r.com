@@ -50,9 +50,10 @@ class PersonView extends Component {
   handleActionClick = (type: ActionsType) => {
     const { history, onActionClick } = this.props;
     const pero = recsStore.persons.find(person => person._id === this.person._id);
+    const person = pero || this.person;
 
-    if (pero) {
-      pero.callAction(type);
+    if (person) {
+      person.callAction(type);
     }
 
     if (onActionClick) {

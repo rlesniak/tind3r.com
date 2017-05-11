@@ -37,7 +37,7 @@ export async function like(id: string): Object {
 
 export async function superlike(id: string): Object {
   try {
-    const { data } = await API.get(`/like/${id}/super`);
+    const { data } = await API.post(`/like/${id}/super`);
 
     if (data.limit_exceeded || data.super_likes.remaining === 0) {
       if (process.env.NODE_ENV === 'production' && window.Bugsnag) {

@@ -93,6 +93,7 @@ const PersonCard = ({
     >
       <div className="person-card__gallery">
         <Gallery
+          withArrowNav={false}
           scrolling={!small}
           images={person.photos}
           width={small ? 220 : 400}

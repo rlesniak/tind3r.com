@@ -169,6 +169,7 @@ class PersonView extends Component {
             scrolling={false}
             images={person.photos}
             width={width}
+            withArrowNav
           />
         </div>
       </div>

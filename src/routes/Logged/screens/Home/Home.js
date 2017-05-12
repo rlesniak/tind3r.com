@@ -76,7 +76,7 @@ class Home extends Component {
         level: 'success',
         position: 'tc',
         autoDismiss: 2,
-        children: <MatchNotification person={person} />
+        children: <MatchNotification person={person} />,
       });
     }
   }
@@ -141,7 +141,7 @@ class Home extends Component {
         level: NOTIF_LEVELS_MAP[payload.type],
         position: 'bl',
         autoDismiss: 3,
-        children: <ActionNotification payload={payload} />
+        children: <ActionNotification payload={payload} />,
       });
     }
   }
@@ -149,7 +149,7 @@ class Home extends Component {
   handleDistanceChange = (distance: number) => {
     this.props.currentUser.updateProfile({
       distance_filter: distance,
-    })
+    });
   };
 
   handleAgeChange = ({ min, max }: { min: number, max: number }) => {

@@ -67,7 +67,7 @@ class Person implements UserInterface {
       extend(this, data.results);
       updatePerson(this._id, data.results);
     } catch (e) {
-      if(errorCallback) errorCallback();
+      if (errorCallback) errorCallback();
     }
 
     this.is_loading = false;

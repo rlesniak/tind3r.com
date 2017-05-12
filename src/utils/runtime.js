@@ -22,7 +22,7 @@ export const checkIfInstalled = callback => {
           if (response) {
             setId(originalId);
           }
-          callback(!!response)
+          callback(!!response);
         });
 
         return;
@@ -30,7 +30,7 @@ export const checkIfInstalled = callback => {
 
       setId(nonStoreId);
 
-      callback(!!response)
+      callback(!!response);
     });
   } else {
     callback(false);

@@ -31,15 +31,13 @@ const enhance = withHandlers({
   },
 });
 
-const ActionNotification = ({ payload: { name, type, _id }, handleRevert }: PropsType) => {
-  return (
-    <div className="action-notification">
+const ActionNotification = ({ payload: { name, type, _id }, handleRevert }: PropsType) => (
+  <div className="action-notification">
       You {ACTIONS_MAP[type]} <Link to={`/user/${_id}`}>{name}</Link>
-      <button className="action-notification__revert" onClick={handleRevert}>
-        <i className="fa fa-undo" />
-      </button>
-    </div>
+    <button className="action-notification__revert" onClick={handleRevert}>
+      <i className="fa fa-undo" />
+    </button>
+  </div>
   );
-};
 
 export default enhance(ActionNotification);

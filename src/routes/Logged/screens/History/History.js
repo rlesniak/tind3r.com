@@ -62,10 +62,10 @@ class Actions extends Component {
   }
 
   getFiltered() {
-    switch(this.filter) {
-      case 'like': return this.filterType('like')
-      case 'superlike': return this.filterType('superlike')
-      case 'pass': return this.filterType('pass')
+    switch (this.filter) {
+      case 'like': return this.filterType('like');
+      case 'superlike': return this.filterType('superlike');
+      case 'pass': return this.filterType('pass');
       default: return this.filterAll();
     }
   }
@@ -95,11 +95,13 @@ class Actions extends Component {
         <SideMenu.Right>
           <div className="history__content">
             {filtered.map(action => (
-              <Link to={`/user/${action.person_id}`} key={action._id} className={cx('history__person', {
-                'history__person--super': action.action_type === 'superlike',
-                'history__person--like': action.action_type === 'like',
-                'history__person--pass': action.action_type === 'pass',
-              })}>
+              <Link
+                to={`/user/${action.person_id}`} key={action._id} className={cx('history__person', {
+                  'history__person--super': action.action_type === 'superlike',
+                  'history__person--like': action.action_type === 'like',
+                  'history__person--pass': action.action_type === 'pass',
+                })}
+              >
                 <Avatar url={action.photo} />
                 <div className="history__person-name">{action.name}</div>
                 <div className="history__person-date">{moment(action.date).fromNow()}</div>

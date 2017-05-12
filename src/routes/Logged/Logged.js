@@ -168,7 +168,7 @@ class Welcome extends Component {
     return (
       <Provider currentUser={currentUser} matchStore={matchStore}>
         <div className="logged">
-          <ReactTooltip id="main" place="top" effect="solid" />
+          <ReactTooltip id="main" place="top" effect="solid" multiline />
           <div className="logged__nav-bar">
             <ul>
               <li>

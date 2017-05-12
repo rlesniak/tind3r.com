@@ -6,6 +6,7 @@ import { observable } from 'mobx';
 import get from 'lodash/get';
 import uniqueId from 'lodash/uniqueId';
 import { observer } from 'mobx-react';
+import ReactTooltip from 'react-tooltip';
 
 import Gallery from 'components/Gallery';
 import Loader from 'components/Loader';
@@ -16,16 +17,16 @@ import Person from 'models/Person';
 import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
 
+import { fbUserSearchUrl } from 'utils';
 import { getMatchByPerson, getActions } from 'utils/database.v2';
 
 import type { ActionsType } from 'types/person';
 import type { MatchType } from 'types/match';
 
 type PropsType = {
-  location: Object,
-  history: Object,
   personId: string,
   onActionClick: () => void,
+  person: Person,
 };
 
 @observer
@@ -35,7 +36,7 @@ class PersonView extends Component {
   match: MatchType;
   person: Person;
 
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
     const json = this.props.person || { _id: this.props.personId };
 
@@ -45,10 +46,16 @@ class PersonView extends Component {
 
   componentDidMount() {
     this.person.fetch();
+
+    ReactTooltip.rebuild();
+  }
+
+  componentDidUpdate() {
+    ReactTooltip.rebuild();
   }
 
   handleActionClick = (type: ActionsType) => {
-    const { history, onActionClick } = this.props;
+    const { onActionClick } = this.props;
     const pero = recsStore.persons.find(person => person._id === this.person._id);
     const person = pero || this.person;
 
@@ -61,15 +68,55 @@ class PersonView extends Component {
     }
   }
 
+  checkIsSuperliked() {
+    if (this.match) {
+      return this.match.is_super_like;
+    }
+    const action = getActions(this.person._id)[0];
+    return action && action.action_type === 'superlike';
+  }
+
+  checkIsLiked() {
+    if (this.match) {
+      return !this.match.is_super_like;
+    }
+    const action = getActions(this.person._id)[0];
+    return action && action.action_type === 'like';
+  }
+
+  checkIsPassed() {
+    if (!this.checkIsLiked()) {
+      const action = getActions(this.person._id)[0];
+      return action && action.action_type === 'pass';
+    }
+
+    return false;
+  }
+
   renderSchools() {
     if (this.person.schools && this.person.schools.length) {
       return (
         <ul>
           {this.person.schools.map(p => (
-            <li key={p.id}>{p.name}</li>
+            <li key={p.id}>
+              <a
+                href={fbUserSearchUrl(p.name, this.person.name)}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-tip="Do Facebook search based on school and name. <br />
+                Tinder user has to have at least one Facebook photo <br />
+                so you can compare and find right person."
+                data-for="main"
+                data-offset="{'top': -10, 'left': -12}"
+                className="person-view__fb-search"
+              >
+                <i className="fa fa-eye" />
+              </a>
+              {p.name}
+            </li>
           ))}
         </ul>
-      )
+      );
     }
 
     return null;
@@ -83,7 +130,7 @@ class PersonView extends Component {
             <li key={uniqueId()}>{get(j, 'company.name', null)}</li>
           ))}
         </ul>
-      )
+      );
     }
 
     return null;
@@ -97,37 +144,10 @@ class PersonView extends Component {
             <li key={c.id}>{c.name}</li>
           ))}
         </ul>
-      )
+      );
     }
 
     return null;
-  }
-
-  checkIsSuperliked() {
-    if (this.match) {
-      return this.match.is_super_like;
-    } else {
-      const action = getActions(this.person._id)[0];
-      return action && action.action_type === 'superlike';
-    }
-  }
-
-  checkIsLiked() {
-    if (this.match) {
-      return !this.match.is_super_like;
-    } else {
-      const action = getActions(this.person._id)[0];
-      return action && action.action_type === 'like';
-    }
-  }
-
-  checkIsPassed() {
-    if (!this.checkIsLiked()) {
-      const action = getActions(this.person._id)[0];
-      return action && action.action_type === 'pass';
-    }
-
-    return false;
   }
 
   render() {

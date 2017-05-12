@@ -107,13 +107,14 @@ class MatchComponent extends Component {
         <div className="match__person-wrapper">
           <Gallery width={getWidth - 20} images={person.photos} />
           <div className="match__person-details">
-            <Link to={{
-              pathname: `/user/${person._id}`,
-              state: {
-                modal: true,
-                person: person.toJSON,
-              },
-            }}
+            <Link
+              to={{
+                pathname: `/user/${person._id}`,
+                state: {
+                  modal: true,
+                  person: person.toJSON,
+                },
+              }}
             >
               <h1>{person.name}, {person.age}</h1>
             </Link>

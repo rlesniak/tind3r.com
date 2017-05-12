@@ -3,7 +3,7 @@ const superlike = {
   super_likes: {
     new_alc_remaining: 0,
     remaining: 0,
-    resets_at: '2017-05-11T20:48:37.696Z'
+    resets_at: '2017-05-11T20:48:37.696Z',
   },
 };
 

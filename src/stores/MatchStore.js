@@ -150,7 +150,7 @@ export class MatchStore {
 
         return true;
       }
-      return m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1
+      return m.person.name.toLowerCase().indexOf(this.filter.toLowerCase()) > -1;
     });
 
     return data;

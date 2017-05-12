@@ -101,13 +101,14 @@ const PersonCard = ({
       </div>
       <div className="person-card__content">
         <div className="person-card__name">
-          <Link to={{
-            pathname: `/user/${person._id}`,
-            state: {
-              modal: true,
-              person: person.toJSON,
-            },
-          }}
+          <Link
+            to={{
+              pathname: `/user/${person._id}`,
+              state: {
+                modal: true,
+                person: person.toJSON,
+              },
+            }}
           >
             {person.name}, {person.age}
           </Link>

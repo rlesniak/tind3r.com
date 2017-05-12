@@ -143,11 +143,11 @@ export default {
 
   updateProfile(payload: Object) {
     if (payload.age_filter_min < 18) {
-      payload.age_filter_min = 18
+      payload.age_filter_min = 18;
     }
 
     if (payload.age_filter_max > 50) {
-      payload.age_filter_max = 50
+      payload.age_filter_max = 50;
     }
 
     return API.post('profile', {
@@ -158,8 +158,8 @@ export default {
       age_filter_max: payload.age_filter_max,
       distance_filter: payload.distance_filter, // in MI
       squads_discoverable: payload.squads_discoverable,
-    })
-  }
+    });
+  },
 };
 
 export async function meta() {

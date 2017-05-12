@@ -62,7 +62,7 @@ const filterTypesMap = [
 ];
 
 const Matches = ({
-  handleMatchClick, matchStore, activeId, ...props,
+  handleMatchClick, matchStore, activeId, ...props
 }: PropsTypes) => (
   <div className="matches">
     <SideMenu title="Matches">
@@ -79,9 +79,11 @@ const Matches = ({
       ))}
       <SideMenu.Separator />
       <SideMenu.Item>
-        <div className={cx('matches__item-action', {
-          'matches__item-action--disabled': matchStore.unreadCount === 0,
-        })}>
+        <div
+          className={cx('matches__item-action', {
+            'matches__item-action--disabled': matchStore.unreadCount === 0,
+          })}
+        >
           <i className="fa fa-check-circle-o" /> Mark all as read
         </div>
       </SideMenu.Item>

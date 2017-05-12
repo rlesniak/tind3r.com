@@ -14,11 +14,11 @@ const enhance = compose(
     handleChange: ({ setBio }) => ({ target }) => {
       setBio(target.value);
     },
-    handleSave: ({ bio }) => (e) => {
+    handleSave: ({ bio }) => e => {
       currentUser.updateProfile({
-        bio
-      })
-    }
+        bio,
+      });
+    },
   }),
   observer,
 );
@@ -28,7 +28,7 @@ const Settings = ({ bio, handleChange, handleSave }) => (
     <div className="settings__row">
       <label>Bio</label>
       <div className="settings__field">
-        <textarea rows="4" value={bio} onChange={handleChange}></textarea>
+        <textarea rows="4" value={bio} onChange={handleChange} />
       </div>
     </div>
     <div className="settings__row">

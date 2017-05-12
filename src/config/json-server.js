@@ -10,7 +10,7 @@ module.exports = function () {
     updates: updates(),
     meta,
     like,
-    superlike
+    superlike,
   };
 
 

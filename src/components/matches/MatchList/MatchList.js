@@ -63,7 +63,7 @@ class MatchList extends Component {
         style={style}
         className="match-list__match"
       >
-        {/*<button onClick={() => match.remove()}>X</button>*/}
+        {/* <button onClick={() => match.remove()}>X</button>*/}
         <MatchRow
           match={match}
           onClick={this.handleMatchClick}
@@ -78,9 +78,11 @@ class MatchList extends Component {
 
     return (
       <div className={cx('match-list', className)}>
-        <div className={cx('match-list__loading-indicator', {
-          active: matchStore.isLoading && !LS.data.lastActivity
-        })}>
+        <div
+          className={cx('match-list__loading-indicator', {
+            active: matchStore.isLoading && !LS.data.lastActivity,
+          })}
+        >
           Loading...
         </div>
         <AutoSizer>

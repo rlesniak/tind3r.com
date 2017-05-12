@@ -2,6 +2,8 @@
 
 .person-view {
   height: 100%;
+  width: 800px;
+  margin: 20px auto;
 
   &__name {
     font-size: 30px;
@@ -67,5 +69,12 @@
       margin-right: 3px;
       margin-bottom: 3px;
     }
+  }
+
+  &__fb-search {
+    font-size: 21px;
+    color: #3b5998;
+    margin-right: 9px;
+    vertical-align: middle;
   }
 }

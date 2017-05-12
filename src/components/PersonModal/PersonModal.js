@@ -15,7 +15,7 @@ type PropsType = {
 class PersonModal extends Component {
   props: PropsType;
 
-  back = (e) => {
+  back = e => {
     const { history } = this.props;
     e.stopPropagation();
     history.goBack();
@@ -36,7 +36,7 @@ class PersonModal extends Component {
         <Rodal
           visible
           onClose={this.back}
-          height={550}
+          height={570}
           width={780}
         >
           <PersonView

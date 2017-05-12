@@ -5,7 +5,7 @@ import './Discussion.scss';
 import React from 'react';
 import RDT from 'react-disqus-thread';
 
-const  Discussion = () => (
+const Discussion = () => (
   <div className="discussion">
     <RDT
       shortname="tind3r"
@@ -14,6 +14,6 @@ const  Discussion = () => (
       url="http://tind3r.com"
     />
   </div>
-)
+);
 
 export default Discussion;

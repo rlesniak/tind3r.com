@@ -31,10 +31,10 @@ class MessageComponent extends Component {
   }
 
   renderMessageContent() {
-    const { message } = this.props
+    const { message } = this.props;
 
     if (message.body.indexOf('giphy.com') > -1) {
-      return <div className="message__gif"><img src={message.body} alt="gif" /></div>
+      return <div className="message__gif"><img src={message.body} alt="gif" /></div>;
     }
 
     return message.body;
@@ -61,7 +61,7 @@ class MessageComponent extends Component {
         </div>}
         <div className="message__body">
           {this.renderMessageContent()}
-          {/*<button onClick={() => onRemove(message)}>X</button>*/}
+          {/* <button onClick={() => onRemove(message)}>X</button>*/}
         </div>
       </div>
     );

@@ -4,6 +4,8 @@ import './Avatar.scss';
 
 import React from 'react';
 
+import Image from 'components/Image';
+
 type PropsType = {
   url: string,
   width?: number,
@@ -17,7 +19,7 @@ const Avatar = ({ url, width, height }: PropsType) => {
 
   return (
     <div className="avatar" style={width && height && style}>
-      <img src={url} className="avatar__image" />
+      <Image src={url} style={{ width }} className="avatar__image" />
     </div>
   );
 };

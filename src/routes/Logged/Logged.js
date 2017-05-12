@@ -207,7 +207,7 @@ class Welcome extends Component {
               <li className="separator" />
               <li className="profile">
                 <NavLink to={`/user/${currentUser._id}`} activeClassName="active">
-                  {currentUser.avatarUrl && <Avatar url={currentUser.avatarUrl} />}
+                  {currentUser.avatarUrl && <Avatar width={50} url={currentUser.avatarUrl} />}
                   <div className="name">
                     {currentUser.name}
                   </div>

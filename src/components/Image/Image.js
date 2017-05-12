@@ -4,6 +4,7 @@ import './Image.scss';
 
 import React from 'react';
 import { compose, withHandlers, withState } from 'recompose';
+import cx from 'classnames';
 
 const enhance = compose(
   withState('isFailed', 'setError', false),
@@ -14,7 +15,7 @@ const enhance = compose(
   }),
 );
 
-const Image = ({ isFailed, onError, style, src, ...props }) => {
+const Image = ({ isFailed, onError, style, src, className, ...props }) => {
   const styles = {
     width: style.width,
     height: style.width,
@@ -24,7 +25,7 @@ const Image = ({ isFailed, onError, style, src, ...props }) => {
   if (isFailed) {
     return (
       <div
-        className="image__fallback"
+        className={cx('image__fallback', className)}
         style={{ width: style.width, height: style.width, lineHeight: `${style.width}px` }}
       >
         Image broken :(
@@ -33,7 +34,7 @@ const Image = ({ isFailed, onError, style, src, ...props }) => {
   }
 
   return (
-    <img src={src} onError={onError} style={style} />
+    <img src={src} onError={onError} style={style} className={cx(className)} />
   );
 };
 

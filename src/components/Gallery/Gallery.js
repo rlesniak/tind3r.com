@@ -92,7 +92,13 @@ class Gallery extends PureComponent {
         {scrolling && <div className="gallery__scrolling-area" style={{ width: width * images.length }}>
           {map(images, image => (
             <div key={uniqueId()} className="gallery__scrolling-area--image">
-              <Image src={image.url} style={{ width }} />
+              <a
+                href={image.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image src={image.url} style={{ width }} />
+              </a>
             </div>
           ))}
         </div>}

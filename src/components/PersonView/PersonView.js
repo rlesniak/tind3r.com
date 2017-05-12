@@ -140,7 +140,23 @@ class PersonView extends Component {
     if (this.person.common_connections && this.person.common_connections.length) {
       return (
         <ul className="person-view__connections">
+          <li className="person-view__connections-header">Common connections:</li>
           {this.person.common_connections.map(c => (
+            <li key={c.id}>{c.name}</li>
+          ))}
+        </ul>
+      );
+    }
+
+    return null;
+  }
+
+  renderInterests() {
+    if (this.person.common_interests && this.person.common_interests.length) {
+      return (
+        <ul className="person-view__connections">
+          <li className="person-view__connections-header">Common interests:</li>
+          {this.person.common_interests.map(c => (
             <li key={c.id}>{c.name}</li>
           ))}
         </ul>
@@ -172,6 +188,7 @@ class PersonView extends Component {
               <Bio text={person.bio} />
             </div>
             {this.renderConnections()}
+            {this.renderInterests()}
           </div>
           <div className="person-view__buttons">
             {person._id !== currentUser._id && <ActionButtons

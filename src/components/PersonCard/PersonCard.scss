@@ -11,6 +11,17 @@
     height: 220px;
   }
 
+  &__common {
+    text-align: left;
+    font-size: 12px;
+    padding: 3px 5px;
+
+    span {
+      margin: 0 2px;
+      font-weight: bold;
+    }
+  }
+
   &__content {
     background: #fff;
     text-align: center;

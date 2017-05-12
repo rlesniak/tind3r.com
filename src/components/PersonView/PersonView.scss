@@ -57,6 +57,14 @@
     }
   }
 
+  &__connections-header:first-child {
+    display: block;
+    border: none;
+    padding: 0;
+    font-size: 13px;
+    color: $font-color;
+  }
+
   &__connections {
     margin-top: 40px;
     li {

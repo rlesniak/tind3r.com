@@ -7,6 +7,8 @@ import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { compose, withHandlers, withState, pure } from 'recompose';
 import cx from 'classnames';
+import map from 'lodash/map';
+import isArray from 'lodash/isArray';
 
 import Gallery from 'components/Gallery';
 import ActionButtons from 'components/ActionButtons';
@@ -116,6 +118,10 @@ const PersonCard = ({
         <div className="person-card__bio">
           <Bio text={person.bio} />
         </div>
+        {!small && !isArray(person.common_interests) && <div className="person-card__common">
+          Interests:
+          {map(person.common_interests, i => <span>{i.name}</span>)}
+        </div>}
 
         {!small && <div className="person-card__school">
           <span>{person.school}</span>

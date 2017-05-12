@@ -37,7 +37,7 @@ class PersonModal extends Component {
           visible
           onClose={this.back}
           height={570}
-          width={780}
+          width={830}
         >
           <PersonView
             person={this.props.location.state.person}

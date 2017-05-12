@@ -2,7 +2,7 @@ import './PersonView.scss';
 
 import React, { Component } from 'react';
 import Rodal from 'rodal';
-import { observable } from 'mobx';
+import { observable, reaction } from 'mobx';
 import get from 'lodash/get';
 import uniqueId from 'lodash/uniqueId';
 import { observer } from 'mobx-react';
@@ -35,6 +35,7 @@ class PersonView extends Component {
 
   match: MatchType;
   person: Person;
+  reactionDispose: () => void = n => n;
 
   constructor(props: PropsType) {
     super(props);
@@ -42,6 +43,15 @@ class PersonView extends Component {
 
     this.match = getMatchByPerson(json._id);
     this.person = new Person({}, json);
+
+    this.reactionDispose = reaction(
+      () => this.person.is_loading,
+      state => {
+        if (this.props.person && state === false) {
+          this.forceUpdate();
+        }
+      },
+    );
   }
 
   componentDidMount() {
@@ -52,6 +62,10 @@ class PersonView extends Component {
 
   componentDidUpdate() {
     ReactTooltip.rebuild();
+  }
+
+  componentWillUnmount() {
+    this.reactionDispose();
   }
 
   handleActionClick = (type: ActionsType) => {
@@ -187,6 +201,14 @@ class PersonView extends Component {
             <div className="person-view__bio">
               <Bio text={person.bio} />
             </div>
+
+            {person.instagramUsername && <div className="person-view__insta">
+              <a href={person.instagramProfileLink} target="_blank" rel="noopener noreferrer">
+                <i className="fa fa-instagram" />
+                <span>{person.instagramUsername}</span>
+              </a>
+            </div>}
+
             {this.renderConnections()}
             {this.renderInterests()}
           </div>

@@ -2,7 +2,7 @@
 
 .person-view {
   height: 100%;
-  width: 800px;
+  width: 820px;
   margin: 20px auto;
 
   &__name {
@@ -10,7 +10,7 @@
   }
 
   &__left {
-    width: 250px;
+    width: 290px;
     height: 500px;
     float: left;
     display: flex;
@@ -24,7 +24,7 @@
   }
 
   &__gallery {
-    margin-left: 250px;
+    margin-left: 300px;
   }
 
   &__info {
@@ -84,5 +84,30 @@
     color: #3b5998;
     margin-right: 9px;
     vertical-align: middle;
+  }
+
+  &__insta {
+    text-align: center;
+    margin-top: 40px;
+
+    a {
+      display: inline-block;
+      color: $accent;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: #000;
+      }
+    }
+
+    span {
+      display: block;
+      margin-top: 7px;
+    }
+
+    .fa {
+      font-size: 80px;
+    }
   }
 }

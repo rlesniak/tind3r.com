@@ -84,6 +84,7 @@ const PersonCard = ({
   limitations: { superlikeRemaining, superlikeResetsAt, likeResetsAt },
 }: PersonCardType) => {
   const shouldShowActionButtons = !small || (small && isHovering);
+  const hasInterests = person.common_interests && person.common_interests.length > 0;
 
   return (
     <div
@@ -118,9 +119,9 @@ const PersonCard = ({
         <div className="person-card__bio">
           <Bio text={person.bio} />
         </div>
-        {!small && !isArray(person.common_interests) && <div className="person-card__common">
+        {!small && hasInterests && <div className="person-card__common">
           Interests:
-          {map(person.common_interests, i => <span>{i.name}</span>)}
+          {map(person.common_interests, i => <span key={i.name}>{i.name}</span>)}
         </div>}
 
         {!small && <div className="person-card__school">

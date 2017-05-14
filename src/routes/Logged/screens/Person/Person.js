@@ -5,9 +5,12 @@ import './Person.scss';
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import DocumentTitle from 'react-document-title';
 
 import Loader from 'components/Loader';
 import PersonView from 'components/PersonView';
+
+import { pageTitle } from 'utils';
 
 import Person from 'models/Person';
 
@@ -35,9 +38,11 @@ class PersonComponent extends Component {
     }
 
     return (
-      <div className="person">
-        <PersonView personId={this.props.match.params.id} />
-      </div>
+      <DocumentTitle title={`${this.person.name} - ${pageTitle}`}>
+        <div className="person">
+          <PersonView personId={this.props.match.params.id} />
+        </div>
+      </DocumentTitle>
     );
   }
 }

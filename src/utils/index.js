@@ -3,3 +3,5 @@ export const kmToMi = km => Number((km / 1.6093).toFixed(0));
 
 export const fbUserSearchUrl = (school: string, name: string) =>
   `https://www.facebook.com/search/str/${school}/pages-named/students/present/str/${name}/users-named/intersect/`;
+
+export const pageTitle = 'Tind3r.com - Unofficial Tinder client';

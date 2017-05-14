@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
+import DocumentTitle from 'react-document-title';
 
 import Root from './routes/Root';
 
@@ -14,7 +15,9 @@ ReactGA.set({ dimension1: '2.0' });
 export default class App extends Component {
   render() {
     return (
-      <Root />
+      <DocumentTitle title="Tinder">
+        <Root />
+      </DocumentTitle>
     );
   }
 }

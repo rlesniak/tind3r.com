@@ -8,6 +8,7 @@ import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
 import ReactGA from 'react-ga';
+import DocumentTitle from 'react-document-title';
 
 import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
@@ -26,6 +27,7 @@ import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
 import matchStore from 'stores/MatchStore';
 
+import { pageTitle } from 'utils';
 import { purge } from 'utils/database.v2';
 import LS from 'utils/localStorage';
 import { purge as runtimePurge, getFacebookToken } from 'utils/runtime';
@@ -165,73 +167,77 @@ class Welcome extends Component {
   }
 
   render() {
+    const title = matchStore.unreadCount ? `(${matchStore.unreadCount}) - ${pageTitle}` : pageTitle;
+
     return (
-      <Provider currentUser={currentUser} matchStore={matchStore}>
-        <div className="logged">
-          <ReactTooltip id="main" place="top" effect="solid" multiline />
-          <div className="logged__nav-bar">
-            <ul>
-              <li>
-                <div className="logo">
-                  <div className="logo-m-white" />
-                </div>
-              </li>
-              <li>
-                <NavLink to="/home" activeClassName="active">
-                  <i className="fa fa-home" />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/matches" activeClassName="active">
-                  <div className="badge">
-                    <i className="fa fa-heart" />
-                    {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
+      <DocumentTitle title={title}>
+        <Provider currentUser={currentUser} matchStore={matchStore}>
+          <div className="logged">
+            <ReactTooltip id="main" place="top" effect="solid" multiline />
+            <div className="logged__nav-bar">
+              <ul>
+                <li>
+                  <div className="logo">
+                    <div className="logo-m-white" />
                   </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/history" activeClassName="active">
-                  <i className="fa fa-history" />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings" activeClassName="active">
-                  <i className="fa fa-cog" />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/discussion" activeClassName="active">
-                  <i className="fa fa-comments-o" />
-                </NavLink>
-              </li>
-              <li className="separator" />
-              <li className="profile">
-                <NavLink to={`/user/${currentUser._id}`} activeClassName="active">
-                  {currentUser.avatarUrl && <Avatar width={50} url={currentUser.avatarUrl} />}
-                  <div className="name">
-                    {currentUser.name}
+                </li>
+                <li>
+                  <NavLink to="/home" activeClassName="active">
+                    <i className="fa fa-home" />
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/matches" activeClassName="active">
+                    <div className="badge">
+                      <i className="fa fa-heart" />
+                      {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/history" activeClassName="active">
+                    <i className="fa fa-history" />
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/settings" activeClassName="active">
+                    <i className="fa fa-cog" />
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/discussion" activeClassName="active">
+                    <i className="fa fa-comments-o" />
+                  </NavLink>
+                </li>
+                <li className="separator" />
+                <li className="profile">
+                  <NavLink to={`/user/${currentUser._id}`} activeClassName="active">
+                    {currentUser.avatarUrl && <Avatar width={50} url={currentUser.avatarUrl} />}
+                    <div className="name">
+                      {currentUser.name}
+                    </div>
+                    {currentUser.plusAccount && <div className="profile__plus">Plus!</div>}
+                  </NavLink>
+                </li>
+                <li>
+                  <div
+                    className="logout"
+                    onClick={this.handleLogout}
+                    data-tip="Logout"
+                    data-for="main"
+                  >
+                    <i className="fa fa-sign-out" />
                   </div>
-                  {currentUser.plusAccount && <div className="profile__plus">Plus!</div>}
-                </NavLink>
-              </li>
-              <li>
-                <div
-                  className="logout"
-                  onClick={this.handleLogout}
-                  data-tip="Logout"
-                  data-for="main"
-                >
-                  <i className="fa fa-sign-out" />
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
+            <div className="logged__content">
+              {currentUser.is_fetching && !currentUser.is_authenticated && <Loader />}
+              {!currentUser.is_fetching && this.renderWhenLogged()}
+            </div>
           </div>
-          <div className="logged__content">
-            {currentUser.is_fetching && !currentUser.is_authenticated && <Loader />}
-            {!currentUser.is_fetching && this.renderWhenLogged()}
-          </div>
-        </div>
-      </Provider>
+        </Provider>
+      </DocumentTitle>
     );
   }
 }

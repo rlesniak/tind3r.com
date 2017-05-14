@@ -25,6 +25,7 @@ type ItemPropsType = PropsType & {
   rightText: string,
   asAction?: boolean,
   disabled?: boolean,
+  asLink?: boolean,
 };
 
 export const Item = (props: ItemPropsType) => (
@@ -33,6 +34,7 @@ export const Item = (props: ItemPropsType) => (
       'side-menu__item--active': props.active,
       'side-menu__item--action': props.asAction,
       'side-menu__item--disabled': props.disabled,
+      'side-menu__item--link': props.asLink,
     })}
     onClick={props.onClick}
   >

@@ -8,6 +8,8 @@ import { get } from 'utils/api';
 import { removeAction } from 'utils/database.v2';
 import Person from 'models/Person';
 
+export type FiltersType = 'all' | 'insta' | 'bio';
+
 class RecsStore {
   loadMoreHandler = null;
 
@@ -15,6 +17,7 @@ class RecsStore {
   @observable is_fetching: boolean = false;
   @observable is_loading_more: boolean = false;
   @observable isError: boolean = false;
+  @observable visibilityFilter: FiltersType = 'all';
 
   constructor() {
     this.loadMoreHandler = reaction(
@@ -73,7 +76,17 @@ class RecsStore {
   }
 
   @computed get allVisible(): Array<Person> {
-    return filter(this.persons, p => p.is_done === 0);
+    return filter(this.persons, p => {
+      let cond = true;
+
+      switch (this.visibilityFilter) {
+        case 'insta': cond = !!p.instagramProfileLink; break;
+        case 'bio': cond = p.bio && p.bio.length; break;
+        default:
+      }
+
+      return cond && p.is_done === 0;
+    });
   }
 
   @computed get areRecsExhaust(): boolean {

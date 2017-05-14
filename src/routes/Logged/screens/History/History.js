@@ -82,7 +82,7 @@ class Actions extends Component {
               active={this.filter === filter.type}
               rightText={filter.type ? this.filterType(filter.type).length : this.filterAll().length}
               onClick={this.handleFilter(filter.type)}
-              className="history__sidemenu-item"
+              asLink
             >
               <span>{filter.text}</span>
             </SideMenu.Item>

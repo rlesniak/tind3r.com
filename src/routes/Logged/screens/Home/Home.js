@@ -27,6 +27,8 @@ import {
   CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE,
 } from 'models/CurrentUser';
 
+import type { FiltersType } from 'stores/RecsStore';
+
 const NOTIF_LEVELS_MAP = {
   like: 'success',
   pass: 'error',
@@ -36,6 +38,12 @@ const NOTIF_LEVELS_MAP = {
 type PropsType = {
   currentUser: CurrentUser,
 };
+
+const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }> = [
+  { text: 'All', type: 'all', handle: 'handleAll' },
+  { text: 'With instagram', type: 'insta', handle: 'handleInsta' },
+  { text: 'With bio', type: 'bio', handle: 'handleBio' },
+];
 
 @inject('currentUser') @observer
 class Home extends Component {
@@ -68,6 +76,18 @@ class Home extends Component {
     recsStore.fetchCore();
 
     ReactTooltip.rebuild();
+  }
+
+  handleAll = () => {
+    recsStore.visibilityFilter = 'all';
+  }
+
+  handleInsta = () => {
+    recsStore.visibilityFilter = 'insta';
+  }
+
+  handleBio = () => {
+    recsStore.visibilityFilter = 'bio';
   }
 
   handleMatch = (person: Person) => {
@@ -260,6 +280,21 @@ class Home extends Component {
             <label>Autolike</label>
             <span>(soon)</span>
           </SideMenu.Item>
+          <SideMenu.Separator />
+          <SideMenu.Item className="home__sidebar-item">
+            <label>Filters</label>
+          </SideMenu.Item>
+          {filterTypesMap.map(filter => (
+            <SideMenu.Item
+              key={filter.text}
+              active={recsStore.visibilityFilter === filter.type}
+              onClick={this[filter.handle]}
+              className="home__sidebar-item"
+              asLink
+            >
+              <span>{filter.text}</span>
+            </SideMenu.Item>
+          ))}
         </SideMenu>
         <SideMenu.Right>
           <div className="home__content">

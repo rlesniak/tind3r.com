@@ -12,7 +12,7 @@ type PropsType = {
 }
 
 const enhance = compose(
-  withState('value', 'setValue', ''),
+  withState('value', 'setValue', ({ matchStore }) => matchStore.filter),
   withHandlers({
     handleChange: ({ setValue, matchStore }: PropsType) => ({ target }: Event) => {
       if (target instanceof HTMLInputElement) {

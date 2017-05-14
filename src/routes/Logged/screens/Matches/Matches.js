@@ -2,7 +2,7 @@
 
 import './Matches.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 import { withState, withHandlers, compose } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
@@ -15,7 +15,7 @@ import MatchFilters from 'components/matches/MatchFilters';
 import { MatchStore, FILTER_TYPES } from 'stores/MatchStore';
 import SideMenu from 'components/SideMenu';
 
-type PropsTypes = {
+type PropsType = {
   handleMatchClick: (matchId: string) => void,
   matchStore: MatchStore,
   activeId: string,
@@ -63,7 +63,7 @@ const filterTypesMap = [
 
 const Matches = ({
   handleMatchClick, matchStore, activeId, ...props
-}: PropsTypes) => (
+}: PropsType) => (
   <div className="matches">
     <SideMenu title="Matches">
       {filterTypesMap.map(filter => (
@@ -72,20 +72,17 @@ const Matches = ({
           active={matchStore.visibilityFilter === filter.type}
           rightText={matchStore.size[filter.size]}
           onClick={props[filter.handle]}
-          className="matches__sidebar-item"
+          asLink
         >
           <span>{filter.text}</span>
         </SideMenu.Item>
       ))}
       <SideMenu.Separator />
-      <SideMenu.Item>
-        <div
-          className={cx('matches__item-action', {
-            'matches__item-action--disabled': matchStore.unreadCount === 0,
-          })}
-        >
-          <i className="fa fa-check-circle-o" /> Mark all as read
-        </div>
+      <SideMenu.Item
+        asAction
+        disabled={matchStore.unreadCount === 0}
+      >
+        <i className="fa fa-check-circle-o" /> Mark all as read
       </SideMenu.Item>
     </SideMenu>
     <SideMenu.Right>

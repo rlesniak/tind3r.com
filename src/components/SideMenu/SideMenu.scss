@@ -68,6 +68,14 @@
       opacity: .5;
       color: #8f9397 !important;
     }
+
+    &--link {
+      cursor: pointer;
+      line-height: 34px;
+      font-size: 15px;
+      padding: 0 10px;
+      border-radius: 5px;
+    }
   }
 
   &__items {

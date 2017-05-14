@@ -1,4 +1,5 @@
 import store from 'store';
+import get from 'lodash/get';
 
 const APP_NAME = 'app.v2';
 
@@ -7,8 +8,8 @@ const ls = {
     return store.get(APP_NAME) || {};
   },
 
-  get(key) {
-    return this.data[key];
+  get(key, defaultValue = null) {
+    return get(this.data, key, defaultValue);
   },
 
   set(newData) {

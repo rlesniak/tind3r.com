@@ -24,4 +24,11 @@
     padding: 5px;
     cursor: pointer;
   }
+
+  &__separator {
+    width: 80%;
+    height: 1px;
+    margin: 20px auto;
+    background: #5b6069;
+  }
 }

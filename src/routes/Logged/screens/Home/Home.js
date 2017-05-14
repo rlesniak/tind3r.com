@@ -23,6 +23,8 @@ import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
 import Person from 'models/Person';
 
+import LS from 'utils/localStorage';
+
 import {
   CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE,
 } from 'models/CurrentUser';
@@ -156,7 +158,7 @@ class Home extends Component {
   }
 
   handleAction = (payload: Object) => {
-    if (this.notificationSystem) {
+    if (this.notificationSystem && LS.get('settings.notifCloudEnabled', true)) {
       this.notificationSystem.addNotification({
         level: NOTIF_LEVELS_MAP[payload.type],
         position: 'bl',

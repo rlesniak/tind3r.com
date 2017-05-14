@@ -141,9 +141,8 @@ export function createMatch(match: Object) {
   createPersons([parsedPerson]);
 }
 
-export function updateMatch(matchId: string, payload: Object) {
-  console.log('update', matchId, payload);
-  db.collection('matches').updateById(matchId, payload);
+export function updateMatch(matchIds: string[], payload: Object) {
+  db.collection('matches').update({ _id: { $in: matchIds } }, payload);
   db.collection('matches').save();
 }
 

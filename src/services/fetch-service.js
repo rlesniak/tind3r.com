@@ -20,7 +20,7 @@ const processMessages = match => {
   collection.save();
 
   if (match.is_new_message) {
-    updateMatch(match._id, { is_new: true });
+    updateMatch([match._id], { is_new: true });
   }
 };
 
@@ -74,10 +74,8 @@ const saveMatchesToDb = (
   });
 };
 
-const createBlocks = (blocks: Array<string>) => {
-  each(blocks, matchId => {
-    updateMatch(matchId, { is_blocked: true });
-  });
+const createBlocks = (matchIds: Array<string>) => {
+  updateMatch(matchIds, { is_blocked: true });
 };
 
 export default {

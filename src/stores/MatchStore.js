@@ -33,10 +33,10 @@ export class MatchStore {
 
   constructor() {
     DB().collection('matches').on('update', data => {
-      const [item]: MatchType = data;
-      const match = this.find(item._id);
-
-      if (match) match.updateMatch(item);
+      each(data, (item: MatchType) => {
+        const match = this.find(item._id);
+        if (match) match.updateMatch(item);
+      });
     });
 
     DB().collection('messages').on('insert', data => {

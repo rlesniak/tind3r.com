@@ -61,7 +61,7 @@ class Match {
     try {
       const blocked = await FetchService.block(this._id); // eslint-disable-line
 
-      updateMatch(this._id, { is_blocked: 1 });
+      updateMatch([this._id], { is_blocked: true });
     } catch (err) {
       this.is_blocked = false;
     }
@@ -72,7 +72,7 @@ class Match {
   }
 
   @action setAsRead() {
-    updateMatch(this._id, { is_new: false });
+    updateMatch([this._id], { is_new: false });
   }
 
   @action insertNewMessage(data: MessageType) {

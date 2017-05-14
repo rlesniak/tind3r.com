@@ -32,6 +32,7 @@ const myPageTest = ab.test('new-version');
 
 app.use('/static', express.static('dist'));
 app.use('/assets', express.static('assets'));
+app.use('/download', express.static('assets'));
 
 if (isDeveloping) {
   const compiler = webpack(config);

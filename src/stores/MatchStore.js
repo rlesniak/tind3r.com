@@ -5,7 +5,7 @@ import orderBy from 'lodash/orderBy';
 import each from 'lodash/each';
 
 import Match from 'models/Match';
-import DB, { matchCollection } from 'utils/database.v2';
+import { collections, matchCollection } from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
 import counterService from 'services/counterService';
 
@@ -32,14 +32,14 @@ export class MatchStore {
   @observable visibilityFilter: FiltersType = 'all';
 
   constructor() {
-    DB().collection('matches').on('update', data => {
+    collections.matches.on('update', data => {
       each(data, (item: MatchType) => {
         const match = this.find(item._id);
         if (match) match.updateMatch(item);
       });
     });
 
-    DB().collection('messages').on('insert', data => {
+    collections.messages.on('insert', data => {
       each(data, message => {
         const match = this.find(message.match_id);
         if (match) match.insertNewMessage(message);

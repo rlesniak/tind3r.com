@@ -4,7 +4,7 @@ import { each } from 'lodash';
 
 import API from 'utils/api';
 import LS from 'utils/localStorage';
-import DB, { updateMatch } from 'utils/database.v2';
+import { collections, updateMatch } from 'utils/database.v2';
 import { parseMatch, parsePerson, parseMessage } from 'utils/parsers';
 
 import type { MatchType } from 'types/match';
@@ -15,7 +15,7 @@ const processMessages = match => {
   const messages = [];
   each(match.messages, message => messages.push(parseMessage(message)));
 
-  const collection = DB().collection('messages');
+  const collection = collections.messages;
   collection.insert(messages);
   collection.save();
 
@@ -32,7 +32,7 @@ const savePersonsToDb = (
   success: () => void,
   error: () => void,
 ) => {
-  const collection = DB().collection('persons');
+  const collection = collections.persons;
   collection.insert(persons);
   collection.save(err => {
     if (err) {
@@ -56,7 +56,7 @@ const saveMatchesToDb = (
   success: () => void,
   error: () => void,
 ) => {
-  const collection = DB().collection('matches');
+  const collection = collections.matches;
   collection.insert(data);
   collection.save(err => {
     if (err) {
@@ -102,15 +102,17 @@ export default {
 
         createBlocks(blocks);
 
-        saveMatchesToDb(parsedMatches, () => {
-          savePersonsToDb(parsedPersons, () => {
-            resolve({
-              matches: parsedMatches,
-              persons: parsedPersons,
-              messages: parsedMessages,
-            });
-          }, err => reject({ type: 'persons-db', data: err }));
-        }, err => reject({ type: 'matches-db', data: err, size: parsedMatches.length }));
+        if (parsedMatches.length) {
+          saveMatchesToDb(parsedMatches, () => {
+            savePersonsToDb(parsedPersons, () => {
+              resolve({
+                matches: parsedMatches,
+                persons: parsedPersons,
+                messages: parsedMessages,
+              });
+            }, err => reject({ type: 'persons-db', data: err }));
+          }, err => reject({ type: 'matches-db', data: err, size: parsedMatches.length }));
+        }
       }).catch(reject);
     });
   },
@@ -118,7 +120,7 @@ export default {
   sendMessage(matchId: string, message: string, payload: ?Object) {
     return new Promise((resolve, reject) => {
       API.post(`/user/matches/${matchId}`, { message, ...payload }).then(({ data }) => {
-        const collection = DB().collection('messages');
+        const collection = collections.messages;
         const parsedMessage = parseMessage(data);
 
         collection.insert(parsedMessage);

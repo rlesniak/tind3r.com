@@ -18,6 +18,14 @@ const render = Component =>
 
 load().then(() => {
   render(App);
+}).catch(err => {
+  render(App);
+
+  if (window.Bugsnag) {
+    Bugsnag.notifyException(new Error('Error loading DB'), err);
+  }
+
+  alert('There is some error. Please try logout and login again');
 });
 
 if (module.hot) module.hot.accept('./App', () => render(App));

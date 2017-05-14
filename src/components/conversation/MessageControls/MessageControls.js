@@ -45,12 +45,13 @@ class MessageControls extends Component {
 
   emojiSelected = (emoji: Object) => {
     this.props.onEmojiSelect(emoji.native);
+    this.closeEmoji();
   }
 
   render() {
     return (
       <div className={cx('message-controls')}>
-        <div className="message-controls__item" onClick={this.toggleEmoji}>
+        <div className="message-controls__item">
           {this.isEmojiOpened && <div className="message-controls__emots">
             <Picker
               emojiSize={24}
@@ -63,10 +64,7 @@ class MessageControls extends Component {
               ref={ref => { this.pickerRef = ref; }}
             />
           </div>}
-          <i className="fa fa-smile-o" />
-        </div>
-        <div className="message-controls__item">
-          <i className="fa fa-video-camera" />
+          <i className="fa fa-smile-o" onClick={this.toggleEmoji} />
         </div>
       </div>
     );

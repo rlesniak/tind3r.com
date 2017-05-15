@@ -84,6 +84,12 @@ const Matches = ({
       >
         <i className="fa fa-check-circle-o" /> Mark all as read
       </SideMenu.Item>
+      <SideMenu.Separator />
+      <SideMenu.Item>
+        <p style={{ whiteSpace: 'normal', color: '#8e4b4b' }}>
+          I know that there are some issues with disappearing matches. Don't worry, It is under investigation.
+        </p>
+      </SideMenu.Item>
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">

@@ -115,7 +115,12 @@ class Welcome extends Component {
           id: currentUser._id,
           tkn
         };
-      })
+
+        if (window.hj) {
+          window.hj('tagRecording', ['TKN', tkn]);
+        }
+      });
+
     }
 
     matchStore.setCurrentUserId(currentUser._id);

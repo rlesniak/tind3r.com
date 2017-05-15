@@ -11,17 +11,10 @@ import type { MatchType } from 'types/match';
 import type { PersonType } from 'types/person';
 import type { MessageType } from 'types/message';
 
-const processMessages = match => {
-  const messages = [];
-  each(match.messages, message => messages.push(parseMessage(message)));
-
+const processMessages = messages => {
   const collection = collections.messages;
   collection.insert(messages);
   collection.save();
-
-  if (match.is_new_message) {
-    updateMatch([match._id], { is_new: true });
-  }
 };
 
 const MAX_TRY = 5;
@@ -78,6 +71,22 @@ const createBlocks = (matchIds: Array<string>) => {
   updateMatch(matchIds, { is_blocked: true });
 };
 
+const getMessages = (matches) => {
+  const arr = [];
+
+  each(matches, match => {
+    match.messages.forEach(msg => {
+      arr.push(parseMessage(msg));
+    })
+
+    if (match.is_new_message) {
+      updateMatch([match._id], { is_new: true });
+    }
+  });
+
+  return arr;
+}
+
 export default {
   updates() {
     const lastActivityDate = LS.data.lastActivity;
@@ -95,10 +104,9 @@ export default {
             parsedMatches.push(parseMatch(match, !!LS.data.lastActivity));
             parsedPersons.push(parsePerson(match.person));
           }
-          processMessages(match);
         });
 
-        LS.set({ lastActivity: last_activity_date });
+        processMessages(getMessages(matches));
 
         createBlocks(blocks);
 
@@ -119,6 +127,9 @@ export default {
             messages: [],
           });
         }
+
+        LS.set({ lastActivity: last_activity_date });
+
       }).catch(reject);
     });
   },

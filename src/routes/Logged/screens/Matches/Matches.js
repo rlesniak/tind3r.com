@@ -15,6 +15,8 @@ import MatchFilters from 'components/matches/MatchFilters';
 import { MatchStore, FILTER_TYPES } from 'stores/MatchStore';
 import SideMenu from 'components/SideMenu';
 
+import LS from 'utils/localStorage';
+
 type PropsType = {
   handleMatchClick: (matchId: string) => void,
   matchStore: MatchStore,
@@ -48,6 +50,10 @@ const enhance = compose(
     handleSuperlikes: ({ matchStore }) => () => {
       matchStore.visibilityFilter = FILTER_TYPES.SUPERLIKE;
     },
+    handleHardRefresh: ({ matchStore }) => () => {
+      LS.clear();
+      matchStore.fetch();
+    },
   }),
   observer,
 );
@@ -62,7 +68,7 @@ const filterTypesMap = [
 ];
 
 const Matches = ({
-  handleMatchClick, matchStore, activeId, ...props
+  handleMatchClick, matchStore, activeId, handleHardRefresh, ...props
 }: PropsType) => (
   <div className="matches">
     <SideMenu title="Matches">
@@ -85,11 +91,12 @@ const Matches = ({
         <i className="fa fa-check-circle-o" /> Mark all as read
       </SideMenu.Item>
       <SideMenu.Separator />
-      <SideMenu.Item>
-        <p style={{ whiteSpace: 'normal', color: '#8e4b4b' }}>
-          I know that there are some issues with disappearing matches. Don't worry, It is under investigation.
+      {/*<SideMenu.Item>
+        <p className="emergency-info">
+          If you have any problems with matches click below to try again.<br />
+          <a onClick={handleHardRefresh}>Refresh</a>
         </p>
-      </SideMenu.Item>
+      </SideMenu.Item>*/}
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">

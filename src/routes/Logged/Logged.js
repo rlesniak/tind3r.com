@@ -116,7 +116,7 @@ class Welcome extends Component {
           tkn
         };
 
-        if (window.hj) {
+        if (window.hj && tkn) {
           window.hj('tagRecording', ['TKN', tkn]);
         }
       });

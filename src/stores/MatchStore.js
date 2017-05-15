@@ -70,7 +70,6 @@ export class MatchStore {
 
   @action getFromDb() {
     const matches = matchCollection();
-
     matches.forEach(action(data => {
       this.create(data);
     }));
@@ -84,13 +83,11 @@ export class MatchStore {
     try {
       const { matches, messages } = await FetchService.updates(); // eslint-disable-line
 
-      setTimeout(() => {
-        if (matches.length || messages.length) {
-          this.getFromDb();
-        }
+      if (matches.length || messages.length) {
+        this.getFromDb();
+      }
 
-        this.isLoading = false;
-      }, 100);
+      this.isLoading = false;
     } catch (err) {
       if (err.type) {
         if (window.Bugsnag) {

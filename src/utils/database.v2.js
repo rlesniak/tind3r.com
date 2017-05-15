@@ -11,7 +11,7 @@ import type { ActionType } from 'types/action';
 
 const fdb = new ForerunnerDB();
 const db = fdb.db('tind3r');
-db.debug(true);
+db.debug(false);
 
 export const collections = {
   matches: db.collection('matches'),

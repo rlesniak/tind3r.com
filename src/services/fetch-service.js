@@ -112,6 +112,12 @@ export default {
               });
             }, err => reject({ type: 'persons-db', data: err }));
           }, err => reject({ type: 'matches-db', data: err, size: parsedMatches.length }));
+        } else {
+          resolve({
+            matches: [],
+            persons: [],
+            messages: [],
+          });
         }
       }).catch(reject);
     });

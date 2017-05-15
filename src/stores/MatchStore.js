@@ -88,6 +88,8 @@ export class MatchStore {
         if (matches.length || messages.length) {
           this.getFromDb();
         }
+
+        this.isLoading = false;
       }, 100);
     } catch (err) {
       if (err.type) {
@@ -95,11 +97,10 @@ export class MatchStore {
           Bugsnag.notifyException(new Error('dbError'), 'fetch()', { type: err.type, data: err.data, size: err.size });
         }
       } else {
-        errorCallback();
+        if (typeof errorCallback === 'function') errorCallback();
       }
+      this.isLoading = false;
     }
-
-    this.isLoading = false;
   }
 
   @action create(data: MatchType): void {

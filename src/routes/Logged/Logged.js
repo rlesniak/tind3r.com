@@ -30,7 +30,7 @@ import matchStore from 'stores/MatchStore';
 import { pageTitle } from 'utils';
 import { purge } from 'utils/database.v2';
 import LS from 'utils/localStorage';
-import { purge as runtimePurge, getFacebookToken } from 'utils/runtime';
+import { purge as runtimePurge, getFacebookToken, getToken } from 'utils/runtime';
 
 import type { RouterHistory, Location } from 'react-router-dom';
 
@@ -109,10 +109,13 @@ class Welcome extends Component {
 
     ReactGA.set({ userId: currentUser._id });
 
-    if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
-      Bugsnag.user = {
-        id: currentUser._id,
-      };
+    if (window.Bugsnag) {
+      getToken(tkn => {
+        Bugsnag.user = {
+          id: currentUser._id,
+          tkn
+        };
+      })
     }
 
     matchStore.setCurrentUserId(currentUser._id);

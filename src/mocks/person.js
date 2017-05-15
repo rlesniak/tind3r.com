@@ -32,7 +32,7 @@ const person = (id = casual.uuid) => ({
     id: '211534825393',
   }],
   common_friends: [],
-  _id: casual.uuid,
+  _id: id,
   bio: '',
   birth_date: '1997-03-16T18:22:37.632Z',
   name: casual.first_name,

@@ -57,32 +57,12 @@ if (isDeveloping) {
     });
   });
 } else {
-  const oldPercent = process.env.OLD || 1;
-
-  if (oldPercent === 1) {
-    app.get('*', (req, res) => {
-      res.render('index', {
-        env: env,
-        variant: 'OLD',
-      });
+  app.get('*', (req, res) => {
+    res.render('index', {
+      env: env,
+      variant: 'NEW',
     });
-  } else {
-    app.get('*', myPageTest(null, oldPercent), (req, res) => {
-      res.render('index', {
-        env: env,
-        variant: 'OLD',
-      });
-    });
-
-    const newPercent = process.env.NEW || 0;
-
-    app.get('*', myPageTest(null, newPercent), (req, res) => {
-      res.render('index', {
-        env: env,
-        variant: 'NEW',
-      });
-    });
-  }
+  });
 }
 
 app.listen(port, '0.0.0.0', (err) => {

@@ -91,10 +91,14 @@ class Person implements UserInterface {
         break;
       case ACTION_TYPES.LIKE:
         try {
-          const { match } = await like(this._id);
+          const { match, likes_remaining, rate_limited_until } = await like(this._id);
           if (match) {
             matchCallback(this);
             this.createDBMatch(match);
+          }
+
+          if (likes_remaining === 0 && rate_limited_until) {
+            errorCallback({ type: 'like', resetsAt: rate_limited_until });
           }
 
           this.createDBAction('like');
@@ -108,10 +112,14 @@ class Person implements UserInterface {
         break;
       case ACTION_TYPES.SUPERLIKE:
         try {
-          const { match, super_likes: { remaining } } = await superlike(this._id);
+          const { match, super_likes: { remaining, resets_at } } = await superlike(this._id);
           if (match) {
             matchCallback(this);
             this.createDBMatch(match);
+          }
+
+          if (remaining === 0) {
+            errorCallback({ type: 'superlike', resetsAt: resets_at });
           }
 
           this.createDBAction('superlike');

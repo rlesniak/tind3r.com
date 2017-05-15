@@ -12,6 +12,8 @@ import type { PersonType } from 'types/person';
 import type { MessageType } from 'types/message';
 
 const processMessages = messages => {
+  if (messages.length === 0) return;
+
   const collection = collections.messages;
   collection.insert(messages);
   collection.save();
@@ -68,6 +70,7 @@ const saveMatchesToDb = (
 };
 
 const createBlocks = (matchIds: Array<string>) => {
+  if (matchIds.length === 0) return;
   updateMatch(matchIds, { is_blocked: true });
 };
 

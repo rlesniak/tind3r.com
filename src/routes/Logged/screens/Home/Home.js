@@ -133,7 +133,7 @@ class Home extends Component {
       counterService.subscribe({
         handler: this.handleLikeCounter,
       });
-    } else {
+    } else if(reason.type === 'superlike') {
       currentUser.superlike_remaining = 0;
       currentUser.superlike_limit_reset = reason.resetsAt;
 

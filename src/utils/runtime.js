@@ -1,4 +1,4 @@
-import { EXT_ID, originalId, nonStoreId, setId } from 'const';
+import { EXT_ID, originalId, secondStoreId, nonStoreId, setId } from 'const';
 
 export const getFacebookToken = () => {
   chrome.runtime.sendMessage(EXT_ID(), { type: 'FACEBOOK_TOKEN' });
@@ -18,19 +18,27 @@ export const checkIfInstalled = callback => {
       if (!response) {
         chrome.runtime.sendMessage(originalId, {
           type: 'CHECK_INSTALLED',
-        }, response => {
-          if (response) {
+        }, response1 => {
+          if (response1) {
             setId(originalId);
+            callback(true);
+          } else {
+            chrome.runtime.sendMessage(secondStoreId, {
+              type: 'CHECK_INSTALLED',
+            }, response2 => {
+              if (response2) {
+                setId(secondStoreId);
+              }
+
+              callback(!!response2);
+            });
           }
-          callback(!!response);
         });
+      } else {
+        setId(nonStoreId);
 
-        return;
+        callback(!!response);
       }
-
-      setId(nonStoreId);
-
-      callback(!!response);
     });
   } else {
     callback(false);
@@ -40,6 +48,12 @@ export const checkIfInstalled = callback => {
 export const checkVersion = cb => {
   chrome.runtime.sendMessage(EXT_ID(), {
     type: 'GET_VERSION',
+  }, response => cb(response));
+};
+
+export const getToken = cb => {
+  chrome.runtime.sendMessage(EXT_ID(), {
+    type: 'GET_TOKEN',
   }, response => cb(response));
 };
 

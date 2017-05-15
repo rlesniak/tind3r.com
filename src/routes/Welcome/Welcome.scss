@@ -31,4 +31,16 @@
       max-width: 100%;
     }
   }
+
+  button {
+    border: 1px solid $blue;
+    background: transparent;
+    font-size: 25px;
+    padding: 10px 20px;
+    color: darken($gray, 50);
+    border-radius: 5px;
+    cursor: pointer;
+    background: lighten($blue, 70);
+    box-shadow: 2px 1px 8px 0px #c5c5c5;
+  }
 }

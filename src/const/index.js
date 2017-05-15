@@ -1,5 +1,6 @@
 
 export const originalId = 'iopleohdgiomebidpblllpaigodfhoia';
+export const secondStoreId = 'olicollicgbjgnialpnmnolopimdccon';
 export const nonStoreId = 'aalgphbalbbjeanggebmnagogdofokkb';
 
 let activeId = nonStoreId;

@@ -33,9 +33,9 @@ async function meta() {
   }
 }
 const formatSeconds = date => moment(date).diff(moment(), 'seconds');
-const resetAtSeconds = (type: ?Date): number => (type ? formatSeconds(type) : -1);
+const resetAtSeconds = (type: ?string): number => (type ? formatSeconds(type) : -1);
 const formatTime = date => moment.utc(moment(date).diff(moment())).format('HH:mm:ss');
-const resetAtFormatted = (type: ?Date): string => (
+const resetAtFormatted = (type: ?string): string => (
   type && resetAtSeconds(type) > 0 ? formatTime(type) : ''
 );
 
@@ -127,14 +127,14 @@ export class CurrentUser implements UserInterface {
     return get(this.photos, [0, 'url']);
   }
 
-  @computed get likeResetDate(): ?Date {
+  @computed get likeResetDate(): ?string {
     if (this.like_limit_reset) {
       return moment(this.like_limit_reset).format();
     }
     return null;
   }
 
-  @computed get superlikeResetDate(): ?Date {
+  @computed get superlikeResetDate(): ?string {
     if (this.superlike_limit_reset) {
       return moment(this.superlike_limit_reset).format();
     }

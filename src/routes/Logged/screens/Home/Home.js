@@ -4,7 +4,7 @@ import './Home.scss';
 import 'react-input-range/src/scss/index.scss';
 
 import React, { Component } from 'react';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
@@ -113,7 +113,7 @@ class Home extends Component {
     this.likeCounter = currentUser.likeReset.formatted;
   }
 
-  handleSuperlikeCounter = () => {
+  @action handleSuperlikeCounter = () => {
     const { currentUser } = this.props;
 
     if (currentUser.superlikeReset.seconds === 0) {

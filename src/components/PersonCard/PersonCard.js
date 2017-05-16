@@ -5,10 +5,9 @@ import './PersonCard.scss';
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { compose, withHandlers, withState, pure } from 'recompose';
+import { compose, withHandlers, withState, pure, mapProps } from 'recompose';
 import cx from 'classnames';
 import map from 'lodash/map';
-import isArray from 'lodash/isArray';
 
 import Gallery from 'components/Gallery';
 import ActionButtons from 'components/ActionButtons';
@@ -34,15 +33,23 @@ const callAction = (props, actionType: ActionsType) => {
 };
 
 const enhance = compose(
+  mapProps(({ limitations, ...props }) => ({
+    ...props,
+    limitations,
+    isLikeDisabled: !!limitations.likeResetsAt,
+    isSuperlikeDisabled: limitations.superlikeRemaining === 0 && !!limitations.superlikeResetsAt,
+  })),
   withState('isHovering', 'toggleHover', false),
   withHotkeys({
     [keyCodes.d]: props => {
       callAction(props, ACTION_TYPES.LIKE);
     },
     [keyCodes.s]: props => {
+      if (props.isSuperlikeDisabled) return;
       callAction(props, ACTION_TYPES.SUPERLIKE);
     },
     [keyCodes.a]: props => {
+      if (props.isLikeDisabled) return;
       callAction(props, ACTION_TYPES.PASS);
     },
   }),
@@ -72,6 +79,8 @@ type PersonCardType = {
   onCardMouseLeave: Function,
   onActionClick: (type: ActionsType) => void,
   onError: (reason: ActionsType) => void,
+  isLikeDisabled: boolean,
+  isSuperlikeDisabled: boolean,
   limitations: {
     superlikeRemaining: number,
     superlikeResetsAt: ?string,
@@ -82,6 +91,7 @@ type PersonCardType = {
 const PersonCard = ({
   person, small, onActionClick, onCardMouseEnter, onCardMouseLeave, isHovering,
   limitations: { superlikeRemaining, superlikeResetsAt, likeResetsAt },
+  isLikeDisabled, isSuperlikeDisabled,
 }: PersonCardType) => {
   const shouldShowActionButtons = !small || (small && isHovering);
   const hasInterests = person.common_interests && person.common_interests.length > 0;
@@ -138,6 +148,8 @@ const PersonCard = ({
               onButtonClick={onActionClick}
               hideTimer={small}
               size={small ? 'small' : 'large'}
+              likeDisabled={isLikeDisabled}
+              superlikeDisabled={isSuperlikeDisabled}
             />
           </div>}
         </div>

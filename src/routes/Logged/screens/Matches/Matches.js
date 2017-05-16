@@ -91,12 +91,13 @@ const Matches = ({
         <i className="fa fa-check-circle-o" /> Mark all as read
       </SideMenu.Item>
       <SideMenu.Separator />
-      {/*<SideMenu.Item>
+      {<SideMenu.Item>
         <p className="emergency-info">
-          If you have any problems with matches click below to try again.<br />
+          If you have any problems with matches click below to try again. <br/>
+          I hope it helps. Please let me know.<br />
           <a onClick={handleHardRefresh}>Refresh</a>
         </p>
-      </SideMenu.Item>*/}
+      </SideMenu.Item>}
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">

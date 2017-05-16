@@ -78,7 +78,7 @@ const getMessages = (matches) => {
   const arr = [];
 
   each(matches, match => {
-    match.messages.forEach(msg => {
+    each(match.messages, msg => {
       arr.push(parseMessage(msg));
     })
 

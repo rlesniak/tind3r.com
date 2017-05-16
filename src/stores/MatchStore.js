@@ -93,6 +93,10 @@ export class MatchStore {
         if (window.Bugsnag) {
           Bugsnag.notifyException(new Error('dbError'), 'fetch()', { type: err.type, data: err.data, size: err.size });
         }
+
+        if (window.hj) {
+          window.hj('tagRecording', ['With error']);
+        }
       } else {
         if (typeof errorCallback === 'function') errorCallback();
       }

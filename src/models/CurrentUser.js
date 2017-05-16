@@ -95,6 +95,10 @@ export class CurrentUser implements UserInterface {
       this.is_fetching = false;
       this.is_authenticated = true;
     }).catch(e => {
+      if (window.Bugsnag) {
+        Bugsnag.notifyException(new Error('meta'), 'metaErr', { data: e });
+      }
+
       this.is_authenticated = false;
       this.is_fetching = false;
       this.is_error = true;

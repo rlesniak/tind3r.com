@@ -1,3 +1,5 @@
+// @flow
+
 import './PersonView.scss';
 
 import React, { Component } from 'react';
@@ -188,6 +190,11 @@ class PersonView extends Component {
       return <Loader />;
     }
 
+    const instagramPhotos = (person.instagram && person.instagram.photos) || [];
+    const photos = person.photos.concat(instagramPhotos.map(photo => (
+      { id: photo.ts, url: photo.image }
+    )));
+
     return (
       <div className="person-view">
         <div className="person-view__left">
@@ -227,9 +234,10 @@ class PersonView extends Component {
           <Gallery
             delay={200}
             scrolling={false}
-            images={person.photos}
+            images={photos}
             width={width}
             withArrowNav
+            lazyLoad={false}
           />
         </div>
       </div>

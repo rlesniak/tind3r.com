@@ -1,3 +1,5 @@
+// @flow
+
 import './Gallery.scss';
 
 import React, { PureComponent } from 'react';
@@ -14,15 +16,20 @@ const sliderOptions = {
   speed: 500,
   currentSlide: 0,
   slide: 0,
-  lazyLoad: true,
 };
+
+type ImageType = {
+  id: string,
+  url: string,
+}
 
 type PropsType = {
   delay?: number,
   scrolling?: boolean,
   width: number,
-  images: Array<Object>,
+  images: Array<ImageType>,
   withArrowNav: boolean,
+  lazyLoad: boolean,
 };
 
 const ARROW_LEFT = 37;
@@ -32,6 +39,10 @@ class Gallery extends PureComponent {
   props: PropsType;
   timeout: number = 0;
   sliderRef: ?any;
+
+  static defaultProps = {
+    lazyLoad: true,
+  };
 
   state = {
     show: !this.props.delay,
@@ -76,19 +87,22 @@ class Gallery extends PureComponent {
   }
 
   render() {
-    const { images = [], width, scrolling } = this.props;
+    const { images = [], width, scrolling, lazyLoad } = this.props;
 
     if (!this.state.show) return null;
 
     return (
       <div className={cx('gallery', { 'gallery--scrolling': scrolling })}>
         {!scrolling && images.length && <div className="gallery__slider">
-          <Slider {...sliderOptions} ref={ref => { this.sliderRef = ref; }}>
+          <Slider {...sliderOptions} lazyLoad={lazyLoad} ref={ref => { this.sliderRef = ref; }}>
             {map(images, image => (
-              <div key={image.id}><Image src={image.url} style={{ width }} /></div>
+              <div key={image.id}>
+                <Image src={image.url} style={{ width }} />
+              </div>
             ))}
           </Slider>
         </div>}
+
         {scrolling && <div className="gallery__scrolling-area" style={{ width: width * images.length }}>
           {map(images, image => (
             <div key={uniqueId()} className="gallery__scrolling-area--image">

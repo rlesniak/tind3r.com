@@ -3,7 +3,7 @@
 import './Logged.scss';
 
 import React, { Component } from 'react';
-import { Route, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
@@ -154,8 +154,8 @@ class Welcome extends Component {
       currentUser.is_authenticated ? (
         <div className="logged">
           <Switch location={isModal ? this.previousLocation : location}>
+            <Redirect from="/home" to="/" />
             <Route exact path="/" component={Home} />
-            <Route path="/home" component={Home} />
             <Route path="/matches" component={Matches} />
             <Route path="/history" component={History} />
             <Route path="/discussion" component={Discussion} />
@@ -190,7 +190,7 @@ class Welcome extends Component {
                   </div>
                 </li>
                 <li>
-                  <NavLink to="/home" activeClassName="active">
+                  <NavLink exact to="/" activeClassName="active">
                     <i className="fa fa-home" />
                   </NavLink>
                 </li>

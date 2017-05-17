@@ -5,6 +5,7 @@ import './Settings.scss';
 import React from 'react';
 import { compose, withHandlers, withState } from 'recompose';
 import { observer } from 'mobx-react';
+import { Button, Classes, Switch } from '@blueprintjs/core';
 
 import LS from 'utils/localStorage';
 
@@ -35,26 +36,23 @@ const Settings = ({ bio, handleChange, handleSave, handleNotifChange, notif }) =
     <div className="settings__row">
       <label>Bio</label>
       <div className="settings__field">
-        <textarea rows="4" value={bio} onChange={handleChange} />
+        <textarea className="pt-input" rows="4" value={bio} onChange={handleChange} />
       </div>
     </div>
     <div className="settings__row">
       <div className="settings__field">
-        <button
-          className="settings__button"
+        <Button
+          className={Classes.LARGE}
           onClick={handleSave}
+          loading={currentUser.isProcessing}
           disabled={currentUser.isProcessing}
-        >
-          {currentUser.isProcessing ? 'Saving...' : 'Save'}
-        </button>
+          text="Save"
+        />
       </div>
     </div>
-    <div className="settings__separator"></div>
+    <div className="settings__separator" />
     <div className="settings__row">
-      <label>Show bottom left notification when swiping</label>
-      <div className="settings__field">
-        <input type="checkbox" onChange={handleNotifChange} checked={notif} />
-      </div>
+      <Switch checked={notif} label="Show bottom left notification when swiping" onChange={handleNotifChange} />
     </div>
   </div>
 );

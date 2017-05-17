@@ -11,6 +11,10 @@
     display: inline-block;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   &__person {
     display: inline-block;
     width: 86px;
@@ -19,15 +23,15 @@
     text-align: center;
 
     &--super {
-      color: $accent;
+      color: $accent !important;
     }
 
     &--like {
-      color: $green;
+      color: $green !important;
     }
 
     &--pass {
-      color: $red;
+      color: $red !important;
     }
   }
 

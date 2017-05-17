@@ -43,6 +43,7 @@
     "eslint-plugin-react": "^6.10.3"
   },
   "dependencies": {
+    "@blueprintjs/core": "^1.17.1",
     "assets-webpack-plugin": "^3.5.1",
     "autobind-decorator": "^1.3.4",
     "axios": "^0.16.1",
@@ -78,6 +79,7 @@
     "node-sass": "^4.5.0",
     "pouchdb-adapter-idb": "^6.1.2",
     "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-addons-perf": "^15.4.2",
     "react-custom-scrollbars": "^4.1.1",
     "react-disqus-thread": "^0.4.0",

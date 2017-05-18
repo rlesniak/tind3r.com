@@ -44,6 +44,7 @@ class MessageList extends Component {
 
   render() {
     const { messageStore, currentUser } = this.props;
+    const todayDate = moment();
     let gorupMessage = false;
 
     return (
@@ -55,6 +56,7 @@ class MessageList extends Component {
               key={message._id || uniqueId()}
               ref={ref => { this.messagesRefs.push(ref); }}
               message={message}
+              todayDate={todayDate}
               onRemove={messageStore.removeMessage}
               author={getAuthor(message.from_id, messageStore.interlocutor, currentUser)}
             />

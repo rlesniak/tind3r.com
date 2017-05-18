@@ -55,7 +55,7 @@ const MatchRow = ({ handleOnClick, match, active }: PropsType) => (
         {getMatchTypeIcon(match)}
       </div>
       <div className="match-row__avatar">
-        <Avatar url={match.person.mainPhoto} />
+        <Avatar width={50} height={50} url={match.person.mainPhoto} />
       </div>
       <div className="match-row__details">
         <div className="match-row__person-details">{match.person.name}</div>

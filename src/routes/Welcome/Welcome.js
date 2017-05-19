@@ -8,13 +8,9 @@ import Login from 'components/Login';
 import { checkIfInstalled, getTokenDate, getFacebookToken } from 'utils/runtime';
 
 export default class Welcome extends Component {
-  state = {
-    isInstalled: this.props.isInstalled,
-  }
-
   handleInstall = () => {
     window.chrome.webstore.install('https://chrome.google.com/webstore/detail/olicollicgbjgnialpnmnolopimdccon', () => {
-      this.setState({ isInstalled: true });
+      location.reload();
     });
   }
 
@@ -22,7 +18,7 @@ export default class Welcome extends Component {
     const isChrome = window.chrome && window.chrome.webstore;
 
     if (isChrome) {
-      if (this.state.isInstalled) {
+      if (this.props.isInstalled) {
         return (
           <Login onClick={this.props.handleConnect} />
         )

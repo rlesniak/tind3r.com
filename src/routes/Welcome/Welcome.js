@@ -2,6 +2,7 @@ import './Welcome.scss';
 
 import React, { Component } from 'react';
 import { Button, Classes, Switch } from '@blueprintjs/core';
+import DocumentTitle from 'react-document-title';
 
 import Login from 'components/Login';
 
@@ -43,24 +44,26 @@ export default class Welcome extends Component {
   render() {
 
     return (
-      <div className="welcome">
-        <div className="welcome__left">
-          <div className="welcome__name">
-            tind<b>3</b>r.com
-            <div className="welcome__slogan">unofficial Tinder web client</div>
+      <DocumentTitle title="Tind3r.com - Unofficial Tinder client">
+        <div className="welcome">
+          <div className="welcome__left">
+            <div className="welcome__name">
+              tind<b>3</b>r.com
+              <div className="welcome__slogan">unofficial Tinder web client</div>
+            </div>
+            <div className="welcome__image"></div>
           </div>
-          <div className="welcome__image"></div>
-        </div>
-        <div className="welcome__right">
-          <div className="welcome__info">
-            <div className="welcome__cell">
-              <h1>Great things <br /> are coming</h1>
+          <div className="welcome__right">
+            <div className="welcome__info">
+              <div className="welcome__cell">
+                <h1>Great things <br /> are coming</h1>
 
-              {this.renderButton()}
+                {this.renderButton()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </DocumentTitle>
     );
   }
 }

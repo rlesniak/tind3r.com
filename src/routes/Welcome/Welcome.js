@@ -1,29 +1,69 @@
 import './Welcome.scss';
 
 import React, { Component } from 'react';
+import { Button, Classes, Switch } from '@blueprintjs/core';
+
+import Login from 'components/Login';
+
+import { checkIfInstalled, getTokenDate, getFacebookToken } from 'utils/runtime';
 
 export default class Welcome extends Component {
+  state = {
+    isInstalled: this.props.isInstalled,
+  }
+
   handleInstall = () => {
-    chrome.webstore.install('https://chrome.google.com/webstore/detail/olicollicgbjgnialpnmnolopimdccon', () => {
-      location.reload();
+    window.chrome.webstore.install('https://chrome.google.com/webstore/detail/olicollicgbjgnialpnmnolopimdccon', () => {
+      this.setState({ isInstalled: true });
     });
   }
 
-  render() {
+  renderButton() {
     const isChrome = window.chrome && window.chrome.webstore;
+
+    if (isChrome) {
+      if (this.state.isInstalled) {
+        return (
+          <Login onClick={this.props.handleConnect} />
+        )
+      }
+
+      return (
+        <Button
+          onClick={this.handleInstall}
+          className={Classes.LARGE}
+          text="Get the extension"
+        />
+      )
+    }
+
+    return (
+      <span className="welcome__chrome">
+        Only on Google Chrome <img src="/assets/img/chrome.png" />
+      </span>
+    )
+  }
+
+  render() {
 
     return (
       <div className="welcome">
-        <h1>"Completely new experience" - tind3r.com</h1>
-
-        <div className="welcome__sneak-peek">
-          <img src="/assets/img/img1.png" />
+        <div className="welcome__left">
+          <div className="welcome__name">
+            tind<b>3</b>r.com
+            <div className="welcome__slogan">unofficial Tinder web client</div>
+          </div>
+          <div className="welcome__image"></div>
         </div>
+        <div className="welcome__right">
+          <div className="welcome__info">
+            <div className="welcome__cell">
+              <h1>Great things <br /> are coming</h1>
 
-        <h2>
-          {isChrome && <button onClick={this.handleInstall}>Install extension!</button>}
-          {!isChrome && <span>Only on Google Chrome</span>}
-        </h2>
+              {this.renderButton()}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

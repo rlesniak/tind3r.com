@@ -135,7 +135,9 @@ class Welcome extends Component {
     runtimePurge();
     LS.clear();
 
-    this.props.history.replace('/welcome');
+    this.props.history.replace('/');
+
+    location.reload();
   }
 
   handleConnect = () => {

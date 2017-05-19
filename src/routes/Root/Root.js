@@ -51,29 +51,20 @@ class App extends Component {
     if (isInstalled) {
       if (isFirstLogin) {
         return (
-          <div>
-            <Login onClick={this.handleConnect} />
-          </div>
+          <Welcome handleConnect={this.handleConnect} isInstalled={isInstalled} />
         );
       }
 
       return (
         <Router>
           <Switch>
-            <Route path="/welcome" component={Welcome} />
             <Route path="/" component={Logged} />
           </Switch>
         </Router>
       );
     } else if (isInstalled === false) {
       return (
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Welcome} />
-            <Route exact path="/welcome" component={Welcome} />
-            <Route component={NotFound} />
-          </Switch>
-        </Router>
+        <Welcome handleConnect={this.handleConnect} isInstalled={isInstalled} />
       );
     }
 

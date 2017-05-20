@@ -3,8 +3,8 @@
 import './Home.scss';
 import 'react-input-range/src/scss/index.scss';
 
-import React, { Component } from 'react';
-import { observable, action } from 'mobx';
+import React, { PureComponent } from 'react';
+import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
@@ -19,17 +19,17 @@ import ShortcutIcon from 'components/ShortcutIcon';
 import ActionNotification from 'components/ActionNotification';
 import MatchNotification from 'components/MatchNotification';
 
-import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
 import Person from 'models/Person';
 
+import withLikeCounter from 'hoc/withLikeCounter';
+
 import LS from 'utils/localStorage';
 
-import {
-  CurrentUser, MAX_DISTANCE, MIN_AGE, MAX_AGE,
-} from 'models/CurrentUser';
+import { MAX_DISTANCE, MIN_AGE, MAX_AGE } from 'models/CurrentUser';
 
 import type { FiltersType } from 'stores/RecsStore';
+import type { WithLikeCounterPropsType } from 'hoc/withLikeCounter';
 
 const NOTIF_LEVELS_MAP = {
   like: 'success',
@@ -37,9 +37,7 @@ const NOTIF_LEVELS_MAP = {
   superlike: 'info',
 };
 
-type PropsType = {
-  currentUser: CurrentUser,
-};
+type PropsType = WithLikeCounterPropsType;
 
 const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }> = [
   { text: 'All', type: 'all', handle: 'handleAll' },
@@ -47,37 +45,23 @@ const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }>
   { text: 'With bio', type: 'bio', handle: 'handleBio' },
 ];
 
-@inject('currentUser') @observer
-class Home extends Component {
+@inject('currentUser') @withLikeCounter @observer
+class Home extends PureComponent {
   props: PropsType;
   notificationSystem: ?any;
 
-  @observable likeCounter = null;
-  @observable superlikeCounter = null;
   @observable distance = this.props.currentUser.distanceKm;
   @observable ageRange = {
     min: this.props.currentUser.age_filter_min,
     max: this.props.currentUser.age_filter_max,
   };
 
-  componentWillUnmount() {
-    counterService.unsubscribe(this.handleLikeCounter);
-    counterService.unsubscribe(this.handleSuperlikeCounter);
-  }
-
   componentDidMount() {
-    const { currentUser } = this.props;
-
-    if (currentUser.likeReset.seconds > 0) {
-      counterService.subscribe({ handler: this.handleLikeCounter });
-    }
-
-    if (currentUser.superlikeReset.seconds > 0 && currentUser.superlike_remaining === 0) {
-      counterService.subscribe({ handler: this.handleSuperlikeCounter });
-    }
     recsStore.fetchCore();
 
     ReactTooltip.rebuild();
+
+    window.cu = this.props.currentUser
   }
 
   handleAll = () => {
@@ -101,52 +85,6 @@ class Home extends Component {
         children: <MatchNotification person={person} />,
       });
     }
-  }
-
-  handleLikeCounter = () => {
-    const { currentUser } = this.props;
-
-    if (currentUser.likeReset.seconds === 0) {
-      counterService.unsubscribe(this.handleLikeCounter);
-    }
-
-    this.likeCounter = currentUser.likeReset.formatted;
-  }
-
-  @action handleSuperlikeCounter = () => {
-    const { currentUser } = this.props;
-
-    if (currentUser.superlikeReset.seconds === 0) {
-      counterService.unsubscribe(this.handleSuperlikeCounter);
-    }
-
-    this.superlikeCounter = currentUser.superlikeReset.formatted;
-  }
-
-  handleError = (reason: Object) => {
-    const { currentUser } = this.props;
-
-    if (reason.type === 'like') {
-      currentUser.like_limit_reset = reason.resetsAt;
-      this.likeCounter = currentUser.likeResetFormatted;
-
-      counterService.subscribe({
-        handler: this.handleLikeCounter,
-      });
-    } else if(reason.type === 'superlike') {
-      currentUser.superlike_remaining = 0;
-      currentUser.superlike_limit_reset = reason.resetsAt;
-
-      counterService.subscribe({
-        handler: this.handleSuperlikeCounter,
-      });
-    }
-  }
-
-  handleSuperlike = (remaining: number) => {
-    const { currentUser } = this.props;
-
-    currentUser.superlike_remaining = remaining;
   }
 
   handleLoadMoreClick = () => {
@@ -186,7 +124,7 @@ class Home extends Component {
   }
 
   renderBody() {
-    const { currentUser } = this.props;
+    const { currentUser, handleSuperlike, handleError, superlikeResetRemaining, likeResetRemaining } = this.props;
 
     if (recsStore.is_fetching || recsStore.areRecsExhaust || (recsStore.is_fetching && recsStore.allVisible.length === 0)) {
       return (
@@ -219,14 +157,14 @@ class Home extends Component {
               person={person}
               small={i !== 0}
               onMatch={this.handleMatch}
-              onError={this.handleError}
-              onSuperlike={this.handleSuperlike}
-              handleAction={this.handleAction}
+              onError={handleError}
+              onSuperlike={handleSuperlike}
+              onButtonClick={this.handleAction}
               allowHotkeys={i === 0}
               limitations={{
                 superlikeRemaining: currentUser.superlike_remaining,
-                superlikeResetsAt: this.superlikeCounter,
-                likeResetsAt: this.likeCounter,
+                superlikeResetsAt: superlikeResetRemaining,
+                likeResetsAt: likeResetRemaining,
               }}
             />
           </div>

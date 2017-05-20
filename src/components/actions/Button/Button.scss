@@ -28,6 +28,10 @@
     }
   }
 
+  &__active {
+    cursor: default;
+  }
+
   &__disabled {
     cursor: default;
   }

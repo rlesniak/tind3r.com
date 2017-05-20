@@ -11,7 +11,6 @@ import map from 'lodash/map';
 
 import Gallery from 'components/Gallery';
 import ActionButtons from 'components/ActionButtons';
-import Bio from 'components/Bio';
 
 import withHotkeys from 'hoc/withHotkeys';
 import { ACTION_TYPES } from 'const';
@@ -23,7 +22,7 @@ import type { ActionsType } from 'types/person';
 const keyCodes = { d: 68, s: 83, a: 65 };
 
 const callAction = (props, actionType: ActionsType) => {
-  props.handleAction({
+  props.onButtonClick({
     type: actionType,
     name: props.person.name,
     _id: props.person._id,
@@ -74,7 +73,7 @@ type PersonCardType = {
   person: Person,
   small?: boolean,
   isHovering: boolean,
-  handleAction: (payload: Object) => void,
+  onButtonClick: (payload: Object) => void,
   onCardMouseEnter: Function,
   onCardMouseLeave: Function,
   onActionClick: (type: ActionsType) => void,
@@ -127,7 +126,7 @@ const PersonCard = ({
           </Link>
         </div>
         <div className="person-card__bio">
-          <Bio text={person.bio} />
+          {person.bio}
         </div>
         {!small && hasInterests && <div className="person-card__common">
           Interests:
@@ -141,15 +140,14 @@ const PersonCard = ({
           {!shouldShowActionButtons && <span>{person.school}</span>}
           {shouldShowActionButtons && <div className="person-card__employ__actions">
             <ActionButtons
-              liked={person.is_liked}
-              likeResetsAt={likeResetsAt}
               superLikeResetsAt={superlikeResetsAt}
               superlikeRemaining={superlikeRemaining}
+              superlikeDisabled={isSuperlikeDisabled}
+              likeResetsAt={likeResetsAt}
+              likeDisabled={isLikeDisabled}
               onButtonClick={onActionClick}
               hideTimer={small}
               size={small ? 'small' : 'large'}
-              likeDisabled={isLikeDisabled}
-              superlikeDisabled={isSuperlikeDisabled}
             />
           </div>}
         </div>

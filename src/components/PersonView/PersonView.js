@@ -3,35 +3,37 @@
 import './PersonView.scss';
 
 import React, { Component } from 'react';
-import Rodal from 'rodal';
-import { observable, reaction } from 'mobx';
+import { reaction, observable } from 'mobx';
 import get from 'lodash/get';
 import uniqueId from 'lodash/uniqueId';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
 
 import Gallery from 'components/Gallery';
-import Loader from 'components/Loader';
 import ActionButtons from 'components/ActionButtons';
 import Bio from 'components/Bio';
 
 import Person from 'models/Person';
-import currentUser from 'models/CurrentUser';
 import recsStore from 'stores/RecsStore';
+
+import withLikeCounter from 'hoc/withLikeCounter';
 
 import { fbUserSearchUrl } from 'utils';
 import { getMatchByPerson, getActions } from 'utils/database.v2';
 
 import type { ActionsType } from 'types/person';
 import type { MatchType } from 'types/match';
+import type { WithLikeCounterPropsType } from 'hoc/withLikeCounter';
 
-type PropsType = {
-  personId: string,
-  onActionClick: () => void,
+type PropsType = WithLikeCounterPropsType & {
+  personId: ?string,
+  onActionClick?: () => void,
   person: Person,
   withoutFetch: boolean,
 };
 
+@inject('currentUser')
+@withLikeCounter
 @observer
 class PersonView extends Component {
   props: PropsType;
@@ -39,6 +41,8 @@ class PersonView extends Component {
   match: MatchType;
   person: Person;
   reactionDispose: () => void = n => n;
+
+  @observable activeAction: ?ActionsType;
 
   constructor(props: PropsType) {
     super(props);
@@ -58,6 +62,8 @@ class PersonView extends Component {
   }
 
   componentDidMount() {
+    this.checkAction();
+
     if (this.props.withoutFetch) return;
 
     this.person.fetch();
@@ -74,42 +80,32 @@ class PersonView extends Component {
   }
 
   handleActionClick = (type: ActionsType) => {
-    const { onActionClick } = this.props;
+    const { onActionClick, handleSuperlike, handleError } = this.props;
+
     const pero = recsStore.persons.find(person => person._id === this.person._id);
     const person = pero || this.person;
 
+    this.activeAction = type;
+
     if (person) {
-      person.callAction(type);
+      person.callAction(type, handleSuperlike, n => n, handleError);
     }
 
     if (onActionClick) {
       onActionClick();
     }
-  }
+  };
 
-  checkIsSuperliked() {
-    if (this.match) {
-      return this.match.is_super_like;
-    }
-    const action = getActions(this.person._id)[0];
-    return action && action.action_type === 'superlike';
-  }
+  checkAction() {
+    const { match } = this;
 
-  checkIsLiked() {
-    if (this.match) {
-      return !this.match.is_super_like;
-    }
-    const action = getActions(this.person._id)[0];
-    return action && action.action_type === 'like';
-  }
-
-  checkIsPassed() {
-    if (!this.checkIsLiked()) {
-      const action = getActions(this.person._id)[0];
-      return action && action.action_type === 'pass';
+    if (match) {
+      this.activeAction = match.is_super_like ? 'superlike' : (!match.is_super_like ? 'like' : null); // eslint-disable-line
     }
 
-    return false;
+    if (!this.activeAction) {
+      this.activeAction = get(getActions(this.person._id), '0.action_type', null);
+    }
   }
 
   renderSchools() {
@@ -145,9 +141,7 @@ class PersonView extends Component {
     if (this.person.jobs && this.person.jobs.length) {
       return (
         <ul>
-          {this.person.jobs.map(j => (
-            <li key={uniqueId()}>{get(j, 'company.name', null)}</li>
-          ))}
+          {this.person.jobs.map(j => <li key={uniqueId()}>{get(j, 'company.name', null)}</li>)}
         </ul>
       );
     }
@@ -160,9 +154,7 @@ class PersonView extends Component {
       return (
         <ul className="person-view__connections">
           <li className="person-view__connections-header">Common connections:</li>
-          {this.person.common_connections.map(c => (
-            <li key={c.id}>{c.name}</li>
-          ))}
+          {this.person.common_connections.map(c => <li key={c.id}>{c.name}</li>)}
         </ul>
       );
     }
@@ -175,9 +167,7 @@ class PersonView extends Component {
       return (
         <ul className="person-view__connections">
           <li className="person-view__connections-header">Common interests:</li>
-          {this.person.common_interests.map(c => (
-            <li key={c.id}>{c.name}</li>
-          ))}
+          {this.person.common_interests.map(c => <li key={c.id}>{c.name}</li>)}
         </ul>
       );
     }
@@ -189,10 +179,10 @@ class PersonView extends Component {
     const { person } = this;
     const width = 500;
 
+    const { currentUser, superlikeResetRemaining, likeResetRemaining } = this.props;
+
     const instagramPhotos = (person.instagram && person.instagram.photos) || [];
-    const photos = person.photos.concat(instagramPhotos.map(photo => (
-      { id: photo.ts, url: photo.image }
-    )));
+    const photos = person.photos.concat(instagramPhotos.map(photo => ({ id: photo.ts, url: photo.image })));
 
     return (
       <div className="person-view">
@@ -208,36 +198,34 @@ class PersonView extends Component {
               <Bio text={person.bio} />
             </div>
 
-            {person.instagramUsername && <div className="person-view__insta">
-              <a href={person.instagramProfileLink} target="_blank" rel="noopener noreferrer">
-                <i className="fa fa-instagram" />
-                <span>{person.instagramUsername}</span>
-              </a>
-            </div>}
+            {person.instagramUsername &&
+              <div className="person-view__insta">
+                <a href={person.instagramProfileLink} target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-instagram" />
+                  <span>{person.instagramUsername}</span>
+                </a>
+              </div>}
 
             {this.renderConnections()}
             {this.renderInterests()}
           </div>
           <div className="person-view__buttons">
-            {person._id !== currentUser._id && <ActionButtons
-              passed={this.checkIsPassed()}
-              liked={this.checkIsLiked()}
-              superliked={this.checkIsSuperliked()}
-              onButtonClick={this.handleActionClick}
-              hideTimer={false}
-              size={'large'}
-            />}
+            {person._id !== currentUser._id &&
+              <ActionButtons
+                superLikeResetsAt={superlikeResetRemaining}
+                superlikeRemaining={currentUser.superlike_remaining}
+                superlikeDisabled={currentUser.superlike_remaining === 0}
+                likeResetsAt={likeResetRemaining}
+                likeDisabled={!!likeResetRemaining}
+                onButtonClick={this.handleActionClick}
+                hideTimer={false}
+                size="large"
+                activeAction={this.activeAction}
+              />}
           </div>
         </div>
         <div className="person-view__gallery" style={{ width: `${width}px` }}>
-          <Gallery
-            delay={200}
-            scrolling={false}
-            images={photos}
-            width={width}
-            withArrowNav
-            lazyLoad={false}
-          />
+          <Gallery delay={200} scrolling={false} images={photos} width={width} withArrowNav lazyLoad={false} />
         </div>
       </div>
     );

@@ -28,9 +28,6 @@ class PersonModal extends Component {
   }
 
   render() {
-    const { person } = this;
-    const width = 500;
-
     return (
       <div className="person-modal">
         <Rodal

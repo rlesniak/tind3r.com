@@ -128,7 +128,7 @@ export class MatchStore {
   }
 
   @computed get unreadCount(): number {
-    return this.matches.filter(match => match.isUnread).length;
+    return this.items.filter(match => match.isUnread).length;
   }
 
   @computed get matches(): Array<Match> {

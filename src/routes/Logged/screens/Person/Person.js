@@ -40,7 +40,7 @@ class PersonComponent extends Component {
     return (
       <DocumentTitle title={`${this.person.name} - ${pageTitle}`}>
         <div className="person">
-          <PersonView personId={this.props.match.params.id} />
+          <PersonView person={this.person} withoutFetch />
         </div>
       </DocumentTitle>
     );

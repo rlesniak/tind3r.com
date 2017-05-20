@@ -23,9 +23,11 @@ class Person implements UserInterface {
   birth_date: string;
   schools: ?Array<SchoolType>;
   instagram: ?InstagramType;
-  photos: ?[];
+  photos: [] = [];
   name: string;
   bio: string;
+  hide_age: boolean = false;
+  hide_distance: boolean = false;
 
   @observable distance_mi: number;
   @observable is_loading: boolean = false;
@@ -135,15 +137,11 @@ class Person implements UserInterface {
   }
 
   @computed get age(): string {
+    if (this.hide_age) {
+      return 'n/a';
+    }
+
     return moment().diff(this.birth_date, 'years');
-  }
-
-  @computed get seenMin(): string {
-    return moment(this.ping_time).fromNow();
-  }
-
-  @computed get seen(): string {
-    return moment(this.ping_time).format('DD/MM HH:mm');
   }
 
   @computed get school(): string {
@@ -151,8 +149,12 @@ class Person implements UserInterface {
   }
 
   @computed get distanceKm(): ?string {
+    if (this.hide_distance) {
+      return 'n/a km';
+    }
+
     if (this.distance_mi) {
-      return `${miToKm(this.distance_mi)} KM`;
+      return `${miToKm(this.distance_mi)} km`;
     }
 
     return null;

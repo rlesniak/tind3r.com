@@ -29,6 +29,7 @@ type PropsType = {
   personId: string,
   onActionClick: () => void,
   person: Person,
+  withoutFetch: boolean,
 };
 
 @observer
@@ -57,6 +58,8 @@ class PersonView extends Component {
   }
 
   componentDidMount() {
+    if (this.props.withoutFetch) return;
+
     this.person.fetch();
 
     ReactTooltip.rebuild();
@@ -185,10 +188,6 @@ class PersonView extends Component {
   render() {
     const { person } = this;
     const width = 500;
-
-    if (!person.distanceKm) {
-      return <Loader />;
-    }
 
     const instagramPhotos = (person.instagram && person.instagram.photos) || [];
     const photos = person.photos.concat(instagramPhotos.map(photo => (

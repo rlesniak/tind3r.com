@@ -15,7 +15,8 @@ import { MatchStore } from 'stores/MatchStore';
 
 import { CurrentUser } from 'models/CurrentUser';
 import Match from 'models/Match';
-import { removeMatch } from 'utils/database.v2';
+import { collections, removeMatch } from 'utils/database.v2';
+
 
 import MessageList from 'components/conversation/MessageList';
 import MessageInput from 'components/conversation/MessageInput';
@@ -41,6 +42,15 @@ class MatchComponent extends Component {
     const { match: { params } } = this.props;
     this.fetchMessages(params.id);
     ReactTooltip.rebuild();
+
+    collections.persons.on('update', data => {
+      const person = data[0];
+
+      if (person && this.match) {
+        this.match.person.distance_mi = person.distance_mi;
+        this.match.person.bio = person.bio;
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps: Object) {

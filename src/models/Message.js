@@ -26,10 +26,10 @@ class Message {
     extend(this, message);
   }
 
-  @action async save() {
+  @action async save(payload: Object = {}) {
     this.isSending = true;
     try {
-      const data = await FetchService.sendMessage(this.match_id, this.body);
+      const data = await FetchService.sendMessage(this.match_id, this.body, payload);
 
       extend(this, data);
     } catch (err) {

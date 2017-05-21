@@ -84,9 +84,9 @@ class MatchComponent extends Component {
     }
   }
 
-  handleMessageSubmit = (text: string) => {
+  handleMessageSubmit = (text: string, payload: Object = {}) => {
     const { match: { params }, currentUser } = this.props;
-    this.messageStore.submit(text, params.id, currentUser._id);
+    this.messageStore.submit(text, params.id, currentUser._id, payload);
   }
 
   handleUnmatch = () => {

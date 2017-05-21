@@ -10,6 +10,8 @@
     background: #fff;
     border-radius: 10px;
     padding: 10px;
+    position: relative;
+    height: 65px;
   }
 
   textarea {
@@ -28,5 +30,18 @@
 
   &__controls {
     padding: 5px 0;
+  }
+
+  &__controls-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 26px;
+    cursor: pointer;
+    z-index: 0;
+
+    i {
+      opacity: .6;
+    }
   }
 }

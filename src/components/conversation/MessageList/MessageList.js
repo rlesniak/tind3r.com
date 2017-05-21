@@ -53,7 +53,7 @@ class MessageList extends Component {
           const component = (
             <Message
               group={gorupMessage}
-              key={message._id || uniqueId()}
+              key={message._id}
               ref={ref => { this.messagesRefs.push(ref); }}
               message={message}
               todayDate={todayDate}

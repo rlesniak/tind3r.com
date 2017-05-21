@@ -1,0 +1,38 @@
+@import 'const';
+
+.message-gif {
+  position: absolute;
+  width: 260px;
+  bottom: 0;
+  background: #fff;
+  padding: 5px;
+  border: 1px solid $gray;
+  border-radius: 5px;
+
+  &__input {
+    width: 100%;
+    margin-bottom: 10px;
+
+    input {
+      width: 100%;
+      font-size: 17px;
+      padding: 4px 8px;
+      border-radius: 5px;
+    }
+  }
+
+  &__list {
+    overflow-y: auto;
+    height: 50vh;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &__list-item {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+}

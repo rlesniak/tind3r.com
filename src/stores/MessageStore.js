@@ -37,7 +37,7 @@ class MessageStore {
     this.messages.push(message);
   }
 
-  @action submit(body: string, matchId: string, fromId: string) {
+  @action submit(body: string, matchId: string, fromId: string, payload: Object = {}) {
     const data = {
       _id: uniqueId(),
       body,
@@ -47,7 +47,7 @@ class MessageStore {
     };
 
     const message: Message = new Message(this, data);
-    message.save();
+    message.save(payload);
 
     this.messages.push(message);
   }

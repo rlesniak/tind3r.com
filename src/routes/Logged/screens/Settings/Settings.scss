@@ -31,4 +31,14 @@
     margin: 20px auto;
     background: #5b6069;
   }
+
+  label span {
+    color: $accent;
+  }
+
+  label i {
+    color: $green;
+    margin: 0 4px;
+    display: inline-block;
+  }
 }

@@ -25,6 +25,7 @@ import Person from 'models/Person';
 
 import withLikeCounter from 'hoc/withLikeCounter';
 
+import { kmToMi } from 'utils';
 import LS from 'utils/localStorage';
 
 import { MAX_DISTANCE, MIN_AGE, MAX_AGE } from 'models/CurrentUser';
@@ -112,9 +113,9 @@ class Home extends PureComponent {
     }
   }
 
-  handleDistanceChange = (distance: number) => {
+  handleDistanceChange = (distanceKm: number) => {
     this.props.currentUser.updateProfile({
-      distance_filter: distance,
+      distance_filter: kmToMi(distanceKm),
     });
 
     ReactGA.event({

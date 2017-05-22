@@ -67,6 +67,7 @@ export class CurrentUser implements UserInterface {
   @observable age_filter_min: number;
   @observable age_filter_max: number;
   @observable plusAccount: boolean;
+  @observable pos: Object = {};
 
   @action set(json: Object) {
     const { rating, user, purchases } = json;
@@ -110,12 +111,33 @@ export class CurrentUser implements UserInterface {
       const { data } = await FetchSevice.updateProfile({
         ...this.profileSettings,
         ...payload,
-        distance_filter: kmToMi(distance),
+        distance_filter: distance,
       });
 
-      this.set(data);
+      extend(this, data);
     } catch (e) {}
 
+    this.isProcessing = false;
+  }
+
+  @action async updateLocation(lat: number, lon: number, errCallback: () => void) {
+    this.isProcessing = true;
+
+    try {
+      const { data } = await API.post('/user/ping', {
+        lat, lon,
+      });
+
+      if (data.error) {
+        errCallback();
+      } else {
+        this.pos = {
+          lat, lon,
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
     this.isProcessing = false;
   }
 

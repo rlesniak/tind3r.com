@@ -16,6 +16,15 @@
   <body>
     <div id='root'>
     </div>
+
+    <script src="//cdn.headwayapp.co/widget.js"></script>
+    <script>
+      window.HW_config = {
+        selector: "#changelog", // CSS selector where to inject the badge
+        account: "7zpzmy" // your account ID
+      };
+    </script>
+
     <% if (env.develop) { %>
       <script src="/static/vendor.js"></script>
       <script src="/static/main.js"></script>

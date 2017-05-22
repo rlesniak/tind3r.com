@@ -77,6 +77,8 @@ class Welcome extends Component {
     reportLocation(this.props.history.location);
 
     this.props.history.listen(reportLocation);
+
+    window.Headway.init(window.HW_config);
   }
 
   componentWillUpdate(nextProps: PropsType) {
@@ -191,7 +193,8 @@ class Welcome extends Component {
                     <div className="logo-m-white" />
                   </div>
                 </li>
-                <li>
+                <li className="with-changelog">
+                  <div id="changelog" />
                   <NavLink exact to="/" activeClassName="active">
                     <i className="fa fa-home" />
                   </NavLink>

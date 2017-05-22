@@ -3,6 +3,7 @@
 import './MessageInput.scss';
 
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
@@ -52,6 +53,11 @@ class MessageInput extends Component {
 
   handleEmojiSelect = (emoji: string) => {
     this.text += emoji;
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Select EMOJI',
+    });
   }
 
   handleGifToggle = () => {
@@ -68,6 +74,11 @@ class MessageInput extends Component {
 
   handleGifSubmit = (body: string, payload: Object) => {
     this.props.onSubmit(body, payload);
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Submit GIF',
+    });
   }
 
   render() {

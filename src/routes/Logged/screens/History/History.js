@@ -3,6 +3,7 @@
 import './History.scss';
 
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import moment from 'moment';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
@@ -59,6 +60,11 @@ class Actions extends Component {
     removeActions();
     this.actions = [];
     this.forceUpdate();
+
+    ReactGA.event({
+      category: 'History',
+      action: 'Clear',
+    });
   }
 
   getFiltered() {

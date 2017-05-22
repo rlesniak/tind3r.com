@@ -5,7 +5,7 @@ import orderBy from 'lodash/orderBy';
 import each from 'lodash/each';
 
 import Match from 'models/Match';
-import { collections, matchCollection } from 'utils/database.v2';
+import { collections, matchCollection, updateMatch } from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
 import counterService from 'services/counterService';
 
@@ -106,6 +106,11 @@ export class MatchStore {
       }
       this.isLoading = false;
     }
+  }
+
+  @action markAllAsRead(): void {
+    const unreadIds = this.items.filter(match => match.isUnread).map(match => match._id);
+    updateMatch(unreadIds, { is_new: false });
   }
 
   @action create(data: MatchType): void {

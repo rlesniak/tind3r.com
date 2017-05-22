@@ -3,6 +3,7 @@
 import './Matches.scss';
 
 import React from 'react';
+import ReactGA from 'react-ga';
 import { withState, withHandlers, compose } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
@@ -53,7 +54,20 @@ const enhance = compose(
     handleHardRefresh: ({ matchStore }) => () => {
       LS.clear();
       matchStore.fetch();
+
+      ReactGA.event({
+        category: 'Matches',
+        action: 'Hard refresh',
+      });
     },
+    handleMarkAllAsRead: ({ matchStore }) => () => {
+      ReactGA.event({
+        category: 'Matches',
+        action: 'Mark as read',
+      });
+
+      matchStore.markAllAsRead();
+    }
   }),
   observer,
 );
@@ -68,7 +82,7 @@ const filterTypesMap = [
 ];
 
 const Matches = ({
-  handleMatchClick, matchStore, activeId, handleHardRefresh, ...props
+  handleMatchClick, matchStore, activeId, handleHardRefresh, handleMarkAllAsRead, ...props
 }: PropsType) => (
   <div className="matches">
     <SideMenu title="Matches">
@@ -86,6 +100,7 @@ const Matches = ({
       <SideMenu.Separator />
       <SideMenu.Item
         asAction
+        onClick={handleMarkAllAsRead}
         disabled={matchStore.unreadCount === 0}
       >
         <i className="fa fa-check-circle-o" /> Mark all as read

@@ -4,6 +4,7 @@ import './Home.scss';
 import 'react-input-range/src/scss/index.scss';
 
 import React, { PureComponent } from 'react';
+import ReactGA from 'react-ga';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import cx from 'classnames';
@@ -77,6 +78,11 @@ class Home extends PureComponent {
   }
 
   handleMatch = (person: Person) => {
+    ReactGA.event({
+      category: 'Recs',
+      action: 'Match',
+    });
+
     if (this.notificationSystem) {
       this.notificationSystem.addNotification({
         level: 'success',
@@ -110,6 +116,11 @@ class Home extends PureComponent {
     this.props.currentUser.updateProfile({
       distance_filter: distance,
     });
+
+    ReactGA.event({
+      category: 'Recs',
+      action: 'Distance change',
+    });
   };
 
   handleAgeChange = ({ min, max }: { min: number, max: number }) => {
@@ -120,6 +131,11 @@ class Home extends PureComponent {
     this.props.currentUser.updateProfile({
       age_filter_min: min,
       age_filter_max: max,
+    });
+
+    ReactGA.event({
+      category: 'Recs',
+      action: 'Age change',
     });
   }
 

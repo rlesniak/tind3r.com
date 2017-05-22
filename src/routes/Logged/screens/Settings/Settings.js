@@ -3,6 +3,7 @@
 import './Settings.scss';
 
 import React from 'react';
+import ReactGA from 'react-ga';
 import { compose, withHandlers, withState } from 'recompose';
 import { observer } from 'mobx-react';
 import { Button, Classes, Switch } from '@blueprintjs/core';
@@ -19,6 +20,10 @@ const enhance = compose(
       setBio(target.value);
     },
     handleSave: ({ bio }) => () => {
+      ReactGA.event({
+        category: 'Settings',
+        action: 'Profile update',
+      });
       currentUser.updateProfile({
         bio,
       });
@@ -26,6 +31,11 @@ const enhance = compose(
     handleNotifChange: ({ setNotif }) => ({ target }) => {
       setNotif(target.checked);
       LS.set({ settings: { ...LS.get('settings'), notifCloudEnabled: target.checked } });
+
+      ReactGA.event({
+        category: 'Settings',
+        action: 'Notification change',
+      });
     },
   }),
   observer,

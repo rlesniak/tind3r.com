@@ -95,10 +95,6 @@ export class CurrentUser implements UserInterface {
       this.is_fetching = false;
       this.is_authenticated = true;
     }).catch(e => {
-      if (window.Bugsnag) {
-        Bugsnag.notifyException(new Error('meta'), 'metaErr', { data: e });
-      }
-
       this.is_authenticated = false;
       this.is_fetching = false;
       this.is_error = true;
@@ -118,11 +114,7 @@ export class CurrentUser implements UserInterface {
       });
 
       this.set(data);
-    } catch (e) {
-      if (process.env.NODE_ENV === 'production' && window.Bugsnag) {
-        Bugsnag.notifyException(e, 'updateProfile()');
-      }
-    }
+    } catch (e) {}
 
     this.isProcessing = false;
   }

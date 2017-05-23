@@ -129,8 +129,8 @@ export class CurrentUser implements UserInterface {
       });
 
       if (data.error) {
-        if (window.Bugsnag) {
-          window.Bugsnag.notifyException(new Error('Update location'), data.error);
+        if (window.hj) {
+          window.hj('tagRecording', ['ALocationErr']);
         }
         errCallback();
       } else {

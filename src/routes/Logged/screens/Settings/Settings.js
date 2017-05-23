@@ -64,6 +64,8 @@ const enhance = compose(
       setTemplateValue('');
       setTemplates(LS.templates);
 
+      if (window.hj) window.hj('tagRecording', ['Template', 'Create']);
+
       ReactGA.event({
         category: 'Settings',
         action: 'Template create',

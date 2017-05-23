@@ -94,6 +94,8 @@ class MessageInput extends Component {
       this.inputRef.focus();
     }
 
+    if (window.hj) window.hj('tagRecording', ['Template', 'Send']);
+
     ReactGA.event({
       category: 'Message',
       action: 'Template use',

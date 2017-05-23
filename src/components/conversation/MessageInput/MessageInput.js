@@ -8,13 +8,17 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 
+import LS from 'utils/localStorage';
+
 import MessageEmoji from '../MessageEmoji';
 import MessageGif from '../MessageGif';
+
 
 type PropsType = {
   onSubmit: (text: string) => void,
   onFocus?: () => void,
   handleMessageSubmit: (body: string, payload: Object) => void,
+  personName: ?string,
 }
 
 @observer
@@ -81,7 +85,23 @@ class MessageInput extends Component {
     });
   }
 
+  handleTemplateChange = ({ target: { value } }: SyntheticInputEvent) => {
+    if (value === '-1') return;
+
+    this.text = value;
+
+    if (this.inputRef) {
+      this.inputRef.focus();
+    }
+
+    ReactGA.event({
+      category: 'Message',
+      action: 'Template use',
+    });
+  }
+
   render() {
+
     return (
       <div
         className={cx('message-input')}
@@ -111,6 +131,17 @@ class MessageInput extends Component {
           </div>
           <div className="message-input__controls-item">
             <i className="fa fa-film" onClick={this.handleGifToggle} />
+          </div>
+          <div className="message-input__controls-item message-input__controls-item-select">
+            <div className="pt-select pt-minimal">
+              <select value="-1" onChange={this.handleTemplateChange}>
+                <option value="-1">Select a message template...</option>
+                {LS.templates.map((tmpl, i) => {
+                  const replaced = tmpl.replace('{{name}}', this.props.personName || '');
+                  return <option key={i} value={replaced}>{replaced.substr(0, 30)}</option>
+                })}
+              </select>
+            </div>
           </div>
         </div>
       </div>

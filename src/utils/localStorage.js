@@ -1,24 +1,78 @@
+// @flow
+
 import store from 'store';
 import get from 'lodash/get';
+import pullAt from 'lodash/pullAt';
 
 const APP_NAME = 'app.v2';
+
+const settings = () => {
+  const ls = () => store.get(APP_NAME) || {};
+
+  const get = () => ls.settings;
+
+  const set = (data: Object) => {
+    store.set(APP_NAME, {
+      ...ls.data,
+      settings: {
+        ...get(),
+        ...data,
+      }
+    });
+  }
+}
 
 const ls = {
   get data() {
     return store.get(APP_NAME) || {};
   },
 
-  get(key, defaultValue = null) {
+  get(key: string, defaultValue: any = null): Object {
     return get(this.data, key, defaultValue);
   },
 
-  set(newData) {
+  set(newData: Object) {
     store.set(APP_NAME, { ...this.data, ...newData });
+  },
+
+  get settings() {
+    return this.get('settings', {});
+  },
+
+  setSettings(data: Object = {}) {
+    this.set({
+      settings: {
+        ...this.settings,
+        ...data,
+      }
+    })
+  },
+
+  get templates() {
+    return this.get('templates', []);
+  },
+
+  createTemplate(value: ?string) {
+    if (!value) return;
+
+    const templates: string[] = this.templates;
+    templates.push(value);
+
+    this.set({ templates });
+  },
+
+  removeTemplateAt(index: number) {
+    const templates = this.templates;
+    pullAt(templates, index);
+
+    this.set({ templates });
   },
 
   clear() {
     store.clearAll();
   },
 };
+
+window.ls = ls;
 
 export default ls;

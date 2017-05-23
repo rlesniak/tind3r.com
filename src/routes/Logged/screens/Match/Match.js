@@ -145,6 +145,7 @@ class MatchComponent extends Component {
   render() {
     const match = this.match;
     const isBlocked = match && match.is_blocked;
+    const personName = match && match.person.name;
 
     return (
       <div className="match">
@@ -181,6 +182,7 @@ class MatchComponent extends Component {
               <MessageInput
                 onFocus={this.setAsRead}
                 onSubmit={this.handleMessageSubmit}
+                personName={personName}
               />
             </div>}
           </div>

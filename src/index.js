@@ -34,4 +34,11 @@ load().then(() => {
   alert('There is some error. Please try logout and login again');
 });
 
+if (window.Bugsnag) {
+  window.Bugsnag.beforeNotify = function (data) {
+    data.metaData.sessionURL = LogRocket.sessionURL;
+    return data;
+  };
+};
+
 if (module.hot) module.hot.accept('./App', () => render(App));

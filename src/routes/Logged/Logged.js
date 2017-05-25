@@ -9,6 +9,7 @@ import { observer, Provider } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
 import ReactGA from 'react-ga';
 import DocumentTitle from 'react-document-title';
+import LogRocket from 'logrocket';
 
 import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
@@ -122,8 +123,11 @@ class Welcome extends Component {
           window.hj('tagRecording', ['TKN', tkn]);
         }
       });
-
     }
+
+    LogRocket.identify(currentUser._id, {
+      name: currentUser.name,
+    });
 
     matchStore.setCurrentUserId(currentUser._id);
 

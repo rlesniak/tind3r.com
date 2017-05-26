@@ -114,9 +114,9 @@ class Welcome extends Component {
 
     if (window.Bugsnag) {
       getToken(tkn => {
-        Bugsnag.user = {
+        window.Bugsnag.user = {
           id: currentUser._id,
-          tkn
+          tkn: tkn || 'null',
         };
 
         if (window.hj && tkn) {
@@ -127,6 +127,7 @@ class Welcome extends Component {
 
     LogRocket.identify(currentUser._id, {
       name: currentUser.name,
+      gender: currentUser.gender,
     });
 
     matchStore.setCurrentUserId(currentUser._id);

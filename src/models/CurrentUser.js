@@ -51,6 +51,7 @@ export const MIN_AGE = 18;
 export class CurrentUser implements UserInterface {
   name: string;
   isCurrentUser: true = true;
+  gender: 0 | 1;
 
   @observable isProcessing: boolean = false;
   @observable is_authenticated: ?boolean = undefined;

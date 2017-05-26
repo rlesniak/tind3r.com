@@ -3,6 +3,7 @@
 import { observable, computed, action } from 'mobx';
 import orderBy from 'lodash/orderBy';
 import each from 'lodash/each';
+import LogRocket from 'logrocket';
 
 import Match from 'models/Match';
 import { collections, matchCollection, updateMatch } from 'utils/database.v2';
@@ -89,6 +90,8 @@ export class MatchStore {
 
       this.isLoading = false;
     } catch (err) {
+      LogRocket.error('fetch', err);
+
       if (err && window.Bugsnag) {
         Bugsnag.notifyException(err);
       }
@@ -158,6 +161,8 @@ export class MatchStore {
         if (window.Bugsnag) {
           Bugsnag.notifyException(new Error('!m.person.name'), m.person);
         }
+
+        LogRocket.warn('person.name', m.person);
 
         return true;
       }

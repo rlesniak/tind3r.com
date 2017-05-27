@@ -1,6 +1,7 @@
 // @flow
 
 import { each } from 'lodash';
+import LogRocket from 'logrocket';
 
 import API from 'utils/api';
 import LS from 'utils/localStorage';
@@ -107,6 +108,9 @@ export default {
         each(matches, match => {
           if (!match.is_new_message) {
             parsedMatches.push(parseMatch(match, !isFirstFetch));
+          }
+
+          if (match.person) {
             parsedPersons.push(parsePerson(match.person));
           }
         });
@@ -118,6 +122,8 @@ export default {
         }
 
         if (parsedMatches.length) {
+          LogRocket.info('fetch update', { matches: parsedMatches.length, persons: parsedPersons.length })
+
           saveMatchesToDb(parsedMatches, () => {
             savePersonsToDb(parsedPersons, () => {
               resolve({

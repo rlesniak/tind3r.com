@@ -53,6 +53,7 @@ const enhance = compose(
     },
     handleHardRefresh: ({ matchStore }) => () => {
       LS.clear();
+      matchStore.items = [];
       matchStore.fetch();
 
       ReactGA.event({

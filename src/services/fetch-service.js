@@ -95,6 +95,8 @@ export default {
     const lastActivityDate = LS.data.lastActivity;
 
     return new Promise((resolve, reject) => {
+      const isFirstFetch = !lastActivityDate;
+
       API.post('/updates', { last_activity_date: lastActivityDate }).then(({ data }) => {
         const { matches, last_activity_date, blocks } = data;
 
@@ -104,14 +106,16 @@ export default {
 
         each(matches, match => {
           if (!match.is_new_message) {
-            parsedMatches.push(parseMatch(match, !!LS.data.lastActivity));
+            parsedMatches.push(parseMatch(match, !isFirstFetch));
             parsedPersons.push(parsePerson(match.person));
           }
         });
 
         processMessages(getMessages(matches));
 
-        createBlocks(blocks);
+        if (!isFirstFetch) {
+          createBlocks(blocks);
+        }
 
         if (parsedMatches.length) {
           saveMatchesToDb(parsedMatches, () => {

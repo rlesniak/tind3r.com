@@ -41,6 +41,7 @@ const enhance = compose(
   withState('isHovering', 'toggleHover', false),
   withHotkeys({
     [keyCodes.d]: props => {
+      if (props.isLikeDisabled) return;
       callAction(props, ACTION_TYPES.LIKE);
     },
     [keyCodes.s]: props => {
@@ -48,7 +49,6 @@ const enhance = compose(
       callAction(props, ACTION_TYPES.SUPERLIKE);
     },
     [keyCodes.a]: props => {
-      if (props.isLikeDisabled) return;
       callAction(props, ACTION_TYPES.PASS);
     },
   }),

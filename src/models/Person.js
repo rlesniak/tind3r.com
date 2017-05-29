@@ -96,7 +96,6 @@ class Person implements UserInterface {
           const { match, likes_remaining, rate_limited_until } = await like(this._id);
           if (match) {
             matchCallback(this);
-            this.createDBMatch(match);
           }
 
           if (likes_remaining === 0 && rate_limited_until) {
@@ -117,7 +116,6 @@ class Person implements UserInterface {
           const { match, super_likes: { remaining, resets_at } } = await superlike(this._id);
           if (match) {
             matchCallback(this);
-            this.createDBMatch(match);
           }
 
           if (remaining === 0) {

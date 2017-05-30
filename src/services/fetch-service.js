@@ -106,6 +106,8 @@ export default {
         const parsedMessages: MessageType[] = [];
 
         each(matches, match => {
+          if (!match._id) return; // when group match
+
           if (!match.is_new_message) {
             parsedMatches.push(parseMatch(match, !isFirstFetch));
           }

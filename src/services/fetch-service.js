@@ -122,7 +122,12 @@ export default {
         }
 
         if (parsedMatches.length) {
-          LogRocket.info('fetch update', { matches: parsedMatches.length, persons: parsedPersons.length })
+          const obj = { matches: parsedMatches.length, persons: parsedPersons.length };
+          LogRocket.info('fetch update', obj);
+
+          if (window.Bugsnag && obj.matches !== obj.persons) {
+            window.Bugsnag.notify('fetch-service', 'fetch update', obj);
+          }
 
           saveMatchesToDb(parsedMatches, () => {
             savePersonsToDb(parsedPersons, () => {

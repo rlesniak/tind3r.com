@@ -49,7 +49,7 @@ export function matchCollection(): Array<MatchType> {
       persons: {
         _id: 'person_id',
         $as: 'person',
-        // $require: true,
+        $require: true,
         $multi: false,
       },
     }],

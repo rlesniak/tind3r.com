@@ -247,6 +247,20 @@ class Welcome extends Component {
                     <i className="fa fa-sign-out" />
                   </div>
                 </li>
+                <li className="logged__coffee">
+                  <a
+                    href='https://ko-fi.com/A0851VB7'
+                    target='_blank'
+                    className="logged__coffee-wrapper"
+                  >
+                    <div className="logged__coffee-icon">
+                      <img src="https://ko-fi.com/img/cuplogo.svg" />
+                    </div>
+                    <div className="logged__coffee-text">
+                      Buy me a coffee
+                    </div>
+                  </a>
+                </li>
               </ul>
             </div>
             <div className="logged__content">

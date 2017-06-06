@@ -97,6 +97,31 @@
       left: 5px;
     }
   }
+
+  &__coffee-wrapper {
+    width: 75px;
+    font-size: 12px;
+    color: #fff;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__coffee {
+    position: fixed;
+    bottom: 5px;
+  }
+
+  &__coffee-icon {
+    display: inline-block;
+    width: 40px;
+    margin-left: 5px;
+  }
+
+  &__coffee-text {
+    margin-top: 6px;
+  }
 }
 
 .not-logged {

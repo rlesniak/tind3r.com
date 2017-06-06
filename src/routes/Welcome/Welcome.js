@@ -9,9 +9,17 @@ import Login from 'components/Login';
 import { checkIfInstalled, getTokenDate, getFacebookToken } from 'utils/runtime';
 
 export default class Welcome extends Component {
+  state = {
+    isButtonVisible: true,
+  }
+
   handleInstall = () => {
+    this.setState({ isButtonVisible: false });
+
     window.chrome.webstore.install('https://chrome.google.com/webstore/detail/olicollicgbjgnialpnmnolopimdccon', () => {
       location.reload();
+    }, () => {
+      this.setState({ isButtonVisible: true });
     });
   }
 
@@ -25,13 +33,23 @@ export default class Welcome extends Component {
         )
       }
 
+      if (this.state.isButtonVisible) {
+        return (
+          <Button
+            onClick={this.handleInstall}
+            className={Classes.LARGE}
+            text="Get the extension"
+          />
+        )
+      }
+
       return (
         <Button
-          onClick={this.handleInstall}
+          disabled
           className={Classes.LARGE}
-          text="Get the extension"
+          text="Installing..."
         />
-      )
+      );
     }
 
     return (

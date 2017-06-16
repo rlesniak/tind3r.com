@@ -12,6 +12,8 @@ import ReactTooltip from 'react-tooltip';
 import NotificationSystem from 'react-notification-system';
 import InputRange from 'react-input-range';
 
+import Autolike from './components/Autolike';
+
 import PersonCard from 'components/PersonCard';
 import LoadMoreCard from 'components/LoadMoreCard';
 import SearchingLoader from 'components/SearchingLoader';
@@ -200,6 +202,8 @@ class Home extends PureComponent {
   }
 
   render() {
+    const { handleSuperlike, handleError } = this.props;
+
     return (
       <div className="home">
         <NotificationSystem ref={ref => { this.notificationSystem = ref; }} />
@@ -234,8 +238,12 @@ class Home extends PureComponent {
           </SideMenu.Item>
           <SideMenu.Separator />
           <SideMenu.Item className="home__sidebar-item">
-            <label>Autolike</label>
-            <span>(soon)</span>
+            <Autolike
+              recs={recsStore}
+              onMatch={this.handleMatch}
+              onError={handleError}
+              onButtonClick={this.handleAction}
+            />
           </SideMenu.Item>
           <SideMenu.Separator />
           <SideMenu.Item className="home__sidebar-item">

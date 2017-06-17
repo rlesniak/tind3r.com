@@ -19,7 +19,7 @@ import currentUser from 'models/CurrentUser';
 
 const enhance = compose(
   withState('bio', 'setBio', () => currentUser.bio),
-  withState('notif', 'setNotif', () => !!LS.settings.notifCloudEnabled || true),
+  withState('notif', 'setNotif', () => LS.get('settings.notifCloudEnabled', true)),
   withState('templates', 'setTemplates', () => LS.templates),
   withState('templateValue', 'setTemplateValue', ''),
   withState('emojiOpen', 'setEmojiOpen', false),

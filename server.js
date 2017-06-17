@@ -60,7 +60,6 @@ if (isDeveloping) {
   app.get('*', (req, res) => {
     res.render('index', {
       env: env,
-      variant: 'NEW',
     });
   });
 }

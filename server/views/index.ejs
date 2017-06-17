@@ -29,33 +29,22 @@
       <script src="/static/vendor.js"></script>
       <script src="/static/main.js"></script>
     <% } else { %>
+      <script src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-3.min.js" data-apikey="1b165597e658f22e79923a8d458d5122"></script>
 
-      <% if (variant === 'OLD') { %>
-        <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js"></script>
-        <script>
-          Raven.config('https://e45202b021c04414a0857c3682f610c5@sentry.io/126011').install()
-        </script>
+      <!-- Hotjar Tracking Code for www.tind3r.com -->
+      <script>
+        (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:497970,hjsv:5};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+      </script>
 
-        <script src="/static/v1/vendor.dll.js"></script>
-        <script src="/static/v1/bundle.a11512e6e43d9ed72ed3.min.js"></script>
-      <% } else { %>
-        <script src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-3.min.js" data-apikey="1b165597e658f22e79923a8d458d5122"></script>
-
-        <!-- Hotjar Tracking Code for www.tind3r.com -->
-        <script>
-          (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:497970,hjsv:5};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-          })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-        </script>
-
-        <% for(var i=0; i<env.assets.length; i++) {%>
-          <script src="<%= env.assets[i] %>"></script>
-        <% } %>
+      <% for(var i=0; i<env.assets.length; i++) {%>
+        <script src="<%= env.assets[i] %>"></script>
       <% } %>
     <% } %>
   </body>

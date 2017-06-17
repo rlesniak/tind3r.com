@@ -1,9 +1,7 @@
 node_modules
 npm-debug.log
 .DS_Store
-dist/*.js
-dist/*.map
-dist/*.json
+dist
 *.swp
 .vscode
 yarn-error.log

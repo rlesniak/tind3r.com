@@ -2,22 +2,21 @@ import './SideMenu.scss';
 
 import React from 'react';
 import cx from 'classnames';
-import { compose, withState } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
+
+import LS from 'utils/localStorage';
 
 type PropsType = {
   children: any,
   className: ?any,
 };
 
-export const Separator = () => (
-  <div className="side-menu__separator" />
-);
+export const Separator = () => <div className="side-menu__separator" />;
 
-export const Right = (props: PropsType) => (
+export const Right = (props: PropsType) =>
   <div className="side-menu__right">
     {props.children}
-  </div>
-);
+  </div>;
 
 type ItemPropsType = PropsType & {
   active: boolean,
@@ -28,7 +27,7 @@ type ItemPropsType = PropsType & {
   asLink?: boolean,
 };
 
-export const Item = (props: ItemPropsType) => (
+export const Item = (props: ItemPropsType) =>
   <div
     className={cx('side-menu__item', props.className, {
       'side-menu__item--active': props.active,
@@ -43,26 +42,38 @@ export const Item = (props: ItemPropsType) => (
     <div className="side-menu__right-text">
       {props.rightText}
     </div>
-  </div>
-);
+  </div>;
 
 const enhance = compose(
-  withState('toggled', 'toggle', false),
+  withState('toggled', 'toggle', props => LS.get(['settings', 'sideBar', props.id], false)),
+  withHandlers({
+    handleSetToggle: props => () => {
+      const state = !props.toggled;
+      props.toggle(state);
+
+      if (props.id) {
+        LS.setSettings({
+          sideBar: {
+            ...LS.get(['settings', 'sideBar'], {}),
+            [props.id]: state,
+          },
+        });
+      }
+    },
+  }),
 );
 
 type SideMenuPropsType = PropsType | {
   title: string,
-  toggle: boolean,
-  toggled: (state: boolean) => void,
+  id: string,
+  toggled: boolean,
+  handleSetToggle: () => void,
 };
 
-export default enhance(({ children, title, toggle, toggled }: SideMenuPropsType) => (
+export default enhance(({ children, title, handleSetToggle, toggled, id }: SideMenuPropsType) =>
   <div className={cx('side-menu', { 'side-menu--hidden': toggled })}>
     <h1 className="side-menu__title">
-      <div
-        className="side-menu__title-toogle"
-        onClick={() => toggle(state => !state)}
-      >
+      <div className="side-menu__title-toogle" onClick={handleSetToggle}>
         <i
           className={cx('fa', {
             'fa-chevron-left': !toggled,
@@ -75,5 +86,5 @@ export default enhance(({ children, title, toggle, toggled }: SideMenuPropsType)
     <div className="side-menu__items">
       {children}
     </div>
-  </div>
-  ));
+  </div>,
+);

@@ -86,7 +86,7 @@ const Matches = ({
   handleMatchClick, matchStore, activeId, handleHardRefresh, handleMarkAllAsRead, ...props
 }: PropsType) => (
   <div className="matches">
-    <SideMenu title="Matches">
+    <SideMenu title="Matches" id="matches">
       {filterTypesMap.map(filter => (
         <SideMenu.Item
           key={filter.text}

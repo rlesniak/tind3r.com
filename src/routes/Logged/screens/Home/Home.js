@@ -207,7 +207,7 @@ class Home extends PureComponent {
     return (
       <div className="home">
         <NotificationSystem ref={ref => { this.notificationSystem = ref; }} />
-        <SideMenu>
+        <SideMenu id="home">
           <SideMenu.Item className="home__sidebar-item home__sidebar-cuts">
             <label>Keyboard shortcuts</label>
             <ShortcutIcon text="a" tooltipText="Pass" />

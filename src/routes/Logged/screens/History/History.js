@@ -81,7 +81,7 @@ class Actions extends Component {
 
     return (
       <div className="history">
-        <SideMenu title="History">
+        <SideMenu title="History" id="history">
           {filterTypesMap.map(filter => (
             <SideMenu.Item
               key={filter.text}

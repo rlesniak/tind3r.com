@@ -27,7 +27,7 @@ const ls = {
     return store.get(APP_NAME) || {};
   },
 
-  get(key: string, defaultValue: any = null): Object {
+  get(key: string | string[], defaultValue: any = null): Object {
     return get(this.data, key, defaultValue);
   },
 

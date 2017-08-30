@@ -34,6 +34,7 @@ type PropsTypes = {
 class MatchComponent extends Component {
   props: PropsTypes;
   personWrapperRef: HTMLElement;
+  tooltipRef: HTMLElement;
   messageStore: MessageStore = new MessageStore(null);
 
   @observable match: ?Match;
@@ -166,8 +167,6 @@ class MatchComponent extends Component {
             {isBlocked && <div
               className={cx('match__option', 'match__option--active')}
               onClick={this.handleRemove}
-              data-tip="Remove"
-              data-for="main"
             >
               <i className="fa fa-trash" />
             </div>}

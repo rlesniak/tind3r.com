@@ -193,7 +193,7 @@ export class MatchStore {
 
   @computed get filterUnanswered() {
     return this.items.filter(m => (
-      m.lastMessage && m.lastMessage.body && m.lastMessage.from_id === this.current_user_id
+      m.lastMessage && m.lastMessage.body && m.lastMessage.from_id !== this.current_user_id
     ));
   }
 

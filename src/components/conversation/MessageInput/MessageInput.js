@@ -41,7 +41,7 @@ class MessageInput extends Component {
   }
 
   handleKeyPress = (e: Event) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
 
       this.props.onSubmit(this.text);

@@ -21,6 +21,7 @@ import { collections, removeMatch } from 'utils/database.v2';
 import MessageList from 'components/conversation/MessageList';
 import MessageInput from 'components/conversation/MessageInput';
 import Gallery from 'components/Gallery';
+import Bio from 'components/Bio';
 
 type PropsTypes = {
   currentUser: CurrentUser,
@@ -133,7 +134,7 @@ class MatchComponent extends Component {
               {person.distanceKm}
             </div>}
             <div className="match__person-bio">
-              {person.bio}
+              <Bio text={person.bio} />
             </div>
           </div>
         </div>

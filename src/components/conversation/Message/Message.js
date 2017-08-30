@@ -43,7 +43,9 @@ class MessageComponent extends Component {
       return <div className="message__gif"><img src={message.body} alt="gif" /></div>;
     }
 
-    return message.body;
+    return message.body.split('\n').map((item, key) => (
+      <span key={key}>{item}<br /></span>
+    ));
   }
 
   render() {

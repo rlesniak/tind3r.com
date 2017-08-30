@@ -46,7 +46,7 @@ class LocationMap extends Component {
         level: 'error',
         position: 'tc',
         autoDismiss: 5,
-        message: 'Position change not significant. Try larger distance.'
+        message: 'Position change not significant or you change too far in small amount of time. Try again later'
       });
     }
 

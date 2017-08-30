@@ -47,6 +47,7 @@ const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }>
   { text: 'All', type: 'all', handle: 'handleAll' },
   { text: 'With instagram', type: 'insta', handle: 'handleInsta' },
   { text: 'With bio', type: 'bio', handle: 'handleBio' },
+  { text: 'With common interests', type: 'interests', handle: 'handleInterests' },
 ];
 
 @inject('currentUser') @withLikeCounter @observer
@@ -78,6 +79,10 @@ class Home extends PureComponent {
 
   handleBio = () => {
     recsStore.visibilityFilter = 'bio';
+  }
+
+  handleInterests = () => {
+    recsStore.visibilityFilter = 'interests';
   }
 
   handleMatch = (person: Person) => {

@@ -82,6 +82,7 @@ class RecsStore {
       switch (this.visibilityFilter) {
         case 'insta': cond = !!p.instagramProfileLink; break;
         case 'bio': cond = p.bio && p.bio.length; break;
+        case 'interests': cond = p.common_interests && p.common_interests.length; break;
         default:
       }
 

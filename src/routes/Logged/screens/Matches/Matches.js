@@ -7,9 +7,10 @@ import ReactGA from 'react-ga';
 import { withState, withHandlers, compose } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import cx from 'classnames';
 
 import Match from '../Match';
+
+import { removeMatch } from 'utils/database.v2';
 
 import MatchList from 'components/matches/MatchList';
 import MatchFilters from 'components/matches/MatchFilters';
@@ -68,7 +69,17 @@ const enhance = compose(
       });
 
       matchStore.markAllAsRead();
-    }
+    },
+    handleRemoveAllBlocked: ({ matchStore, history }) => () => {
+      ReactGA.event({
+        category: 'Matches',
+        action: 'Remove all blocked',
+      });
+
+      const removedIds = matchStore.removeAllBlocked();
+      removeMatch(removedIds);
+      history.replace('/matches');
+    },
   }),
   observer,
 );
@@ -83,7 +94,7 @@ const filterTypesMap = [
 ];
 
 const Matches = ({
-  handleMatchClick, matchStore, activeId, handleHardRefresh, handleMarkAllAsRead, ...props
+  handleMatchClick, matchStore, activeId, handleHardRefresh, handleMarkAllAsRead, handleRemoveAllBlocked, ...props
 }: PropsType) => (
   <div className="matches">
     <SideMenu title="Matches" id="matches">
@@ -105,6 +116,13 @@ const Matches = ({
         disabled={matchStore.unreadCount === 0}
       >
         <i className="fa fa-check-circle-o" /> Mark all as read
+      </SideMenu.Item>
+      <SideMenu.Item
+        asAction
+        onClick={handleRemoveAllBlocked}
+        disabled={matchStore.blockedCount === 0}
+      >
+        <i className="fa fa-ban" /> Remove all blocked ({matchStore.blockedCount})
       </SideMenu.Item>
       <SideMenu.Separator />
       {<SideMenu.Item>

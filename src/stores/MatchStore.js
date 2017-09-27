@@ -116,6 +116,19 @@ export class MatchStore {
     updateMatch(unreadIds, { is_new: false });
   }
 
+  @action removeAllBlocked(): string[] {
+    const removedIds = [];
+
+    this.items.slice(0).forEach(match => {
+      if (match.is_blocked) {
+        this.remove(match);
+        removedIds.push(match._id);
+      }
+    });
+
+    return removedIds;
+  }
+
   @action create(data: MatchType): void {
     if (this.items.find(el => el._id === data._id)) {
       return;
@@ -137,6 +150,10 @@ export class MatchStore {
 
   @computed get unreadCount(): number {
     return this.items.filter(match => match.isUnread).length;
+  }
+
+  @computed get blockedCount(): number {
+    return this.items.filter(match => match.is_blocked).length;
   }
 
   @computed get matches(): Array<Match> {

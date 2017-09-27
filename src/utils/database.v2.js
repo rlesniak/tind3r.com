@@ -157,10 +157,18 @@ export function removeMessage(_id: string) {
   collections.messages.save();
 }
 
-export function removeMatch(_id: string) {
-  const removedMatch = collections.matches.remove({ _id });
+export function removeMatch(_id: string | string[]) {
+  const removedMatches = collections.matches.remove({ _id });
+  let personsIds;
+
+  if (Array.isArray(_id)) {
+    personsIds = removedMatches.map(match => match.person_id);
+  } else {
+    personsIds = removedMatches.person_id;
+  }
+
   collections.messages.remove({ match_id: _id });
-  collections.persons.remove({ _id: removedMatch.person_id });
+  collections.persons.remove({ _id: personsIds });
 
   collections.matches.save();
   collections.messages.save();

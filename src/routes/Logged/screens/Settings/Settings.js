@@ -146,7 +146,7 @@ const Settings = ({
     <div className="settings__row">
       <label>
         Templates list
-        <i className="fa fa-question-circle" data-for="main" data-tip="NOTICE: You will lost all your templates when logout." />
+        <i className="fa fa-question-circle" data-for="main" data-tip="NOTICE: You will lose all your templates when you log out." />
       </label>
       <div className="settings__field">
         {templates.length === 0 ?

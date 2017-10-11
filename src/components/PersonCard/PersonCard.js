@@ -94,6 +94,7 @@ const PersonCard = ({
 }: PersonCardType) => {
   const shouldShowActionButtons = !small || (small && isHovering);
   const hasInterests = person.common_interests && person.common_interests.length > 0;
+  const hasFriends = person.common_connections && person.common_connections.length > 0;
 
   return (
     <div
@@ -132,6 +133,10 @@ const PersonCard = ({
           Interests:
           {map(person.common_interests, i => <span key={i.name}>{i.name}</span>)}
         </div>}
+        {!small && hasFriends && <div className="person-card__common">
+          Friends:
+          {map(person.common_connections, i => <span key={i.id}>{i.name}</span>)}
+        </div>}
 
         {!small && <div className="person-card__school">
           <span>{person.school}</span>
@@ -154,6 +159,9 @@ const PersonCard = ({
 
         <div className="person-card__footer">
           <div className="person-card__footer--distance">{person.distanceKm}</div>
+          {small && hasFriends && <div className="person-card__footer--distance">
+            Friends: ({person.common_connections.length})
+          </div>}
           <div className="person-card__footer--instagram">
             {
               person.instagramProfileLink ?

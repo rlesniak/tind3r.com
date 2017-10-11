@@ -8,7 +8,7 @@ import { get } from 'utils/api';
 import { removeAction } from 'utils/database.v2';
 import Person from 'models/Person';
 
-export type FiltersType = 'all' | 'insta' | 'bio';
+export type FiltersType = 'all' | 'insta' | 'bio' | 'interests' | 'friends';
 
 class RecsStore {
   loadMoreHandler = null;
@@ -30,7 +30,8 @@ class RecsStore {
     );
   }
 
-  @action async fetchCore(asLoadMore: boolean = false) {
+  @action
+  async fetchCore(asLoadMore: boolean = false) {
     if (this.allVisible.length > 3 && !asLoadMore) {
       return;
     }
@@ -57,7 +58,8 @@ class RecsStore {
     this.is_loading_more = false;
   }
 
-  @action setPerson(json) {
+  @action
+  setPerson(json) {
     if (find(this.persons, { _id: json._id })) {
       return;
     }
@@ -66,7 +68,8 @@ class RecsStore {
     this.persons.push(person);
   }
 
-  @action revert(_id: string) {
+  @action
+  revert(_id: string) {
     const person = this.persons.find(p => p._id === _id);
 
     if (person) {
@@ -75,14 +78,24 @@ class RecsStore {
     }
   }
 
-  @computed get allVisible(): Array<Person> {
+  @computed
+  get allVisible(): Array<Person> {
     return filter(this.persons, p => {
       let cond = true;
 
       switch (this.visibilityFilter) {
-        case 'insta': cond = !!p.instagramProfileLink; break;
-        case 'bio': cond = p.bio && p.bio.length; break;
-        case 'interests': cond = p.common_interests && p.common_interests.length; break;
+        case 'insta':
+          cond = !!p.instagramProfileLink;
+          break;
+        case 'bio':
+          cond = p.bio && p.bio.length;
+          break;
+        case 'interests':
+          cond = p.common_interests && p.common_interests.length;
+          break;
+        case 'friends':
+          cond = p.common_connections && p.common_connections.length;
+          break;
         default:
       }
 
@@ -90,7 +103,8 @@ class RecsStore {
     });
   }
 
-  @computed get areRecsExhaust(): boolean {
+  @computed
+  get areRecsExhaust(): boolean {
     return !this.is_fetching && this.allVisible.length === 0;
   }
 }

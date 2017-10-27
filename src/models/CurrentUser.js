@@ -45,7 +45,7 @@ const resetAtDateHelper = (data): ResetAtHelperType => ({
 });
 
 export const MAX_DISTANCE = 160;
-export const MAX_AGE = 50;
+export const MAX_AGE = 55;
 export const MIN_AGE = 18;
 
 export class CurrentUser implements UserInterface {

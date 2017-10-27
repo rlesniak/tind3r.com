@@ -51,6 +51,8 @@ const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }>
   { text: 'With common friends', type: 'friends', handle: 'handleFriends' },
 ];
 
+const formatAgeRangeLabel = value => (value > 54 ? '55+' : value);
+
 @inject('currentUser') @withLikeCounter @observer
 class Home extends PureComponent {
   props: PropsType;
@@ -137,13 +139,16 @@ class Home extends PureComponent {
   };
 
   handleAgeChange = ({ min, max }: { min: number, max: number }) => {
+    const maxAge = max === 55 ? 1000 : max;
+
     this.ageRange = {
-      min, max,
+      max: maxAge,
+      min,
     };
 
     this.props.currentUser.updateProfile({
       age_filter_min: min,
-      age_filter_max: max,
+      age_filter_max: maxAge,
     });
 
     ReactGA.event({
@@ -241,6 +246,7 @@ class Home extends PureComponent {
             <InputRange
               minValue={MIN_AGE}
               maxValue={MAX_AGE}
+              formatLabel={formatAgeRangeLabel}
               value={this.ageRange}
               onChange={value => this.ageRange = value}
               onChangeComplete={this.handleAgeChange}

@@ -183,10 +183,6 @@ export default {
       payload.age_filter_min = 18;
     }
 
-    if (payload.age_filter_max > 50) {
-      payload.age_filter_max = 50;
-    }
-
     return API.post('profile', {
       bio: payload.bio,
       discoverable: payload.discoverable,

@@ -194,6 +194,7 @@ class Home extends PureComponent {
               onError={handleError}
               onSuperlike={handleSuperlike}
               onButtonClick={this.handleAction}
+              currentUserDistanceSetting={currentUser.distance_filter}
               allowHotkeys={i === 0}
               limitations={{
                 superlikeRemaining: currentUser.superlike_remaining,

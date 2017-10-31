@@ -1,9 +1,9 @@
 // @flow
 
-import './Discussion.scss';
-
 import React from 'react';
 import RDT from 'react-disqus-thread';
+
+import './Discussion.scss';
 
 const Discussion = () => (
   <div className="discussion">

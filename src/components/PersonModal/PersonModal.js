@@ -1,10 +1,13 @@
-import './PersonModal.scss';
+// @flow
+
 import 'rodal/lib/rodal.css';
 
 import React, { Component } from 'react';
 import Rodal from 'rodal';
 
 import PersonView from 'components/PersonView';
+
+import './PersonModal.scss';
 
 type PropsType = {
   location: Object,
@@ -15,7 +18,7 @@ type PropsType = {
 class PersonModal extends Component {
   props: PropsType;
 
-  back = e => {
+  back = (e) => {
     const { history } = this.props;
     e.stopPropagation();
     history.goBack();

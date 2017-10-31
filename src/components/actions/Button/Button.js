@@ -1,9 +1,9 @@
 // @flow
 
-import './Button.scss';
-
 import React from 'react';
 import cx from 'classnames';
+
+import './Button.scss';
 
 type PropsType = {
   children: any,

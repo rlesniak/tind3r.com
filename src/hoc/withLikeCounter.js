@@ -22,16 +22,6 @@ export type WithLikeCounterPropsType = {
 
 const withLikeCounter = (BaseComponent: any) => (
   observer(class extends Component {
-    props: PropsType;
-
-    @observable likeResetRemaining: ?string = null;
-    @observable superlikeResetRemaining: ?string = null;
-
-    componentWillUnmount() {
-      counterService.unsubscribe(this.handleLikeCounter);
-      counterService.unsubscribe(this.handleSuperlikeCounter);
-    }
-
     componentDidMount() {
       const { currentUser } = this.props;
 
@@ -43,6 +33,16 @@ const withLikeCounter = (BaseComponent: any) => (
         counterService.subscribe({ handler: this.handleSuperlikeCounter });
       }
     }
+
+    componentWillUnmount() {
+      counterService.unsubscribe(this.handleLikeCounter);
+      counterService.unsubscribe(this.handleSuperlikeCounter);
+    }
+
+    props: PropsType;
+
+    @observable likeResetRemaining: ?string = null;
+    @observable superlikeResetRemaining: ?string = null;
 
     @action handleLikeCounter = () => {
       const { currentUser } = this.props;

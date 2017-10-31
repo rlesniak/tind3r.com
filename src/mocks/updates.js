@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const person = require('./person').person;
 const casual = require('casual');
 

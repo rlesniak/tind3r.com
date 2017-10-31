@@ -8,12 +8,12 @@ import { removeMatch, updateMatch } from 'utils/database.v2';
 import FetchService from 'services/fetch-service';
 import MessageStore from 'stores/MessageStore';
 
-import Person from './Person';
-import Message from './Message';
-
 import type { MatchType } from 'types/match';
 import type { MessageType } from 'types/message';
 import type moment$Moment from 'moment';
+
+import Person from './Person';
+import Message from './Message';
 
 class Match {
   _id: string;

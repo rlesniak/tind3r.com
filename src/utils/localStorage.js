@@ -6,24 +6,8 @@ import pullAt from 'lodash/pullAt';
 
 const APP_NAME = 'app.v2';
 
-const settings = () => {
-  const ls = () => store.get(APP_NAME) || {};
-
-  const get = () => ls.settings;
-
-  const set = (data: Object) => {
-    store.set(APP_NAME, {
-      ...ls.data,
-      settings: {
-        ...get(),
-        ...data,
-      },
-    });
-  };
-};
-
 const ls = {
-  get data() {
+  get data(): Object {
     return store.get(APP_NAME) || {};
   },
 

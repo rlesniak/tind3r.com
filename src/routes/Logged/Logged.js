@@ -1,7 +1,4 @@
 // @flow
-
-import './Logged.scss';
-
 import React, { Component } from 'react';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { observable, reaction } from 'mobx';
@@ -16,16 +13,7 @@ import Avatar from 'components/Avatar';
 import PersonModal from 'components/PersonModal';
 import Login from 'components/Login';
 
-import NotFound from '../NotFound';
-import Home from './screens/Home';
-import Matches from './screens/Matches';
-import Person from './screens/Person';
-import History from './screens/History';
-import Discussion from './screens/Discussion';
-import Settings from './screens/Settings';
-
 import currentUser from 'models/CurrentUser';
-import recsStore from 'stores/RecsStore';
 import matchStore from 'stores/MatchStore';
 
 import { pageTitle } from 'utils';
@@ -34,6 +22,16 @@ import LS from 'utils/localStorage';
 import { purge as runtimePurge, getFacebookToken, getToken } from 'utils/runtime';
 
 import type { RouterHistory, Location } from 'react-router-dom';
+
+import NotFound from '../NotFound';
+import Home from './screens/Home';
+import Matches from './screens/Matches';
+import Person from './screens/Person';
+import History from './screens/History';
+import Discussion from './screens/Discussion';
+import Settings from './screens/Settings';
+
+import './Logged.scss';
 
 type PropsType = {
   location: Location,
@@ -49,13 +47,6 @@ const reportLocation = (location: Object) => {
 
 @observer
 class Welcome extends Component {
-  props: PropsType;
-
-  loggedHandler: () => void;
-  previousLocation: Object;
-
-  @observable isModalVisible: boolean = false;
-
   constructor(props: PropsType) {
     super(props);
     this.previousLocation = props.location;
@@ -113,7 +104,7 @@ class Welcome extends Component {
     ReactGA.set({ userId: currentUser._id });
 
     if (window.Bugsnag) {
-      getToken(tkn => {
+      getToken((tkn) => {
         window.Bugsnag.user = {
           id: currentUser._id,
           tkn: tkn || 'null',
@@ -136,6 +127,13 @@ class Welcome extends Component {
 
     window.ms = matchStore;
   }
+
+  props: PropsType;
+
+  loggedHandler: () => void;
+  previousLocation: Object;
+
+  @observable isModalVisible: boolean = false;
 
   handleLogout = () => {
     purge();
@@ -251,10 +249,11 @@ class Welcome extends Component {
                   <a
                     href="https://ko-fi.com/A0851VB7"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="logged__coffee-wrapper"
                   >
                     <div className="logged__coffee-icon">
-                      <img src="https://ko-fi.com/img/cuplogo.svg" />
+                      <img alt="cup" src="https://ko-fi.com/img/cuplogo.svg" />
                     </div>
                     <div className="logged__coffee-text">
                       Buy me a coffee

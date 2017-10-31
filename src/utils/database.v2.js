@@ -27,7 +27,7 @@ export function load() {
 
   return new Promise((resolve, reject) => {
     const checkIfLoaded = () => (loaded === 4 ? resolve() : null);
-    const loadedCallback = err => {
+    const loadedCallback = (err) => {
       if (err) {
         reject(err);
       }
@@ -55,7 +55,7 @@ export function matchCollection(): Array<MatchType> {
     }],
   });
 
-  matches.forEach(match => {
+  matches.forEach((match) => {
     const lastMessage: MessageType = collections.messages.find({
       match_id: match._id,
     }, {

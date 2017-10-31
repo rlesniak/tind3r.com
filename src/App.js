@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactGA from 'react-ga';
 import DocumentTitle from 'react-document-title';
 
@@ -12,12 +12,8 @@ ReactGA.initialize(gaCode, {
 
 ReactGA.set({ dimension1: '2.0' });
 
-export default class App extends Component {
-  render() {
-    return (
-      <DocumentTitle title="Tinder">
-        <Root />
-      </DocumentTitle>
-    );
-  }
-}
+export default () => (
+  <DocumentTitle title="Tinder">
+    <Root />
+  </DocumentTitle>
+);

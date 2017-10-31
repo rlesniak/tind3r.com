@@ -1,6 +1,6 @@
 // @flow
+// eslint-disable jsx-a11y/label-has-for
 
-import './Home.scss';
 import 'react-input-range/src/scss/index.scss';
 
 import React, { PureComponent } from 'react';
@@ -11,8 +11,6 @@ import cx from 'classnames';
 import ReactTooltip from 'react-tooltip';
 import NotificationSystem from 'react-notification-system';
 import InputRange from 'react-input-range';
-
-import Autolike from './components/Autolike';
 
 import PersonCard from 'components/PersonCard';
 import LoadMoreCard from 'components/LoadMoreCard';
@@ -35,13 +33,19 @@ import { MAX_DISTANCE, MIN_AGE, MAX_AGE } from 'models/CurrentUser';
 import type { FiltersType } from 'stores/RecsStore';
 import type { WithLikeCounterPropsType } from 'hoc/withLikeCounter';
 
+import Autolike from './components/Autolike';
+
+import './Home.scss';
+
 const NOTIF_LEVELS_MAP = {
   like: 'success',
   pass: 'error',
   superlike: 'info',
 };
 
-type PropsType = WithLikeCounterPropsType;
+type PropsType = WithLikeCounterPropsType & {
+  currentUser: Object,
+};
 
 const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }> = [
   { text: 'All', type: 'all', handle: 'handleAll' },
@@ -55,6 +59,14 @@ const formatAgeRangeLabel = value => (value > 54 ? '55+' : value);
 
 @inject('currentUser') @withLikeCounter @observer
 class Home extends PureComponent {
+  componentDidMount() {
+    recsStore.fetchCore();
+
+    ReactTooltip.rebuild();
+
+    window.cu = this.props.currentUser;
+  }
+
   props: PropsType;
   notificationSystem: ?any;
 
@@ -63,14 +75,6 @@ class Home extends PureComponent {
     min: this.props.currentUser.age_filter_min,
     max: this.props.currentUser.age_filter_max,
   };
-
-  componentDidMount() {
-    recsStore.fetchCore();
-
-    ReactTooltip.rebuild();
-
-    window.cu = this.props.currentUser;
-  }
 
   handleAll = () => {
     recsStore.visibilityFilter = 'all';
@@ -138,7 +142,7 @@ class Home extends PureComponent {
     });
   };
 
-  handleAgeChange = ({ min, max }: { min: number, max: number }) => {
+  handleAgeChange = ({ min, max }: Object) => {
     const maxAge = max === 55 ? 1000 : max;
 
     this.ageRange = {
@@ -160,7 +164,9 @@ class Home extends PureComponent {
   renderBody() {
     const { currentUser, handleSuperlike, handleError, superlikeResetRemaining, likeResetRemaining } = this.props;
 
-    if (recsStore.is_fetching || recsStore.areRecsExhaust || (recsStore.is_fetching && recsStore.allVisible.length === 0)) {
+    if (
+      recsStore.is_fetching || recsStore.areRecsExhaust || (recsStore.is_fetching && recsStore.allVisible.length === 0)
+    ) {
       return (
         <SearchingLoader
           noAnimation={recsStore.areRecsExhaust}
@@ -218,11 +224,11 @@ class Home extends PureComponent {
   }
 
   render() {
-    const { handleSuperlike, handleError } = this.props;
+    const { handleError } = this.props;
 
     return (
       <div className="home">
-        <NotificationSystem ref={ref => { this.notificationSystem = ref; }} />
+        <NotificationSystem ref={(ref) => { this.notificationSystem = ref; }} />
         <SideMenu id="home">
           <SideMenu.Item className="home__sidebar-item home__sidebar-cuts">
             <label>Keyboard shortcuts</label>
@@ -238,7 +244,7 @@ class Home extends PureComponent {
               minValue={2}
               maxValue={MAX_DISTANCE}
               value={this.distance}
-              onChange={value => this.distance = value}
+              onChange={(value) => { this.distance = value; }}
               onChangeComplete={this.handleDistanceChange}
             />
           </SideMenu.Item>
@@ -249,7 +255,7 @@ class Home extends PureComponent {
               maxValue={MAX_AGE}
               formatLabel={formatAgeRangeLabel}
               value={this.ageRange}
-              onChange={value => this.ageRange = value}
+              onChange={(value) => { this.ageRange = value; }}
               onChangeComplete={this.handleAgeChange}
             />
           </SideMenu.Item>

@@ -1,15 +1,14 @@
 // @flow
 
-import './LocationMap.scss';
-
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { observer } from 'mobx-react';
 import GoogleMap from 'google-map-react';
 import NotificationSystem from 'react-notification-system';
 
-import { miToKm } from 'utils';
 import { CurrentUser } from 'models/CurrentUser';
+
+import './LocationMap.scss';
 
 type PropsType = {
   currentUser: CurrentUser,
@@ -56,7 +55,7 @@ class LocationMap extends Component {
     });
   }
 
-  handleOnMapClick = ({ x, y, lat, lng, event }: Object) => {
+  handleOnMapClick = ({ lat, lng }: Object) => {
     this.props.currentUser.updateLocation(lat, lng, this.handleError);
 
     ReactGA.event({
@@ -79,7 +78,7 @@ class LocationMap extends Component {
 
     return (
       <div className="location-map">
-        <NotificationSystem ref={ref => { this.notificationSystem = ref; }} />
+        <NotificationSystem ref={(ref) => { this.notificationSystem = ref; }} />
 
         <GoogleMap
           bootstrapURLKeys={{ key: 'AIzaSyDd3XG700RoXgHsnnu53gMz13gO8SOWqZc' }}

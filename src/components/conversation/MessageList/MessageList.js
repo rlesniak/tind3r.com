@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { last, uniqueId } from 'lodash';
+import { last } from 'lodash';
 import moment from 'moment';
 
-import Message from '../Message';
 import MessageStore from 'stores/MessageStore';
 import Person from 'models/Person';
 import { CurrentUser } from 'models/CurrentUser';
+import Message from '../Message';
 
 type PropsType = {
   messageStore: MessageStore,
@@ -22,10 +22,6 @@ const getAuthor = (fromId: string, interlocutor: Person, currentUser: CurrentUse
 );
 
 class MessageList extends Component {
-  props: PropsType;
-
-  messagesRefs: Array<*> = [];
-
   componentDidMount() {
     this.scrollIntoView();
   }
@@ -33,6 +29,10 @@ class MessageList extends Component {
   componentDidUpdate() {
     this.scrollIntoView();
   }
+
+  props: PropsType;
+
+  messagesRefs: Array<*> = [];
 
   scrollIntoView() {
     const lastMessage = last(this.messagesRefs);
@@ -54,7 +54,7 @@ class MessageList extends Component {
             <Message
               group={gorupMessage}
               key={message._id}
-              ref={ref => { this.messagesRefs.push(ref); }}
+              ref={(ref) => { this.messagesRefs.push(ref); }}
               message={message}
               todayDate={todayDate}
               onRemove={messageStore.removeMessage}

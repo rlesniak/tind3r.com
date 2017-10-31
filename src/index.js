@@ -14,17 +14,18 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const rootEl = document.getElementById('root');
-const render = Component =>
+const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
       <Component />
     </AppContainer>,
     rootEl,
   );
+};
 
 load().then(() => {
   render(App);
-}).catch(err => {
+}).catch((err) => {
   render(App);
 
   if (window.Bugsnag) {
@@ -36,7 +37,7 @@ load().then(() => {
 
 if (window.Bugsnag) {
   window.Bugsnag.beforeNotify = function (data) {
-    data.metaData.sessionURL = LogRocket.sessionURL;
+    data.metaData.sessionURL = LogRocket.sessionURL; // eslint-disable-line
     return data;
   };
 }

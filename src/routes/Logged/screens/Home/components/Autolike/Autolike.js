@@ -1,23 +1,22 @@
 // @flow
 
-import './Autolike.scss';
-
 import React, { Component } from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Switch } from '@blueprintjs/core';
-import { compose, lifecycle, withState, withHandlers, withProps } from 'recompose';
 import { head, noop } from 'lodash';
 import ReactGA from 'react-ga';
 
 import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
 import Person from 'models/Person';
-import CurrentUser from 'models/CurrentUser';
+import { CurrentUser } from 'models/CurrentUser';
 import { ACTION_TYPES } from 'const';
 import LS from 'utils/localStorage';
 
 import type { ActionsType } from 'types/person';
+
+import './Autolike.scss';
 
 type PropsType = {
   currentUser: CurrentUser,
@@ -28,21 +27,19 @@ type PropsType = {
   onMatch: (person: Person) => void,
 };
 
-const SUBSCRIBE_ID = 'autolike';
-
 @inject('currentUser')
 @observer
 class Autolike extends Component {
+  componentWillUnmount() {
+    counterService.unsubscribe(this.handleAutolike);
+  }
+
   props: PropsType;
 
   @observable enabled = false;
   @observable velocity = parseInt(LS.get('settings.autolikeVelocity', 1), 10);
   @observable giveUp = parseInt(LS.get('settings.autolikeGiveUp', 5), 10);
   @observable retryNumber = 0;
-
-  componentWillUnmount() {
-    counterService.unsubscribe(this.handleAutolike);
-  }
 
   handleSetEnabled = () => {
     ReactGA.event({
@@ -64,7 +61,7 @@ class Autolike extends Component {
   };
 
   handleSetVelocity = ({ target: { value } }: SyntheticInputEvent) => {
-    this.velocity = parseInt(value);
+    this.velocity = parseInt(value, 10);
     LS.setSettings({ autolikeVelocity: value });
 
     ReactGA.event({
@@ -162,7 +159,7 @@ class Autolike extends Component {
           </label>
           <div className="pt-form-content">
             <input className="pt-input" type="number" value={this.giveUp} onChange={this.handleSetGiveUp} />
-            <div className="pt-form-helper-text">0 = don't care</div>
+            <div className="pt-form-helper-text">0 = don{'\''}t care</div>
           </div>
         </div>
       </div>

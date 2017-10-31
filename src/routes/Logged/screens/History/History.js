@@ -1,7 +1,4 @@
 // @flow
-
-import './History.scss';
-
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import moment from 'moment';
@@ -18,9 +15,7 @@ import { getActions, removeActions } from 'utils/database.v2';
 
 import type { ActionType } from 'types/action';
 
-type PropsType = {
-  match: Object,
-}
+import './History.scss';
 
 const filterTypesMap = [
   { text: 'All', type: '' },
@@ -31,16 +26,15 @@ const filterTypesMap = [
 
 @observer
 class Actions extends Component {
-  props: PropsType;
-  actions: Array<ActionType> = [];
-
-  @observable filter = '';
-
   constructor() {
     super();
 
     this.actions = getActions();
   }
+
+  actions: Array<ActionType> = [];
+
+  @observable filter = '';
 
   filterAll(): Array<ActionType> {
     return orderBy(this.actions.filter(action => action.name), action => (
@@ -67,7 +61,7 @@ class Actions extends Component {
     });
   }
 
-  getFiltered() {
+  filtered() {
     switch (this.filter) {
       case 'like': return this.filterType('like');
       case 'superlike': return this.filterType('superlike');
@@ -77,7 +71,7 @@ class Actions extends Component {
   }
 
   render() {
-    const filtered = this.getFiltered();
+    const filtered = this.filtered();
 
     return (
       <div className="history">
@@ -102,7 +96,9 @@ class Actions extends Component {
           <div className="history__content">
             {filtered.map(action => (
               <Link
-                to={`/user/${action.person_id}`} key={action._id} className={cx('history__person', {
+                to={`/user/${action.person_id}`}
+                key={action._id}
+                className={cx('history__person', {
                   'history__person--super': action.action_type === 'superlike',
                   'history__person--like': action.action_type === 'like',
                   'history__person--pass': action.action_type === 'pass',

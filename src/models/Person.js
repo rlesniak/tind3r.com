@@ -24,6 +24,9 @@ class Person implements UserInterface {
   schools: ?Array<SchoolType>;
   instagram: ?InstagramType;
   photos: [] = [];
+  jobs: ?[] = [];
+  common_connections: ?[] = [];
+  common_interests: ?[] = [];
   name: string;
   bio: string;
   hide_age: boolean = false;
@@ -47,7 +50,7 @@ class Person implements UserInterface {
     }
   }
 
-  createDBAction(type: string) {
+  createDBAction(type: ActionsType) {
     createAction({
       person_id: this._id,
       action_type: type,
@@ -87,9 +90,9 @@ class Person implements UserInterface {
     switch (type) {
       case ACTION_TYPES.PASS:
         try {
-          const data = await pass(this._id);
+          await pass(this._id);
           this.createDBAction('pass');
-        } catch (e) {}
+        } catch (e) { console.error('Pass errror', e); }
         break;
       case ACTION_TYPES.LIKE:
         try {
@@ -134,7 +137,7 @@ class Person implements UserInterface {
     }
   }
 
-  @computed get age(): string {
+  @computed get age(): string | number {
     if (this.hide_age) {
       return 'n/a';
     }
@@ -182,7 +185,7 @@ class Person implements UserInterface {
     return get(this.photos, [0, 'processedFiles', 2, 'url']);
   }
 
-  @computed get toJSON() {
+  @computed get toJSON(): Object {
     return {
       _id: this._id,
       name: this.name,

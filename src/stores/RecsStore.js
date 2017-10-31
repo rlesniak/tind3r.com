@@ -22,7 +22,7 @@ class RecsStore {
   constructor() {
     this.loadMoreHandler = reaction(
       () => this.allVisible.length,
-      length => {
+      (length) => {
         if (length <= 3 && !this.is_fetching && !this.is_loading_more) {
           this.fetchCore(true);
         }
@@ -80,7 +80,7 @@ class RecsStore {
 
   @computed
   get allVisible(): Array<Person> {
-    return filter(this.persons, p => {
+    return filter(this.persons, (p) => {
       let cond = true;
 
       switch (this.visibilityFilter) {

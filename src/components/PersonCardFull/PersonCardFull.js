@@ -1,16 +1,15 @@
-import './PersonCardFull.scss';
-
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { compose, withHandlers, withState, pure } from 'recompose';
-import cx from 'classnames';
+import { compose, withHandlers, withState } from 'recompose';
 import map from 'lodash/map';
 import filter from 'lodash/filter';
 import uniqueId from 'lodash/uniqueId';
 
 import Gallery from 'components/Gallery';
 import ActionButtons from 'components/ActionButtons';
+
+import './PersonCardFull.scss';
 
 const enhance = compose(
   withState('counter', 'setCounter', 0),
@@ -21,7 +20,7 @@ const enhance = compose(
         props.setCounter(n => n + 1);
       }, 1000);
     },
-    onActionClick: props => actionType => {
+    onActionClick: props => (actionType) => {
       props.person.callAction(actionType);
     },
   }),
@@ -61,7 +60,7 @@ const PersonCardFull = ({
       </div>
 
       <div className="person-card-full__job">
-        {_.map(person.job, job => (
+        {map(person.job, job => (
           <div key={uniqueId()}>{job}</div>
         ))}
       </div>

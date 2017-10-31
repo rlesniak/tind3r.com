@@ -33,7 +33,7 @@ const counter = (): CounterType => {
   );
 
   const runSubscribers = (delay: number) => {
-    intervals[delay].subscribers.forEach(sub => {
+    intervals[delay].subscribers.forEach((sub) => {
       if ((sub.isBusyHandler && !sub.isBusyHandler()) || !sub.isBusyHandler) {
         sub.handler(delay);
       }
@@ -79,7 +79,7 @@ const counter = (): CounterType => {
 
   const unsubscribe = (handler: HandlerType | string) => {
     forEach(intervals, (val, key) => {
-      intervals[key].subscribers = intervals[key].subscribers.filter(sub => {
+      intervals[key].subscribers = intervals[key].subscribers.filter((sub) => {
         if (!isFunction(handler)) {
           return sub.id !== handler;
         }

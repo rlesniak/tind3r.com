@@ -1,7 +1,5 @@
 // @flow
 
-import './Message.scss';
-
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
@@ -15,6 +13,8 @@ import Message from 'models/Message';
 import Person from 'models/Person';
 import { CurrentUser } from 'models/CurrentUser';
 
+import './Message.scss';
+
 type PropsType = {
   message: Message,
   author: Person | CurrentUser,
@@ -24,13 +24,12 @@ type PropsType = {
 }
 
 class MessageComponent extends Component {
-  props: PropsType;
-
-  wrapperRef: HTMLElement;
-
   componentDidMount() {
     ReactTooltip.rebuild();
   }
+
+  props: PropsType;
+  wrapperRef: HTMLElement;
 
   scrollIntoView() {
     this.wrapperRef.scrollIntoView();
@@ -49,7 +48,7 @@ class MessageComponent extends Component {
   }
 
   render() {
-    const { message, author, onRemove, group, todayDate } = this.props;
+    const { message, author, group, todayDate } = this.props;
     const messageDate = moment(message.date);
     const messageDiff = todayDate.diff(messageDate, 'd');
     const dateFormat = messageDiff > 0 ? 'DD/MM' : 'HH:mm';
@@ -63,7 +62,7 @@ class MessageComponent extends Component {
 
     return (
       <div
-        ref={ref => { this.wrapperRef = ref; }}
+        ref={(ref) => { this.wrapperRef = ref; }}
         className={cx('message', {
           message__current: author.isCurrentUser,
           'message--sending': message.isSending,
@@ -79,7 +78,7 @@ class MessageComponent extends Component {
         </div>}
         <div className="message__body" data-for="main" {...tipProps}>
           {this.renderMessageContent()}
-          {/* <button onClick={() => onRemove(message)}>X</button>*/}
+          {/* <button onClick={() => onRemove(message)}>X</button> */}
         </div>
       </div>
     );

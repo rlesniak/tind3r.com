@@ -1,9 +1,6 @@
 // @flow
 
-import './Person.scss';
-
 import React, { Component } from 'react';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import DocumentTitle from 'react-document-title';
 
@@ -14,6 +11,8 @@ import { pageTitle } from 'utils';
 
 import Person from 'models/Person';
 
+import './Person.scss';
+
 type PropsType = {
   match: Object,
   history: Object,
@@ -21,16 +20,16 @@ type PropsType = {
 
 @observer
 class PersonComponent extends Component {
-  props: PropsType;
-  person: Person = new Person({}, {
-    _id: this.props.match.params.id,
-  });
-
   componentDidMount() {
     this.person.fetch(() => {
       this.props.history.replace('/not-found');
     });
   }
+
+  person: Person = new Person({}, {
+    _id: this.props.match.params.id,
+  });
+  props: PropsType;
 
   render() {
     if (this.person.is_loading) {

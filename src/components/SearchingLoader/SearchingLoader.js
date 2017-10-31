@@ -1,7 +1,9 @@
-import './SearchingLoader.scss';
+// @flow
 
 import React from 'react';
 import cx from 'classnames';
+
+import './SearchingLoader.scss';
 
 type PropsType = {
   children: any,

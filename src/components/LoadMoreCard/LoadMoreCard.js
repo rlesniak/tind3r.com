@@ -1,11 +1,11 @@
 // @flow
 
-import './LoadMoreCard.scss';
-
 import React from 'react';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import noop from 'lodash/noop';
+
+import './LoadMoreCard.scss';
 
 type LoadMoreCardType = {
   loading?: boolean,

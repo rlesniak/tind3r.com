@@ -1,7 +1,5 @@
 // @flow
 
-import './ActionNotification.scss';
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withHandlers } from 'recompose';
@@ -9,6 +7,8 @@ import { withHandlers } from 'recompose';
 import recsStore from 'stores/RecsStore';
 
 import type { ActionsType } from 'types/person';
+
+import './ActionNotification.scss';
 
 type PropsType = {
   payload: {

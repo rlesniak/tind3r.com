@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const person = require('../mocks/person').person;
 const updates = require('../mocks/updates');
 const meta = require('../mocks/meta');

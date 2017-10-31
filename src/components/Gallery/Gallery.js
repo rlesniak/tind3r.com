@@ -1,7 +1,5 @@
 // @flow
 
-import './Gallery.scss';
-
 import React, { PureComponent } from 'react';
 import Slider from 'react-slick';
 import uniqueId from 'lodash/uniqueId';
@@ -9,6 +7,8 @@ import map from 'lodash/map';
 import cx from 'classnames';
 
 import Image from 'components/Image';
+
+import './Gallery.scss';
 
 const sliderOptions = {
   dots: true,
@@ -36,10 +36,6 @@ const ARROW_LEFT = 37;
 const ARROW_RIGHTT = 39;
 
 class Gallery extends PureComponent {
-  props: PropsType;
-  timeout: number = 0;
-  sliderRef: ?any;
-
   static defaultProps = {
     lazyLoad: true,
   };
@@ -74,6 +70,10 @@ class Gallery extends PureComponent {
     }
   }
 
+  props: PropsType;
+  timeout: number = 0;
+  sliderRef: ?any;
+
   handleKeydown = ({ keyCode }: Event) => {
     if (!this.sliderRef) {
       return;
@@ -94,7 +94,7 @@ class Gallery extends PureComponent {
     return (
       <div className={cx('gallery', { 'gallery--scrolling': scrolling })}>
         {!scrolling && images.length && <div className="gallery__slider">
-          <Slider {...sliderOptions} lazyLoad={lazyLoad} ref={ref => { this.sliderRef = ref; }}>
+          <Slider {...sliderOptions} lazyLoad={lazyLoad} ref={(ref) => { this.sliderRef = ref; }}>
             {map(images, image => (
               <div key={image.id}>
                 <Image src={image.url} style={{ width }} />

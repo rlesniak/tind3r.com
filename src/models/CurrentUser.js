@@ -7,7 +7,7 @@ import pick from 'lodash/pick';
 import get from 'lodash/get';
 import find from 'lodash/find';
 
-import { miToKm, kmToMi } from 'utils';
+import { miToKm } from 'utils';
 import API from 'utils/api';
 import FetchSevice from 'services/fetch-service';
 
@@ -91,12 +91,12 @@ export class CurrentUser implements UserInterface {
   @action fetch() {
     this.is_fetching = true;
 
-    meta().then(data => {
+    meta().then((data) => {
       this.set(data);
 
       this.is_fetching = false;
       this.is_authenticated = true;
-    }).catch(e => {
+    }).catch(() => {
       this.is_authenticated = false;
       this.is_fetching = false;
       this.is_error = true;
@@ -116,7 +116,7 @@ export class CurrentUser implements UserInterface {
       });
 
       extend(this, data);
-    } catch (e) {}
+    } catch (e) { console.error(e); }
 
     this.isProcessing = false;
   }

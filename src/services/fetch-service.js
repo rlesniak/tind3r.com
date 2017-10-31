@@ -12,7 +12,7 @@ import type { MatchType } from 'types/match';
 import type { PersonType } from 'types/person';
 import type { MessageType } from 'types/message';
 
-const processMessages = messages => {
+const processMessages = (messages) => {
   if (messages.length === 0) return;
 
   const collection = collections.messages;
@@ -30,7 +30,7 @@ const savePersonsToDb = (
 ) => {
   const collection = collections.persons;
   collection.insert(persons);
-  collection.save(err => {
+  collection.save((err) => {
     if (err) {
       if (personsTryCount > MAX_TRY) {
         personsTryCount = 0;
@@ -54,7 +54,7 @@ const saveMatchesToDb = (
 ) => {
   const collection = collections.matches;
   collection.insert(data);
-  collection.save(err => {
+  collection.save((err) => {
     if (err) {
       if (matchesTryCount > MAX_TRY) {
         error(err);
@@ -75,11 +75,11 @@ const createBlocks = (matchIds: Array<string>) => {
   updateMatch(matchIds, { is_blocked: true });
 };
 
-const getMessages = matches => {
+const getMessages = (matches) => {
   const arr = [];
 
-  each(matches, match => {
-    each(match.messages, msg => {
+  each(matches, (match) => {
+    each(match.messages, (msg) => {
       arr.push(parseMessage(msg));
     });
 
@@ -105,7 +105,7 @@ export default {
         const parsedPersons: PersonType[] = [];
         const parsedMessages: MessageType[] = [];
 
-        each(matches, match => {
+        each(matches, (match) => {
           if (!match._id) return; // when group match
 
           if (!match.is_new_message) {
@@ -179,7 +179,7 @@ export default {
 
   updateProfile(payload: Object) {
     if (payload.age_filter_min < 18) {
-      payload.age_filter_min = 18;
+      payload.age_filter_min = 18; // eslint-disable-line
     }
 
     return API.post('profile', {

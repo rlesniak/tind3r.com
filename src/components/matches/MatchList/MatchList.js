@@ -1,7 +1,4 @@
 // @flow
-
-import './MatchList.scss';
-
 import React, { Component } from 'react';
 import { reaction, computed } from 'mobx';
 import { observer } from 'mobx-react';
@@ -14,6 +11,8 @@ import LS from 'utils/localStorage';
 
 import { MatchStore } from 'stores/MatchStore';
 
+import './MatchList.scss';
+
 type PropsType = {
   matchStore: MatchStore,
   className: string,
@@ -23,10 +22,6 @@ type PropsType = {
 
 @observer
 class MatchList extends Component {
-  props: PropsType;
-  listRef: ?any;
-  lastMessageReactionDispose: () => void;
-
   componentDidMount() {
     this.lastMessageReactionDispose = reaction(
       () => ({
@@ -46,13 +41,17 @@ class MatchList extends Component {
     this.lastMessageReactionDispose();
   }
 
-  handleMatchClick = (matchId: string) => {
-    this.props.handleMatchClick(matchId);
-  };
-
   @computed get matches(): Array<Object> {
     return this.props.matchStore.matches;
   }
+
+  props: PropsType;
+  listRef: ?any;
+  lastMessageReactionDispose: () => void;
+
+  handleMatchClick = (matchId: string) => {
+    this.props.handleMatchClick(matchId);
+  };
 
   rowRenderer = ({ index, key, style }: Object) => {
     const match = this.matches[index];
@@ -63,7 +62,7 @@ class MatchList extends Component {
         style={style}
         className="match-list__match"
       >
-        {/* <button onClick={() => match.remove()}>X</button>*/}
+        {/* <button onClick={() => match.remove()}>X</button> */}
         <MatchRow
           match={match}
           onClick={this.handleMatchClick}
@@ -88,7 +87,7 @@ class MatchList extends Component {
         <AutoSizer>
           {({ height, width }) => (
             <List
-              ref={ref => { this.listRef = ref; }}
+              ref={(ref) => { this.listRef = ref; }}
               height={height}
               overscanRowCount={10}
               rowCount={this.matches.length}

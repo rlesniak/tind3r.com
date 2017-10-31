@@ -1,14 +1,14 @@
 // @flow
 
-import './MessageEmoji.scss';
 import 'emoji-mart/css/emoji-mart.css';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 import { Picker } from 'emoji-mart';
+
+import './MessageEmoji.scss';
 
 type PropsType = {
   onEmojiSelect: (emoji: string) => void,
@@ -17,8 +17,13 @@ type PropsType = {
 
 @observer
 class MessageEmoji extends Component {
-  props: PropsType;
-  pickerRef: ?HTMLElement;
+  componentDidMount() {
+    document.addEventListener('mousedown', this.onMouseDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.onMouseDown);
+  }
 
   onMouseDown = (e: any) => {
     const picker = ReactDOM.findDOMNode(this.pickerRef); // eslint-disable-line
@@ -28,13 +33,8 @@ class MessageEmoji extends Component {
     }
   }
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.onMouseDown);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.onMouseDown);
-  }
+  props: PropsType;
+  pickerRef: ?HTMLElement;
 
   closeEmoji() {
     this.props.onClose();
@@ -57,7 +57,7 @@ class MessageEmoji extends Component {
             title="Pick your Emoji!"
             style={{ position: 'absolute', bottom: '4px' }}
             onClick={this.emojiSelected}
-            ref={ref => { this.pickerRef = ref; }}
+            ref={(ref) => { this.pickerRef = ref; }}
           />
         </div>
       </div>

@@ -1,10 +1,10 @@
 // @flow
 
-import './Avatar.scss';
-
 import React from 'react';
 
 import Image from 'components/Image';
+
+import './Avatar.scss';
 
 type PropsType = {
   url: string,

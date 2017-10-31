@@ -53,7 +53,7 @@ class MessageStore {
   }
 
   // FOR DEBUG
-  removeMessage = message => {
+  removeMessage = (message) => {
     this.messages.remove(message);
     removeMessage(message._id);
   }

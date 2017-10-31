@@ -1,7 +1,5 @@
 // @flow
 
-import './Match.scss';
-
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { observable } from 'mobx';
@@ -17,11 +15,12 @@ import { CurrentUser } from 'models/CurrentUser';
 import Match from 'models/Match';
 import { collections, removeMatch } from 'utils/database.v2';
 
-
 import MessageList from 'components/conversation/MessageList';
 import MessageInput from 'components/conversation/MessageInput';
 import Gallery from 'components/Gallery';
 import Bio from 'components/Bio';
+
+import './Match.scss';
 
 type PropsTypes = {
   currentUser: CurrentUser,
@@ -33,19 +32,12 @@ type PropsTypes = {
 @inject('currentUser', 'matchStore')
 @observer
 class MatchComponent extends Component {
-  props: PropsTypes;
-  personWrapperRef: HTMLElement;
-  tooltipRef: HTMLElement;
-  messageStore: MessageStore = new MessageStore(null);
-
-  @observable match: ?Match;
-
   componentDidMount() {
     const { match: { params } } = this.props;
     this.fetchMessages(params.id);
     ReactTooltip.rebuild();
 
-    collections.persons.on('update', data => {
+    collections.persons.on('update', (data) => {
       const person = data[0];
 
       if (person && this.match) {
@@ -58,6 +50,12 @@ class MatchComponent extends Component {
   componentWillReceiveProps(nextProps: Object) {
     if (nextProps.match.params.id !== this.props.match.params.id) {
       this.fetchMessages(nextProps.match.params.id);
+    }
+  }
+
+  setAsRead = () => {
+    if (this.match && this.match.is_new) {
+      this.match.setAsRead();
     }
   }
 
@@ -80,11 +78,11 @@ class MatchComponent extends Component {
     }
   }
 
-  setAsRead = () => {
-    if (this.match && this.match.is_new) {
-      this.match.setAsRead();
-    }
-  }
+  props: PropsTypes;
+  personWrapperRef: HTMLElement;
+  tooltipRef: HTMLElement;
+  messageStore: MessageStore = new MessageStore(null);
+  @observable match: ?Match;
 
   handleMessageSubmit = (text: string, payload: Object = {}) => {
     const { match: { params }, currentUser } = this.props;
@@ -187,7 +185,7 @@ class MatchComponent extends Component {
             </div>}
           </div>
         </div>
-        <div className="match__person" ref={ref => this.personWrapperRef = ref}>
+        <div className="match__person" ref={(ref) => { this.personWrapperRef = ref; }}>
           <Scrollbars>
             {this.renderPerson()}
           </Scrollbars>

@@ -1,10 +1,12 @@
-import './MatchFilters.scss';
+// @flow
 
 import React from 'react';
 import { compose, withState, withHandlers } from 'recompose';
 import cx from 'classnames';
 
 import { MatchStore } from 'stores/MatchStore';
+
+import './MatchFilters.scss';
 
 type PropsType = {
   setValue: (value: string) => void,

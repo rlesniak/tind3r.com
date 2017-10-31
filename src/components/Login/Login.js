@@ -1,8 +1,8 @@
 // @flow
 
-import './Login.scss';
-
 import React from 'react';
+
+import './Login.scss';
 
 type PropsType = {
   children?: React.Element<*>,

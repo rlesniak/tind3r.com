@@ -1,7 +1,5 @@
 // @flow
 
-import './MessageInput.scss';
-
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { observable } from 'mobx';
@@ -13,6 +11,8 @@ import LS from 'utils/localStorage';
 import MessageEmoji from '../MessageEmoji';
 import MessageGif from '../MessageGif';
 
+import './MessageInput.scss';
+
 
 type PropsType = {
   onSubmit: (text: string) => void,
@@ -23,18 +23,18 @@ type PropsType = {
 
 @observer
 class MessageInput extends Component {
+  componentDidUpdate() {
+    if (this.inputRef) {
+      this.inputRef.focus();
+    }
+  }
+
   @observable text = '';
   @observable isGifOpen: boolean = false;
   @observable isEmojiOpen: boolean = false;
 
   props: PropsType;
   inputRef: ?HTMLElement;
-
-  componentDidUpdate() {
-    if (this.inputRef) {
-      this.inputRef.focus();
-    }
-  }
 
   handleMessageChange = ({ target }: SyntheticInputEvent) => {
     this.text = target.value;
@@ -113,7 +113,7 @@ class MessageInput extends Component {
               <textarea
                 autoFocus
                 type="text"
-                ref={ref => { this.inputRef = ref; }}
+                ref={(ref) => { this.inputRef = ref; }}
                 onFocus={this.handleFocus}
                 onChange={this.handleMessageChange}
                 onKeyPress={this.handleKeyPress}

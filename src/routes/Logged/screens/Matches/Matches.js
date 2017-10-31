@@ -1,14 +1,11 @@
 // @flow
-
-import './Matches.scss';
+/* eslint-disable no-param-reassign */
 
 import React from 'react';
 import ReactGA from 'react-ga';
 import { withState, withHandlers, compose } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-
-import Match from '../Match';
 
 import { removeMatch } from 'utils/database.v2';
 
@@ -19,18 +16,25 @@ import SideMenu from 'components/SideMenu';
 
 import LS from 'utils/localStorage';
 
+import Match from '../Match';
+
+import './Matches.scss';
+
 type PropsType = {
   handleMatchClick: (matchId: string) => void,
   matchStore: MatchStore,
   activeId: string,
   props: any,
+  handleHardRefresh: () => void,
+  handleMarkAllAsRead: () => void,
+  handleRemoveAllBlocked: () => void,
 };
 
 const enhance = compose(
   inject('matchStore'),
   withState('activeId', 'setActiveId', props => props.location.pathname.split('/matches/')[1]),
   withHandlers({
-    handleMatchClick: ({ history, setActiveId }) => matchId => {
+    handleMatchClick: ({ history, setActiveId }) => (matchId) => {
       history.push(`/matches/${matchId}`);
       setActiveId(matchId);
     },
@@ -94,7 +98,13 @@ const filterTypesMap = [
 ];
 
 const Matches = ({
-  handleMatchClick, matchStore, activeId, handleHardRefresh, handleMarkAllAsRead, handleRemoveAllBlocked, ...props
+  handleMatchClick,
+  matchStore,
+  activeId,
+  handleHardRefresh,
+  handleMarkAllAsRead,
+  handleRemoveAllBlocked,
+  ...props
 }: PropsType) => (
   <div className="matches">
     <SideMenu title="Matches" id="matches">
@@ -110,28 +120,22 @@ const Matches = ({
         </SideMenu.Item>
       ))}
       <SideMenu.Separator />
-      <SideMenu.Item
-        asAction
-        onClick={handleMarkAllAsRead}
-        disabled={matchStore.unreadCount === 0}
-      >
+      <SideMenu.Item asAction onClick={handleMarkAllAsRead} disabled={matchStore.unreadCount === 0}>
         <i className="fa fa-check-circle-o" /> Mark all as read
       </SideMenu.Item>
-      <SideMenu.Item
-        asAction
-        onClick={handleRemoveAllBlocked}
-        disabled={matchStore.blockedCount === 0}
-      >
+      <SideMenu.Item asAction onClick={handleRemoveAllBlocked} disabled={matchStore.blockedCount === 0}>
         <i className="fa fa-ban" /> Remove all blocked ({matchStore.blockedCount})
       </SideMenu.Item>
       <SideMenu.Separator />
-      {<SideMenu.Item>
-        <p className="emergency-info">
-          If you have any problems with matches click below to try again. <br />
-          I hope it helps. Please let me know.<br />
-          <a onClick={handleHardRefresh}>Refresh</a>
-        </p>
-      </SideMenu.Item>}
+      {
+        <SideMenu.Item>
+          <p className="emergency-info">
+            If you have any problems with matches click below to try again. <br />
+            I hope it helps. Please let me know.<br />
+            <a onClick={handleHardRefresh}>Refresh</a>
+          </p>
+        </SideMenu.Item>
+      }
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">
@@ -147,6 +151,6 @@ const Matches = ({
       </div>
     </SideMenu.Right>
   </div>
-  );
+);
 
 export default enhance(Matches);

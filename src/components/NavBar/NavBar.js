@@ -1,12 +1,11 @@
 // @flow
-
-import './NavBar.scss';
-
 import React, { Component } from 'react';
 import {
   NavLink,
 } from 'react-router-dom';
 import { observer } from 'mobx-react';
+
+import './NavBar.scss';
 
 type PropsType = {
   unreadCount?: number,

@@ -1,10 +1,10 @@
 // @flow
 
-import './Image.scss';
-
 import React from 'react';
 import { compose, withHandlers, withState } from 'recompose';
 import cx from 'classnames';
+
+import './Image.scss';
 
 const enhance = compose(
   withState('isFailed', 'setError', false),
@@ -16,12 +16,6 @@ const enhance = compose(
 );
 
 const Image = ({ isFailed, onError, style, src, className, ...props }) => {
-  const styles = {
-    width: style.width,
-    height: style.width,
-    lineHeight: `${style.width}px`,
-  };
-
   if (isFailed) {
     return (
       <div
@@ -34,7 +28,7 @@ const Image = ({ isFailed, onError, style, src, className, ...props }) => {
   }
 
   return (
-    <img src={src} onError={onError} style={style} className={cx(className)} />
+    <img alt="Error" src={src} onError={onError} style={style} className={cx(className)} />
   );
 };
 

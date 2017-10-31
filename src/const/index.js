@@ -5,7 +5,7 @@ export const nonStoreId = 'aalgphbalbbjeanggebmnagogdofokkb';
 
 let activeId = nonStoreId;
 
-export const setId = id => { activeId = id; };
+export const setId = (id) => { activeId = id; };
 
 export const EXT_ID = () => activeId;
 

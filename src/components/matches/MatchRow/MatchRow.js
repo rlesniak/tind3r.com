@@ -1,7 +1,5 @@
 // @flow
 
-import './MatchRow.scss';
-
 import React from 'react';
 import cx from 'classnames';
 import moment from 'moment';
@@ -11,6 +9,8 @@ import { observer } from 'mobx-react';
 import Avatar from 'components/Avatar';
 
 import Match from 'models/Match';
+
+import './MatchRow.scss';
 
 type PropsType = {
   onClick: (matchId: string) => void,

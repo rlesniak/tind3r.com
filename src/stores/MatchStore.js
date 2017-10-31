@@ -33,15 +33,15 @@ export class MatchStore {
   @observable visibilityFilter: FiltersType = 'all';
 
   constructor() {
-    collections.matches.on('update', data => {
+    collections.matches.on('update', (data) => {
       each(data, (item: MatchType) => {
         const match = this.find(item._id);
         if (match) match.updateMatch(item);
       });
     });
 
-    collections.messages.on('insert', data => {
-      each(data, message => {
+    collections.messages.on('insert', (data) => {
+      each(data, (message) => {
         const match = this.find(message.match_id);
         if (match) match.insertNewMessage(message);
       });
@@ -71,7 +71,7 @@ export class MatchStore {
 
   @action getFromDb() {
     const matches = matchCollection();
-    matches.forEach(action(data => {
+    matches.forEach(action((data) => {
       this.create(data);
     }));
 
@@ -117,7 +117,7 @@ export class MatchStore {
   @action removeAllBlocked(): string[] {
     const removedIds = [];
 
-    this.items.slice(0).forEach(match => {
+    this.items.slice(0).forEach((match) => {
       if (match.is_blocked) {
         this.remove(match);
         removedIds.push(match._id);
@@ -171,7 +171,7 @@ export class MatchStore {
       case FILTER_TYPES.SUPERLIKE: data = this.filterSuperlike; break;
     }
 
-    data = data.filter(m => {
+    data = data.filter((m) => {
       if (!m.person.name) {
         if (window.Bugsnag) {
           Bugsnag.notifyException(new Error('!m.person.name'), m.person);
@@ -221,7 +221,7 @@ export class MatchStore {
   }
 
   filterTypes(type: string) {
-    return this.items.filter(m => {
+    return this.items.filter((m) => {
       switch (type) {
         case FILTER_TYPES.SUPERLIKE: return m.is_super_like;
       }

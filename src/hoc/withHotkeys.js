@@ -6,12 +6,12 @@ export default function withHotkeys(handlers, useCapture = false) {
     class WithHotkeys extends Component {
       displayName = wrapDisplayName(BaseComponent, 'withHotkeys');
 
-      componentWillUpdate(props) {
-        this.updateEventListener(props);
-      }
-
       componentDidMount() {
         this.updateEventListener(this.props);
+      }
+
+      componentWillUpdate(props) {
+        this.updateEventListener(props);
       }
 
       componentWillUnmount() {
@@ -26,7 +26,7 @@ export default function withHotkeys(handlers, useCapture = false) {
         }
       }
 
-      handleKeyDown = event => {
+      handleKeyDown = (event) => {
         const handler = handlers[event.keyCode];
 
         if (!handler) {

@@ -1,5 +1,3 @@
-import '../../styles/globals.scss';
-
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -8,15 +6,14 @@ import {
 } from 'react-router-dom';
 
 import Loader from 'components/Loader';
-import Login from 'components/Login';
 
 import { checkIfInstalled, getTokenDate, getFacebookToken } from 'utils/runtime';
 import LS from 'utils/localStorage';
 
 import Welcome from '../Welcome';
 import Logged from '../Logged';
-import NotFound from '../NotFound';
 
+import '../../styles/globals.scss';
 
 class App extends Component {
   state = {
@@ -25,13 +22,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    checkIfInstalled(isInstalled => {
+    checkIfInstalled((isInstalled) => {
       this.setState({ isInstalled });
     });
   }
 
   checkLogged = () => {
-    getTokenDate(date => {
+    getTokenDate((date) => {
       if (date) {
         window.onfocus = n => n;
         this.setState({ isFirstLogin: false });

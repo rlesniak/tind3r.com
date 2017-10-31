@@ -1,8 +1,8 @@
 // @flow
 
-import './ShortcutIcon.scss';
-
 import React from 'react';
+
+import './ShortcutIcon.scss';
 
 type PropsType = {
   text: string,

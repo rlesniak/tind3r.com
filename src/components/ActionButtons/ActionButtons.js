@@ -5,10 +5,10 @@ import { compose, withHandlers, withState, pure } from 'recompose';
 import { observer } from 'mobx-react';
 import cx from 'classnames';
 
+import type { ActionsType } from 'types/person';
+
 import { ACTION_TYPES } from '../../const/index.js';
 import Button from '../actions/Button';
-
-import type { ActionsType } from 'types/person';
 
 import './ActionButtons.scss';
 

@@ -1,7 +1,5 @@
 // @flow
 
-import './Settings.scss';
-
 import React from 'react';
 import ReactGA from 'react-ga';
 import { compose, withHandlers, withState, lifecycle } from 'recompose';
@@ -9,6 +7,7 @@ import { observer } from 'mobx-react';
 import { Button, Classes, Switch } from '@blueprintjs/core';
 import ReactTooltip from 'react-tooltip';
 import trim from 'lodash/trim';
+import uniqueId from 'lodash/uniqueId';
 
 import LocationMap from 'components/LocationMap';
 import MessageEmoji from 'components/conversation/MessageEmoji';
@@ -16,6 +15,8 @@ import MessageEmoji from 'components/conversation/MessageEmoji';
 import LS from 'utils/localStorage';
 
 import currentUser from 'models/CurrentUser';
+
+import './Settings.scss';
 
 const enhance = compose(
   withState('bio', 'setBio', () => currentUser.bio),
@@ -48,7 +49,7 @@ const enhance = compose(
         action: 'Notification change',
       });
     },
-    handleTemplateRemove: ({ setTemplates }) => index => {
+    handleTemplateRemove: ({ setTemplates }) => (index) => {
       LS.removeTemplateAt(index);
       setTemplates(LS.templates);
 
@@ -71,7 +72,7 @@ const enhance = compose(
         action: 'Template create',
       });
     },
-    handleEmojiToggle: ({ setEmojiOpen, emojiOpen }) => () => {
+    handleEmojiToggle: ({ setEmojiOpen }) => () => {
       setEmojiOpen(true);
     },
     handleEmojiSelect: ({ templateValue, setTemplateValue, setEmojiOpen }) => (emoji: string) => {
@@ -87,7 +88,7 @@ const enhance = compose(
   observer,
 );
 
-const TemplateRow = ({ value, onRemove }) => (
+const TemplateRow = ({ value, onRemove }: { value: string, onRemove: () => void }) => (
   <tr>
     <td>
       <button type="button" className="pt-button pt-icon-trash" onClick={onRemove} />
@@ -97,9 +98,20 @@ const TemplateRow = ({ value, onRemove }) => (
 );
 
 const Settings = ({
-  bio, handleChange, handleSave, handleNotifChange, notif, handleTemplateRemove,
-  templates, templateValue, handleTemplateValueChange, handleCreateTemplate, emojiOpen,
-  handleEmojiSelect, handleEmojiToggle, setEmojiOpen,
+  bio,
+  handleChange,
+  handleSave,
+  handleNotifChange,
+  notif,
+  handleTemplateRemove,
+  templates,
+  templateValue,
+  handleTemplateValueChange,
+  handleCreateTemplate,
+  emojiOpen,
+  handleEmojiSelect,
+  handleEmojiToggle,
+  setEmojiOpen,
 }) => (
   <div className="settings">
     <div className="settings__row">
@@ -111,7 +123,16 @@ const Settings = ({
     <div className="settings__row">
       <label>
         Your current location
-        {!currentUser.pos.lat && <i className="fa fa-question-circle" data-for="main" data-tip="Be careful with significant changes! <br />I do not take responsibility for any possible problems with ban etc." />}
+        {!currentUser.pos.lat && (
+          <i
+            className="fa fa-question-circle"
+            data-for="main"
+            data-tip={`
+              Be careful with significant changes! <br />
+              I do not take responsibility for any possible problems with ban etc.
+            `}
+          />
+        )}
         {!!currentUser.pos.lat && <span>(update by clicking somewhere)</span>}
       </label>
       <div className="settings__field">
@@ -120,37 +141,45 @@ const Settings = ({
     </div>
     <div className="settings__row">
       <div className="settings__field">
-        <Button
-          className={Classes.LARGE}
-          onClick={handleSave}
-          loading={currentUser.isProcessing}
-          text="Save"
-        />
+        <Button className={Classes.LARGE} onClick={handleSave} loading={currentUser.isProcessing} text="Save" />
       </div>
     </div>
-    <div className="settings__separator"><span>Saved only locally</span></div>
+    <div className="settings__separator">
+      <span>Saved only locally</span>
+    </div>
     <div className="settings__row">
       <label>Create message template</label>
-      <span className="settings__info">Use variable like: <b>{'{{name}}'}</b> to replace with interlocutor real name.</span>
+      <span className="settings__info">
+        Use variable like: <b>{'{{name}}'}</b> to replace with interlocutor real name.
+      </span>
       <div className="settings__field">
         {emojiOpen && <MessageEmoji onClose={() => setEmojiOpen(false)} onEmojiSelect={handleEmojiSelect} />}
         <div className="settings__field">
           <textarea className="pt-input" value={templateValue} onChange={handleTemplateValueChange} />
         </div>
         <div className="settings__field">
-          <button type="button" className="pt-button pt-intent-primary pt-icon-add" onClick={handleCreateTemplate}>Add</button>
-          <button type="button" className="pt-button pt-icon-user" onClick={handleEmojiToggle}>Emoji</button>
+          <button type="button" className="pt-button pt-intent-primary pt-icon-add" onClick={handleCreateTemplate}>
+            Add
+          </button>
+          <button type="button" className="pt-button pt-icon-user" onClick={handleEmojiToggle}>
+            Emoji
+          </button>
         </div>
       </div>
     </div>
     <div className="settings__row">
       <label>
         Templates list
-        <i className="fa fa-question-circle" data-for="main" data-tip="NOTICE: You will lose all your templates when you log out." />
+        <i
+          className="fa fa-question-circle"
+          data-for="main"
+          data-tip="NOTICE: You will lose all your templates when you log out."
+        />
       </label>
       <div className="settings__field">
-        {templates.length === 0 ?
-          <h5>Empty</h5> :
+        {templates.length === 0 ? (
+          <h5>Empty</h5>
+        ) : (
           <table className="pt-table pt-condensed pt-striped settings__field-table">
             <thead>
               <th width="50px" />
@@ -158,11 +187,11 @@ const Settings = ({
             </thead>
             <tbody>
               {templates.map((value, i) => (
-                <TemplateRow key={i} onRemove={() => handleTemplateRemove(i)} value={value} />
+                <TemplateRow key={uniqueId()} onRemove={() => handleTemplateRemove(i)} value={value} />
               ))}
             </tbody>
           </table>
-        }
+        )}
       </div>
     </div>
     <div className="settings__row">

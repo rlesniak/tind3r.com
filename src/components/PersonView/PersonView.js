@@ -1,7 +1,5 @@
 // @flow
 
-import './PersonView.scss';
-
 import React, { Component } from 'react';
 import { reaction, observable } from 'mobx';
 import get from 'lodash/get';
@@ -25,6 +23,8 @@ import type { ActionsType } from 'types/person';
 import type { MatchType } from 'types/match';
 import type { WithLikeCounterPropsType } from 'hoc/withLikeCounter';
 
+import './PersonView.scss';
+
 type PropsType = WithLikeCounterPropsType & {
   personId: ?string,
   onActionClick?: () => void,
@@ -36,14 +36,6 @@ type PropsType = WithLikeCounterPropsType & {
 @withLikeCounter
 @observer
 class PersonView extends Component {
-  props: PropsType;
-
-  match: MatchType;
-  person: Person;
-  reactionDispose: () => void = n => n;
-
-  @observable activeAction: ?ActionsType;
-
   constructor(props: PropsType) {
     super(props);
     const json = this.props.person || { _id: this.props.personId };
@@ -53,7 +45,7 @@ class PersonView extends Component {
 
     this.reactionDispose = reaction(
       () => this.person.is_loading,
-      state => {
+      (state) => {
         if (this.props.person && state === false) {
           this.forceUpdate();
         }
@@ -78,6 +70,14 @@ class PersonView extends Component {
   componentWillUnmount() {
     this.reactionDispose();
   }
+
+  props: PropsType;
+
+  match: MatchType;
+  person: Person;
+  reactionDispose: () => void = n => n;
+
+  @observable activeAction: ?ActionsType;
 
   handleActionClick = (type: ActionsType) => {
     const { onActionClick, handleSuperlike, handleError } = this.props;

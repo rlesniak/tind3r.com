@@ -1,14 +1,13 @@
 // @flow
 
-import './MatchNotification.scss';
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { withHandlers } from 'recompose';
 
 import Avatar from 'components/Avatar';
 
 import Person from 'models/Person';
+
+import './MatchNotification.scss';
 
 type PropsType = {
   person: Person,

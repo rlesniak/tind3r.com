@@ -1,17 +1,23 @@
-import './Welcome.scss';
+// @flow
 
 import React, { Component } from 'react';
-import { Button, Classes, Switch } from '@blueprintjs/core';
+import { Button, Classes } from '@blueprintjs/core';
 import DocumentTitle from 'react-document-title';
 
 import Login from 'components/Login';
 
-import { checkIfInstalled, getTokenDate, getFacebookToken } from 'utils/runtime';
+import './Welcome.scss';
+
+type PropsType = {
+  isInstalled: boolean,
+  handleConnect: () => void,
+}
 
 export default class Welcome extends Component {
   state = {
     isButtonVisible: true,
   }
+  props: PropsType;
 
   handleInstall = () => {
     this.setState({ isButtonVisible: false });
@@ -54,7 +60,7 @@ export default class Welcome extends Component {
 
     return (
       <span className="welcome__chrome">
-        Only on Google Chrome <img src="/assets/img/chrome.png" />
+        Only on Google Chrome <img alt="Chrome" src="/assets/img/chrome.png" />
       </span>
     );
   }

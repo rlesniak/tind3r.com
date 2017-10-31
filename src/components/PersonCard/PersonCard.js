@@ -1,7 +1,4 @@
 // @flow
-
-import './PersonCard.scss';
-
 import React from 'react';
 import { reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
@@ -21,6 +18,8 @@ import Person from 'models/Person';
 import { CurrentUser } from 'models/CurrentUser';
 
 import type { ActionsType } from 'types/person';
+
+import './PersonCard.scss';
 
 const keyCodes = { d: 68, s: 83, a: 65 };
 
@@ -46,15 +45,15 @@ const enhance = compose(
   withState('isHovering', 'toggleHover', false),
   withState('isDistanceDirty', 'toggleDistanceDirty', false),
   withHotkeys({
-    [keyCodes.d]: props => {
+    [keyCodes.d]: (props) => {
       if (props.isLikeDisabled) return;
       callAction(props, ACTION_TYPES.LIKE);
     },
-    [keyCodes.s]: props => {
+    [keyCodes.s]: (props) => {
       if (props.isSuperlikeDisabled) return;
       callAction(props, ACTION_TYPES.SUPERLIKE);
     },
-    [keyCodes.a]: props => {
+    [keyCodes.a]: (props) => {
       callAction(props, ACTION_TYPES.PASS);
     },
   }),
@@ -109,7 +108,7 @@ type PersonCardType = {
 };
 
 type DistanceType = {
-  distanceKm: number,
+  distanceKm: ?string,
   distance: number,
   currentUserDistance: number,
   isDistanceDirty: boolean,
@@ -208,7 +207,7 @@ const PersonCard = ({
             />
           </div>
           {small && hasFriends && <div className="person-card__footer--distance">
-            Friends: ({person.common_connections.length})
+            Friends: ({person.common_connections && person.common_connections.length})
           </div>}
           <div className="person-card__footer--instagram">
             {

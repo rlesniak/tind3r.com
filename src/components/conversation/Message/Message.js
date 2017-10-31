@@ -58,7 +58,7 @@ class MessageComponent extends Component {
     if (messageDiff > 0) {
       tipProps = {
         'data-tip': messageDate.format('DD/MM HH:mm'),
-      }
+      };
     }
 
     return (

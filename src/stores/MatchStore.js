@@ -104,9 +104,7 @@ export class MatchStore {
         if (window.hj) {
           window.hj('tagRecording', ['With error']);
         }
-      } else {
-        if (typeof errorCallback === 'function') errorCallback();
-      }
+      } else if (typeof errorCallback === 'function') errorCallback();
       this.isLoading = false;
     }
   }

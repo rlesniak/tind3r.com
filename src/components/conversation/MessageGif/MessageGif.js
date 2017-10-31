@@ -8,9 +8,9 @@ import { observer } from 'mobx-react';
 import cx from 'classnames';
 import each from 'lodash/each';
 import map from 'lodash/map';
-import axios from 'axios'
+import axios from 'axios';
 
-const fetchGipy = query => axios.get(`http://api.giphy.com/v1/gifs/search?q=${encodeURI(query)}&api_key=dc6zaTOxFJmzC`)
+const fetchGipy = query => axios.get(`http://api.giphy.com/v1/gifs/search?q=${encodeURI(query)}&api_key=dc6zaTOxFJmzC`);
 
 type PropsType = {
   onSelect: (body: string, data: Object) => void,
@@ -31,7 +31,7 @@ class MessageGif extends Component {
       this.inputRef.focus();
     }
 
-    document.addEventListener('mousedown', this.onMouseDown)
+    document.addEventListener('mousedown', this.onMouseDown);
   }
 
   onMouseDown = (e: any) => {
@@ -49,18 +49,18 @@ class MessageGif extends Component {
       const { data } = await fetchGipy(this.text);
       this.gifs = [];
 
-      each(data.data, action((gif) => {
+      each(data.data, action(gif => {
         this.gifs.push({
           id: gif.id,
           url: gif.images.downsized.url,
           fixedHeight: gif.images.fixed_height,
-        })
+        });
       }));
     }
   }
 
   handleSelect = (gif: Object) => {
-    const url = `${gif.fixedHeight.url}?width=${gif.fixedHeight.width}&height=${gif.fixedHeight.height}`
+    const url = `${gif.fixedHeight.url}?width=${gif.fixedHeight.width}&height=${gif.fixedHeight.height}`;
 
     this.props.onSelect(url, {
       type: 'GIF',

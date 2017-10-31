@@ -69,7 +69,7 @@ class Home extends PureComponent {
 
     ReactTooltip.rebuild();
 
-    window.cu = this.props.currentUser
+    window.cu = this.props.currentUser;
   }
 
   handleAll = () => {

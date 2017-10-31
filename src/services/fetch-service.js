@@ -75,13 +75,13 @@ const createBlocks = (matchIds: Array<string>) => {
   updateMatch(matchIds, { is_blocked: true });
 };
 
-const getMessages = (matches) => {
+const getMessages = matches => {
   const arr = [];
 
   each(matches, match => {
     each(match.messages, msg => {
       arr.push(parseMessage(msg));
-    })
+    });
 
     if (match.is_new_message) {
       updateMatch([match._id], { is_new: true });
@@ -89,7 +89,7 @@ const getMessages = (matches) => {
   });
 
   return arr;
-}
+};
 
 export default {
   updates() {
@@ -149,7 +149,6 @@ export default {
         }
 
         LS.set({ lastActivity: last_activity_date });
-
       }).catch(reject);
     });
   },

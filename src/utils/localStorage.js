@@ -17,10 +17,10 @@ const settings = () => {
       settings: {
         ...get(),
         ...data,
-      }
+      },
     });
-  }
-}
+  };
+};
 
 const ls = {
   get data() {
@@ -44,8 +44,8 @@ const ls = {
       settings: {
         ...this.settings,
         ...data,
-      }
-    })
+      },
+    });
   },
 
   get templates() {

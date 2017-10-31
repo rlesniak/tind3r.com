@@ -103,7 +103,6 @@ class MessageInput extends Component {
   }
 
   render() {
-
     return (
       <div
         className={cx('message-input')}
@@ -111,16 +110,16 @@ class MessageInput extends Component {
         <div className="message-input__input">
           {this.isGifOpen ?
             <MessageGif onToggle={this.handleGifToggle} onSelect={this.handleGifSubmit} /> : (
-            <textarea
-              autoFocus
-              type="text"
-              ref={ref => { this.inputRef = ref; }}
-              onFocus={this.handleFocus}
-              onChange={this.handleMessageChange}
-              onKeyPress={this.handleKeyPress}
-              value={this.text}
-              placeholder="Type your message or select a GIF"
-            />
+              <textarea
+                autoFocus
+                type="text"
+                ref={ref => { this.inputRef = ref; }}
+                onFocus={this.handleFocus}
+                onChange={this.handleMessageChange}
+                onKeyPress={this.handleKeyPress}
+                value={this.text}
+                placeholder="Type your message or select a GIF"
+              />
           )}
         </div>
         <div className="message-input__controls">
@@ -140,7 +139,7 @@ class MessageInput extends Component {
                 <option value="-1">Select a message template...</option>
                 {LS.templates.map((tmpl, i) => {
                   const replaced = tmpl.replace('{{name}}', this.props.personName || '');
-                  return <option key={i} value={replaced}>{replaced.substr(0, 30)}</option>
+                  return <option key={i} value={replaced}>{replaced.substr(0, 30)}</option>;
                 })}
               </select>
             </div>

@@ -127,7 +127,7 @@ const Matches = ({
       <SideMenu.Separator />
       {<SideMenu.Item>
         <p className="emergency-info">
-          If you have any problems with matches click below to try again. <br/>
+          If you have any problems with matches click below to try again. <br />
           I hope it helps. Please let me know.<br />
           <a onClick={handleHardRefresh}>Refresh</a>
         </p>

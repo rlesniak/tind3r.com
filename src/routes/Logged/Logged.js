@@ -249,8 +249,8 @@ class Welcome extends Component {
                 </li>
                 <li className="logged__coffee">
                   <a
-                    href='https://ko-fi.com/A0851VB7'
-                    target='_blank'
+                    href="https://ko-fi.com/A0851VB7"
+                    target="_blank"
                     className="logged__coffee-wrapper"
                   >
                     <div className="logged__coffee-icon">

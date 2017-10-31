@@ -137,7 +137,7 @@ export class CurrentUser implements UserInterface {
       } else {
         this.pos = {
           lat, lon,
-        }
+        };
       }
     } catch (e) {
       console.error(e);

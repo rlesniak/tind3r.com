@@ -46,7 +46,7 @@ class LocationMap extends Component {
         level: 'error',
         position: 'tc',
         autoDismiss: 5,
-        message: 'Position change not significant or you change too far in small amount of time. Try again later'
+        message: 'Position change not significant or you change too far in small amount of time. Try again later',
       });
     }
 
@@ -71,10 +71,10 @@ class LocationMap extends Component {
 
     if (!currentUser.pos.lat) {
       return (
-      <div className="location-map">
-        <h1>To see map and to be able to change location, click save to fetch your current location.</h1>
-      </div>
-      )
+        <div className="location-map">
+          <h1>To see map and to be able to change location, click save to fetch your current location.</h1>
+        </div>
+      );
     }
 
     return (

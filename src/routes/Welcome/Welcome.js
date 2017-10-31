@@ -30,7 +30,7 @@ export default class Welcome extends Component {
       if (this.props.isInstalled) {
         return (
           <Login onClick={this.props.handleConnect} />
-        )
+        );
       }
 
       if (this.state.isButtonVisible) {
@@ -40,7 +40,7 @@ export default class Welcome extends Component {
             className={Classes.LARGE}
             text="Get the extension"
           />
-        )
+        );
       }
 
       return (
@@ -56,11 +56,10 @@ export default class Welcome extends Component {
       <span className="welcome__chrome">
         Only on Google Chrome <img src="/assets/img/chrome.png" />
       </span>
-    )
+    );
   }
 
   render() {
-
     return (
       <DocumentTitle title="Tind3r.com - Unofficial Tinder client">
         <div className="welcome">
@@ -69,7 +68,7 @@ export default class Welcome extends Component {
               tind<b>3</b>r.com
               <div className="welcome__slogan">unofficial Tinder web client</div>
             </div>
-            <div className="welcome__image"></div>
+            <div className="welcome__image" />
           </div>
           <div className="welcome__right">
             <div className="welcome__info">

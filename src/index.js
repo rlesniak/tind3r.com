@@ -39,6 +39,6 @@ if (window.Bugsnag) {
     data.metaData.sessionURL = LogRocket.sessionURL;
     return data;
   };
-};
+}
 
 if (module.hot) module.hot.accept('./App', () => render(App));

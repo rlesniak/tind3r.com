@@ -48,7 +48,7 @@ const enhance = compose(
         action: 'Notification change',
       });
     },
-    handleTemplateRemove: ({ setTemplates }) => (index) => {
+    handleTemplateRemove: ({ setTemplates }) => index => {
       LS.removeTemplateAt(index);
       setTemplates(LS.templates);
 
@@ -82,7 +82,7 @@ const enhance = compose(
   lifecycle({
     componentDidMount: () => {
       ReactTooltip.rebuild();
-    }
+    },
   }),
   observer,
 );
@@ -153,7 +153,7 @@ const Settings = ({
           <h5>Empty</h5> :
           <table className="pt-table pt-condensed pt-striped settings__field-table">
             <thead>
-              <th width="50px"></th>
+              <th width="50px" />
               <th>Text</th>
             </thead>
             <tbody>

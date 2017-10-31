@@ -61,7 +61,7 @@ const MatchRow = ({ handleOnClick, match, active }: PropsType) => (
         <div className="match-row__person-details">{match.person.name}</div>
         <div className="match-row__message-content">
           <span>
-            {(match.lastMessage.body || '').indexOf('giph') >= 0 ? 'You send a GIPHY': match.lastMessage.body}
+            {(match.lastMessage.body || '').indexOf('giph') >= 0 ? 'You send a GIPHY' : match.lastMessage.body}
           </span>
           <div className="match-row__date">{moment(match.lastActivity).fromNow()}</div>
         </div>

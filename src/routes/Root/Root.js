@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -15,7 +17,7 @@ import Logged from '../Logged';
 
 import '../../styles/globals.scss';
 
-class App extends Component {
+class App extends Component<{}, { isInstalled: ?boolean, isFirstLogin: boolean }> {
   state = {
     isInstalled: null,
     isFirstLogin: !LS.data.lastActivity,

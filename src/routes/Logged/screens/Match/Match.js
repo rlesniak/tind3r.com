@@ -22,7 +22,7 @@ import Bio from 'components/Bio';
 
 import './Match.scss';
 
-type PropsTypes = {
+type PropsType = {
   currentUser: CurrentUser,
   match: Object,
   history: Object,
@@ -31,7 +31,7 @@ type PropsTypes = {
 
 @inject('currentUser', 'matchStore')
 @observer
-class MatchComponent extends Component {
+class MatchComponent extends Component<PropsType> {
   componentDidMount() {
     const { match: { params } } = this.props;
     this.fetchMessages(params.id);
@@ -78,7 +78,6 @@ class MatchComponent extends Component {
     }
   }
 
-  props: PropsTypes;
   personWrapperRef: HTMLElement;
   tooltipRef: HTMLElement;
   messageStore: MessageStore = new MessageStore(null);

@@ -13,11 +13,10 @@ type PropsType = {
   handleConnect: () => void,
 }
 
-export default class Welcome extends Component {
+export default class Welcome extends Component<PropsType, { isButtonVisible: boolean }> {
   state = {
     isButtonVisible: true,
   }
-  props: PropsType;
 
   handleInstall = () => {
     this.setState({ isButtonVisible: false });

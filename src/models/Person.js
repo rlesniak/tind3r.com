@@ -17,13 +17,13 @@ import type { UserInterface } from 'types/userInterface';
 
 class Person implements UserInterface {
   isCurrentUser: false = false;
+  photos = [];
 
   _id: string;
   store: any;
   birth_date: string;
   schools: ?Array<SchoolType>;
   instagram: ?InstagramType;
-  photos: [] = [];
   jobs: ?[] = [];
   common_connections: ?[] = [];
   common_interests: ?[] = [];
@@ -146,7 +146,7 @@ class Person implements UserInterface {
   }
 
   @computed get school(): string {
-    return get(this.schools, [0, 'name'], '');
+    return get(this.schools, '0.name', '');
   }
 
   @computed get distanceKm(): ?string {
@@ -178,11 +178,11 @@ class Person implements UserInterface {
   }
 
   @computed get mainPhoto(): string {
-    return get(this.photos, [0, 'url']);
+    return get(this.photos, '0.url');
   }
 
   @computed get mainPhotoSmall(): string {
-    return get(this.photos, [0, 'processedFiles', 2, 'url']);
+    return get(this.photos, '0.processedFiles.2.url');
   }
 
   @computed get toJSON(): Object {

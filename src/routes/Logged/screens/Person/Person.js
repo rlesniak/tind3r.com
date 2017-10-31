@@ -19,7 +19,7 @@ type PropsType = {
 }
 
 @observer
-class PersonComponent extends Component {
+class PersonComponent extends Component<PropsType> {
   componentDidMount() {
     this.person.fetch(() => {
       this.props.history.replace('/not-found');
@@ -29,7 +29,6 @@ class PersonComponent extends Component {
   person: Person = new Person({}, {
     _id: this.props.match.params.id,
   });
-  props: PropsType;
 
   render() {
     if (this.person.is_loading) {

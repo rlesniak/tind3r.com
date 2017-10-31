@@ -2,7 +2,7 @@
 
 import React from 'react';
 import cx from 'classnames';
-import { compose, withState, withHandlers } from 'recompose';
+import { compose, withStateHandlers, withHandlers, type HOC } from 'recompose';
 
 import LS from 'utils/localStorage';
 
@@ -15,10 +15,7 @@ type PropsType = {
 
 export const Separator = () => <div className="side-menu__separator" />;
 
-export const Right = (props: PropsType) =>
-  (<div className="side-menu__right">
-    {props.children}
-  </div>);
+export const Right = (props: PropsType) => <div className="side-menu__right">{props.children}</div>;
 
 type ItemPropsType = PropsType & {
   active: boolean,
@@ -29,8 +26,8 @@ type ItemPropsType = PropsType & {
   asLink?: boolean,
 };
 
-export const Item = (props: ItemPropsType) =>
-  (<div
+export const Item = (props: ItemPropsType) => (
+  <div
     className={cx('side-menu__item', props.className, {
       'side-menu__item--active': props.active,
       'side-menu__item--action': props.asAction,
@@ -41,13 +38,41 @@ export const Item = (props: ItemPropsType) =>
   >
     {props.children}
 
-    <div className="side-menu__right-text">
-      {props.rightText}
-    </div>
-  </div>);
+    <div className="side-menu__right-text">{props.rightText}</div>
+  </div>
+);
 
-const enhance = compose(
-  withState('toggled', 'toggle', props => LS.get(['settings', 'sideBar', props.id], false)),
+type SideMenuPropsType = {
+  title: string,
+  id: string,
+  toggled: boolean,
+  handleSetToggle: () => void,
+  children: any,
+};
+
+const SideMenu = ({ children, title, handleSetToggle, toggled }) => (
+  <div className={cx('side-menu', { 'side-menu--hidden': toggled })}>
+    <h1 className="side-menu__title">
+      <div className="side-menu__title-toogle" onClick={handleSetToggle}>
+        <i
+          className={cx('fa', {
+            'fa-chevron-left': !toggled,
+            'fa-chevron-right': toggled,
+          })}
+        />
+      </div>
+      <span>{title}</span>
+    </h1>
+    <div className="side-menu__items">{children}</div>
+  </div>
+);
+
+const enhance: HOC<*, SideMenuPropsType> = compose(
+  withStateHandlers(({ id }) => ({ toggled: LS.get(['settings', 'sideBar', id], false) }), {
+    toggle: () => value => ({
+      toggled: value,
+    }),
+  }),
   withHandlers({
     handleSetToggle: props => () => {
       const state = !props.toggled;
@@ -65,28 +90,4 @@ const enhance = compose(
   }),
 );
 
-type SideMenuPropsType = PropsType | {
-  title: string,
-  id: string,
-  toggled: boolean,
-  handleSetToggle: () => void,
-};
-
-export default enhance(({ children, title, handleSetToggle, toggled }: SideMenuPropsType) =>
-  (<div className={cx('side-menu', { 'side-menu--hidden': toggled })}>
-    <h1 className="side-menu__title">
-      <div className="side-menu__title-toogle" onClick={handleSetToggle}>
-        <i
-          className={cx('fa', {
-            'fa-chevron-left': !toggled,
-            'fa-chevron-right': toggled,
-          })}
-        />
-      </div>
-      <span>{title}</span>
-    </h1>
-    <div className="side-menu__items">
-      {children}
-    </div>
-  </div>),
-);
+export default enhance(SideMenu);

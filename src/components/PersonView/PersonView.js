@@ -35,7 +35,7 @@ type PropsType = WithLikeCounterPropsType & {
 @inject('currentUser')
 @withLikeCounter
 @observer
-class PersonView extends Component {
+class PersonView extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
     const json = this.props.person || { _id: this.props.personId };
@@ -70,8 +70,6 @@ class PersonView extends Component {
   componentWillUnmount() {
     this.reactionDispose();
   }
-
-  props: PropsType;
 
   match: MatchType;
   person: Person;

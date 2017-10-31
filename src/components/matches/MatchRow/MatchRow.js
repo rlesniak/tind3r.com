@@ -3,7 +3,7 @@
 import React from 'react';
 import cx from 'classnames';
 import moment from 'moment';
-import { withHandlers } from 'recompose';
+import { withHandlers, type HOC } from 'recompose';
 import { observer } from 'mobx-react';
 
 import Avatar from 'components/Avatar';
@@ -14,16 +14,9 @@ import './MatchRow.scss';
 
 type PropsType = {
   onClick: (matchId: string) => void,
-  handleOnClick: () => void,
   match: Match,
   active: boolean,
 };
-
-const enhance = withHandlers({
-  handleOnClick: ({ match: { _id }, onClick }: PropsType) => () => {
-    onClick(_id);
-  },
-});
 
 const getMatchTypeIcon = (match: Match) => {
   if (match.is_blocked) {
@@ -41,7 +34,7 @@ const getMatchTypeIcon = (match: Match) => {
   return null;
 };
 
-const MatchRow = ({ handleOnClick, match, active }: PropsType) => (
+const MatchRow = ({ handleOnClick, match, active }) => (
   <div
     className={cx('match-row', {
       'match-row--active': active,
@@ -68,6 +61,12 @@ const MatchRow = ({ handleOnClick, match, active }: PropsType) => (
       </div>
     </div>
   </div>
-  );
+);
 
-export default enhance(observer(MatchRow));
+const enhance: HOC<*, PropsType> = withHandlers({
+  handleOnClick: ({ match: { _id }, onClick }) => () => {
+    onClick(_id);
+  },
+});
+
+export default observer(enhance(MatchRow));

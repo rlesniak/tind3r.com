@@ -6,6 +6,8 @@ import { observer, inject } from 'mobx-react';
 import { Switch } from '@blueprintjs/core';
 import { head, noop } from 'lodash';
 import ReactGA from 'react-ga';
+import { lifecycle } from 'recompose';
+import ReactTooltip from 'react-tooltip';
 
 import counterService from 'services/counterService';
 import recsStore from 'stores/RecsStore';
@@ -27,6 +29,27 @@ type PropsType = {
   onMatch: (person: Person) => void,
 };
 
+const labelEhnance = lifecycle({
+  componentDidMount() {
+    ReactTooltip.rebuild();
+  },
+  componentWillUnmount() {
+    ReactTooltip.rebuild();
+  },
+});
+
+const Label = labelEhnance(() => (
+  <span>
+    Autolike {' '}
+    <i
+      className="fa fa-question-circle"
+      data-for="main"
+      data-multiline
+      data-tip="Use wisely. Can cause drop in Tinder algorithm. <br>Read more goo.gl/EuPNcP"
+    />
+  </span>
+));
+
 @inject('currentUser')
 @observer
 class Autolike extends Component {
@@ -41,23 +64,24 @@ class Autolike extends Component {
   @observable giveUp = parseInt(LS.get('settings.autolikeGiveUp', 5), 10);
   @observable retryNumber = 0;
 
-  handleSetEnabled = () => {
-    ReactGA.event({
-      category: 'Autolike',
-      action: `Turn ${!this.enabled ? 'on' : 'off'}`,
-    });
+  handleSetEnabled = (e) => {
+    console.log(e.target)
+    // ReactGA.event({
+    //   category: 'Autolike',
+    //   action: `Turn ${!this.enabled ? 'on' : 'off'}`,
+    // });
 
-    if (!this.enabled) {
-      counterService.subscribe({
-        handler: this.handleAutolike,
-        delay: this.velocity * 1000,
-      });
-      this.retryNumber = 0;
-    } else {
-      counterService.unsubscribe(this.handleAutolike);
-    }
+    // if (!this.enabled) {
+    //   counterService.subscribe({
+    //     handler: this.handleAutolike,
+    //     delay: this.velocity * 1000,
+    //   });
+    //   this.retryNumber = 0;
+    // } else {
+    //   counterService.unsubscribe(this.handleAutolike);
+    // }
 
-    this.enabled = !this.enabled;
+    // this.enabled = !this.enabled;
   };
 
   handleSetVelocity = ({ target: { value } }: SyntheticInputEvent) => {
@@ -137,7 +161,7 @@ class Autolike extends Component {
           className="pt-align-right autolike__toggle"
           checked={this.enabled}
           disabled={this.props.currentUser.likeReset.seconds > 0}
-          label="Autolike"
+          label={<Label />}
           onChange={this.handleSetEnabled}
         />
 

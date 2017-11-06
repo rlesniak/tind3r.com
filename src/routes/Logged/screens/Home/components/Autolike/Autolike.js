@@ -65,23 +65,22 @@ class Autolike extends Component {
   @observable retryNumber = 0;
 
   handleSetEnabled = (e) => {
-    console.log(e.target)
-    // ReactGA.event({
-    //   category: 'Autolike',
-    //   action: `Turn ${!this.enabled ? 'on' : 'off'}`,
-    // });
+    ReactGA.event({
+      category: 'Autolike',
+      action: `Turn ${!this.enabled ? 'on' : 'off'}`,
+    });
 
-    // if (!this.enabled) {
-    //   counterService.subscribe({
-    //     handler: this.handleAutolike,
-    //     delay: this.velocity * 1000,
-    //   });
-    //   this.retryNumber = 0;
-    // } else {
-    //   counterService.unsubscribe(this.handleAutolike);
-    // }
+    if (!this.enabled) {
+      counterService.subscribe({
+        handler: this.handleAutolike,
+        delay: this.velocity * 1000,
+      });
+      this.retryNumber = 0;
+    } else {
+      counterService.unsubscribe(this.handleAutolike);
+    }
 
-    // this.enabled = !this.enabled;
+    this.enabled = !this.enabled;
   };
 
   handleSetVelocity = ({ target: { value } }: SyntheticInputEvent) => {

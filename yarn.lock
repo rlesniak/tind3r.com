@@ -70,7 +70,7 @@ acorn@^5.0.0:
 
 acorn@^5.1.1:
   version "5.2.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
 
 add-px-to-style@1.0.0:
   version "1.0.0"
@@ -123,7 +123,7 @@ ansi-align@^1.1.0:
 
 ansi-escapes@^1.1.0:
   version "1.4.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
+  resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
 
 ansi-html@0.0.5:
   version "0.0.5"
@@ -139,7 +139,7 @@ ansi-regex@^2.0.0, ansi-regex@^2.1.1:
 
 ansi-regex@^3.0.0:
   version "3.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
 
 ansi-styles@^2.2.1:
   version "2.2.1"
@@ -181,7 +181,7 @@ argsarray@0.0.1:
 
 aria-query@^0.5.0:
   version "0.5.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/aria-query/-/aria-query-0.5.0.tgz#85e3152cd8cc5bab18dbed61cd9c4fce54fa79c3"
+  resolved "https://registry.yarnpkg.com/aria-query/-/aria-query-0.5.0.tgz#85e3152cd8cc5bab18dbed61cd9c4fce54fa79c3"
   dependencies:
     ast-types-flow "0.0.7"
 
@@ -205,7 +205,7 @@ array-flatten@1.1.1:
 
 array-includes@^3.0.3:
   version "3.0.3"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/array-includes/-/array-includes-3.0.3.tgz#184b48f62d92d7452bb31b323165c7f8bd02266d"
+  resolved "https://registry.yarnpkg.com/array-includes/-/array-includes-3.0.3.tgz#184b48f62d92d7452bb31b323165c7f8bd02266d"
   dependencies:
     define-properties "^1.1.2"
     es-abstract "^1.7.0"
@@ -355,7 +355,7 @@ axios@^0.16.1:
 
 axobject-query@^0.1.0:
   version "0.1.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/axobject-query/-/axobject-query-0.1.0.tgz#62f59dbc59c9f9242759ca349960e7a2fe3c36c0"
+  resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-0.1.0.tgz#62f59dbc59c9f9242759ca349960e7a2fe3c36c0"
   dependencies:
     ast-types-flow "0.0.7"
 
@@ -369,7 +369,7 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.22.0:
 
 babel-code-frame@^6.16.0:
   version "6.26.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
+  resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
   dependencies:
     chalk "^1.1.3"
     esutils "^2.0.2"
@@ -1399,7 +1399,7 @@ cli-boxes@^1.0.0:
 
 cli-cursor@^1.0.1:
   version "1.0.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/cli-cursor/-/cli-cursor-1.0.2.tgz#64da3f7d56a54412e59794bd62dc35295e8f2987"
+  resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-1.0.2.tgz#64da3f7d56a54412e59794bd62dc35295e8f2987"
   dependencies:
     restore-cursor "^1.0.1"
 
@@ -1556,7 +1556,7 @@ concat-map@0.0.1:
 
 concat-stream@^1.5.2:
   version "1.6.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
+  resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
@@ -1867,7 +1867,7 @@ currently-unhandled@^0.4.1:
 
 d@1:
   version "1.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
+  resolved "https://registry.yarnpkg.com/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
   dependencies:
     es5-ext "^0.10.9"
 
@@ -1905,7 +1905,7 @@ debug@2.6.7, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0, debug@^2.4.5:
 
 debug@^2.6.8:
   version "2.6.9"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
     ms "2.0.0"
 
@@ -2113,7 +2113,7 @@ elliptic@^6.0.0:
 
 emoji-mart@^2.1.1:
   version "2.1.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/emoji-mart/-/emoji-mart-2.1.1.tgz#4bce8ec9d9fd0d8adfd2517e7e296871c40762ac"
+  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-2.1.1.tgz#4bce8ec9d9fd0d8adfd2517e7e296871c40762ac"
 
 emoji-regex@^6.0.0, emoji-regex@^6.1.0:
   version "6.4.2"
@@ -2202,14 +2202,14 @@ es3ify@^0.1.3:
 
 es5-ext@^0.10.14, es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
   version "0.10.35"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/es5-ext/-/es5-ext-0.10.35.tgz#18ee858ce6a3c45c7d79e91c15fcca9ec568494f"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.35.tgz#18ee858ce6a3c45c7d79e91c15fcca9ec568494f"
   dependencies:
     es6-iterator "~2.0.1"
     es6-symbol "~3.1.1"
 
 es6-iterator@^2.0.1, es6-iterator@~2.0.1:
   version "2.0.3"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/es6-iterator/-/es6-iterator-2.0.3.tgz#a7de889141a05a94b0854403b2d0a0fbfa98f3b7"
+  resolved "https://registry.yarnpkg.com/es6-iterator/-/es6-iterator-2.0.3.tgz#a7de889141a05a94b0854403b2d0a0fbfa98f3b7"
   dependencies:
     d "1"
     es5-ext "^0.10.35"
@@ -2217,7 +2217,7 @@ es6-iterator@^2.0.1, es6-iterator@~2.0.1:
 
 es6-map@^0.1.3:
   version "0.1.5"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/es6-map/-/es6-map-0.1.5.tgz#9136e0503dcc06a301690f0bb14ff4e364e949f0"
+  resolved "https://registry.yarnpkg.com/es6-map/-/es6-map-0.1.5.tgz#9136e0503dcc06a301690f0bb14ff4e364e949f0"
   dependencies:
     d "1"
     es5-ext "~0.10.14"
@@ -2232,7 +2232,7 @@ es6-object-assign@~1.1.0:
 
 es6-set@~0.1.5:
   version "0.1.5"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/es6-set/-/es6-set-0.1.5.tgz#d2b3ec5d4d800ced818db538d28974db0a73ccb1"
+  resolved "https://registry.yarnpkg.com/es6-set/-/es6-set-0.1.5.tgz#d2b3ec5d4d800ced818db538d28974db0a73ccb1"
   dependencies:
     d "1"
     es5-ext "~0.10.14"
@@ -2242,14 +2242,14 @@ es6-set@~0.1.5:
 
 es6-symbol@3.1.1, es6-symbol@^3.1.1, es6-symbol@~3.1.1:
   version "3.1.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/es6-symbol/-/es6-symbol-3.1.1.tgz#bf00ef4fdab6ba1b46ecb7b629b4c7ed5715cc77"
+  resolved "https://registry.yarnpkg.com/es6-symbol/-/es6-symbol-3.1.1.tgz#bf00ef4fdab6ba1b46ecb7b629b4c7ed5715cc77"
   dependencies:
     d "1"
     es5-ext "~0.10.14"
 
 es6-weak-map@^2.0.1:
   version "2.0.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/es6-weak-map/-/es6-weak-map-2.0.2.tgz#5e3ab32251ffd1538a1f8e5ffa1357772f92d96f"
+  resolved "https://registry.yarnpkg.com/es6-weak-map/-/es6-weak-map-2.0.2.tgz#5e3ab32251ffd1538a1f8e5ffa1357772f92d96f"
   dependencies:
     d "1"
     es5-ext "^0.10.14"
@@ -2277,7 +2277,7 @@ escodegen@^1.8.1:
 
 escope@^3.6.0:
   version "3.6.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/escope/-/escope-3.6.0.tgz#e01975e812781a163a6dadfdd80398dc64c889c3"
+  resolved "https://registry.yarnpkg.com/escope/-/escope-3.6.0.tgz#e01975e812781a163a6dadfdd80398dc64c889c3"
   dependencies:
     es6-map "^0.1.3"
     es6-weak-map "^2.0.1"
@@ -2286,39 +2286,39 @@ escope@^3.6.0:
 
 eslint-config-airbnb-base@^11.3.0:
   version "11.3.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-config-airbnb-base/-/eslint-config-airbnb-base-11.3.2.tgz#8703b11abe3c88ac7ec2b745b7fdf52e00ae680a"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-11.3.2.tgz#8703b11abe3c88ac7ec2b745b7fdf52e00ae680a"
   dependencies:
     eslint-restricted-globals "^0.1.1"
 
 eslint-config-airbnb@15.1.0:
   version "15.1.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-config-airbnb/-/eslint-config-airbnb-15.1.0.tgz#fd432965a906e30139001ba830f58f73aeddae8e"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-15.1.0.tgz#fd432965a906e30139001ba830f58f73aeddae8e"
   dependencies:
     eslint-config-airbnb-base "^11.3.0"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.1.tgz#4422574cde66a9a7b099938ee4d508a199e0e3cc"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.1.tgz#4422574cde66a9a7b099938ee4d508a199e0e3cc"
   dependencies:
     debug "^2.6.8"
     resolve "^1.2.0"
 
 eslint-module-utils@^2.1.1:
   version "2.1.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-module-utils/-/eslint-module-utils-2.1.1.tgz#abaec824177613b8a95b299639e1b6facf473449"
+  resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.1.1.tgz#abaec824177613b8a95b299639e1b6facf473449"
   dependencies:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
 eslint-plugin-flowtype@^2.39.1:
   version "2.39.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.39.1.tgz#b5624622a0388bcd969f4351131232dcb9649cd5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.39.1.tgz#b5624622a0388bcd969f4351131232dcb9649cd5"
   dependencies:
     lodash "^4.15.0"
 
 eslint-plugin-import@^2.8.0:
   version "2.8.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-plugin-import/-/eslint-plugin-import-2.8.0.tgz#fa1b6ef31fcb3c501c09859c1b86f1fc5b986894"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.8.0.tgz#fa1b6ef31fcb3c501c09859c1b86f1fc5b986894"
   dependencies:
     builtin-modules "^1.1.1"
     contains-path "^0.1.0"
@@ -2333,7 +2333,7 @@ eslint-plugin-import@^2.8.0:
 
 eslint-plugin-jsx-a11y@5.0.1:
   version "5.0.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-5.0.1.tgz#48e678891fec9fe1e53ef53adc2f7d05fee6640c"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-5.0.1.tgz#48e678891fec9fe1e53ef53adc2f7d05fee6640c"
   dependencies:
     aria-query "^0.5.0"
     array-includes "^3.0.3"
@@ -2345,7 +2345,7 @@ eslint-plugin-jsx-a11y@5.0.1:
 
 eslint-plugin-react@^7.4.0:
   version "7.4.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-plugin-react/-/eslint-plugin-react-7.4.0.tgz#300a95861b9729c087d362dd64abcc351a74364a"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.4.0.tgz#300a95861b9729c087d362dd64abcc351a74364a"
   dependencies:
     doctrine "^2.0.0"
     has "^1.0.1"
@@ -2354,11 +2354,11 @@ eslint-plugin-react@^7.4.0:
 
 eslint-restricted-globals@^0.1.1:
   version "0.1.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint-restricted-globals/-/eslint-restricted-globals-0.1.1.tgz#35f0d5cbc64c2e3ed62e93b4b1a7af05ba7ed4d7"
+  resolved "https://registry.yarnpkg.com/eslint-restricted-globals/-/eslint-restricted-globals-0.1.1.tgz#35f0d5cbc64c2e3ed62e93b4b1a7af05ba7ed4d7"
 
 eslint@3.19.0:
   version "3.19.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"
   dependencies:
     babel-code-frame "^6.16.0"
     chalk "^1.1.3"
@@ -2402,7 +2402,7 @@ esmangle-evaluator@^1.0.0:
 
 espree@^3.4.0:
   version "3.5.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/espree/-/espree-3.5.1.tgz#0c988b8ab46db53100a1954ae4ba995ddd27d87e"
+  resolved "https://registry.yarnpkg.com/espree/-/espree-3.5.1.tgz#0c988b8ab46db53100a1954ae4ba995ddd27d87e"
   dependencies:
     acorn "^5.1.1"
     acorn-jsx "^3.0.0"
@@ -2421,7 +2421,7 @@ esprima@^2.1.0, esprima@^2.6.0, esprima@^2.7.1, esprima@~2.7.1:
 
 esprima@^4.0.0:
   version "4.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
 
 esprima@~3.1.0:
   version "3.1.3"
@@ -2462,7 +2462,7 @@ etag@~1.8.0:
 
 event-emitter@~0.3.5:
   version "0.3.5"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
+  resolved "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
   dependencies:
     d "1"
     es5-ext "~0.10.14"
@@ -2493,7 +2493,7 @@ exenv@^1.2.1:
 
 exit-hook@^1.0.0:
   version "1.1.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
+  resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
 
 expand-brackets@^0.1.4:
   version "0.1.5"
@@ -2626,7 +2626,7 @@ fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.3, fbjs@^0.8.4, fbjs@^0.8.9:
 
 figures@^1.3.5:
   version "1.7.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/figures/-/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
+  resolved "https://registry.yarnpkg.com/figures/-/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
   dependencies:
     escape-string-regexp "^1.0.5"
     object-assign "^4.1.0"
@@ -2689,7 +2689,7 @@ find-up@^1.0.0:
 
 find-up@^2.0.0:
   version "2.1.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
+  resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   dependencies:
     locate-path "^2.0.0"
 
@@ -2833,11 +2833,11 @@ gaze@^1.0.0:
 
 generate-function@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/generate-function/-/generate-function-2.0.0.tgz#6858fe7c0969b7d4e9093337647ac79f60dfbe74"
+  resolved "https://registry.yarnpkg.com/generate-function/-/generate-function-2.0.0.tgz#6858fe7c0969b7d4e9093337647ac79f60dfbe74"
 
 generate-object-property@^1.1.0:
   version "1.2.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/generate-object-property/-/generate-object-property-1.2.0.tgz#9c0e1c40308ce804f4783618b937fa88f99d50d0"
+  resolved "https://registry.yarnpkg.com/generate-object-property/-/generate-object-property-1.2.0.tgz#9c0e1c40308ce804f4783618b937fa88f99d50d0"
   dependencies:
     is-property "^1.0.0"
 
@@ -2898,7 +2898,7 @@ globals@^9.0.0:
 
 globals@^9.14.0:
   version "9.18.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/globals/-/globals-9.18.0.tgz#aa3896b3e69b487f17e31ed2143d69a8e30c2d8a"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-9.18.0.tgz#aa3896b3e69b487f17e31ed2143d69a8e30c2d8a"
 
 globby@^5.0.0:
   version "5.0.0"
@@ -3190,7 +3190,7 @@ ieee754@^1.1.4:
 
 ignore@^3.2.0:
   version "3.3.7"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
 immediate@3.0.6, immediate@~3.0.5:
   version "3.0.6"
@@ -3246,7 +3246,7 @@ inline-process-browser@^1.0.0:
 
 inquirer@^0.12.0:
   version "0.12.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/inquirer/-/inquirer-0.12.0.tgz#1ef2bfd63504df0bc75785fff8c2c41df12f077e"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-0.12.0.tgz#1ef2bfd63504df0bc75785fff8c2c41df12f077e"
   dependencies:
     ansi-escapes "^1.1.0"
     ansi-regex "^2.0.0"
@@ -3411,7 +3411,7 @@ is-in-browser@1.0.2:
 
 is-my-json-valid@^2.10.0:
   version "2.16.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/is-my-json-valid/-/is-my-json-valid-2.16.1.tgz#5a846777e2c2620d1e69104e5d3a03b1f6088f11"
+  resolved "https://registry.yarnpkg.com/is-my-json-valid/-/is-my-json-valid-2.16.1.tgz#5a846777e2c2620d1e69104e5d3a03b1f6088f11"
   dependencies:
     generate-function "^2.0.0"
     generate-object-property "^1.1.0"
@@ -3479,7 +3479,7 @@ is-promise@^2.1.0:
 
 is-property@^1.0.0:
   version "1.0.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/is-property/-/is-property-1.0.2.tgz#57fe1c4e48474edd65b09911f26b1cd4095dda84"
+  resolved "https://registry.yarnpkg.com/is-property/-/is-property-1.0.2.tgz#57fe1c4e48474edd65b09911f26b1cd4095dda84"
 
 is-redirect@^1.0.0:
   version "1.0.0"
@@ -3592,11 +3592,11 @@ js-tokens@^3.0.0:
 
 js-tokens@^3.0.2:
   version "3.0.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
+  resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
 js-yaml@^3.5.1:
   version "3.10.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/js-yaml/-/js-yaml-3.10.0.tgz#2e78441646bd4682e963f22b6e92823c309c62dc"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.10.0.tgz#2e78441646bd4682e963f22b6e92823c309c62dc"
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
@@ -3689,7 +3689,7 @@ jsonify@~0.0.0:
 
 jsonpointer@^4.0.0:
   version "4.0.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
+  resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
 
 jsprim@^1.2.2:
   version "1.4.0"
@@ -3745,11 +3745,11 @@ jstransform@~3.0.0:
 
 jsx-ast-utils@^1.4.0:
   version "1.4.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/jsx-ast-utils/-/jsx-ast-utils-1.4.1.tgz#3867213e8dd79bf1e8f2300c0cfc1efb182c0df1"
+  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-1.4.1.tgz#3867213e8dd79bf1e8f2300c0cfc1efb182c0df1"
 
 jsx-ast-utils@^2.0.0:
   version "2.0.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
+  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
   dependencies:
     array-includes "^3.0.3"
 
@@ -3831,7 +3831,7 @@ load-json-file@^1.0.0:
 
 load-json-file@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/load-json-file/-/load-json-file-2.0.0.tgz#7947e42149af80d696cbf797bcaabcfe1fe29ca8"
+  resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-2.0.0.tgz#7947e42149af80d696cbf797bcaabcfe1fe29ca8"
   dependencies:
     graceful-fs "^4.1.2"
     parse-json "^2.2.0"
@@ -3867,7 +3867,7 @@ localforage@^1.4.3:
 
 locate-path@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
+  resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
   dependencies:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
@@ -4327,7 +4327,7 @@ ms@2.0.0:
 
 mute-stream@0.0.5:
   version "0.0.5"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
+  resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
 
 nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"
@@ -4573,7 +4573,7 @@ once@^1.3.0, once@^1.3.3:
 
 onetime@^1.0.0:
   version "1.1.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
+  resolved "https://registry.yarnpkg.com/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
 
 open@0.0.5:
   version "0.0.5"
@@ -4637,11 +4637,11 @@ osenv@0, osenv@^0.1.0, osenv@^0.1.4:
 
 p-limit@^1.1.0:
   version "1.1.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/p-limit/-/p-limit-1.1.0.tgz#b07ff2d9a5d88bec806035895a2bab66a27988bc"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-1.1.0.tgz#b07ff2d9a5d88bec806035895a2bab66a27988bc"
 
 p-locate@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/p-locate/-/p-locate-2.0.0.tgz#20a0103b222a70c8fd39cc2e580680f3dde5ec43"
+  resolved "https://registry.yarnpkg.com/p-locate/-/p-locate-2.0.0.tgz#20a0103b222a70c8fd39cc2e580680f3dde5ec43"
   dependencies:
     p-limit "^1.1.0"
 
@@ -4721,7 +4721,7 @@ path-exists@^2.0.0:
 
 path-exists@^3.0.0:
   version "3.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/path-exists/-/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
+  resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
 
 path-is-absolute@^1.0.0:
   version "1.0.1"
@@ -4755,7 +4755,7 @@ path-type@^1.0.0:
 
 path-type@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/path-type/-/path-type-2.0.0.tgz#f012ccb8415b7096fc2daa1054c3d72389594c73"
+  resolved "https://registry.yarnpkg.com/path-type/-/path-type-2.0.0.tgz#f012ccb8415b7096fc2daa1054c3d72389594c73"
   dependencies:
     pify "^2.0.0"
 
@@ -4806,7 +4806,7 @@ pkg-dir@^1.0.0:
 
 pluralize@^1.2.1:
   version "1.2.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
 pluralize@^3.0.0:
   version "3.1.0"
@@ -5185,7 +5185,7 @@ process@~0.5.1:
 
 progress@^1.1.8:
   version "1.1.8"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
+  resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
 
 promise@^7.1.1:
   version "7.1.1"
@@ -5574,7 +5574,7 @@ read-pkg-up@^1.0.1:
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/read-pkg-up/-/read-pkg-up-2.0.0.tgz#6b72a8048984e0c41e79510fd5e9fa99b3b549be"
+  resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-2.0.0.tgz#6b72a8048984e0c41e79510fd5e9fa99b3b549be"
   dependencies:
     find-up "^2.0.0"
     read-pkg "^2.0.0"
@@ -5589,7 +5589,7 @@ read-pkg@^1.0.0:
 
 read-pkg@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/read-pkg/-/read-pkg-2.0.0.tgz#8ef1c0623c6a6db0dc6713c4bfac46332b2368f8"
+  resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-2.0.0.tgz#8ef1c0623c6a6db0dc6713c4bfac46332b2368f8"
   dependencies:
     load-json-file "^2.0.0"
     normalize-package-data "^2.3.2"
@@ -5627,7 +5627,7 @@ readdirp@^2.0.0:
 
 readline2@^1.0.1:
   version "1.0.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/readline2/-/readline2-1.0.1.tgz#41059608ffc154757b715d9989d199ffbf372e35"
+  resolved "https://registry.yarnpkg.com/readline2/-/readline2-1.0.1.tgz#41059608ffc154757b715d9989d199ffbf372e35"
   dependencies:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
@@ -5662,7 +5662,7 @@ recast@^0.11.5:
 
 rechoir@^0.6.2:
   version "0.6.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
+  resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
   dependencies:
     resolve "^1.1.6"
 
@@ -5897,7 +5897,7 @@ require-main-filename@^1.0.1:
 
 require-uncached@^1.0.2:
   version "1.0.3"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/require-uncached/-/require-uncached-1.0.3.tgz#4e0d56d6c9662fd31e43011c4b95aa49955421d3"
+  resolved "https://registry.yarnpkg.com/require-uncached/-/require-uncached-1.0.3.tgz#4e0d56d6c9662fd31e43011c4b95aa49955421d3"
   dependencies:
     caller-path "^0.1.0"
     resolve-from "^1.0.0"
@@ -5934,7 +5934,7 @@ resolve-url@~0.2.1:
 
 resolve@^1.1.6, resolve@^1.2.0:
   version "1.5.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
   dependencies:
     path-parse "^1.0.5"
 
@@ -5944,7 +5944,7 @@ rest@^2.0.0:
 
 restore-cursor@^1.0.1:
   version "1.0.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/restore-cursor/-/restore-cursor-1.0.1.tgz#34661f46886327fed2991479152252df92daa541"
+  resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-1.0.1.tgz#34661f46886327fed2991479152252df92daa541"
   dependencies:
     exit-hook "^1.0.0"
     onetime "^1.0.0"
@@ -5994,13 +5994,13 @@ rodal@^1.5.0:
 
 run-async@^0.1.0:
   version "0.1.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/run-async/-/run-async-0.1.0.tgz#c8ad4a5e110661e402a7d21b530e009f25f8e389"
+  resolved "https://registry.yarnpkg.com/run-async/-/run-async-0.1.0.tgz#c8ad4a5e110661e402a7d21b530e009f25f8e389"
   dependencies:
     once "^1.3.0"
 
 rx-lite@^3.1.2:
   version "3.1.2"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
+  resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
 
 safe-buffer@^5.0.1:
   version "5.0.1"
@@ -6154,7 +6154,7 @@ shebang-regex@^1.0.0:
 
 shelljs@^0.7.5:
   version "0.7.8"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/shelljs/-/shelljs-0.7.8.tgz#decbcf874b0d1e5fb72e14b164a9683048e9acb3"
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.8.tgz#decbcf874b0d1e5fb72e14b164a9683048e9acb3"
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"
@@ -6174,7 +6174,7 @@ slash@^1.0.0:
 
 slice-ansi@0.0.4:
   version "0.0.4"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
+  resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
 
 slick-carousel@^1.6.0:
   version "1.6.0"
@@ -6406,7 +6406,7 @@ string-width@^1.0.1, string-width@^1.0.2:
 
 string-width@^2.0.0:
   version "2.1.1"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/string-width/-/string-width-2.1.1.tgz#ab93f27a8dc13d28cac815c462143a6d9012ae9e"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-2.1.1.tgz#ab93f27a8dc13d28cac815c462143a6d9012ae9e"
   dependencies:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
@@ -6443,7 +6443,7 @@ strip-ansi@3.0.1, strip-ansi@^3.0.0, strip-ansi@^3.0.1:
 
 strip-ansi@^4.0.0:
   version "4.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/strip-ansi/-/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
   dependencies:
     ansi-regex "^3.0.0"
 
@@ -6455,7 +6455,7 @@ strip-bom@^2.0.0:
 
 strip-bom@^3.0.0:
   version "3.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/strip-bom/-/strip-bom-3.0.0.tgz#2334c18e9c759f7bdd56fdef7e9ae3d588e68ed3"
+  resolved "https://registry.yarnpkg.com/strip-bom/-/strip-bom-3.0.0.tgz#2334c18e9c759f7bdd56fdef7e9ae3d588e68ed3"
 
 strip-indent@^1.0.1:
   version "1.0.1"
@@ -6507,7 +6507,7 @@ symbol-observable@^1.0.4:
 
 table@^3.7.8:
   version "3.8.3"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/table/-/table-3.8.3.tgz#2bbc542f0fda9861a755d3947fefd8b3f513855f"
+  resolved "https://registry.yarnpkg.com/table/-/table-3.8.3.tgz#2bbc542f0fda9861a755d3947fefd8b3f513855f"
   dependencies:
     ajv "^4.7.0"
     ajv-keywords "^1.0.0"
@@ -6838,7 +6838,7 @@ url@^0.11.0:
 
 user-home@^2.0.0:
   version "2.0.0"
-  resolved "http://10.210.200.230:8081/repository/williamhill-npm/user-home/-/user-home-2.0.0.tgz#9c70bfd8169bc1dcbf48604e0f04b8b49cde9e9f"
+  resolved "https://registry.yarnpkg.com/user-home/-/user-home-2.0.0.tgz#9c70bfd8169bc1dcbf48604e0f04b8b49cde9e9f"
   dependencies:
     os-homedir "^1.0.0"
 

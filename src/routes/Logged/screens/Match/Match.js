@@ -79,7 +79,7 @@ class MatchComponent extends Component {
   }
 
   props: PropsTypes;
-  personWrapperRef: HTMLElement;
+  personWrapperRef: ?HTMLElement;
   tooltipRef: HTMLElement;
   messageStore: MessageStore = new MessageStore(null);
   @observable match: ?Match;
@@ -110,12 +110,12 @@ class MatchComponent extends Component {
     const match = this.match;
 
     if (match) {
-      const getWidth = this.personWrapperRef.getBoundingClientRect().width;
+      const getWidth = this.personWrapperRef && this.personWrapperRef.getBoundingClientRect().width;
       const { person } = match;
 
       return (
         <div className="match__person-wrapper">
-          <Gallery width={getWidth - 20} images={person.photos} />
+          {getWidth && <Gallery width={getWidth - 20} images={person.photos} />}
           <div className="match__person-details">
             <Link
               to={{

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import ReactGA from 'react-ga';
-import { withState, withHandlers, compose } from 'recompose';
+import { withState, withHandlers, compose, type HOC } from 'recompose';
 import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
@@ -30,7 +30,7 @@ type PropsType = {
   handleRemoveAllBlocked: () => void,
 };
 
-const enhance = compose(
+const enhance: HOC<*, PropsType> = compose(
   inject('matchStore'),
   withState('activeId', 'setActiveId', props => props.location.pathname.split('/matches/')[1]),
   withHandlers({

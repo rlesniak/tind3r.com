@@ -7,18 +7,18 @@ import Rodal from 'rodal';
 
 import PersonView from 'components/PersonView';
 
+import type { RouterHistory, Location } from 'react-router';
+
 import './PersonModal.scss';
 
 type PropsType = {
-  location: Object,
-  history: Object,
+  location: Location,
+  history: RouterHistory,
   person: Object,
 }
 
-class PersonModal extends Component {
-  props: PropsType;
-
-  back = (e) => {
+class PersonModal extends Component<PropsType> {
+  back = (e: SyntheticEvent<>) => {
     const { history } = this.props;
     e.stopPropagation();
     history.goBack();

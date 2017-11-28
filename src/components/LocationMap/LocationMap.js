@@ -35,8 +35,7 @@ const Marker = () => (
 );
 
 @observer
-class LocationMap extends Component {
-  props: PropsType;
+class LocationMap extends Component<PropsType> {
   notificationSystem: ?any;
 
   handleError = () => {

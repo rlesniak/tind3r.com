@@ -11,7 +11,7 @@ const ls = {
     return store.get(APP_NAME) || {};
   },
 
-  get(key: string | string[], defaultValue: any = null): Object {
+  get<T>(key: string | string[], defaultValue?: T): T {
     return get(this.data, key, defaultValue);
   },
 

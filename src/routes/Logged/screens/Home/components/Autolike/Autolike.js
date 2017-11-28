@@ -52,12 +52,10 @@ const Label = labelEhnance(() => (
 
 @inject('currentUser')
 @observer
-class Autolike extends Component {
+class Autolike extends Component<PropsType> {
   componentWillUnmount() {
     counterService.unsubscribe(this.handleAutolike);
   }
-
-  props: PropsType;
 
   @observable enabled = false;
   @observable velocity = parseInt(LS.get('settings.autolikeVelocity', 1), 10);
@@ -84,7 +82,7 @@ class Autolike extends Component {
     // this.enabled = !this.enabled;
   };
 
-  handleSetVelocity = ({ target: { value } }: SyntheticInputEvent) => {
+  handleSetVelocity = ({ target: { value } }: SyntheticInputEvent<>) => {
     this.velocity = parseInt(value, 10);
     LS.setSettings({ autolikeVelocity: value });
 
@@ -104,7 +102,7 @@ class Autolike extends Component {
     }
   };
 
-  handleSetGiveUp = ({ target: { value } }: SyntheticInputEvent) => {
+  handleSetGiveUp = ({ target: { value } }: SyntheticInputEvent<>) => {
     const val = parseInt(value, 10);
 
     if (val < 0) {

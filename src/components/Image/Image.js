@@ -1,21 +1,19 @@
 // @flow
 
 import React from 'react';
-import { compose, withHandlers, withState } from 'recompose';
+import { compose, withStateHandlers, withHandlers, type HOC } from 'recompose';
 import cx from 'classnames';
 
 import './Image.scss';
 
-const enhance = compose(
-  withState('isFailed', 'setError', false),
-  withHandlers({
-    onError: ({ setError }) => () => {
-      setError(true);
-    },
-  }),
-);
+type PropsType = {
+  isFailed: boolean,
+  style: { width: number },
+  src: string,
+  className: ?string,
+};
 
-const Image = ({ isFailed, onError, style, src, className, ...props }) => {
+const Image = ({ isFailed, onError, style, src, className }) => {
   if (isFailed) {
     return (
       <div
@@ -27,9 +25,20 @@ const Image = ({ isFailed, onError, style, src, className, ...props }) => {
     );
   }
 
-  return (
-    <img alt="Error" src={src} onError={onError} style={style} className={cx(className)} />
-  );
+  return <img alt="Error" src={src} onError={onError} style={style} className={cx(className)} />;
 };
+
+const enhance: HOC<*, PropsType> = compose(
+  withStateHandlers({ isFailed: false }, {
+    setError: () => value => ({
+      isFailed: value,
+    }),
+  }),
+  withHandlers({
+    onError: ({ setError }) => () => {
+      setError(true);
+    },
+  }),
+);
 
 export default enhance(Image);

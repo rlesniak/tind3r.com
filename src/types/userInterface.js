@@ -2,7 +2,7 @@
 
 export interface UserInterface {
   _id: string,
-  photos: ?[],
+  photos: ?Object[],
   name: string,
   +mainPhoto: string,
 }

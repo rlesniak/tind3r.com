@@ -9,6 +9,7 @@ type PropsType = {
   children: any,
   noAnimation: boolean,
   photoUrl: string,
+  children: any,
 };
 
 export default ({ noAnimation, photoUrl, children }: PropsType) => (

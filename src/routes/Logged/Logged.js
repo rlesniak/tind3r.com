@@ -46,7 +46,7 @@ const reportLocation = (location: Object) => {
 };
 
 @observer
-class Welcome extends Component {
+class Welcome extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
     this.previousLocation = props.location;
@@ -127,8 +127,6 @@ class Welcome extends Component {
 
     window.ms = matchStore;
   }
-
-  props: PropsType;
 
   loggedHandler: () => void;
   previousLocation: Object;

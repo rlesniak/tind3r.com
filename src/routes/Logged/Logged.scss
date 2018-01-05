@@ -43,14 +43,16 @@
         position: relative;
 
         span {
-          right: 12px;
-          top: -5px;
+          right: 1px;
+          top: -3px;
+          min-width: 22px;
+          line-height: 22px;
           position: absolute;
           background: $red;
           color: #fff;
           border-radius: 50%;
           font-size: 11px;
-          padding: 5px 3px 3px 3px;
+          padding: 0px 2px;
         }
       }
     }

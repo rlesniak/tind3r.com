@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 const env = {};
 
 Object.assign(env, {
-  assets: JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/webpack-assets.json'))),
+  assets: !isDeveloping ? JSON.parse(fs.readFileSync(path.join(process.cwd(), 'dist/webpack-assets.json'))) : {},
   develop: isDeveloping,
 });
 

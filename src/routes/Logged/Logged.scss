@@ -78,9 +78,17 @@
       color: #fff;
     }
 
-    &__plus {
+    &__plus,
+    &__gold {
       font-size: 12px;
+    }
+
+    &__plus {
       color: $red;
+    }
+
+    &__gold {
+      color: #ffcc00 !important;
     }
   }
 

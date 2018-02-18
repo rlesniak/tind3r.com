@@ -6,6 +6,7 @@ import extend from 'lodash/extend';
 import pick from 'lodash/pick';
 import get from 'lodash/get';
 import find from 'lodash/find';
+import each from 'lodash/each';
 
 import { miToKm } from 'utils';
 import API from 'utils/api';
@@ -68,6 +69,7 @@ export class CurrentUser implements UserInterface {
   @observable age_filter_min: number;
   @observable age_filter_max: number;
   @observable plusAccount: boolean;
+  @observable goldAccount: boolean;
   @observable pos: Object = {};
 
   @action set(json: Object) {
@@ -78,7 +80,16 @@ export class CurrentUser implements UserInterface {
     }
 
     if (purchases) {
-      this.plusAccount = !!find(purchases, p => p.product_type === 'plus');
+      let plusAcc = false;
+      let goldAcc = false;
+
+      each(purchases, (p) => {
+        plusAcc = p.product_type === 'plus';
+        goldAcc = p.product_type === 'gold';
+      });
+
+      this.plusAccount = plusAcc;
+      this.goldAccount = goldAcc;
     }
 
     if (rating) {

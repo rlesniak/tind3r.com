@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip';
 import ReactGA from 'react-ga';
 import DocumentTitle from 'react-document-title';
 import LogRocket from 'logrocket';
+import cx from 'classnames';
 
 import Loader from 'components/Loader';
 import Avatar from 'components/Avatar';
@@ -76,10 +77,7 @@ class Welcome extends Component {
   componentWillUpdate(nextProps: PropsType) {
     const { location } = this.props;
     // set previousLocation if props.location is not modal
-    if (
-      nextProps.history.action !== 'POP' &&
-      (!location.state || !location.state.modal)
-    ) {
+    if (nextProps.history.action !== 'POP' && (!location.state || !location.state.modal)) {
       this.previousLocation = this.props.location;
     }
   }
@@ -143,41 +141,35 @@ class Welcome extends Component {
     this.props.history.replace('/');
 
     location.reload();
-  }
+  };
 
   handleConnect = () => {
     getFacebookToken();
-  }
+  };
 
   renderWhenLogged() {
     const { location } = this.props;
-    const isModal = !!(
-      location.state &&
-      location.state.modal &&
-      this.previousLocation !== location // not initial render
-    );
+    const isModal = !!(location.state && location.state.modal && this.previousLocation !== location); // not initial render
 
-    return (
-      currentUser.is_authenticated ? (
-        <div className="logged">
-          <Switch location={isModal ? this.previousLocation : location}>
-            <Redirect from="/home" to="/" />
-            <Route exact path="/" component={Home} />
-            <Route path="/matches" component={Matches} />
-            <Route path="/history" component={History} />
-            <Route path="/discussion" component={Discussion} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/user/:id" component={Person} />
-            <Route component={NotFound} />
-          </Switch>
+    return currentUser.is_authenticated ? (
+      <div className="logged">
+        <Switch location={isModal ? this.previousLocation : location}>
+          <Redirect from="/home" to="/" />
+          <Route exact path="/" component={Home} />
+          <Route path="/matches" component={Matches} />
+          <Route path="/history" component={History} />
+          <Route path="/discussion" component={Discussion} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/user/:id" component={Person} />
+          <Route component={NotFound} />
+        </Switch>
 
-          {isModal ? <Route path="/user/:id" component={PersonModal} /> : null}
-        </div>
-      ) : (
-        <div className="not-logged">
-          <Login onClick={this.handleConnect}>Your Tinder session has expired.</Login>
-        </div>
-      )
+        {isModal ? <Route path="/user/:id" component={PersonModal} /> : null}
+      </div>
+    ) : (
+      <div className="not-logged">
+        <Login onClick={this.handleConnect}>Your Tinder session has expired.</Login>
+      </div>
     );
   }
 
@@ -229,19 +221,21 @@ class Welcome extends Component {
                 <li className="profile">
                   <NavLink to={`/user/${currentUser._id}`} activeClassName="active">
                     {currentUser.avatarUrl && <Avatar width={50} url={currentUser.avatarUrl} />}
-                    <div className="name">
-                      {currentUser.name}
-                    </div>
-                    {currentUser.plusAccount && <div className="profile__plus">Plus!</div>}
+                    <div className="name">{currentUser.name}</div>
+                    {(currentUser.plusAccount || currentUser.goldAccount) && (
+                      <div
+                        className={cx({
+                          profile__plus: currentUser.plusAccount,
+                          profile__gold: currentUser.goldAccount,
+                        })}
+                      >
+                        {currentUser.goldAccount ? 'Gold!' : currentUser.plusAccount ? 'Plus!' : ''}
+                      </div>
+                    )}
                   </NavLink>
                 </li>
                 <li>
-                  <div
-                    className="logout"
-                    onClick={this.handleLogout}
-                    data-tip="Logout"
-                    data-for="main"
-                  >
+                  <div className="logout" onClick={this.handleLogout} data-tip="Logout" data-for="main">
                     <i className="fa fa-sign-out" />
                   </div>
                 </li>
@@ -255,9 +249,7 @@ class Welcome extends Component {
                     <div className="logged__coffee-icon">
                       <img alt="cup" src="https://ko-fi.com/img/cuplogo.svg" />
                     </div>
-                    <div className="logged__coffee-text">
-                      Buy me a coffee
-                    </div>
+                    <div className="logged__coffee-text">Buy me a coffee</div>
                   </a>
                 </li>
               </ul>

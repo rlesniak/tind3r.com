@@ -41,6 +41,7 @@ class Person implements UserInterface {
   @observable like_limit_reset: ?string = null;
   @observable superlike_limit_reset: ?string = null;
   @observable instagram: ?Object;
+  @observable is_fast_match_found: boolean = false;
 
   constructor(store: Object, json: ?Object) {
     this.store = store;

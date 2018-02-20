@@ -1,0 +1,27 @@
+.fast-match {
+  padding: 20px;
+  &__card {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  h1,
+  h2 {
+    text-align: center;
+    position: relative;
+    top: 150px;
+  }
+
+  h1 {
+    text-shadow: 1px 1px 1px #4c4c4c;
+    color: gold;
+  }
+
+  h2 {
+    color: gray;
+  }
+
+  .person-card {
+    box-shadow: rgba(234, 199, 0, 0.9) 0 0 13px 0px;
+  }
+}

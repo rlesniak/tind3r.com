@@ -15,6 +15,7 @@ class RecsStore {
 
   @observable persons: Array<Person> = [];
   @observable is_fetching: boolean = false;
+  @observable is_fetching_fast_match: boolean = false;
   @observable is_loading_more: boolean = false;
   @observable isError: boolean = false;
   @observable visibilityFilter: FiltersType = 'all';
@@ -22,7 +23,7 @@ class RecsStore {
   constructor() {
     this.loadMoreHandler = reaction(
       () => this.allVisible.length,
-      (length) => {
+      length => {
         if (length <= 3 && !this.is_fetching && !this.is_loading_more) {
           this.fetchCore(true);
         }
@@ -59,12 +60,33 @@ class RecsStore {
   }
 
   @action
-  setPerson(json) {
-    if (find(this.persons, { _id: json._id })) {
+  async fetchFastMatch() {
+    this.is_fetching_fast_match = true;
+    try {
+      const { data } = await get('/v2/fast-match');
+
+      const results = map(data.data.results, r => r.user);
+
+      each(results, json => this.setPerson({ ...json, is_fast_match_found: true }, true));
+    } catch (e) {
+      this.isError = true;
+    }
+
+    this.is_fetching_fast_match = false;
+  }
+
+  @action
+  setPerson(json, force = false) {
+    const existingPerson = find(this.persons, { _id: json._id });
+    const person = new Person(this, json);
+
+    if (existingPerson) {
+      if (force) {
+        this.persons.replace([person]);
+      }
       return;
     }
 
-    const person = new Person(this, json);
     this.persons.push(person);
   }
 
@@ -80,7 +102,7 @@ class RecsStore {
 
   @computed
   get allVisible(): Array<Person> {
-    return filter(this.persons, (p) => {
+    return filter(this.persons, p => {
       let cond = true;
 
       switch (this.visibilityFilter) {
@@ -101,6 +123,16 @@ class RecsStore {
 
       return cond && p.is_done === 0;
     });
+  }
+
+  @computed
+  get fastMatched(): Person[] {
+    return this.persons.filter(person => person.is_fast_match_found && !person.is_done);
+  }
+
+  @computed
+  get fastMatchCount(): number {
+    return this.fastMatched.length;
   }
 
   @computed

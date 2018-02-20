@@ -176,7 +176,7 @@ class Home extends PureComponent {
             recsStore.is_fetching ? 'Finding people near you...' : (
               <div>
                 {'There\'s no one new around you.'}<br />
-              (TIP: Try to change distance filter <i className="fa fa-arrow-up" />) <br />
+              (TIP: Try to change distance filter <i className="fa fa-arrow-left" />) <br />
                 <button
                   onClick={this.handleRefresh}
                   className="home__refresh-button"

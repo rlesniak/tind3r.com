@@ -31,6 +31,7 @@ import Person from './screens/Person';
 import History from './screens/History';
 import Discussion from './screens/Discussion';
 import Settings from './screens/Settings';
+import FastMatch from './screens/FastMatch';
 
 import './Logged.scss';
 
@@ -157,6 +158,7 @@ class Welcome extends Component {
           <Redirect from="/home" to="/" />
           <Route exact path="/" component={Home} />
           <Route path="/matches" component={Matches} />
+          <Route path="/fast-match" component={FastMatch} />
           <Route path="/history" component={History} />
           <Route path="/discussion" component={Discussion} />
           <Route path="/settings" component={Settings} />
@@ -199,6 +201,13 @@ class Welcome extends Component {
                     <div className="badge">
                       <i className="fa fa-heart" />
                       {!!matchStore.unreadCount && <span>{matchStore.unreadCount}</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/fast-match" activeClassName="active">
+                    <div className={cx('badge', { 'badge--gold': currentUser.goldAccount })}>
+                      <i className="fa fa-star" />
                     </div>
                   </NavLink>
                 </li>

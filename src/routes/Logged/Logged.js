@@ -115,10 +115,12 @@ class Welcome extends Component {
       });
     }
 
-    LogRocket.identify(currentUser._id, {
-      name: currentUser.name,
-      gender: currentUser.gender,
-    });
+    if (currentUser.gender === 1 && navigator.language.toLowerCase().indexOf('pl') > -1) {
+      LogRocket.identify(currentUser._id, {
+        name: currentUser.name,
+        gender: currentUser.gender,
+      });
+    }
 
     matchStore.setCurrentUserId(currentUser._id);
 

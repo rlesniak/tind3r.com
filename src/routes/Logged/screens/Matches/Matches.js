@@ -8,6 +8,7 @@ import { Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
 import { removeMatch } from 'utils/database.v2';
+import { exportCSVFile } from 'utils/csv';
 
 import MatchList from 'components/matches/MatchList';
 import MatchFilters from 'components/matches/MatchFilters';
@@ -28,13 +29,14 @@ type PropsType = {
   handleHardRefresh: () => void,
   handleMarkAllAsRead: () => void,
   handleRemoveAllBlocked: () => void,
+  handleExport: () => void,
 };
 
 const enhance = compose(
   inject('matchStore'),
   withState('activeId', 'setActiveId', props => props.location.pathname.split('/matches/')[1]),
   withHandlers({
-    handleMatchClick: ({ history, setActiveId }) => (matchId) => {
+    handleMatchClick: ({ history, setActiveId }) => matchId => {
       history.push(`/matches/${matchId}`);
       setActiveId(matchId);
     },
@@ -84,6 +86,19 @@ const enhance = compose(
       removeMatch(removedIds);
       history.replace('/matches');
     },
+    handleExport: ({ matchStore }) => () => {
+      const data = matchStore.matches.map(m => ({
+        name: (m.person.name || '').replace(/,/g, ''),
+        age: m.person.age,
+        distanceKm: m.person.distanceKm || 'n/a',
+        superlike: m.is_super_like ? 'Yes' : '',
+        url: `http://tind3r.com/user/${m.person._id}`,
+      }));
+
+      const headers = { name: 'Name', age: 'Age', distanceKm: 'Distance', superlike: 'Superliked', url: 'Link' };
+
+      exportCSVFile(headers, data, 'matches');
+    },
   }),
   observer,
 );
@@ -104,6 +119,7 @@ const Matches = ({
   handleHardRefresh,
   handleMarkAllAsRead,
   handleRemoveAllBlocked,
+  handleExport,
   ...props
 }: PropsType) => (
   <div className="matches">
@@ -127,15 +143,9 @@ const Matches = ({
         <i className="fa fa-ban" /> Remove all blocked ({matchStore.blockedCount})
       </SideMenu.Item>
       <SideMenu.Separator />
-      {
-        <SideMenu.Item>
-          <p className="emergency-info">
-            If you have any problems with matches click below to try again. <br />
-            I hope it helps. Please let me know.<br />
-            <a onClick={handleHardRefresh}>Refresh</a>
-          </p>
-        </SideMenu.Item>
-      }
+      <SideMenu.Item asAction onClick={handleExport}>
+        <i className="fa fa-download" /> Export matches
+      </SideMenu.Item>
     </SideMenu>
     <SideMenu.Right>
       <div className="matches__wrapper">

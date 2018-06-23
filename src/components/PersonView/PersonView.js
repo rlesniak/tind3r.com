@@ -112,10 +112,10 @@ class PersonView extends Component {
     if (this.person.schools && this.person.schools.length) {
       return (
         <ul>
-          {this.person.schools.map(p => (
-            <li key={p.id}>
+          {this.person.schools.map(school => (
+            <li key={school.id}>
               <a
-                href={fbUserSearchUrl(p.name, this.person.name)}
+                href={fbUserSearchUrl(school.id, this.person.name)}
                 target="_blank"
                 rel="noreferrer noopener"
                 data-tip="Do Facebook search based on school and name. <br />
@@ -127,7 +127,7 @@ class PersonView extends Component {
               >
                 <i className="fa fa-eye" />
               </a>
-              {p.name}
+              {school.name}
             </li>
           ))}
         </ul>

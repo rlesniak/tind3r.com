@@ -16,7 +16,7 @@ import recsStore from 'stores/RecsStore';
 
 import withLikeCounter from 'hoc/withLikeCounter';
 
-import { fbUserSearchUrl } from 'utils';
+import { fbUserSearchUrlBySchool, fbUserSearchUrlByInterests } from 'utils';
 import { getMatchByPerson, getActions } from 'utils/database.v2';
 
 import type { ActionsType } from 'types/person';
@@ -112,10 +112,10 @@ class PersonView extends Component {
     if (this.person.schools && this.person.schools.length) {
       return (
         <ul>
-          {this.person.schools.map(p => (
-            <li key={p.id}>
+          {this.person.schools.map(school => (
+            <li key={school.id}>
               <a
-                href={fbUserSearchUrl(p.name, this.person.name)}
+                href={fbUserSearchUrlBySchool(school.id, this.person.name)}
                 target="_blank"
                 rel="noreferrer noopener"
                 data-tip="Do Facebook search based on school and name. <br />
@@ -127,7 +127,7 @@ class PersonView extends Component {
               >
                 <i className="fa fa-eye" />
               </a>
-              {p.name}
+              {school.name}
             </li>
           ))}
         </ul>
@@ -167,7 +167,33 @@ class PersonView extends Component {
       return (
         <ul className="person-view__connections">
           <li className="person-view__connections-header">Common interests:</li>
-          {this.person.common_interests.map(c => <li key={c.id}>{c.name}</li>)}
+          {this.person.common_interests.map(c => (
+            <li key={c.id}>
+              <a
+                href={fbUserSearchUrlByInterests(c.id, this.person.name)}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-tip="Do Facebook search based on interest and name. <br />
+                Tinder user has to have at least one Facebook photo <br />
+                so you can compare and find right person."
+                data-for="main"
+              >
+                {c.name}
+              </a>
+            </li>))}
+          <li key="ALL">
+            <a
+              href={fbUserSearchUrlByInterests(this.person.common_interests.map(c => c.id), this.person.name)}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-tip="Do Facebook search based on all interests and name. <br />
+                Tinder user has to have at least one Facebook photo <br />
+                so you can compare and find right person."
+              data-for="main"
+            >
+                ALL
+              </a>
+          </li>
         </ul>
       );
     }

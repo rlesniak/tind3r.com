@@ -9,10 +9,6 @@ import { load } from './utils/database.v2';
 
 window.Perf = Perf;
 
-if (process.env.NODE_ENV === 'production') {
-  LogRocket.init('cqjmsx/tind3r');
-}
-
 const rootEl = document.getElementById('root');
 const render = (Component) => {
   ReactDOM.render(

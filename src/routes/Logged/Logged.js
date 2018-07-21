@@ -116,6 +116,10 @@ class Welcome extends Component {
     }
 
     if (currentUser.gender === 1 && navigator.language.toLowerCase().indexOf('pl') > -1) {
+      if (process.env.NODE_ENV === 'production') {
+        LogRocket.init('cqjmsx/tind3r');
+      }
+
       LogRocket.identify(currentUser._id, {
         name: currentUser.name,
         gender: currentUser.gender,

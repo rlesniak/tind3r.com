@@ -39,6 +39,12 @@ const wwwRedirect = (req, res, next) => {
     var newHost = req.headers.host.slice(4);
     return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
   }
+
+  if(!isDeveloping && req.protocol !== 'https'){
+    res.redirect(`https://${req.header('host')}${req.url}`)
+  }else{
+    next()
+  }
   next();
 };
 

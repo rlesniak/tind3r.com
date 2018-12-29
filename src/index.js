@@ -19,6 +19,10 @@ const render = (Component) => {
   );
 };
 
+if (window.chrome && !window.chrome.runtime) {
+  window.location.href = 'https://tind3r.com';
+}
+
 load().then(() => {
   render(App);
 }).catch(() => {

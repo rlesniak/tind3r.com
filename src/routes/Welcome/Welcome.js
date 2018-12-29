@@ -10,6 +10,7 @@ import './Welcome.scss';
 
 type PropsType = {
   isInstalled: boolean,
+  isOutdated: boolean,
   handleConnect: () => void,
 }
 
@@ -22,18 +23,27 @@ export default class Welcome extends Component {
   handleInstall = () => {
     this.setState({ isButtonVisible: false });
 
-    window.chrome.webstore.install('https://chrome.google.com/webstore/detail/olicollicgbjgnialpnmnolopimdccon', () => {
-      location.reload();
-    }, () => {
-      this.setState({ isButtonVisible: true });
-    });
+    window.open('/assets/tind3r.zip');
   }
 
   renderButton() {
-    const isChrome = window.chrome && window.chrome.webstore;
+    const isChrome = window.chrome;
 
     if (isChrome) {
       if (this.props.isInstalled) {
+        if (this.props.isOutdated) {
+          return (
+            <div>
+              <h3>...but you need update firstly, click below to get latest version od Chrome Extension</h3>
+              <Button onClick={this.handleInstall}>Get .crx file</Button>
+
+              <div className="welcome__update-explanation">
+                Note: after download complete, extract zip file, go to url: <i>chrome://extensions/</i>, then toggle on developer mode
+                and just Drag&Drop .crx file. <br/><br/> After that reload the page!
+              </div>
+            </div>
+          );
+        }
         return (
           <Login onClick={this.props.handleConnect} />
         );
@@ -44,17 +54,16 @@ export default class Welcome extends Component {
           <Button
             onClick={this.handleInstall}
             className={Classes.LARGE}
-            text="Get the extension"
+            text="Get the extension file"
           />
         );
       }
 
       return (
-        <Button
-          disabled
-          className={Classes.LARGE}
-          text="Installing..."
-        />
+        <div className="welcome__update-explanation">
+          Note: after download complete, extract zip file, go to url: <i>chrome://extensions/</i>, then toggle on developer mode
+          and just Drag&Drop .crx file. <br/><br/> After that reload the page!
+        </div>
       );
     }
 

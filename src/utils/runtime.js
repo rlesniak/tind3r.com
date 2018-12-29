@@ -11,34 +11,42 @@ export const getTokenDate = (callback) => {
 };
 
 export const checkIfInstalled = (callback) => {
-  if (window.chrome && window.chrome.webstore) {
-    chrome.runtime.sendMessage(nonStoreId, {
+  if (window.chrome) {
+    chrome.runtime.sendMessage(EXT_ID(), {
       type: 'CHECK_INSTALLED',
-    }, (response) => {
-      if (!response) {
-        chrome.runtime.sendMessage(originalId, {
-          type: 'CHECK_INSTALLED',
-        }, (response1) => {
-          if (response1) {
-            setId(originalId);
-            callback(true);
-          } else {
-            chrome.runtime.sendMessage(secondStoreId, {
-              type: 'CHECK_INSTALLED',
-            }, (response2) => {
-              if (response2) {
-                setId(secondStoreId);
-              }
-
-              callback(!!response2);
-            });
-          }
-        });
-      } else {
-        setId(nonStoreId);
-
-        callback(!!response);
+    }, (resp) => {
+      if (resp) {
+        return callback(true);
       }
+
+      return chrome.runtime.sendMessage(nonStoreId, {
+        type: 'CHECK_INSTALLED',
+      }, (response) => {
+        if (!response) {
+          chrome.runtime.sendMessage(originalId, {
+            type: 'CHECK_INSTALLED',
+          }, (response1) => {
+            if (response1) {
+              setId(originalId);
+              callback(true);
+            } else {
+              chrome.runtime.sendMessage(secondStoreId, {
+                type: 'CHECK_INSTALLED',
+              }, (response2) => {
+                if (response2) {
+                  setId(secondStoreId);
+                }
+
+                callback(!!response2);
+              });
+            }
+          });
+        } else {
+          setId(nonStoreId);
+
+          callback(!!response);
+        }
+      });
     });
   } else {
     callback(false);

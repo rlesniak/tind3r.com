@@ -21,21 +21,8 @@ const render = (Component) => {
 
 load().then(() => {
   render(App);
-}).catch((err) => {
+}).catch(() => {
   render(App);
-
-  if (window.Bugsnag) {
-    Bugsnag.notifyException(new Error('Error loading DB'), err);
-  }
-
-  alert('There is some error. Please try logout and login again');
 });
-
-if (window.Bugsnag) {
-  window.Bugsnag.beforeNotify = function (data) {
-    data.metaData.sessionURL = LogRocket.sessionURL; // eslint-disable-line
-    return data;
-  };
-}
 
 if (module.hot) module.hot.accept('./App', () => render(App));

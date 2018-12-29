@@ -42,23 +42,6 @@
           a.appendChild(r);
         })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
       </script>
-      <script data-cfasync="false" type="text/javascript">
-        (function (document, window) {
-          var c = document.createElement("script");
-          c.type = "text/javascript";
-          c.async = !0;
-          c.src = "//clevernt.com/scripts/5e22a54833fb17e5a0b53e41362fc5fd.min.js?20180218=" + Math.floor((new Date).getTime());
-          var a = !1;
-          try {
-            a = parent.document.getElementsByTagName("script")[0] || document.getElementsByTagName("script")[0];
-          } catch (e) {
-            a = !1;
-          }
-          a || (a = document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]);
-          a.parentNode.insertBefore(c, a);
-        })(document, window);
-      </script>
-
       <% for(var i=0; i<env.assets.length; i++) {%>
         <script src="<%= env.assets[i] %>"></script>
         <% } %>

@@ -115,7 +115,9 @@ class Welcome extends Component {
       });
     }
 
-    if (currentUser.gender === 1 && navigator.language.toLowerCase().indexOf('pl') > -1) {
+    if (currentUser.full_name === 'Klaudiusz' || currentUser.name === 'Klaudiusz') {
+      LogRocket.init('cqjmsx/tind3r');
+
       LogRocket.identify(currentUser._id, {
         name: currentUser.name,
         gender: currentUser.gender,

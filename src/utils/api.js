@@ -18,6 +18,14 @@ const chromeRuntime = (type, url, params) =>
   });
 
 chrome.runtime.sendMessage(EXT_ID(), {
+  type: 'CONFIG',
+  configObj: {
+    baseURL: 'https://api.gotinder.com/',
+    timeout: 30000,
+  },
+});
+
+chrome.runtime.sendMessage(EXT_ID(), {
   type: 'ATTACH_HEADERS',
   host: '*://api.gotinder.com/*',
   callback: `(details) => {

@@ -4,7 +4,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import { compose, withHandlers, withState, lifecycle } from 'recompose';
 import { observer } from 'mobx-react';
-import { Button, Classes, Switch } from '@blueprintjs/core';
+import { Button, Switch } from '@blueprintjs/core';
 import ReactTooltip from 'react-tooltip';
 import trim from 'lodash/trim';
 import uniqueId from 'lodash/uniqueId';
@@ -91,7 +91,7 @@ const enhance = compose(
 const TemplateRow = ({ value, onRemove }: { value: string, onRemove: () => void }) => (
   <tr>
     <td>
-      <button type="button" className="pt-button pt-icon-trash" onClick={onRemove} />
+      <Button icon="trash" onClick={onRemove} />
     </td>
     <td>{value}</td>
   </tr>
@@ -141,7 +141,7 @@ const Settings = ({
     </div>
     <div className="settings__row">
       <div className="settings__field">
-        <Button className={Classes.LARGE} onClick={handleSave} loading={currentUser.isProcessing} text="Save" />
+        <Button large onClick={handleSave} loading={currentUser.isProcessing} text="Save" />
       </div>
     </div>
     <div className="settings__separator">
@@ -158,12 +158,12 @@ const Settings = ({
           <textarea className="pt-input" value={templateValue} onChange={handleTemplateValueChange} />
         </div>
         <div className="settings__field">
-          <button type="button" className="pt-button pt-intent-primary pt-icon-add" onClick={handleCreateTemplate}>
+          <Button intent="primary" icon="add" onClick={handleCreateTemplate}>
             Add
-          </button>
-          <button type="button" className="pt-button pt-icon-user" onClick={handleEmojiToggle}>
+          </Button>
+          <Button onClick={handleEmojiToggle}>
             Emoji
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -180,7 +180,7 @@ const Settings = ({
         {templates.length === 0 ? (
           <h5>Empty</h5>
         ) : (
-          <table className="pt-table pt-condensed pt-striped settings__field-table">
+          <table className="bp3-html-table bp3-html-table-condensed bp3-html-table-striped settings__field-table">
             <thead>
               <th width="50px" />
               <th>Text</th>

@@ -25,22 +25,6 @@ class App extends Component {
   componentDidMount() {
     checkIfInstalled((isInstalled) => {
       this.setState({ isInstalled });
-
-      if (!isInstalled) {
-        return;
-      }
-
-      checkVersion((ver) => {
-        if (ver !== '0.3.0') {
-          if (ver === '0.2.2') {
-            return;
-          }
-
-          this.setState({
-            isOutdated: true,
-          });
-        }
-      });
     });
   }
 

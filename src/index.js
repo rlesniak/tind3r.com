@@ -25,8 +25,6 @@ if (window.chrome && !window.chrome.runtime) {
 
 load().then(() => {
   render(App);
-}).catch(() => {
-  render(App);
 });
 
 if (module.hot) module.hot.accept('./App', () => render(App));

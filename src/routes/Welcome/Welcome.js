@@ -21,9 +21,7 @@ export default class Welcome extends Component {
   props: PropsType;
 
   handleInstall = () => {
-    this.setState({ isButtonVisible: false });
-
-    window.open('/assets/tind3r.zip');
+    location.href = 'https://chrome.google.com/webstore/detail/love-app/hnecmhokjnjgbfhbnhkphjgohmhhcloo';
   }
 
   renderButton() {
@@ -54,7 +52,7 @@ export default class Welcome extends Component {
           <Button
             onClick={this.handleInstall}
             className={Classes.LARGE}
-            text="Get the extension file"
+            text="Get the extension"
           />
         );
       }

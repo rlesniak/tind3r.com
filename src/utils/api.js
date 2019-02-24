@@ -33,12 +33,10 @@ chrome.runtime.sendMessage(EXT_ID(), {
       if (header.name === 'User-Agent') {
         header.value = 'Tinder/6.3.1 (iPhone; iOS 10.0.2; Scale/2.00)';
       }
-
       if (header.name === 'Origin') {
         header.value = '';
       }
     });
-
     return { requestHeaders: details.requestHeaders };
   }`,
 });

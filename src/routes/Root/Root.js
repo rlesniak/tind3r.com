@@ -25,6 +25,18 @@ class App extends Component {
   componentDidMount() {
     checkIfInstalled((isInstalled) => {
       this.setState({ isInstalled });
+
+      if (!isInstalled) {
+        return;
+      }
+
+      checkVersion((ver) => {
+        if (ver !== '0.2.0') {
+          this.setState({
+            isOutdated: true,
+          });
+        }
+      });
     });
   }
 
@@ -45,7 +57,6 @@ class App extends Component {
 
   render() {
     const { isInstalled, isFirstLogin, isOutdated } = this.state;
-
     if (isInstalled && !isOutdated) {
       if (isFirstLogin) {
         return (

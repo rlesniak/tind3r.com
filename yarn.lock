@@ -9,12 +9,12 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@blueprintjs/core@^3.11.0":
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.11.0.tgz#7657a4f1db9e6e3d3dbddc64867ed3ef72d9ccd9"
-  integrity sha512-efCny6krIYtaXNo9d38EFeQfLuLSn+76t94N8vdjSICeuL5pm8q8cbmypNv2BQ01TJR6juO6Ori0MBW+zf3LHw==
+"@blueprintjs/core@^3.13.0":
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.13.0.tgz#2f767d7c8ae06e94380460e1ba43987671e86e67"
+  integrity sha512-4+DqwflyOLbdHCLXA67UWKP8Efq7bKphIEkHfMdzxWkyXvqYm82YzTTh6T4wt8IKGsjdKQq9gE1lt8peJH8J6w==
   dependencies:
-    "@blueprintjs/icons" "^3.5.0"
+    "@blueprintjs/icons" "^3.6.0"
     "@types/dom4" "^2.0.0"
     classnames "^2.2"
     dom4 "^2.0.1"
@@ -25,10 +25,10 @@
     resize-observer-polyfill "^1.5.0"
     tslib "^1.9.0"
 
-"@blueprintjs/icons@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.5.0.tgz#d5600b1d736367a90e9c186975dc8e6efa719f7d"
-  integrity sha512-+euHGqIgRJzcUXmtnWUp4vPY++YGA4YztSx2uzCgpTiL0BcFm+syw8yIviyjdhTqMXk8sttk4W2pEALcTJtX6A==
+"@blueprintjs/icons@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.6.0.tgz#af1d2de091d67927ed61671e6967c43620cb416d"
+  integrity sha512-sgB6rJtMjc2mS4aCS+65gK5DCr8fiWgOYi0buc0ODvGD2fwOtOFZuE4Duuj6/GZnCYj4s7E8NZgYK9Krd7G73Q==
   dependencies:
     classnames "^2.2"
     tslib "^1.9.0"

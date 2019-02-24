@@ -21,7 +21,9 @@ export default class Welcome extends Component {
   props: PropsType;
 
   handleInstall = () => {
-    location.href = 'https://chrome.google.com/webstore/detail/love-app/hnecmhokjnjgbfhbnhkphjgohmhhcloo';
+    this.setState({ isButtonVisible: false });
+
+    window.open('/assets/tind3r.zip');
   }
 
   renderButton() {
@@ -30,9 +32,10 @@ export default class Welcome extends Component {
     if (isChrome) {
       if (this.props.isInstalled) {
         if (this.props.isOutdated) {
+
           return (
             <div>
-              <h3>...but you need update firstly, click below to get latest version od Chrome Extension</h3>
+              <h3 className={Classes.HEADING}>...but you need update firstly, click below to get latest version od Chrome Extension</h3>
               <Button onClick={this.handleInstall}>Get .crx file</Button>
 
               <div className="welcome__update-explanation">
@@ -51,8 +54,7 @@ export default class Welcome extends Component {
         return (
           <Button
             onClick={this.handleInstall}
-            className={Classes.LARGE}
-            text="Get the extension"
+            text="Get the extension file"
           />
         );
       }
@@ -60,7 +62,7 @@ export default class Welcome extends Component {
       return (
         <div className="welcome__update-explanation">
           Note: after download complete, extract zip file, go to url: <i>chrome://extensions/</i>, then toggle on developer mode
-          and just Drag&Drop .crx file. <br/><br/> After that reload the page!
+          and click "Load unpacked" at the top left and seleft unziped folder. <br/><br/> After that reload the page!
         </div>
       );
     }

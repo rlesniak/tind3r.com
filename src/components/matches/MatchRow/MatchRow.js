@@ -31,7 +31,11 @@ const getMatchTypeIcon = (match: Match) => {
   }
 
   if (match.is_super_like) {
-    return <i className="fa fa-star" />;
+    if (!!match.super_liker && match.super_liker === match.person._id) {
+      return <i className="fa fa-star other-superliked" data-tip="You've been superliked" data-for="main" />;
+    } else {
+      return <i className="fa fa-star you-superliked" data-tip="You superliked" data-for="main" />;
+    }
   }
 
   if (match.is_boost_match) {

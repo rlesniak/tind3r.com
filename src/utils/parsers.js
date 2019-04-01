@@ -15,6 +15,7 @@ export const parseMatch = (match: Object, isNew: boolean): MatchType => ({
   is_blocked: false,
   is_boost_match: match.is_boost_match,
   is_super_like: match.is_super_like,
+  super_liker: match.super_liker,
 });
 
 export const parsePerson = (person: Object): PersonType => pick(person, [

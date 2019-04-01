@@ -78,10 +78,12 @@
     left: 3px;
     font-size: 15px;
 
-    .fa-star {
+    .other-superliked {
+      color: $gray;
+    }
+    .you-superliked {
       color: $blue;
     }
-
     .fa-bolt {
       color: $violet;
     }

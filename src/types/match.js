@@ -14,6 +14,7 @@ export type MatchType = {
   is_super_like: boolean,
   is_starred: boolean,
   last_msg_from_db?: Object,
+  super_liker: string,
 };
 
 export type FiltersType = 'all' | 'new' | 'unread' | 'unanswered' | 'blocked' | 'superlike';

@@ -6,4 +6,5 @@ export default input => ({
   last_activity_date: input.last_activity_date,
   created_date: input.created_date,
   is_new: input.is_new,
+  super_liker: input.super_liker,
 });

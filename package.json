@@ -9,6 +9,7 @@
     "prebuild": "",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.prod.js",
     "server": "NODE_ENV=production PORT=3000 node server.js",
+    "server-dev": "cross-env NODE_ENV=development, PORT=3000 node server.js",
     "styleguide-server": "styleguidist server",
     "styleguide-build": "styleguidist build",
     "json-server": "json-server ./src/config/json-server.js --routes ./routes.json -p 3001"

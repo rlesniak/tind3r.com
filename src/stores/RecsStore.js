@@ -44,9 +44,9 @@ class RecsStore {
     }
 
     try {
-      const { data } = await get('/recs/core');
+      const { data } = await get('/v2/recs/core');
 
-      const results = map(data.results, r => r.user);
+      const results = map(data.data.results, r => r.user);
 
       if (results.length > 0) {
         each(results, json => this.setPerson(json));

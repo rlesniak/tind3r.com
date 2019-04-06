@@ -31,7 +31,7 @@ class App extends Component {
       }
 
       checkVersion((ver) => {
-        if (ver !== '0.2.0') {
+        if (ver !== '0.3.0') {
           this.setState({
             isOutdated: true,
           });

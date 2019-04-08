@@ -48,8 +48,6 @@ class MessageStore {
 
     const message: Message = new Message(this, data);
     message.save(payload);
-
-    this.messages.push(message);
   }
 
   // FOR DEBUG

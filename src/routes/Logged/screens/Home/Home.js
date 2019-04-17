@@ -3,7 +3,7 @@
 
 import 'react-input-range/src/scss/index.scss';
 
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
@@ -58,7 +58,7 @@ const filterTypesMap: Array<{ text: string, type: FiltersType, handle: string }>
 const formatAgeRangeLabel = value => (value > 54 ? '55+' : value);
 
 @inject('currentUser') @withLikeCounter @observer
-class Home extends PureComponent {
+class Home extends Component {
   componentDidMount() {
     recsStore.fetchCore();
 
@@ -70,10 +70,10 @@ class Home extends PureComponent {
   props: PropsType;
   notificationSystem: ?any;
 
-  @observable distance = this.props.currentUser.distanceKm;
+  @observable distance = (this.props.currentUser.distanceKm ? this.props.currentUser.distanceKm : 100);
   @observable ageRange = {
-    min: this.props.currentUser.age_filter_min,
-    max: this.props.currentUser.age_filter_max,
+    min: (this.props.currentUser.age_filter_min ? this.props.currentUser.age_filter_min : 18),
+    max: (this.props.currentUser.age_filter_max ? this.props.currentUser.age_filter_max : 50),
   };
 
   handleAll = () => {

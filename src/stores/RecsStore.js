@@ -44,12 +44,11 @@ class RecsStore {
     }
 
     try {
-      const { data } = await get('/recs/core');
+      const { data } = await get('/v2/recs/core');
 
-      const results = map(data.results, r => r.user);
-
+      const results = data.data.results;
       if (results.length > 0) {
-        each(results, json => this.setPerson(json));
+        each(results, json => this.setPerson({ ...json.user, distance_mi: json.distance_mi }));
       }
     } catch (e) {
       this.isError = true;

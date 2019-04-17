@@ -17,6 +17,7 @@
     "Bugsnag": true
   },
   "rules": {
+    "linebreak-style": "off",
     "jsx-a11y/no-noninteractive-element-to-interactive-role": 0,
     "react/jsx-filename-extension": 0,
     "import/no-extraneous-dependencies": 0,

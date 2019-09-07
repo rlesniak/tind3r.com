@@ -26,13 +26,6 @@ const enhance = compose(
   }),
 );
 
-const renderInstagramLink = (link, name, small) => (
-  <a href={link} target="_blank" title={name}>
-    <i className="fa fa-instagram" />
-    {!small && <div className="instaname">{name}</div>}
-  </a>
-);
-
 const PersonCardFull = ({
   person, small, counter, startCount, onActionClick,
 }) => (
@@ -87,13 +80,6 @@ const PersonCardFull = ({
 
       <div className="person-card-full__footer">
         <div className="person-card-full__footer--distance">{person.distanceKm}</div>
-        <div className="person-card-full__footer--instagram">
-          {
-            person.instagramProfileLink ?
-            renderInstagramLink(person.instagramProfileLink, person.instagramUsername, small) :
-            <i className="fa fa-instagram" />
-          }
-        </div>
       </div>
     </div>
   </div>

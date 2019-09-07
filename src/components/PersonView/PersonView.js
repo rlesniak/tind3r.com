@@ -108,6 +108,30 @@ class PersonView extends Component {
     }
   }
 
+  renderInstaSearch() {
+    const { person } = this;
+    const GOOGLE_IMAGE_QUERY_URL = 'https://www.google.com/searchbyimage?image_url=';
+
+    const instagramProfilePicture = person.instagram && person.instagram.profile_picture;
+    if (instagramProfilePicture) {
+      return (
+        <a 
+          href={GOOGLE_IMAGE_QUERY_URL+instagramProfilePicture}
+          target="_blank"
+          rel="noreferrer noopener"
+          data-tip="Do Google search based on Instagram profile photo. <br />
+          You might find the Instagram account by the first results by first name."
+          data-for="main"
+          data-offset="{'top': -10, 'left': -12}"
+        >
+            <i className="fa fa-instagram" />Try Instagram search
+        </a>
+      );
+    }
+
+    return null;
+  }
+
   renderSchools() {
     if (this.person.schools && this.person.schools.length) {
       return (
@@ -219,19 +243,11 @@ class PersonView extends Component {
             <div className="person-view__lists">
               {this.renderSchools()}
               {this.renderJobs()}
+              {this.renderInstaSearch()}
             </div>
             <div className="person-view__bio">
               <Bio text={person.bio} />
             </div>
-
-            {person.instagramUsername &&
-              <div className="person-view__insta">
-                <a href={person.instagramProfileLink} target="_blank" rel="noopener noreferrer">
-                  <i className="fa fa-instagram" />
-                  <span>{person.instagramUsername}</span>
-                </a>
-              </div>}
-
             {this.renderConnections()}
             {this.renderInterests()}
           </div>

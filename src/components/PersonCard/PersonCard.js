@@ -80,13 +80,6 @@ const enhance = compose(
   pure,
 );
 
-const renderInstagramLink = (link, name, small) => (
-  <a href={link} target="_blank" rel="noopener noreferrer" title={name}>
-    <i className="fa fa-instagram" />
-    {!small && <div className="instaname">{name}</div>}
-  </a>
-);
-
 type PersonCardType = {
   person: Person,
   small?: boolean,
@@ -209,13 +202,6 @@ const PersonCard = ({
           {small && hasFriends && <div className="person-card__footer--distance">
             Friends: ({person.common_connections && person.common_connections.length})
           </div>}
-          <div className="person-card__footer--instagram">
-            {
-              person.instagramProfileLink ?
-              renderInstagramLink(person.instagramProfileLink, person.instagramUsername, small) :
-              <i className="fa fa-instagram" />
-            }
-          </div>
         </div>
       </div>
     </div>
